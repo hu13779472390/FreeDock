@@ -1,9 +1,4 @@
-﻿// Type: TD.SandDock.Design.DockContainerDesigner
-// Assembly: SandDock, Version=3.0.6.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3
-// MVID: 86A16A8A-6BB9-495D-A857-1A3306E497E9
-// Assembly location: C:\Program Files (x86)\Divelements Limited\SandDock for Windows Forms\SandDock.dll
-
-using System;
+﻿using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -15,7 +10,7 @@ using FQ.FreeDock;
 
 namespace FQ.FreeDock.Design
 {
-  internal class DockContainerDesigner : ParentControlDesigner
+  class DockContainerDesigner : ParentControlDesigner
   {
     private System.Drawing.Point x6afebf16b45c02e0 = System.Drawing.Point.Empty;
     private DockContainer x0467b00af7810f0c;
@@ -275,8 +270,8 @@ label_21:;
       {
         if (this.x372569d2ea29984e != null)
         {
-          if ((uint) cancel - (uint) cancel < 0U)
-            return;
+
+
           this.x372569d2ea29984e.Commit();
         }
         else
@@ -299,10 +294,10 @@ label_12:
             }
           }
           this.x531514c39973cbc6.Commit();
-          if ((uint) cancel - (uint) cancel <= uint.MaxValue)
-            this.x0467b00af7810f0c.Capture = false;
-          else
-            goto label_11;
+
+                   this.x0467b00af7810f0c.Capture = false;
+
+
         }
         else
         {
@@ -444,14 +439,12 @@ label_2:
     {
       IComponentChangeService componentChangeService = (IComponentChangeService) this.GetService(typeof (IComponentChangeService));
       bool flag;
-      if ((uint) flag - (uint) flag > uint.MaxValue)
-      {
-        if ((uint) flag + (uint) flag >= 0U)
-          goto label_44;
-        else
-          goto label_41;
-      }
-      else
+
+
+
+
+
+
         goto label_45;
 label_2:
       bool x49cf4e0157d9436c;
@@ -473,16 +466,16 @@ label_36:
         control1 = this.x0467b00af7810f0c.Manager.DockSystemContainer;
 label_37:
         Control control2 = control1;
-        if ((uint) x49cf4e0157d9436c + (uint) x49cf4e0157d9436c < 0U)
-          goto label_26;
-        else
-          goto label_38;
+
+
+
+        goto label_38;
 label_18:
         componentChangeService.OnComponentChanged((object) this.x0467b00af7810f0c, (MemberDescriptor) TypeDescriptor.GetProperties((object) this.x0467b00af7810f0c)["LayoutSystem"], (object) null, (object) null);
         if (((x49cf4e0157d9436c ? 1 : 0) | 4) != 0)
         {
-          if ((uint) x49cf4e0157d9436c + (uint) x49cf4e0157d9436c < 0U)
-            goto label_29;
+
+
         }
         else
           goto label_33;
@@ -560,7 +553,7 @@ label_22:
         {
           if (2 == 0)
           {
-            if ((uint) x49cf4e0157d9436c >= 0U)
+
               goto label_31;
           }
           else
