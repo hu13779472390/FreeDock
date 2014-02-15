@@ -1,0 +1,38 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TD\SandDock\DockContainer.cs">
+    <Files>
+      <File FileName="TD\SandDock\TabControl.cs" Line="1" Column="1" />
+      <File FileName="TD\Util\xf8f9565783602018.cs" Line="661" Column="26" />
+      <File FileName="TD\SandDock\DockContainer.cs" Line="599" Column="11" />
+      <File FileName="TD\SandDock\SandDockManager.cs" Line="16" Column="14" />
+      <File FileName="TD\SandDock\DocumentContainer.cs" Line="10" Column="19" />
+      <File FileName="TD\SandDock\Design\DockContainerDesigner.cs" Line="16" Column="29" />
+      <File FileName="TD\SandDock\Design\DockControlDesigner.cs" Line="16" Column="29" />
+      <File FileName="TD\SandDock\Design\DocumentContainerDesigner.cs" Line="10" Column="29" />
+      <File FileName="TD\SandDock\Rendering\BorderStyle.cs" Line="6" Column="32" />
+      <File FileName="TD\SandDock\Rendering\BoxEdges.cs" Line="6" Column="32" />
+      <File FileName="TD\SandDock\Rendering\BoxModel.cs" Line="8" Column="32" />
+      <File FileName="TD\SandDock\Rendering\EverettRenderer.cs" Line="12" Column="32" />
+      <File FileName="TD\SandDock\Rendering\ITabControlRenderer.cs" Line="10" Column="32" />
+      <File FileName="TD\SandDock\Rendering\MilborneRenderer.cs" Line="14" Column="32" />
+      <File FileName="TD\SandDock\Rendering\Office2003Renderer.cs" Line="11" Column="32" />
+      <File FileName="TD\SandDock\Rendering\Office2007ColorScheme.cs" Line="6" Column="32" />
+      <File FileName="TD\SandDock\Rendering\Office2007Renderer.cs" Line="13" Column="32" />
+      <File FileName="TD\SandDock\Rendering\RendererBase.cs" Line="14" Column="32" />
+      <File FileName="TD\SandDock\Rendering\SandDockButtonType.cs" Line="6" Column="32" />
+      <File FileName="TD\SandDock\Rendering\TabTextDisplayMode.cs" Line="6" Column="32" />
+      <File FileName="TD\SandDock\Rendering\ThemeAwareRendererBase.cs" Line="13" Column="32" />
+      <File FileName="TD\SandDock\Rendering\WhidbeyRenderer.cs" Line="13" Column="32" />
+      <File FileName="TD\SandDock\Rendering\WindowsColorScheme.cs" Line="6" Column="32" />
+      <File FileName="TD\SandDock\Rendering\x9c9262004128fe00.cs" Line="14" Column="32" />
+      <File FileName="TD\SandDock\Rendering\xa811784015ed8842.cs" Line="11" Column="32" />
+      <File FileName="TD\SandDock\Rendering\xdc4dfd9427bbb983.cs" Line="9" Column="32" />
+      <File FileName="AssemblyInfo.cs" Line="17" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
