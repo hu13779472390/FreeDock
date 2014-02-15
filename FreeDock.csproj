@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <!--Project was exported from assembly: C:\Program Files (x86)\Divelements Limited\SandDock for Windows Forms\SandDock.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{311E664F-2D11-4E3B-8399-E33B54F4C57E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>FreeDock</AssemblyName>
+    <ApplicationVersion>3.0.6.1</ApplicationVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Xenocode\Client\Attributes\AssemblyAttributes\ProcessedByXenocode.cs" />
+    <Compile Include="Xenocode\Client\Attributes\AssemblyAttributes\SuppressDisassembly.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="FQ\FreeDock\DocumentContainer.cs" />
+    <Compile Include="FQ\FreeDock\x10ac79a4257c7f52.cs" />
+    <Compile Include="FQ\FreeDock\SandDockManager.cs" />
+    <Compile Include="FQ\FreeDock\ShowControlContextMenuEventHandler.cs" />
+    <Compile Include="FQ\FreeDock\ShowControlContextMenuEventArgs.cs" />
+    <Compile Include="FQ\FreeDock\DockControlEventArgs.cs" />
+    <Compile Include="FQ\FreeDock\DockControl.cs" />
+    <Compile Include="FQ\FreeDock\SandDockLanguage.cs" />
+    <Compile Include="FQ\FreeDock\ControlLayoutSystem.cs" />
+    <Compile Include="FQ\FreeDock\LayoutSystemBase.cs" />
+    <Compile Include="FQ\FreeDock\SplitLayoutSystem.cs" />
+    <Compile Include="FQ\FreeDock\DockContainer.cs" />
+    <Compile Include="FQ\FreeDock\xedb4922162c60d3d.cs" />
+    <Compile Include="FQ\FreeDock\x890231ddf317379e.cs" />
+    <Compile Include="FQ\FreeDock\DockingHints.cs" />
+    <Compile Include="FQ\FreeDock\x7a797590a9beb775.cs" />
+    <Compile Include="FQ\FreeDock\x130e0425ae2d4496.cs" />
+    <Compile Include="FQ\FreeDock\DockSide.cs" />
+    <Compile Include="FQ\FreeDock\ContainerDockLocation.cs" />
+    <Compile Include="FQ\FreeDock\x60f3af502af1d663.cs" />
+    <Compile Include="FQ\FreeDock\x9b2777bb8e78938b.cs" />
+    <Compile Include="FQ\FreeDock\DocumentLayoutSystem.cs" />
+    <Compile Include="FQ\FreeDock\x0a9f5257a10031b2.cs" />
+    <Compile Include="FQ\FreeDock\x87cf4de36131799d.cs" />
+    <Compile Include="FQ\FreeDock\x7fc004d490c8a431.cs" />
+    <Compile Include="FQ\FreeDock\WindowMetaData.cs" />
+    <Compile Include="FQ\FreeDock\DockSituation.cs" />
+    <Compile Include="FQ\FreeDock\x129cb2a2bdfd0ab2.cs" />
+    <Compile Include="FQ\FreeDock\xd0aa9d0e7d3446c0.cs" />
+    <Compile Include="FQ\FreeDock\x443cc432acaadb1d.cs" />
+    <Compile Include="FQ\FreeDock\LayoutUtilities.cs" />
+    <Compile Include="FQ\FreeDock\x410f3612b9a8f9de.cs" />
+    <Compile Include="FQ\FreeDock\xd936980ea1aac341.cs" />
+    <Compile Include="FQ\FreeDock\ContextMenuContext.cs" />
+    <Compile Include="FQ\FreeDock\DockingManager.cs" />
+    <Compile Include="FQ\FreeDock\x31248f32f85df1dd.cs" />
+    <Compile Include="FQ\FreeDock\xd0a1f65420a07725.cs" />
+    <Compile Include="FQ\FreeDock\DockingRules.cs" />
+    <Compile Include="FQ\FreeDock\DockControlEventHandler.cs" />
+    <Compile Include="FQ\FreeDock\DockControlClosingEventArgs.cs" />
+    <Compile Include="FQ\FreeDock\DockControlClosingEventHandler.cs" />
+    <Compile Include="FQ\FreeDock\DockControlCloseAction.cs" />
+    <Compile Include="FQ\FreeDock\WindowOpenMethod.cs" />
+    <Compile Include="FQ\FreeDock\x5678bb8d80c0f12e.cs" />
+    <Compile Include="FQ\FreeDock\ContainerDockEdge.cs" />
+    <Compile Include="FQ\FreeDock\DocumentOverflowMode.cs" />
+    <Compile Include="FQ\FreeDock\DocumentContainerWindowOpenPosition.cs" />
+    <Compile Include="FQ\FreeDock\ActiveFilesListEventArgs.cs" />
+    <Compile Include="FQ\FreeDock\ActiveFilesListEventHandler.cs" />
+    <Compile Include="FQ\FreeDock\x8e80e1c8bce8caf7.cs" />
+    <Compile Include="FQ\FreeDock\x09c1c18390e52ebf.cs" />
+    <Compile Include="FQ\FreeDock\ResolveDockControlEventHandler.cs" />
+    <Compile Include="FQ\FreeDock\ResolveDockControlEventArgs.cs" />
+    <Compile Include="FQ\FreeDock\x245a5abec1c73d3a.cs" />
+    <Compile Include="FQ\FreeDock\LayoutSettings.cs" />
+    <Compile Include="FQ\FreeDock\DockableWindow.cs" />
+    <Compile Include="FQ\FreeDock\TabbedDocument.cs" />
+    <Compile Include="FQ\FreeDock\TabControl.cs" />
+    <Compile Include="FQ\FreeDock\TabPage.cs" />
+    <Compile Include="FQ\FreeDock\TabLayout.cs" />
+    <Compile Include="FQ\FreeDock\UserDockableWindow.cs" />
+    <Compile Include="FQ\FreeDock\UserTabbedDocument.cs" />
+    <Compile Include="FQ\FreeDock\x44c2ba9761cb4dd2.cs" />
+    <Compile Include="FQ\FreeDock\x807757bdf074f1b8.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\ITabControlRenderer.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\RendererBase.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\SandDockButtonType.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\BoxModel.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\BoxEdges.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\TabTextDisplayMode.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\WhidbeyRenderer.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\ThemeAwareRendererBase.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\WindowsColorScheme.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\xa811784015ed8842.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\EverettRenderer.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\BorderStyle.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\MilborneRenderer.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\Office2007ColorScheme.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\Office2003Renderer.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\Office2007Renderer.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\x9c9262004128fe00.cs" />
+    <Compile Include="FQ\FreeDock\Rendering\xdc4dfd9427bbb983.cs" />
+    <Compile Include="FQ\FreeDock\Design\DockControlDesigner.cs" />
+    <Compile Include="FQ\FreeDock\Design\DockContainerDesigner.cs" />
+    <Compile Include="FQ\FreeDock\Design\DocumentContainerDesigner.cs" />
+    <Compile Include="FQ\Util\xf8f9565783602018.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintbottom.png" />
+    <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintcenter.png" />
+    <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintleft.png" />
+    <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintright.png" />
+    <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghinttop.png" />
+    <EmbeddedResource Include="FQ\FreeDock\Resources\splitting.cur" />
+    <EmbeddedResource Include="FQ\FreeDock\Resources\splittingno.cur" />
+    <EmbeddedResource Include="FQ\FreeDock\sanddock.png" />
+    <EmbeddedResource Include="FQ\FreeDock\SandDockManager.bmp" />
+    <EmbeddedResource Include="FQ\FreeDock\TabControl.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
