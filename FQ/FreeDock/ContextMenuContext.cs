@@ -9,6 +9,6 @@
         Keyboard,
         RightClick,
         OptionsButton,
-        Other,
+        Other
     }
 }

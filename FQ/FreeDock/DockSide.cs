@@ -18,6 +18,6 @@
         Bottom,
         Left,
         Right,
-        None,
+        None
     }
 }

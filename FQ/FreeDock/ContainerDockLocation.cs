@@ -10,6 +10,6 @@
         Right = 2,
         Top = 3,
         Bottom = 4,
-        Center = 5,
+        Center = 5
     }
 }

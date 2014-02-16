@@ -8,20 +8,11 @@ namespace FQ.FreeDock
     /// </summary>
     public class ResolveDockControlEventArgs : EventArgs
     {
-        private DockControl x43bec302f92080b9;
-        private Guid xb51cd75f17ace1ec;
-
         /// <summary>
         /// The unique identifier of the DockControl to resolve.
         /// 
         /// </summary>
-        public Guid Guid
-        {
-            get
-            {
-                return this.xb51cd75f17ace1ec;
-            }
-        }
+        public Guid Guid { get; private set; }
 
         /// <summary>
         /// The DockControl that the Guid property references.
@@ -35,21 +26,11 @@ namespace FQ.FreeDock
         /// </para>
         /// 
         /// </remarks>
-        public DockControl DockControl
-        {
-            get
-            {
-                return this.x43bec302f92080b9;
-            }
-            set
-            {
-                this.x43bec302f92080b9 = value;
-            }
-        }
+        public DockControl DockControl { get; set; }
 
         internal ResolveDockControlEventArgs(Guid guid)
         {
-            this.xb51cd75f17ace1ec = guid;
+            this.Guid = guid;
         }
     }
 }

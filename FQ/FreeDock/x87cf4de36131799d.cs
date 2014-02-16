@@ -13,7 +13,7 @@ namespace FQ.FreeDock
         private x7fc004d490c8a431 x372569d2ea29984e;
         private Rectangle x21ed2ecc088ef4e4;
         private Rectangle x59f159fe47159543;
-        private xf8f9565783602018 xac1c850120b1f254;
+        private Tooltips xac1c850120b1f254;
 
         public int xca843b3e9a1c605f
         {
@@ -135,14 +135,14 @@ namespace FQ.FreeDock
             if (8 != 0 && 0 == 0)
                 goto label_2;
             label_1:
-            this.xac1c850120b1f254.x9b21ee8e7ceaada3 += new xf8f9565783602018.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
+            this.xac1c850120b1f254.x9b21ee8e7ceaada3 += new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
             this.BackColor = SystemColors.Control;
             return;
             label_2:
             this.x2ee8392f53a01b93 = bar;
             this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.Selectable, false);
-            this.xac1c850120b1f254 = new xf8f9565783602018((Control)this);
+            this.xac1c850120b1f254 = new Tooltips((Control)this);
             this.xac1c850120b1f254.xa6e4f463e64a5987 = false;
             goto label_1;
         }
@@ -250,7 +250,7 @@ namespace FQ.FreeDock
                 else
                     break;
                 label_6:
-                this.xac1c850120b1f254 = (xf8f9565783602018)null;
+                this.xac1c850120b1f254 = (Tooltips)null;
                 goto label_2;
                 label_8:
                 if (int.MaxValue != 0)

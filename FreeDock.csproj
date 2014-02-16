@@ -37,8 +37,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Xenocode\Client\Attributes\AssemblyAttributes\ProcessedByXenocode.cs" />
-    <Compile Include="Xenocode\Client\Attributes\AssemblyAttributes\SuppressDisassembly.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="FQ\FreeDock\DocumentContainer.cs" />
     <Compile Include="FQ\FreeDock\x10ac79a4257c7f52.cs" />
@@ -125,7 +123,7 @@
     <Compile Include="FQ\FreeDock\Design\DockControlDesigner.cs" />
     <Compile Include="FQ\FreeDock\Design\DockContainerDesigner.cs" />
     <Compile Include="FQ\FreeDock\Design\DocumentContainerDesigner.cs" />
-    <Compile Include="FQ\Util\xf8f9565783602018.cs" />
+    <Compile Include="FQ\Util\Tooltips.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintbottom.png" />

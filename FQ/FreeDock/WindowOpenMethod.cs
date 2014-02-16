@@ -8,6 +8,6 @@
     {
         OnScreen = 1,
         OnScreenSelect = 2,
-        OnScreenActivate = 3,
+        OnScreenActivate = 3
     }
 }

@@ -8,6 +8,6 @@
     {
         None,
         Scrollable,
-        Menu,
+        Menu
     }
 }

@@ -11,6 +11,6 @@
         ScrollLeft,
         ScrollRight,
         WindowPosition,
-        ActiveFiles,
+        ActiveFiles
     }
 }

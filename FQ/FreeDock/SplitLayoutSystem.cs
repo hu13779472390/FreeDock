@@ -25,7 +25,7 @@ namespace FQ.FreeDock
     {
         internal const int x51b0f429bd564626 = 4;
         private SplitLayoutSystem.LayoutSystemBaseCollection x820c504c9c557c92;
-        private Orientation xe36f4efbf268b3f1;
+        private Orientation splitMode;
         private ArrayList x366d4cf7098f9c63;
         private x8e80e1c8bce8caf7 x372569d2ea29984e;
 
@@ -46,9 +46,9 @@ namespace FQ.FreeDock
         {
             get
             {
-                ArrayList x8da10969b0e2a75e = new ArrayList();
-                this.xd78391e378ab076b(this, x8da10969b0e2a75e);
-                return (DockControl[])x8da10969b0e2a75e.ToArray(typeof(DockControl));
+                ArrayList list = new ArrayList();
+                this.xd78391e378ab076b(this, list);
+                return (DockControl[])list.ToArray(typeof(DockControl));
             }
         }
 
@@ -72,11 +72,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xe36f4efbf268b3f1;
+                return this.splitMode;
             }
             set
             {
-                this.xe36f4efbf268b3f1 = value;
+                this.splitMode = value;
                 this.x3e0280cae730d1f2();
             }
         }
@@ -226,7 +226,7 @@ namespace FQ.FreeDock
         public SplitLayoutSystem(int desiredWidth, int desiredHeight, Orientation splitMode, LayoutSystemBase[] layoutSystems)
       : this(desiredWidth, desiredHeight)
         {
-            this.xe36f4efbf268b3f1 = splitMode;
+            this.splitMode = splitMode;
             this.x820c504c9c557c92.AddRange(layoutSystems);
         }
 
@@ -240,7 +240,7 @@ namespace FQ.FreeDock
       : this()
         {
             this.WorkingSize = workingSize;
-            this.xe36f4efbf268b3f1 = splitMode;
+            this.splitMode = splitMode;
             this.x820c504c9c557c92.AddRange(layoutSystems);
         }
 
@@ -1046,7 +1046,7 @@ namespace FQ.FreeDock
             }
             else
             {
-                Cursor.Current = this.xe36f4efbf268b3f1 != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
+                Cursor.Current = this.splitMode != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
                 goto label_2;
             }
             label_9:
@@ -1111,8 +1111,6 @@ namespace FQ.FreeDock
         {
             if (this.DockContainer != null)
             {
-                if (int.MinValue == 0)
-                    ;
                 this.DockContainer.xec9697acef66c1bc((LayoutSystemBase)this, this.Bounds);
             }
             if (this.DockContainer == null)
@@ -1273,8 +1271,8 @@ namespace FQ.FreeDock
             int index4 = 0;
             while (index3 < x10f4d88af727adbc)
             {
-                num6 = Math.Max(this.xe36f4efbf268b3f1 != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
-                if (this.xe36f4efbf268b3f1 != Orientation.Horizontal)
+                num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
+                if (this.splitMode != Orientation.Horizontal)
                 {
                     if (index3 == x10f4d88af727adbc - 1)
                     {
@@ -1323,7 +1321,7 @@ namespace FQ.FreeDock
             if (index5 >= x10f4d88af727adbc - 1)
                 return;
             bounds = layoutSystemBaseArray[index5].Bounds;
-            if (this.xe36f4efbf268b3f1 != Orientation.Horizontal)
+            if (this.splitMode != Orientation.Horizontal)
             {
                 bounds.Offset(bounds.Width, 0);
                 bounds.Width = 4;
@@ -1340,7 +1338,7 @@ namespace FQ.FreeDock
             goto label_2;
             label_21:
             int num7;
-            if (this.xe36f4efbf268b3f1 == Orientation.Horizontal)
+            if (this.splitMode == Orientation.Horizontal)
                 num7 = bounds.Y;
             else
                 goto label_24;
@@ -1356,7 +1354,7 @@ namespace FQ.FreeDock
             num8 = 0;
             while (index6 < x10f4d88af727adbc)
             {
-                num2 += this.xe36f4efbf268b3f1 == Orientation.Horizontal ? sizeFArray[index6].Height : sizeFArray[index6].Width;
+                num2 += this.splitMode == Orientation.Horizontal ? sizeFArray[index6].Height : sizeFArray[index6].Width;
                 ++index6;
                 if (true)
                 {
@@ -1382,7 +1380,7 @@ namespace FQ.FreeDock
             {
                 if ((x10f4d88af727adbc & 0) == 0)
                 {
-                    if (0 != 0 || this.xe36f4efbf268b3f1 == Orientation.Horizontal)
+                    if (0 != 0 || this.splitMode == Orientation.Horizontal)
                     {
                         sizeFArray[0].Height += num8;
                         goto label_21;
@@ -1405,11 +1403,11 @@ namespace FQ.FreeDock
             }
             else
             {
-                num9 = this.xe36f4efbf268b3f1 != Orientation.Horizontal ? sizeFArray[index4].Width : sizeFArray[index4].Height;
+                num9 = this.splitMode != Orientation.Horizontal ? sizeFArray[index4].Width : sizeFArray[index4].Height;
                 goto label_44;
             }
             label_40:
-            if (this.xe36f4efbf268b3f1 == Orientation.Horizontal)
+            if (this.splitMode == Orientation.Horizontal)
                 goto label_39;
             else
                 goto label_41;
@@ -1445,7 +1443,7 @@ namespace FQ.FreeDock
             label_54:
             while (index1 < x10f4d88af727adbc)
             {
-                num2 += this.xe36f4efbf268b3f1 == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
+                num2 += this.splitMode == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
                 if (true)
                     ++index1;
             }
@@ -1473,7 +1471,7 @@ namespace FQ.FreeDock
                 if (x10f4d88af727adbc > 1)
                     goto label_61;
                 label_58:
-                num4 = this.xe36f4efbf268b3f1 == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
+                num4 = this.splitMode == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
                 continue;
                 label_61:
                 floating = false;
@@ -1503,7 +1501,7 @@ namespace FQ.FreeDock
                 while (enumerator1.MoveNext())
                 {
                     Rectangle bounds = (Rectangle)enumerator1.Current;
-                    x38870620fd380a6b.DrawSplitter(container, (Control)this.DockContainer, x41347a961b838962, bounds, this.xe36f4efbf268b3f1);
+                    x38870620fd380a6b.DrawSplitter(container, (Control)this.DockContainer, x41347a961b838962, bounds, this.splitMode);
                 }
             }
             finally

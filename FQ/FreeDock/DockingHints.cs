@@ -7,6 +7,6 @@
     public enum DockingHints
     {
         RubberBand,
-        TranslucentFill,
+        TranslucentFill
     }
 }

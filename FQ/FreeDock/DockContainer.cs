@@ -43,10 +43,10 @@ namespace FQ.FreeDock
         private SplitLayoutSystem x35c76d526f88c3c8;
         internal ArrayList x83627743ea4ce5a2;
         private RendererBase xa2c39ea75c543fc7;
-        private xf8f9565783602018 xac1c850120b1f254;
+        private Tooltips xac1c850120b1f254;
         private int xa03963cfd21be862;
         private static bool x1f080f764b4036b1;
-//        private xbd7c5470fc89975b x266365ea27fa7af8;
+        //        private xbd7c5470fc89975b x266365ea27fa7af8;
         private x09c1c18390e52ebf x754f1c6f433be75d;
         private bool x841598f8fd19209c;
         internal LayoutSystemBase x3df31cf55a47bc37;
@@ -246,8 +246,6 @@ namespace FQ.FreeDock
                         return;
                 }
                 this.x841598f8fd19209c = true;
-                if (-2 == 0)
-                    ;
                 this.xd987e7deb2afdfde = value;
                 this.x333d8ec4f70a6d86();
             }
@@ -336,18 +334,9 @@ namespace FQ.FreeDock
                     goto label_6;
                 else
                     goto label_10;
+
                 label_5:
-                do
-                {
-                    do
-                    {
-                        this.x91f347c6e97f1846 = value;
-                    }
-                    while ((int)byte.MaxValue == 0);
-                    if (0 != 0)
-                        goto label_7;
-                }
-                while (8 == 0);
+                this.x91f347c6e97f1846 = value;
                 if (this.x91f347c6e97f1846 == null)
                     return;
                 this.x91f347c6e97f1846.RegisterDockContainer(this);
@@ -362,8 +351,8 @@ namespace FQ.FreeDock
                 else
                     goto label_5;
                 label_10:
-                if (0 == 0)
-                    goto label_5;
+
+                goto label_5;
                 label_11:
                 this.x91f347c6e97f1846.UnregisterDockContainer(this);
                 goto label_9;
@@ -374,11 +363,11 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
-        protected override System.Drawing.Size DefaultSize
+        protected override Size DefaultSize
         {
             get
             {
-                return new System.Drawing.Size(0, 0);
+                return new Size(0, 0);
             }
         }
 
@@ -421,8 +410,9 @@ namespace FQ.FreeDock
             {
                 if (value == this.x35c76d526f88c3c8)
                     return;
-                if (-2 == 0 || value == null)
+                if (value == null)
                     throw new ArgumentNullException("value");
+
                 DockContainer.x1f080f764b4036b1 = true;
                 try
                 {
@@ -506,31 +496,17 @@ namespace FQ.FreeDock
         /// </summary>
         public DockContainer()
         {
-            if (0 == 0)
-                goto label_6;
-            label_1:
-            this.xac1c850120b1f254.x9b21ee8e7ceaada3 += new xf8f9565783602018.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
-            this.BackColor = SystemColors.Control;
-            return;
-            label_6:
 //            this.x266365ea27fa7af8 = LicenseManager.Validate(typeof(DockContainer), (object)this) as xbd7c5470fc89975b;
             this.x35c76d526f88c3c8 = new SplitLayoutSystem();
-            while ((int)byte.MaxValue != 0)
-            {
-                this.x35c76d526f88c3c8.x56e964269d48cfcc(this);
-                this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-                this.SetStyle(ControlStyles.Selectable, false);
-                if (int.MinValue != 0)
-                {
-                    this.x83627743ea4ce5a2 = new ArrayList();
-                    this.xac1c850120b1f254 = new xf8f9565783602018((Control)this);
-                    this.xac1c850120b1f254.xa6e4f463e64a5987 = false;
-                    if (-2 != 0)
-                        goto label_1;
-                }
-                else
-                    goto label_1;
-            }
+            this.x35c76d526f88c3c8.x56e964269d48cfcc(this);
+            this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.Selectable, false);
+            this.x83627743ea4ce5a2 = new ArrayList();
+            this.xac1c850120b1f254 = new Tooltips(this);
+            this.xac1c850120b1f254.xa6e4f463e64a5987 = false;
+            this.xac1c850120b1f254.x9b21ee8e7ceaada3 += new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
+            this.BackColor = SystemColors.Control;
+            return;
         }
 
         internal virtual void x5fc4eceec879ff0f()
@@ -544,23 +520,17 @@ namespace FQ.FreeDock
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
-            while (this.Manager == null)
-            {
-                if (-1 != 0)
-                    return;
-                if (0 == 0)
-                    break;
-            }
-            if (this.Parent == null && (0 != 0 || 0 == 0) || this.Parent is xd936980ea1aac341)
+            if (this.Manager == null)
+                return;
+            if (this.Parent == null || this.Parent is xd936980ea1aac341)
                 return;
             this.Manager.DockSystemContainer = this.Parent;
         }
 
         internal void x8ba6fce4f4601549(ShowControlContextMenuEventArgs xfbf34718e704c6bc)
         {
-            if (this.Manager == null)
-                return;
-            this.Manager.OnShowControlContextMenu(xfbf34718e704c6bc);
+            if (this.Manager != null)
+                this.Manager.OnShowControlContextMenu(xfbf34718e704c6bc);
         }
 
         /// <summary>
@@ -570,27 +540,17 @@ namespace FQ.FreeDock
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                goto label_3;
-            label_2:
+            {
+                if (this.xa2c39ea75c543fc7 != null)
+                {   
+                    this.xa2c39ea75c543fc7.Dispose();
+                    this.xa2c39ea75c543fc7 = null;
+                }
+                this.Manager = null;
+                this.xac1c850120b1f254.x9b21ee8e7ceaada3 -= new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
+                this.xac1c850120b1f254.Dispose();
+            }
             base.Dispose(disposing);
-            return;
-            label_3:
-            if (this.xa2c39ea75c543fc7 != null)
-                goto label_4;
-            else
-                goto label_6;
-            label_1:
-            this.Manager = null;
-            this.xac1c850120b1f254.x9b21ee8e7ceaada3 -= new xf8f9565783602018.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
-            this.xac1c850120b1f254.Dispose();
-            goto label_2;
-            label_4:
-            this.xa2c39ea75c543fc7.Dispose();
-            label_5:
-            this.xa2c39ea75c543fc7 = null;
-            goto label_1;
-            label_6:
-            goto label_1;
         }
 
         /// <summary>
@@ -634,30 +594,14 @@ namespace FQ.FreeDock
         public ControlLayoutSystem CreateNewLayoutSystem(DockControl[] controls, SizeF size)
         {
             if (controls == null)
-            {
-                if (3 != 0)
-                    throw new ArgumentNullException("controls");
-                else
-                    goto label_3;
-            }
-            else
-                goto label_5;
-            label_2:
-            if (controls == null || controls.Length == 0)
-                goto label_6;
-            label_3:
-            ControlLayoutSystem controlLayoutSystem;
-            controlLayoutSystem.Controls.AddRange(controls);
-            if (-1 == 0 || 0 != 0 && 0 != 0)
-                goto label_2;
-            else
-                goto label_6;
-            label_5:
-            controlLayoutSystem = this.xd6284ffe96aec512();
-            controlLayoutSystem.WorkingSize = size;
-            goto label_2;
-            label_6:
-            return controlLayoutSystem;
+                throw new ArgumentNullException("controls");
+
+            ControlLayoutSystem layout = this.xd6284ffe96aec512();
+            layout.WorkingSize = size;
+            if (controls.Length != 0)
+                layout.Controls.AddRange(controls);
+
+            return layout;
         }
 
         internal virtual ControlLayoutSystem xd6284ffe96aec512()
@@ -956,7 +900,7 @@ namespace FQ.FreeDock
                 label_6:
                 if (true)
                 {
-                        goto label_14;
+                    goto label_14;
                 }
                 else
                     goto label_13;
@@ -964,7 +908,7 @@ namespace FQ.FreeDock
 
 
 
-                    goto label_14;
+                goto label_14;
 
 
                 label_10:
@@ -1051,8 +995,8 @@ namespace FQ.FreeDock
                     {
 
 
-                            if (!(layoutSystemBase is ControlLayoutSystem))
-                                goto label_23;
+                        if (!(layoutSystemBase is ControlLayoutSystem))
+                            goto label_23;
 
 
                         label_24:
@@ -1109,7 +1053,7 @@ namespace FQ.FreeDock
                 this.Width = num2;
 
 
-                    return;
+                return;
             }
             label_18:
             num2 += this.ContentSize + (this.AllowResize ? 4 : 0);
@@ -1399,7 +1343,7 @@ namespace FQ.FreeDock
         {
             base.OnMouseUp(e);
 //            if (!this.x266365ea27fa7af8.Locked)
-            if (true) 
+            if (true)
             {
                 if (this.x3df31cf55a47bc37 == null)
                 {
@@ -1595,7 +1539,7 @@ namespace FQ.FreeDock
 //                        goto label_14;
 //                }
 //                else
-                    goto label_20;
+                goto label_20;
             }
             while (4 == 0);
             using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(50, Color.White)))

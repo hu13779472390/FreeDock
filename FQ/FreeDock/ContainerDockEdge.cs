@@ -7,6 +7,6 @@
     public enum ContainerDockEdge
     {
         Inside,
-        Outside,
+        Outside
     }
 }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
-    internal class x7a797590a9beb775 : Form
+    class x7a797590a9beb775 : Form
     {
         private const int x25e1af1de31299a2 = 2;
         private const int xb615ddf284afbdf6 = 524288;

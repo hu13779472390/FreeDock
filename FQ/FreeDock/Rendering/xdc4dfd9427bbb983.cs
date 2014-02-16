@@ -7,17 +7,13 @@ namespace FQ.FreeDock.Rendering
     {
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            ArrayList arrayList = new ArrayList();
-            arrayList.Add((object)"Everett");
-            arrayList.Add((object)"Office 2003");
-            arrayList.Add((object)"Whidbey");
-            arrayList.Add((object)"Milborne");
-            do
-            {
-                arrayList.Add((object)"Office 2007");
-            }
-            while (0 != 0);
-            return new TypeConverter.StandardValuesCollection((ICollection)arrayList);
+            ArrayList list = new ArrayList();
+            list.Add("Everett");
+            list.Add("Office 2003");
+            list.Add("Whidbey");
+            list.Add("Milborne");
+            list.Add("Office 2007");
+            return new TypeConverter.StandardValuesCollection(list);
         }
     }
 }

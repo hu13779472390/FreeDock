@@ -6,7 +6,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace TD.Util
 {
-    internal class xf8f9565783602018 : IDisposable
+    class Tooltips : IDisposable
     {
         private bool xeefb7b23d49f09bc = true;
         private const int x77bf04ec211c4a37 = 16;
@@ -14,11 +14,11 @@ namespace TD.Util
         private const int xdbb7427772b219d6 = 128;
         private const int xb644deafcaa222c4 = 2;
         private const int xb8a822e576f3bf60 = 1;
-        private Control x43bec302f92080b9;
+        private Control control;
         private bool x364c1e3b189d47fe;
         private bool x0e75cd3866dbb930;
         private Point xa639e9f791585165;
-        private xf8f9565783602018.xab7df35839b7399e xa6607dfd4b3038ad;
+        private xab7df35839b7399e xa6607dfd4b3038ad;
         private Timer x537a4001020fd4c7;
         private Form x9238f6a5f034aeb5;
 
@@ -46,40 +46,23 @@ namespace TD.Util
             }
         }
 
-        public event xf8f9565783602018.x58986a4a0b75e5b5 x9b21ee8e7ceaada3;
+        public event Tooltips.x58986a4a0b75e5b5 x9b21ee8e7ceaada3;
 
-        public xf8f9565783602018(Control control)
+        public Tooltips(Control control)
         {
-            if (int.MinValue != 0 && 0 == 0)
-                goto label_4;
-            label_1:
+            this.control = control;
+            control.MouseMove += new MouseEventHandler(this.x51529e0468abe27e);
+            control.MouseLeave += new EventHandler(this.x664829383a59617c);
+            control.MouseDown += new MouseEventHandler(this.x1c8953a8a8447816);
+            control.MouseWheel += new MouseEventHandler(this.x5e1cbc67acfe3317);
+            control.Disposed += new EventHandler(this.x77d9086325b6e538);
+            control.FontChanged += new EventHandler(this.xb27df3b0091b2a36);
+            this.xa6607dfd4b3038ad = new Tooltips.xab7df35839b7399e(this);
             this.xa6607dfd4b3038ad.MouseMove += new MouseEventHandler(this.x1aaaf41037533886);
             this.x537a4001020fd4c7 = new Timer();
             this.x537a4001020fd4c7.Interval = SystemInformation.DoubleClickTime;
             this.x537a4001020fd4c7.Tick += new EventHandler(this.x79a58a5d2c65c5a4);
             return;
-            label_4:
-            if (0 == 0)
-                goto label_5;
-            label_2:
-            control.FontChanged += new EventHandler(this.xb27df3b0091b2a36);
-            this.xa6607dfd4b3038ad = new xf8f9565783602018.xab7df35839b7399e(this);
-            goto label_7;
-            label_5:
-            this.x43bec302f92080b9 = control;
-            if (15 != 0)
-            {
-                control.MouseMove += new MouseEventHandler(this.x51529e0468abe27e);
-                control.MouseLeave += new EventHandler(this.x664829383a59617c);
-                control.MouseDown += new MouseEventHandler(this.x1c8953a8a8447816);
-                control.MouseWheel += new MouseEventHandler(this.x5e1cbc67acfe3317);
-                control.Disposed += new EventHandler(this.x77d9086325b6e538);
-            }
-            if (int.MinValue != 0)
-                goto label_2;
-            label_7:
-            if (-2 != 0)
-                goto label_1;
         }
 
         [DllImport("user32.dll")]
@@ -89,36 +72,22 @@ namespace TD.Util
         {
             if (this.x0e75cd3866dbb930)
                 return;
-            if (0 == 0)
-                goto label_6;
-            label_2:
+
+            this.x47c79a4d207183de();
+            this.xa6607dfd4b3038ad.MouseMove -= new MouseEventHandler(this.x1aaaf41037533886);
+            this.xa6607dfd4b3038ad.Dispose();
+            this.xa6607dfd4b3038ad = null;
+            this.control.MouseMove -= new MouseEventHandler(this.x51529e0468abe27e);
+            this.control.MouseLeave -= new EventHandler(this.x664829383a59617c);
+            this.control.MouseDown -= new MouseEventHandler(this.x1c8953a8a8447816);
+            this.control.MouseWheel -= new MouseEventHandler(this.x5e1cbc67acfe3317);
+            this.control.Disposed -= new EventHandler(this.x77d9086325b6e538);
+            this.control.FontChanged -= new EventHandler(this.xb27df3b0091b2a36);
+            this.control = null;
             this.x537a4001020fd4c7.Tick -= new EventHandler(this.x79a58a5d2c65c5a4);
             this.x537a4001020fd4c7.Dispose();
             this.x0e75cd3866dbb930 = true;
             return;
-            label_6:
-            this.x47c79a4d207183de();
-            this.xa6607dfd4b3038ad.MouseMove -= new MouseEventHandler(this.x1aaaf41037533886);
-            this.xa6607dfd4b3038ad.Dispose();
-            this.xa6607dfd4b3038ad = (xf8f9565783602018.xab7df35839b7399e)null;
-            if ((int)byte.MaxValue == 0)
-                return;
-            if (-2 != 0)
-            {
-                this.x43bec302f92080b9.MouseMove -= new MouseEventHandler(this.x51529e0468abe27e);
-                this.x43bec302f92080b9.MouseLeave -= new EventHandler(this.x664829383a59617c);
-                this.x43bec302f92080b9.MouseDown -= new MouseEventHandler(this.x1c8953a8a8447816);
-                this.x43bec302f92080b9.MouseWheel -= new MouseEventHandler(this.x5e1cbc67acfe3317);
-                if (-2 != 0)
-                {
-                    this.x43bec302f92080b9.Disposed -= new EventHandler(this.x77d9086325b6e538);
-                    this.x43bec302f92080b9.FontChanged -= new EventHandler(this.xb27df3b0091b2a36);
-                }
-                this.x43bec302f92080b9 = (Control)null;
-                goto label_2;
-            }
-            else
-                goto label_2;
         }
 
         private static bool x7fb2e1ce54a27086()
@@ -140,7 +109,7 @@ namespace TD.Util
             else
                 goto label_43;
             label_3:
-            this.x9238f6a5f034aeb5 = this.x624fa8b017460890(this.x43bec302f92080b9);
+            this.x9238f6a5f034aeb5 = this.x624fa8b017460890(this.control);
             if (0 == 0 && this.x9238f6a5f034aeb5 == null)
                 return;
             this.x9238f6a5f034aeb5.Deactivate += new EventHandler(this.xdef19f2ef265bf1e);
@@ -174,7 +143,7 @@ namespace TD.Util
             Size size;
             do
             {
-                size = Size.Ceiling(this.xa6607dfd4b3038ad.x0a8f2a18d3b53839(xb41faee6912a2313));
+                size = Size.Ceiling(this.xa6607dfd4b3038ad.MeasureText(xb41faee6912a2313));
                 label_44:
                 size.Height += 4;
                 if (8 != 0)
@@ -286,7 +255,7 @@ namespace TD.Util
                 goto label_5;
             }
             label_17:
-            xf8f9565783602018.SetWindowPos(this.xa6607dfd4b3038ad.Handle, -1, xb9c2cfae130d9256.X, xb9c2cfae130d9256.Y, size.Width, size.Height, 80);
+            Tooltips.SetWindowPos(this.xa6607dfd4b3038ad.Handle, -1, xb9c2cfae130d9256.X, xb9c2cfae130d9256.Y, size.Width, size.Height, 80);
             normal = VisualStyleElement.ToolTip.Standard.Normal;
             if (Application.RenderWithVisualStyles)
             {
@@ -328,26 +297,23 @@ namespace TD.Util
             this.x9238f6a5f034aeb5 = (Form)null;
         }
 
-        private void x51529e0468abe27e(object xe0292b9ed559da7d, MouseEventArgs xfbf34718e704c6bc)
+        private void x51529e0468abe27e(object xe0292b9ed559da7d, MouseEventArgs e)
         {
-            if (xfbf34718e704c6bc.Button == MouseButtons.None)
+            if (e.Button == MouseButtons.None)
                 goto label_19;
             else
                 goto label_22;
+
             label_1:
-            if (0 == 0)
-                goto label_4;
+            goto label_4;
+
             label_2:
-            if (0 != 0)
-                goto label_5;
+            ;
             label_3:
-            if (0 == 0)
-                return;
+            return;
             label_4:
-            if (int.MinValue == 0)
-                goto label_2;
-            else
-                goto label_21;
+            goto label_21;
+
             label_5:
             string xb41faee6912a2313;
             if (xb41faee6912a2313 != this.xa6607dfd4b3038ad.Text)
@@ -357,89 +323,67 @@ namespace TD.Util
             }
             else
                 goto label_1;
+
             label_19:
             if (!this.x364c1e3b189d47fe)
                 goto label_8;
             else
                 goto label_20;
+
             label_6:
             Point point;
             this.xa639e9f791585165 = point;
             this.x537a4001020fd4c7.Enabled = false;
             this.x537a4001020fd4c7.Enabled = true;
             return;
+
             label_8:
-            point = new Point(xfbf34718e704c6bc.X, xfbf34718e704c6bc.Y);
+            point = new Point(e.X, e.Y);
             if (!(point != this.xa639e9f791585165))
                 return;
-            if (0 == 0)
-                goto label_6;
-            else
-                goto label_1;
+ 
+            goto label_6;
+
             label_20:
-            xb41faee6912a2313 = this.x9b21ee8e7ceaada3(new Point(xfbf34718e704c6bc.X, xfbf34718e704c6bc.Y));
-            if (0 == 0)
+            xb41faee6912a2313 = this.x9b21ee8e7ceaada3(new Point(e.X, e.Y));
+
+            if (xb41faee6912a2313 != null)
+                goto label_13;
+            label_11:
+            this.x47c79a4d207183de();
+            return;
+            label_13:
+
+            if (xb41faee6912a2313.Length != 0)
             {
-                if (xb41faee6912a2313 != null)
-                    goto label_13;
-                label_11:
-                this.x47c79a4d207183de();
-                return;
-                label_13:
-                if (1 != 0)
-                {
-                    if (int.MinValue != 0)
-                    {
-                        if (xb41faee6912a2313.Length != 0)
-                        {
-                            if (xb41faee6912a2313.Length != 0)
-                                goto label_5;
-                            else
-                                goto label_2;
-                        }
-                        else
-                            goto label_11;
-                    }
-                    else
-                        goto label_6;
-                }
-                else
-                    goto label_3;
-            }
-            label_21:
-            if (0 == 0)
-                return;
-            label_22:
-            if (0 == 0)
-            {
-                if (1 == 0)
-                    goto label_19;
+                goto label_5;
             }
             else
-                goto label_2;
+                goto label_11;
+
+            label_21:
+            return;
+
+            label_22:
+            ;
         }
 
         private void x79a58a5d2c65c5a4(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
         {
+            string xb41faee6912a2313 = "";
             this.x537a4001020fd4c7.Enabled = false;
             bool flag1;
-            if (false)
-            {
-                if (((flag1 ? 1 : 0) & 0) == 0)
-                    goto label_7;
-            }
-            else
-                goto label_17;
+
+            goto label_17;
             label_2:
             bool flag2;
-            string xb41faee6912a2313;
-            while (flag2 && this.x43bec302f92080b9.Visible)
+   
+            if (flag2 && this.control.Visible)
             {
                 this.x4402a69f607144e3(Cursor.Position, xb41faee6912a2313);
-                if (true)
-                    break;
             }
             return;
+
             label_4:
             int num;
             flag2 = num != 0;
@@ -449,45 +393,36 @@ namespace TD.Util
             Form form;
             num = activeForm != form ? (activeForm == form.Owner ? 1 : 0) : 1;
             goto label_4;
+
             label_17:
-            do
+            Point point = this.control.PointToClient(Cursor.Position);
+            Rectangle clientRectangle = this.control.ClientRectangle;
+
+            if (clientRectangle.Contains(point))
             {
-                Point point = this.x43bec302f92080b9.PointToClient(Cursor.Position);
-                Rectangle clientRectangle = this.x43bec302f92080b9.ClientRectangle;
-                if (clientRectangle.Contains(point))
-                {
-                    xb41faee6912a2313 = this.x9b21ee8e7ceaada3(point);
-                    if (xb41faee6912a2313 == null)
-                        goto label_16;
-                }
-                else
-                    goto label_18;
+                xb41faee6912a2313 = this.x9b21ee8e7ceaada3(point);
+                if (xb41faee6912a2313 == null)
+                    goto label_16;
             }
-            while (false);
+
             goto label_14;
             label_16:
             return;
+
             label_14:
-            if (-2 != 0)
-            {
-                if (xb41faee6912a2313.Length == 0)
-                    return;
-                form = this.x624fa8b017460890(this.x43bec302f92080b9);
-                activeForm = Form.ActiveForm;
-                if (form == null || activeForm == null)
-                {
-                    num = 0;
-                    goto label_4;
-                }
-                else
-                    goto label_7;
-            }
-            else if (true)
+            if (xb41faee6912a2313.Length == 0)
                 return;
+            form = this.x624fa8b017460890(this.control);
+            activeForm = Form.ActiveForm;
+            if (form == null || activeForm == null)
+            {
+                num = 0;
+                goto label_4;
+            }
             else
                 goto label_7;
-            label_18:
-            ;
+
+
         }
 
         private Form x624fa8b017460890(Control x3c4da2980d043c95)
@@ -535,7 +470,7 @@ namespace TD.Util
 
         private void xb27df3b0091b2a36(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
         {
-            this.xa6607dfd4b3038ad.Font = this.x43bec302f92080b9.Font;
+            this.xa6607dfd4b3038ad.Font = this.control.Font;
         }
 
         private class xab7df35839b7399e : Form
@@ -544,30 +479,26 @@ namespace TD.Util
             private const int x2b7f5d3ca7ec1edf = -2147483648;
             private const int xd708511d2241a4fb = 131072;
             private const int x836e53e090609b16 = 4132;
-            private xf8f9565783602018 xac1c850120b1f254;
-            private TextFormatFlags xae3b2752a89e7464;
+            private Tooltips tooltips;
+            private TextFormatFlags textFormatFlags;
 
             public bool x9ab519b46dd91330
             {
                 get
                 {
-                    return (this.xae3b2752a89e7464 & TextFormatFlags.HidePrefix) != TextFormatFlags.HidePrefix;
+                    return (this.textFormatFlags & TextFormatFlags.HidePrefix) != TextFormatFlags.HidePrefix;
                 }
                 set
                 {
                     if (value)
                     {
-                        do
-                        {
-                            this.xae3b2752a89e7464 |= TextFormatFlags.HidePrefix;
-                        }
-                        while (0 != 0);
-                        this.xae3b2752a89e7464 &= ~TextFormatFlags.NoPrefix;
+                        this.textFormatFlags |= TextFormatFlags.HidePrefix;
+                        this.textFormatFlags &= ~TextFormatFlags.NoPrefix;
                     }
                     else
                     {
-                        this.xae3b2752a89e7464 &= ~TextFormatFlags.HidePrefix;
-                        this.xae3b2752a89e7464 |= TextFormatFlags.NoPrefix;
+                        this.textFormatFlags &= ~TextFormatFlags.HidePrefix;
+                        this.textFormatFlags |= TextFormatFlags.NoPrefix;
                     }
                 }
             }
@@ -577,38 +508,16 @@ namespace TD.Util
                 get
                 {
                     CreateParams createParams = base.CreateParams;
-                    label_7:
-                    while (this.xac1c850120b1f254 != null)
+                    if (this.tooltips != null)
                     {
-                        while (this.xac1c850120b1f254.xa6e4f463e64a5987)
+                        if (this.tooltips.xa6e4f463e64a5987)
                         {
-                            if (!xf8f9565783602018.xab7df35839b7399e.x3b1aa41797c18588)
-                            {
-                                if (0 != 0)
-                                {
-                                    if (3 != 0)
-                                    {
-                                        if (-1 == 0)
-                                        {
-                                            if (4 == 0)
-                                                break;
-                                            else
-                                                break;
-                                        }
-                                    }
-                                    else
-                                        goto label_7;
-                                }
-                                else
-                                    break;
-                            }
-                            else
+                            if (Tooltips.xab7df35839b7399e.x3b1aa41797c18588)
                             {
                                 createParams.ClassStyle |= 131072;
-                                break;
+
                             }
                         }
-                        break;
                     }
                     return createParams;
                 }
@@ -619,158 +528,115 @@ namespace TD.Util
                 get
                 {
                     int i = 0;
-                    while (xf8f9565783602018.x7fb2e1ce54a27086())
+                    if (Tooltips.x7fb2e1ce54a27086())
                     {
-                        if ((uint)i + (uint)i <= uint.MaxValue)
-                        {
-                            if (0 == 0 || (i | (int)byte.MaxValue) != 0)
-                                xf8f9565783602018.xab7df35839b7399e.SystemParametersInfo(4132, 0, ref i, 0);
-                            else
-                                continue;
-                        }
+                        Tooltips.xab7df35839b7399e.SystemParametersInfo(4132, 0, ref i, 0);
                         return Convert.ToBoolean(i);
                     }
                     return false;
                 }
             }
 
-            public xab7df35839b7399e(xf8f9565783602018 tooltips)
+            public xab7df35839b7399e(Tooltips tooltips)
             {
-                this.xac1c850120b1f254 = tooltips;
-                label_4:
+                this.tooltips = tooltips;
                 this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-                do
-                {
-                    this.Font = tooltips.x43bec302f92080b9.Font;
-                    this.xae3b2752a89e7464 = TextFormatFlags.NoClipping | TextFormatFlags.VerticalCenter;
-                    this.ShowInTaskbar = false;
-                    this.FormBorderStyle = FormBorderStyle.None;
-                    this.ControlBox = false;
-                    this.StartPosition = FormStartPosition.Manual;
-                    if (1 == 0)
-                        goto label_4;
-                }
-                while (-2 == 0);
+                this.Font = tooltips.control.Font;
+                this.textFormatFlags = TextFormatFlags.NoClipping | TextFormatFlags.VerticalCenter;
+                this.ShowInTaskbar = false;
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.ControlBox = false;
+                this.StartPosition = FormStartPosition.Manual;
             }
 
             [DllImport("user32.dll")]
             private static extern bool SystemParametersInfo(int nAction, int nParam, ref int i, int nUpdate);
 
-            public SizeF x0a8f2a18d3b53839(string xb41faee6912a2313)
+            public SizeF MeasureText(string text)
             {
                 SizeF sizeF1;
                 using (Graphics graphics = this.CreateGraphics())
                 {
                     VisualStyleElement normal = VisualStyleElement.ToolTip.Standard.Normal;
-                    while (Application.RenderWithVisualStyles)
+                    if (Application.RenderWithVisualStyles)
                     {
-                        if (!VisualStyleRenderer.IsElementDefined(normal))
-                        {
-                            if (int.MaxValue != 0 || 0 == 0 && 0 == 0)
-                                break;
-                        }
-                        else
+                        if (VisualStyleRenderer.IsElementDefined(normal))
                         {
                             VisualStyleRenderer visualStyleRenderer = new VisualStyleRenderer(normal);
-                            Rectangle textExtent = visualStyleRenderer.GetTextExtent((IDeviceContext)graphics, xb41faee6912a2313, TextFormatFlags.Default);
-                            sizeF1 = (SizeF)visualStyleRenderer.GetBackgroundExtent((IDeviceContext)graphics, textExtent).Size;
-                            if (0 == 0)
-                                goto label_12;
+                            Rectangle textExtent = visualStyleRenderer.GetTextExtent(graphics, text, TextFormatFlags.Default);
+                            sizeF1 = (SizeF)visualStyleRenderer.GetBackgroundExtent(graphics, textExtent).Size;
+                            return sizeF1;
                         }
                     }
-                    SizeF sizeF2 = (SizeF)TextRenderer.MeasureText((IDeviceContext)graphics, xb41faee6912a2313, this.Font, new Size(SystemInformation.PrimaryMonitorSize.Width, int.MaxValue), this.xae3b2752a89e7464);
+                    SizeF sizeF2 = (SizeF)TextRenderer.MeasureText(graphics, text, this.Font, new Size(SystemInformation.PrimaryMonitorSize.Width, int.MaxValue), this.textFormatFlags);
                     sizeF2.Width -= 2f;
-                    if (1 != 0)
-                        sizeF2.Height += 2f;
+                    sizeF2.Height += 2f;
                     sizeF1 = sizeF2;
                 }
-                label_12:
                 return sizeF1;
             }
 
             protected override void Dispose(bool disposing)
             {
-                int num = disposing ? 1 : 0;
                 base.Dispose(disposing);
             }
 
             protected override void OnPaint(PaintEventArgs e)
             {
                 VisualStyleElement normal = VisualStyleElement.ToolTip.Standard.Normal;
-                if (0 == 0)
-                    goto label_16;
+
+                if (!Application.RenderWithVisualStyles)
+                    goto label_8;
                 else
                     goto label_10;
+
                 label_1:
                 Rectangle clientRectangle;
-                TextRenderer.DrawText((IDeviceContext)e.Graphics, this.Text, this.Font, clientRectangle, SystemColors.InfoText, this.xae3b2752a89e7464);
-                if (-2 != 0)
-                    return;
-                else
-                    goto label_16;
+                TextRenderer.DrawText(e.Graphics, this.Text, this.Font, clientRectangle, SystemColors.InfoText, this.textFormatFlags);
+                return;
+
                 label_2:
                 Pen pen1 = SystemPens.InfoText;
+
                 label_3:
                 Pen pen2 = pen1;
                 e.Graphics.DrawLine(pen2, this.ClientRectangle.Left, this.ClientRectangle.Top, this.ClientRectangle.Right, this.ClientRectangle.Top);
-                if (0 == 0)
-                {
-                    e.Graphics.DrawLine(pen2, this.ClientRectangle.Left, this.ClientRectangle.Top, this.ClientRectangle.Left, this.ClientRectangle.Bottom);
-                    e.Graphics.DrawLine(SystemPens.InfoText, this.ClientRectangle.Left, this.ClientRectangle.Bottom - 1, this.ClientRectangle.Right, this.ClientRectangle.Bottom - 1);
-                    e.Graphics.DrawLine(SystemPens.InfoText, this.ClientRectangle.Right - 1, this.ClientRectangle.Top, this.ClientRectangle.Right - 1, this.ClientRectangle.Bottom);
-                    clientRectangle = this.ClientRectangle;
-                    clientRectangle.Inflate(-2, -2);
-                    goto label_1;
-                }
-                else
-                    goto label_8;
+                e.Graphics.DrawLine(pen2, this.ClientRectangle.Left, this.ClientRectangle.Top, this.ClientRectangle.Left, this.ClientRectangle.Bottom);
+                e.Graphics.DrawLine(SystemPens.InfoText, this.ClientRectangle.Left, this.ClientRectangle.Bottom - 1, this.ClientRectangle.Right, this.ClientRectangle.Bottom - 1);
+                e.Graphics.DrawLine(SystemPens.InfoText, this.ClientRectangle.Right - 1, this.ClientRectangle.Top, this.ClientRectangle.Right - 1, this.ClientRectangle.Bottom);
+                clientRectangle = this.ClientRectangle;
+                clientRectangle.Inflate(-2, -2);
+                goto label_1;
+
                 label_5:
                 pen1 = SystemPens.Control;
                 goto label_3;
-                label_7:
+
+
+                label_8:
+                e.Graphics.FillRectangle(SystemBrushes.Info, this.ClientRectangle);
                 if (!SystemInformation.HighContrast)
                     goto label_5;
                 else
                     goto label_2;
-                label_8:
-                e.Graphics.FillRectangle(SystemBrushes.Info, this.ClientRectangle);
-                if (0 == 0)
-                    goto label_7;
-                else
-                    goto label_5;
+
                 label_10:
                 if (VisualStyleRenderer.IsElementDefined(normal))
                 {
                     VisualStyleRenderer visualStyleRenderer = new VisualStyleRenderer(normal);
                     visualStyleRenderer.DrawBackground((IDeviceContext)e.Graphics, this.ClientRectangle);
-                    Rectangle textExtent = visualStyleRenderer.GetTextExtent((IDeviceContext)e.Graphics, this.ClientRectangle, this.Text, this.xae3b2752a89e7464);
-                    if (0 != 0)
-                        return;
+                    Rectangle textExtent = visualStyleRenderer.GetTextExtent((IDeviceContext)e.Graphics, this.ClientRectangle, this.Text, this.textFormatFlags);
                     textExtent.X = this.ClientRectangle.X + this.ClientRectangle.Width / 2 - textExtent.Width / 2;
                     textExtent.Y = this.ClientRectangle.Y + this.ClientRectangle.Height / 2 - textExtent.Height / 2;
-                    do
-                    {
-                        visualStyleRenderer.DrawText((IDeviceContext)e.Graphics, textExtent, this.Text, false, this.xae3b2752a89e7464);
-                        if (-1 == 0)
-                            goto label_1;
-                    }
-                    while (4 == 0);
+                    visualStyleRenderer.DrawText(e.Graphics, textExtent, this.Text, false, this.textFormatFlags);
                     return;
                 }
                 else
-                    goto label_8;
-                label_16:
-                if (0 != 0)
                 {
-                    if (3 == 0 || 0 != 0)
-                        goto label_7;
-                    else
-                        goto label_2;
-                }
-                else if (!Application.RenderWithVisualStyles)
                     goto label_8;
-                else
-                    goto label_10;
+                }
+
+
             }
         }
 

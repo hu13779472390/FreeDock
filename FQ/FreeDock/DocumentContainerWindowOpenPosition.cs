@@ -7,6 +7,6 @@
     public enum DocumentContainerWindowOpenPosition
     {
         First,
-        Last,
+        Last
     }
 }

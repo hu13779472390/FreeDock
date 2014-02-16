@@ -7,6 +7,6 @@
     public enum TabTextDisplayMode
     {
         AllTabs,
-        SelectedTab,
+        SelectedTab
     }
 }

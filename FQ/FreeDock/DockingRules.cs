@@ -9,108 +9,41 @@ namespace FQ.FreeDock
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class DockingRules
     {
-        private bool x33b0d41936d07496 = true;
-        private bool x608234746b921e23 = true;
-        private bool x22d61e656653012c = true;
-        private bool xf2ea876cc567e81e = true;
-        private bool x789b1ef056ebb726 = true;
-        private bool xadbc8fe70595ade0 = true;
-
         /// <summary>
         /// Indicates whether the user can dock the window to the left of the layout.
         /// 
         /// </summary>
-        public bool AllowDockLeft
-        {
-            get
-            {
-                return this.x33b0d41936d07496;
-            }
-            set
-            {
-                this.x33b0d41936d07496 = value;
-            }
-        }
+        public bool AllowDockLeft { get; set; }
 
         /// <summary>
         /// Indicates whether the user can dock the window to the right of the layout.
         /// 
         /// </summary>
-        public bool AllowDockRight
-        {
-            get
-            {
-                return this.x608234746b921e23;
-            }
-            set
-            {
-                this.x608234746b921e23 = value;
-            }
-        }
+        public bool AllowDockRight { get; set; }
 
         /// <summary>
         /// Indicates whether the user can dock the window at the top of the layout.
         /// 
         /// </summary>
-        public bool AllowDockTop
-        {
-            get
-            {
-                return this.x22d61e656653012c;
-            }
-            set
-            {
-                this.x22d61e656653012c = value;
-            }
-        }
+        public bool AllowDockTop { get; set; }
 
         /// <summary>
         /// Indicates whether the user can dock the window at the bottom of the layout.
         /// 
         /// </summary>
-        public bool AllowDockBottom
-        {
-            get
-            {
-                return this.xf2ea876cc567e81e;
-            }
-            set
-            {
-                this.xf2ea876cc567e81e = value;
-            }
-        }
+        public bool AllowDockBottom { get; set; }
 
         /// <summary>
         /// Indicates whether the user can dock the window as a tabbed document.
         /// 
         /// </summary>
-        public bool AllowTab
-        {
-            get
-            {
-                return this.x789b1ef056ebb726;
-            }
-            set
-            {
-                this.x789b1ef056ebb726 = value;
-            }
-        }
+        public bool AllowTab { get; set; }
 
         /// <summary>
         /// Indicates whether the user can float the window.
         /// 
         /// </summary>
-        public bool AllowFloat
-        {
-            get
-            {
-                return this.xadbc8fe70595ade0;
-            }
-            set
-            {
-                this.xadbc8fe70595ade0 = value;
-            }
-        }
+        public bool AllowFloat { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the DockingRules class.
@@ -118,6 +51,12 @@ namespace FQ.FreeDock
         /// </summary>
         public DockingRules()
         {
+            this.AllowDockLeft = true;
+            this.AllowDockRight = true;
+            this.AllowDockTop = true;
+            this.AllowDockBottom = true;
+            this.AllowTab = true;
+            this.AllowFloat = true;
         }
 
         /// <summary>
@@ -125,63 +64,27 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         /// <param name="allowDock">Whether to allow docking.</param><param name="allowTab">Whether to allow tabbing.</param><param name="allowFloat">Whether to allow floating.</param>
-        public DockingRules(bool allowDock, bool allowTab, bool allowFloat)
+        public DockingRules(bool allowDock, bool allowTab, bool allowFloat) : this()
         {
             this.AllowDockLeft = allowDock;
             this.AllowDockRight = allowDock;
-            do
-            {
-                this.AllowDockTop = allowDock;
-            }
-            while (0 != 0);
+            this.AllowDockTop = allowDock;
             this.AllowDockBottom = allowDock;
             this.AllowTab = allowTab;
             this.AllowFloat = allowFloat;
         }
 
-        internal void xd5da23b762ce52a2(DockingRules[] x7c92c43084985bae)
+        internal void xd5da23b762ce52a2(DockingRules[] rulesArray)
         {
-            DockingRules[] dockingRulesArray = x7c92c43084985bae;
-            if (15 == 0)
+            foreach (DockingRules rules in rulesArray)
             {
-                if (0 == 0)
-                    goto label_5;
+                this.AllowDockLeft = this.AllowDockLeft && rules.AllowDockLeft;
+                this.AllowDockRight = this.AllowDockRight && rules.AllowDockRight;
+                this.AllowDockTop = this.AllowDockTop && rules.AllowDockTop;
+                this.AllowDockBottom = this.AllowDockBottom && rules.AllowDockBottom;
+                this.AllowTab = this.AllowTab && rules.AllowTab;
+                this.AllowFloat = this.AllowFloat && rules.AllowFloat;
             }
-            else
-                goto label_8;
-            label_2:
-            int index;
-            ++index;
-            label_3:
-            DockingRules dockingRules;
-            if (index >= dockingRulesArray.Length)
-            {
-                if (15 != 0)
-                    return;
-                else
-                    goto label_8;
-            }
-            else
-            {
-                dockingRules = dockingRulesArray[index];
-                this.AllowDockLeft = this.AllowDockLeft && dockingRules.AllowDockLeft;
-            }
-            label_5:
-            this.AllowDockRight = this.AllowDockRight && dockingRules.AllowDockRight;
-            if (0 != 0)
-                return;
-            label_6:
-            this.AllowDockTop = this.AllowDockTop && dockingRules.AllowDockTop;
-            this.AllowDockBottom = this.AllowDockBottom && dockingRules.AllowDockBottom;
-            this.AllowTab = this.AllowTab && dockingRules.AllowTab;
-            this.AllowFloat = this.AllowFloat && dockingRules.AllowFloat;
-            goto label_2;
-            label_8:
-            index = 0;
-            if (0 != 0)
-                goto label_6;
-            else
-                goto label_3;
         }
     }
 }

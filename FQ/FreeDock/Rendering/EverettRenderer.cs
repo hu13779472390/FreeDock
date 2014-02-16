@@ -1,9 +1,4 @@
-﻿// Type: TD.SandDock.Rendering.EverettRenderer
-// Assembly: SandDock, Version=3.0.6.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3
-// MVID: 86A16A8A-6BB9-495D-A857-1A3306E497E9
-// Assembly location: C:\Program Files (x86)\Divelements Limited\SandDock for Windows Forms\SandDock.dll
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -43,13 +38,9 @@ namespace FQ.FreeDock.Rendering
             {
                 if (EverettRenderer.xdc3f45c33fe25d85 == null)
                 {
-                    do
-                    {
-                        EverettRenderer.xdc3f45c33fe25d85 = new StringFormat(StringFormat.GenericDefault);
-                        EverettRenderer.xdc3f45c33fe25d85.Alignment = StringAlignment.Near;
-                        EverettRenderer.xdc3f45c33fe25d85.LineAlignment = StringAlignment.Center;
-                    }
-                    while (0 != 0);
+                    EverettRenderer.xdc3f45c33fe25d85 = new StringFormat(StringFormat.GenericDefault);
+                    EverettRenderer.xdc3f45c33fe25d85.Alignment = StringAlignment.Near;
+                    EverettRenderer.xdc3f45c33fe25d85.LineAlignment = StringAlignment.Center;
                     EverettRenderer.xdc3f45c33fe25d85.Trimming = StringTrimming.EllipsisCharacter;
                     EverettRenderer.xdc3f45c33fe25d85.FormatFlags |= StringFormatFlags.NoWrap;
                 }
@@ -65,8 +56,7 @@ namespace FQ.FreeDock.Rendering
                 {
                     EverettRenderer.x7553dbb15fca5d00 = new StringFormat(StringFormat.GenericDefault);
                     EverettRenderer.x7553dbb15fca5d00.Alignment = StringAlignment.Near;
-                    if (0 == 0)
-                        EverettRenderer.x7553dbb15fca5d00.LineAlignment = StringAlignment.Center;
+                    EverettRenderer.x7553dbb15fca5d00.LineAlignment = StringAlignment.Center;
                     EverettRenderer.x7553dbb15fca5d00.Trimming = StringTrimming.EllipsisCharacter;
                     EverettRenderer.x7553dbb15fca5d00.FormatFlags |= StringFormatFlags.NoWrap;
                     EverettRenderer.x7553dbb15fca5d00.FormatFlags |= StringFormatFlags.DirectionVertical;
@@ -950,8 +940,6 @@ namespace FQ.FreeDock.Rendering
             graphics.DrawLine(SystemPens.ControlDark, bounds.X + 1, bounds.Bottom - 1, bounds.Right - 2, bounds.Bottom - 1);
             graphics.DrawLine(SystemPens.ControlDark, bounds.X, bounds.Y + 1, bounds.X, bounds.Bottom - 2);
             graphics.DrawLine(SystemPens.ControlDark, bounds.Right - 1, bounds.Y + 1, bounds.Right - 1, bounds.Bottom - 2);
-            if (0 != 0)
-                goto label_2;
         }
 
         /// <summary>
@@ -973,8 +961,6 @@ namespace FQ.FreeDock.Rendering
         {
             this.x166a89f4cd379ec8.Dispose();
             this.x7a0be2490cda8794.Dispose();
-            if (0 != 0)
-                ;
             this.x050be261498a0c97.Dispose();
             this.x54c190ae969c389d.Dispose();
             this.xa33e6094d9ed12d6.Dispose();

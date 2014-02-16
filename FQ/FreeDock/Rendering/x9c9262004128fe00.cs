@@ -8,14 +8,12 @@ using FQ.FreeDock;
 
 namespace FQ.FreeDock.Rendering
 {
-    internal class x9c9262004128fe00 : TypeConverter
+    class x9c9262004128fe00 : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             if (destinationType == typeof(string))
             {
-                if (2 == 0)
-                    ;
                 return true;
             }
             else if (destinationType == typeof(InstanceDescriptor))
@@ -29,46 +27,40 @@ namespace FQ.FreeDock.Rendering
             if (destinationType != typeof(string))
             {
                 if (destinationType == typeof(InstanceDescriptor))
-                    return (object)new InstanceDescriptor((MemberInfo)value.GetType().GetConstructor(Type.EmptyTypes), (ICollection)new object[0], true);
+                    return new InstanceDescriptor((MemberInfo)value.GetType().GetConstructor(Type.EmptyTypes), (ICollection)new object[0], true);
                 else
                     return base.ConvertTo(context, culture, value, destinationType);
             }
             else if (value is string)
                 return value;
             else
-                return (object)value.ToString();
+                return value.ToString();
         }
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (!(value is string))
                 return base.ConvertFrom(context, culture, value);
-            string str;
-            if ((str = (string)value) != null)
-                goto label_13;
-            label_3:
-            return (object)null;
-            label_13:
-            while (!(str == "Everett"))
+
+            string render = (string)value;
+            if (render == null)
+                return null;
+
+            switch (render)
             {
-                label_10:
-                if (str == "Office 2003")
-                    return (object)new Office2003Renderer();
-                if (str == "Whidbey")
-                    return (object)new WhidbeyRenderer();
-                if (0 == 0)
-                {
-                    if (str == "Milborne")
-                        return (object)new MilborneRenderer();
-                    if (str == "Office 2007")
-                        return (object)new Office2007Renderer();
-                    else
-                        goto label_3;
-                }
-                else if (0 == 0)
-                    goto label_10;
+                case "Everett": 
+                    return new EverettRenderer();
+                case "Office 2003": 
+                    return new Office2003Renderer();
+                case "Whidbey":
+                    return new WhidbeyRenderer();
+                case "Milborne":
+                    return new MilborneRenderer();
+                case "Office 2007":
+                    return new Office2007Renderer();
+                default:
+                    return null;
             }
-            return (object)new EverettRenderer();
         }
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -91,53 +83,17 @@ namespace FQ.FreeDock.Rendering
 
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            ArrayList arrayList = new ArrayList();
-            label_9:
-            if (context != null)
-                goto label_10;
-            label_3:
-            arrayList.Add((object)"Everett");
-            arrayList.Add((object)"Office 2003");
-            goto label_8;
-            label_4:
+            ArrayList list = new ArrayList();
             if (context.Instance is DockContainer)
-                goto label_12;
-            label_5:
-            if (0 == 0 && 0 == 0)
             {
-                if (0 == 0)
-                    goto label_3;
-                else
-                    goto label_8;
+                list.Add("(default)");
             }
-            label_6:
-            if (int.MaxValue == 0)
-                goto label_4;
-            else
-                goto label_3;
-            label_8:
-            if (0 == 0)
-            {
-                if (0 == 0)
-                {
-                    arrayList.Add((object)"Whidbey");
-                    arrayList.Add((object)"Office 2007");
-                    return new TypeConverter.StandardValuesCollection((ICollection)arrayList);
-                }
-                else
-                    goto label_11;
-            }
-            else
-                goto label_9;
-            label_10:
-            if (int.MinValue == 0)
-                goto label_5;
-            label_11:
-            if (0 == 0)
-                goto label_4;
-            label_12:
-            arrayList.Add((object)"(default)");
-            goto label_6;
+            list.Add("Everett");
+            list.Add("Office 2003");
+            list.Add("Whidbey");
+            list.Add("Office 2007");
+            return new TypeConverter.StandardValuesCollection(list);
+
         }
     }
 }

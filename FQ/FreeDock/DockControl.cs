@@ -34,7 +34,7 @@ namespace FQ.FreeDock
         private System.Drawing.Point xc868bd63c888e533 = new System.Drawing.Point(-1, -1);
         private bool x35db3fd5e409fffb = true;
         private bool x1def1a42ad5b7095 = true;
-        private SandDockManager x91f347c6e97f1846;
+        private SandDockManager manager;
         private ControlLayoutSystem xb6a159a84cb992d6;
         private static Image x28afaed1891a17a1;
         private Image x564c6c527905c683;
@@ -324,26 +324,19 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x91f347c6e97f1846;
+                return this.manager;
             }
             set
             {
-                if (value == this.x91f347c6e97f1846)
+                if (value == this.manager)
                     return;
-                do
-                {
-                    if (this.x91f347c6e97f1846 != null)
-                        this.x91f347c6e97f1846.UnregisterWindow(this);
-                    this.x91f347c6e97f1846 = value;
-                    if (2 == 0 || this.x91f347c6e97f1846 != null)
-                        this.x91f347c6e97f1846.RegisterWindow(this);
-                    else
-                        goto label_2;
-                }
-                while (int.MinValue == 0);
-                return;
-                label_2:
-                ;
+
+                if (this.manager != null)
+                    this.manager.UnregisterWindow(this);
+                this.manager = value;
+
+                if (this.manager != null)
+                    this.manager.RegisterWindow(this);
             }
         }
 
@@ -2000,7 +1993,7 @@ namespace FQ.FreeDock
         private void x298b2fdefeb76ab8()
         {
             this.x550f9212086279db();
-            if (this.x91f347c6e97f1846 == null)
+            if (this.manager == null)
                 throw new InvalidOperationException("No SandDockManager is associated with this DockControl. To create an association, set the Manager property.");
         }
 
@@ -3105,38 +3098,17 @@ namespace FQ.FreeDock
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (!disposing)
-                goto label_3;
-            else
-                goto label_6;
-            label_1:
-            while (this.Manager != null)
+            if (disposing)
             {
-                this.Manager = (SandDockManager)null;
-                if (0 != 0)
-                    return;
-                if (0 == 0)
-                    break;
+                if (this.xb6a159a84cb992d6 != null)
+                    LayoutUtilities.xf1cbd48a28ce6e74(this);
+
+                if (this.Manager != null)
+                    this.Manager = null;
             }
-            label_3:
-            do
-            {
-                base.Dispose(disposing);
-                if (true)
-                    goto label_9;
-            }
-            while (false);
-            goto label_5;
-            label_9:
-            return;
-            label_5:
-            LayoutUtilities.xf1cbd48a28ce6e74(this);
-            goto label_1;
-            label_6:
-            if (this.xb6a159a84cb992d6 != null)
-                goto label_5;
-            else
-                goto label_1;
+            base.Dispose(disposing);
+
+
         }
 
         /// <summary>
@@ -3145,22 +3117,11 @@ namespace FQ.FreeDock
         /// </summary>
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 33)
+            base.WndProc(ref m);
+            if (m.Msg == 33 && !this.ContainsFocus)
             {
-                if (0 == 0)
-                    goto label_5;
-                label_2:
                 this.Activate();
-                return;
-                label_5:
-                base.WndProc(ref m);
-                if (0 != 0)
-                    ;
-                if (!this.ContainsFocus)
-                    goto label_2;
             }
-            else
-                base.WndProc(ref m);
         }
     }
 }

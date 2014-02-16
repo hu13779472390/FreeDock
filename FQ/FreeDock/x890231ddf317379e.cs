@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
-    internal abstract class x890231ddf317379e : IDisposable, IMessageFilter
+    abstract class x890231ddf317379e : IDisposable, IMessageFilter
     {
         private DockingHints x48cee1d69929b4fe = DockingHints.TranslucentFill;
         private Rectangle xca9fb28c817965fb = Rectangle.Empty;

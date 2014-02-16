@@ -12,12 +12,12 @@ namespace FQ.FreeDock
     /// </summary>
     public abstract class LayoutSystemBase
     {
-        private Rectangle xda73fcb97c77d998 = Rectangle.Empty;
-        private SizeF x0e30cd10f9fd6d77 = new SizeF(250f, 400f);
+        private Rectangle bounds = Rectangle.Empty;
+        private SizeF workingSize = new SizeF(250f, 400f);
         internal const int x35828a68467e5465 = 250;
         internal const int x87970cf44a2c6ba8 = 400;
         internal SplitLayoutSystem xb6a159a84cb992d6;
-        private DockContainer x0467b00af7810f0c;
+        private DockContainer dockContainer;
         internal xedb4922162c60d3d x531514c39973cbc6;
 
         internal abstract bool x56005f23d6948487 { get; }
@@ -46,13 +46,13 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x0e30cd10f9fd6d77;
+                return this.workingSize;
             }
             set
             {
-                if ((double)value.Width <= 0.0 || (double)value.Height <= 0.0)
+                if (value.Width <= 0.0 || value.Height <= 0.0)
                     throw new ArgumentException("value");
-                this.x0e30cd10f9fd6d77 = value;
+                this.workingSize = value;
             }
         }
 
@@ -64,7 +64,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x0467b00af7810f0c;
+                return this.dockContainer;
             }
         }
 
@@ -76,7 +76,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x0467b00af7810f0c != null;
+                return this.dockContainer != null;
             }
         }
 
@@ -92,14 +92,11 @@ namespace FQ.FreeDock
             }
         }
 
-        private SandDockManager x460ab163f44a604d
+        private SandDockManager DockManager
         {
             get
             {
-                if (this.DockContainer != null)
-                    return this.DockContainer.Manager;
-                else
-                    return (SandDockManager)null;
+                return this.DockContainer != null ? this.DockContainer.Manager : null;
             }
         }
 
@@ -111,7 +108,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xda73fcb97c77d998;
+                return this.bounds;
             }
         }
 
@@ -125,7 +122,7 @@ namespace FQ.FreeDock
         {
         }
 
-        internal void xe9a159cd1e028df2(SandDockManager x91f347c6e97f1846, DockContainer xd3311d815ca25f02, LayoutSystemBase x6e150040c8d97700, DockControl x43bec302f92080b9, int x9562cf1322eeedf1, System.Drawing.Point x6afebf16b45c02e0, DockingHints x48cee1d69929b4fe, DockingManager xab4835b6b3620991)
+        internal void xe9a159cd1e028df2(SandDockManager x91f347c6e97f1846, DockContainer xd3311d815ca25f02, LayoutSystemBase x6e150040c8d97700, DockControl x43bec302f92080b9, int x9562cf1322eeedf1, Point x6afebf16b45c02e0, DockingHints x48cee1d69929b4fe, DockingManager xab4835b6b3620991)
         {
             if (xab4835b6b3620991 == DockingManager.Whidbey)
                 goto label_4;
@@ -136,16 +133,14 @@ namespace FQ.FreeDock
             this.x531514c39973cbc6.x868a32060451dd2e += new EventHandler(this.x0ae87c4881d90427);
             label_3:
             this.x531514c39973cbc6.OnMouseMove(Cursor.Position);
-            if ((uint)x9562cf1322eeedf1 - (uint)x9562cf1322eeedf1 >= 0U)
-                return;
+            return;
+
             label_4:
-            if ((uint)x9562cf1322eeedf1 > uint.MaxValue || x890231ddf317379e.xca8cda6e489f8dd8())
+            if (x890231ddf317379e.xca8cda6e489f8dd8())
             {
                 this.x531514c39973cbc6 = (xedb4922162c60d3d)new x31248f32f85df1dd(x91f347c6e97f1846, this.DockContainer, this, x43bec302f92080b9, x9562cf1322eeedf1, x6afebf16b45c02e0, x48cee1d69929b4fe);
                 goto label_2;
             }
-            else if (0 != 0)
-                goto label_3;
             else
                 goto label_1;
         }
@@ -154,7 +149,7 @@ namespace FQ.FreeDock
         {
             this.x531514c39973cbc6.x67ecc0d0e7c9a202 -= new xedb4922162c60d3d.DockingManagerFinishedEventHandler(this.x46ff430ed3944e0f);
             this.x531514c39973cbc6.x868a32060451dd2e -= new EventHandler(this.x0ae87c4881d90427);
-            this.x531514c39973cbc6 = (xedb4922162c60d3d)null;
+            this.x531514c39973cbc6 = null;
         }
 
         internal virtual void x46ff430ed3944e0f(xedb4922162c60d3d.DockTarget x11d58b056c032b03)
@@ -169,7 +164,7 @@ namespace FQ.FreeDock
 
         internal virtual void x56e964269d48cfcc(DockContainer x0467b00af7810f0c)
         {
-            this.x0467b00af7810f0c = x0467b00af7810f0c;
+            this.dockContainer = x0467b00af7810f0c;
         }
 
         /// <summary>
@@ -231,7 +226,7 @@ namespace FQ.FreeDock
         /// <param name="renderer">The renderer currently in use in the container.</param><param name="graphics">A Graphics object to perform measurement calculations with.</param><param name="bounds">The boundaries of this layout system within the container.</param><param name="floating">Indicates whether titlebars should be omitted. This is usually false.</param>
         protected internal virtual void Layout(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
         {
-            this.xda73fcb97c77d998 = bounds;
+            this.bounds = bounds;
         }
 
         internal void x810df8ef88cf4bf2(SandDockManager x91f347c6e97f1846, ContainerDockLocation x9c911703d455884e, ContainerDockEdge x3e4dcab61996c9ea)
@@ -330,7 +325,7 @@ namespace FQ.FreeDock
 
         private void x298b2fdefeb76ab8()
         {
-            if (this.x460ab163f44a604d == null)
+            if (this.DockManager == null)
                 throw new InvalidOperationException("No SandDockManager is associated with this ControlLayoutSystem.");
         }
 

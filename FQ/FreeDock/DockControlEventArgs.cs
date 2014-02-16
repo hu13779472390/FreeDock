@@ -8,23 +8,15 @@ namespace FQ.FreeDock
     /// </summary>
     public class DockControlEventArgs : EventArgs
     {
-        private DockControl xdeac46e41e0fbcf5;
-
         /// <summary>
         /// The DockControl associated with this event.
         /// 
         /// </summary>
-        public DockControl DockControl
-        {
-            get
-            {
-                return this.xdeac46e41e0fbcf5;
-            }
-        }
+        public DockControl DockControl { get; private set; }
 
         internal DockControlEventArgs(DockControl dockControl)
         {
-            this.xdeac46e41e0fbcf5 = dockControl;
+            this.DockControl = dockControl;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace FQ.FreeDock
     [ToolboxItem(false)]
     public class TabPage : Panel
     {
-        private Image xe058541ca798c059;
-        private int x3214e09b677ccd2b;
+        private Image image;
+        private int maximumTabWidth;
         internal double x9b0739496f8b5475;
         internal int xa806b754814b9ae0;
         internal Rectangle x123e054dab107457;
@@ -33,9 +33,8 @@ namespace FQ.FreeDock
             set
             {
                 base.BackColor = value;
-                if (!(this.Parent is TabControl))
-                    return;
-                this.Parent.Invalidate(this.x123e054dab107457);
+                if (this.Parent is TabControl)
+                    this.Parent.Invalidate(this.x123e054dab107457);
             }
         }
 
@@ -158,16 +157,15 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x3214e09b677ccd2b;
+                return this.maximumTabWidth;
             }
             set
             {
                 if (value < 0)
                     throw new ArgumentException("Value must be greater than or equal to zero.");
-                this.x3214e09b677ccd2b = value;
-                if (!(this.Parent is TabControl))
-                    return;
-                ((TabControl)this.Parent).x436f6f3ee14607e0();
+                this.maximumTabWidth = value;
+                if (this.Parent is TabControl)
+                    ((TabControl)this.Parent).x436f6f3ee14607e0();
             }
         }
 
@@ -185,9 +183,8 @@ namespace FQ.FreeDock
             set
             {
                 base.Text = value;
-                if (!(this.Parent is TabControl))
-                    return;
-                ((TabControl)this.Parent).x436f6f3ee14607e0();
+                if (this.Parent is TabControl)
+                    ((TabControl)this.Parent).x436f6f3ee14607e0();
             }
         }
 
@@ -203,14 +200,13 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xe058541ca798c059;
+                return this.image;
             }
             set
             {
-                this.xe058541ca798c059 = value;
-                if (!(this.Parent is TabControl))
-                    return;
-                ((TabControl)this.Parent).x436f6f3ee14607e0();
+                this.image = value;
+                if (this.Parent is TabControl)
+                    ((TabControl)this.Parent).x436f6f3ee14607e0();
             }
         }
 
@@ -252,11 +248,11 @@ namespace FQ.FreeDock
         [Browsable(false)]
         [Obsolete]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public System.Drawing.Size FloatingSize
+        public Size FloatingSize
         {
             get
             {
-                return System.Drawing.Size.Empty;
+                return Size.Empty;
             }
             set
             {
@@ -274,7 +270,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return "";
+                return string.Empty;
             }
             set
             {
@@ -310,8 +306,7 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         /// <param name="text">The text for the tab of the new TabPage.</param>
-        public TabPage(string text)
-      : this()
+        public TabPage(string text) : this()
         {
             this.Text = text;
         }
@@ -322,7 +317,6 @@ namespace FQ.FreeDock
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            int num = disposing ? 1 : 0;
             base.Dispose(disposing);
         }
 
@@ -343,9 +337,8 @@ namespace FQ.FreeDock
         /// <param name="e">The arguments associated with the event.</param>
         protected virtual void OnLoad(EventArgs e)
         {
-            if (this.Load == null)
-                return;
-            this.Load((object)this, e);
+            if (this.Load != null)
+                this.Load(this, e);
         }
 
         /// <summary>
@@ -355,16 +348,12 @@ namespace FQ.FreeDock
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             if (this.ClientRectangle == Rectangle.Empty)
-            {
-                if (-2 == 0 || 0 == 0)
-                    return;
-            }
-            else if (!(this.Parent is TabControl) || !((TabControl)this.Parent).Renderer.ShouldDrawTabControlBackground)
-            {
-                base.OnPaintBackground(pevent);
                 return;
-            }
-            ((TabControl)this.Parent).Renderer.DrawTabControlBackground(pevent.Graphics, this.ClientRectangle, this.BackColor, true);
+
+            if ((this.Parent is TabControl) && ((TabControl)this.Parent).Renderer.ShouldDrawTabControlBackground)
+                ((TabControl)this.Parent).Renderer.DrawTabControlBackground(pevent.Graphics, this.ClientRectangle, this.BackColor, true);
+            else
+                base.OnPaintBackground(pevent);
         }
 
         /// <summary>
@@ -374,32 +363,11 @@ namespace FQ.FreeDock
         protected override void CreateHandle()
         {
             int newIndex = -1;
-            do
-            {
-                if (this.Parent != null)
-                    goto label_5;
-                label_1:
-                base.CreateHandle();
-                if (this.Parent == null)
-                    continue;
-                else
-                    goto label_2;
-                label_5:
-                newIndex = this.Parent.Controls.IndexOf((Control)this);
-                if (0 != 0)
-                    goto label_7;
-                else
-                    goto label_1;
-            }
-            while (4 == 0);
-            goto label_6;
-            label_2:
-            this.Parent.Controls.SetChildIndex((Control)this, newIndex);
-            return;
-            label_6:
-            return;
-            label_7:
-            ;
+            if (this.Parent != null)
+                newIndex = this.Parent.Controls.IndexOf(this);
+            base.CreateHandle();
+            if (this.Parent != null)
+                this.Parent.Controls.SetChildIndex(this, newIndex);
         }
     }
 }

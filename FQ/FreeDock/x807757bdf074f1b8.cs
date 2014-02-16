@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
-    internal class x807757bdf074f1b8 : TypeConverter
+    class x807757bdf074f1b8 : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, System.Type destinationType)
         {

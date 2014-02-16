@@ -7,6 +7,6 @@
     public enum DockControlCloseAction
     {
         HideOnly,
-        Dispose,
+        Dispose
     }
 }

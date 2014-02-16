@@ -28,8 +28,7 @@ namespace FQ.FreeDock
 
         public event x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler x67ecc0d0e7c9a202;
 
-        public x8e80e1c8bce8caf7(DockContainer container, SplitLayoutSystem splitLayout, LayoutSystemBase aboveLayout, LayoutSystemBase belowLayout, System.Drawing.Point startPoint, DockingHints dockingHints)
-      : base((Control)container, dockingHints, false)
+        public x8e80e1c8bce8caf7(DockContainer container, SplitLayoutSystem splitLayout, LayoutSystemBase aboveLayout, LayoutSystemBase belowLayout, Point startPoint, DockingHints dockingHints) : base(container, dockingHints, false)
         {
             label_12:
             this.xd3311d815ca25f02 = container;
@@ -81,9 +80,8 @@ namespace FQ.FreeDock
         public override void Commit()
         {
             base.Commit();
-            if (this.x67ecc0d0e7c9a202 == null)
-                return;
-            this.x67ecc0d0e7c9a202(this.xc13a8191724b6d55, this.x5aa50bbadb0a1e6c, this.x5c2440c931f8d932, this.x4afa341b2323a009);
+            if (this.x67ecc0d0e7c9a202 != null)
+                this.x67ecc0d0e7c9a202(this.xc13a8191724b6d55, this.x5aa50bbadb0a1e6c, this.x5c2440c931f8d932, this.x4afa341b2323a009);
         }
 
         public override void OnMouseMove(System.Drawing.Point position)
@@ -105,7 +103,7 @@ namespace FQ.FreeDock
 
 
 
-                    goto label_2;
+                goto label_2;
 
             }
             goto label_5;

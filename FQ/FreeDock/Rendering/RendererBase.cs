@@ -15,8 +15,8 @@ namespace FQ.FreeDock.Rendering
     [TypeConverter(typeof(x9c9262004128fe00))]
     public abstract class RendererBase : ITabControlRenderer, IDisposable
     {
-        private System.Drawing.Size x95dac044246123ac = new System.Drawing.Size(16, 16);
-        private bool x106e6f99e65ccd35;
+        private System.Drawing.Size imageSize = new System.Drawing.Size(16, 16);
+        private bool customColors;
 
         /// <summary>
         /// Indicates whether custom colours have been configured on this renderer.
@@ -34,36 +34,17 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x106e6f99e65ccd35;
+                return this.customColors;
             }
             set
             {
-                this.x106e6f99e65ccd35 = value;
-                if (0 == 0)
-                    goto label_5;
-                label_1:
-                if (this.x106e6f99e65ccd35)
+                this.customColors = value;
+                if (this.customColors)
                 {
-                    if (1 != 0)
-                        return;
-                    else
-                        return;
+                    return;
                 }
-                else
-                    goto label_6;
-                label_5:
-                if (8 != 0)
-                    goto label_1;
-                label_6:
                 this.GetColorsFromSystem();
-                if (true)
-                {
-                    if (0 != 0)
-                        goto label_5;
-                }
-                else
-                    goto label_1;
-            }
+             }
         }
 
         /// <summary>
@@ -92,11 +73,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x95dac044246123ac;
+                return this.imageSize;
             }
             set
             {
-                this.x95dac044246123ac = value;
+                this.imageSize = value;
                 this.OnMetricsChanged(EventArgs.Empty);
             }
         }
@@ -223,9 +204,8 @@ namespace FQ.FreeDock.Rendering
         /// <param name="e">The arguments associated with the event.</param>
         protected virtual void OnMetricsChanged(EventArgs e)
         {
-            if (this.MetricsChanged == null)
-                return;
-            this.MetricsChanged((object)this, e);
+            if (this.MetricsChanged != null)
+                this.MetricsChanged(this, e);
         }
 
         /// <summary>
@@ -239,10 +219,9 @@ namespace FQ.FreeDock.Rendering
 
         private void x985016783c040310(object xe0292b9ed559da7d, UserPreferenceChangedEventArgs xfbf34718e704c6bc)
         {
-            if (xfbf34718e704c6bc.Category != UserPreferenceCategory.Color || this.x106e6f99e65ccd35)
+            if (xfbf34718e704c6bc.Category != UserPreferenceCategory.Color || this.customColors)
                 return;
             this.GetColorsFromSystem();
-            this.x106e6f99e65ccd35 = false;
         }
 
         /// <summary>
@@ -253,34 +232,14 @@ namespace FQ.FreeDock.Rendering
         /// <returns>
         /// The new colour produced after mixing.
         /// </returns>
-        protected internal static System.Drawing.Color InterpolateColors(System.Drawing.Color color1, System.Drawing.Color color2, float percentage)
+        protected internal static System.Drawing.Color InterpolateColors(System.Drawing.Color c1, System.Drawing.Color c2, float percentage)
         {
-            int num1 = (int)color1.R;
-            int num2 = (int)color1.G;
-            int num3 = (int)color1.B;
-            int num4 = (int)color1.A;
-            int num5;
-            int num6;
-            int num7;
-            byte num8;
+            int A = (int)((float)c1.A + (float)(c2.A - c1.A) * percentage);
+            int R = (int)((float)c1.R + (float)(c2.R - c1.R) * percentage);
+            int G = (int)((float)c1.G + (float)(c2.G - c1.G) * percentage);
+            int B = (int)((float)c1.B + (float)(c2.B - c1.B) * percentage);
+            return System.Drawing.Color.FromArgb(A, R, G, B);
 
-            int num9 = (int)color2.R;
-            num5 = (int)color2.G;
-            num6 = (int)color2.B;
-            num7 = (int)color2.A;
-            num8 = Convert.ToByte((float)num1 + (float)(num9 - num1) * percentage);
-            byte num10 = 0;
-            byte num11 = 0;
-            byte num12 = 0;
-            if ((uint)num9 - (uint)num2 < 0U)
-            {
-                return System.Drawing.Color.FromArgb((int)num12, (int)num8, (int)num10, (int)num11);
-            }
-            num10 = Convert.ToByte((float)num2 + (float)(num5 - num2) * percentage);
-            num11 = Convert.ToByte((float)num3 + (float)(num6 - num3) * percentage);
-            num12 = Convert.ToByte((float)num4 + (float)(num7 - num4) * percentage);
-
-            return System.Drawing.Color.FromArgb((int)num12, (int)num8, (int)num10, (int)num11);
         }
 
         /// <summary>
@@ -289,7 +248,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected virtual void GetColorsFromSystem()
         {
-            this.x106e6f99e65ccd35 = false;
+            this.customColors = false;
         }
 
         /// <summary>
@@ -457,7 +416,9 @@ namespace FQ.FreeDock.Rendering
         public virtual void DrawFakeTabControlBackgroundExtension(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor)
         {
             using (SolidBrush solidBrush = new SolidBrush(backColor))
-                graphics.FillRectangle((Brush)solidBrush, bounds);
+            {
+                graphics.FillRectangle(solidBrush, bounds);
+            }
         }
 
         /// <summary>
@@ -476,7 +437,9 @@ namespace FQ.FreeDock.Rendering
         public virtual void DrawTabControlBackground(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor, bool client)
         {
             using (SolidBrush solidBrush = new SolidBrush(backColor))
-                graphics.FillRectangle((Brush)solidBrush, bounds);
+            {
+                graphics.FillRectangle(solidBrush, bounds);
+            }
         }
 
         /// <summary>

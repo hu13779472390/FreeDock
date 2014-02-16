@@ -5,58 +5,53 @@ using FQ.FreeDock;
 
 namespace FQ.FreeDock.Rendering
 {
-    internal class xa811784015ed8842
+    class xa811784015ed8842
     {
-        internal static void x91433b5e99eb7cac(Graphics x41347a961b838962, Color x6c50a99faab7d741)
+        internal static void x91433b5e99eb7cac(Graphics graphics, Color color)
         {
             try
             {
-                x41347a961b838962.Clear(x6c50a99faab7d741);
+                graphics.Clear(color);
             }
             catch
             {
             }
         }
 
-        public static void xf8aac789a7846004(Graphics x41347a961b838962, Rectangle xda73fcb97c77d998, Rectangle x0bd0d09521a6c8ef, Image xe058541ca798c059, System.Drawing.Size x95dac044246123ac, string xb41faee6912a2313, Font x26094932cf7a9139, Color x477e9d1180ece053, Color x3421b2dea6733873, Brush x4fe4e32776bbc2b0, Color xa1359fb73f86c7a4, Color xfca0e3085d5a7f42, Color x228f9881a1be0e5d, bool x9f93ebd2ca5601a2, int x6843d1739e949b3a, int xbd5e294caed74c4d, TextFormatFlags xae3b2752a89e7464, bool xb0f87b71823b1d4e)
+        public static void xf8aac789a7846004(Graphics graphics, Rectangle bounds, Rectangle x0bd0d09521a6c8ef, Image image, Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Brush brush, Color xa1359fb73f86c7a4, Color xfca0e3085d5a7f42, Color x228f9881a1be0e5d, bool x9f93ebd2ca5601a2, int x6843d1739e949b3a, int xbd5e294caed74c4d, TextFormatFlags xae3b2752a89e7464, bool xb0f87b71823b1d4e)
         {
-            if (xda73fcb97c77d998.Width <= 0 || xda73fcb97c77d998.Height <= 0)
+            if (bounds.Width <= 0 || bounds.Height <= 0)
                 return;
             Rectangle rectangle;
             do
             {
                 using (Pen pen = new Pen(xa1359fb73f86c7a4))
                 {
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom - 2, xda73fcb97c77d998.Left + 1, xda73fcb97c77d998.Bottom - 2);
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + 1, xda73fcb97c77d998.Bottom - 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 2);
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 2, xda73fcb97c77d998.Top + 2);
-                    if ((uint)xbd5e294caed74c4d >= 0U)
-                    {
-                        x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + x6843d1739e949b3a - 1, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Left + x6843d1739e949b3a, xda73fcb97c77d998.Top + 1);
-                        do
-                        {
-                            x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top);
-                            x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top + 2);
-                            x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Bottom - 2);
-                        }
-                        while (((xb0f87b71823b1d4e ? 1 : 0) & 0) != 0);
-                    }
+                    graphics.DrawLine(pen, bounds.Left, bounds.Bottom - 2, bounds.Left + 1, bounds.Bottom - 2);
+                    graphics.DrawLine(pen, bounds.Left + 1, bounds.Bottom - 2, bounds.Left + x6843d1739e949b3a - 3, bounds.Top + 2);
+                    graphics.DrawLine(pen, bounds.Left + x6843d1739e949b3a - 3, bounds.Top + 2, bounds.Left + x6843d1739e949b3a - 2, bounds.Top + 2);
+                    graphics.DrawLine(pen, bounds.Left + x6843d1739e949b3a - 1, bounds.Top + 1, bounds.Left + x6843d1739e949b3a, bounds.Top + 1);
+                    graphics.DrawLine(pen, bounds.Left + x6843d1739e949b3a + 1, bounds.Top, bounds.Right - 3, bounds.Top);
+                    graphics.DrawLine(pen, bounds.Right - 3, bounds.Top, bounds.Right - 1, bounds.Top + 2);
                 }
+
                 using (Pen pen = new Pen(xfca0e3085d5a7f42))
                 {
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom - 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 3);
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 3, xda73fcb97c77d998.Left + x6843d1739e949b3a - 2, xda73fcb97c77d998.Top + 3);
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + x6843d1739e949b3a - 1, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Left + x6843d1739e949b3a, xda73fcb97c77d998.Top + 2);
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Right - 4, xda73fcb97c77d998.Top + 1);
+                    graphics.DrawLine(pen, bounds.Left + 2, bounds.Bottom - 2, bounds.Left + x6843d1739e949b3a - 3, bounds.Top + 3);
+                    graphics.DrawLine(pen, bounds.Left + x6843d1739e949b3a - 3, bounds.Top + 3, bounds.Left + x6843d1739e949b3a - 2, bounds.Top + 3);
+                    graphics.DrawLine(pen, bounds.Left + x6843d1739e949b3a - 1, bounds.Top + 2, bounds.Left + x6843d1739e949b3a, bounds.Top + 2);
+                    graphics.DrawLine(pen, bounds.Left + x6843d1739e949b3a + 1, bounds.Top + 1, bounds.Right - 4, bounds.Top + 1);
                 }
+
                 using (Pen pen = new Pen(x228f9881a1be0e5d))
                 {
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2);
-                    x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Bottom - 2);
+                    graphics.DrawLine(pen, bounds.Right - 3, bounds.Top + 1, bounds.Right - 2, bounds.Top + 2);
+                    graphics.DrawLine(pen, bounds.Right - 2, bounds.Top + 2, bounds.Right - 2, bounds.Bottom - 2);
                 }
-                System.Drawing.Point[] points = new System.Drawing.Point[5];
-                points[0] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom - 1);
-                points[1] = new System.Drawing.Point(xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 4);
+
+                Point[] points = new Point[5];
+                points[0] = new Point(bounds.Left + 2, bounds.Bottom - 1);
+                points[1] = new Point(bounds.Left + x6843d1739e949b3a - 3, bounds.Top + 4);
                 if (0 != 0)
                     goto label_8;
                 else
@@ -64,7 +59,7 @@ namespace FQ.FreeDock.Rendering
                 label_1:
                 if (xb0f87b71823b1d4e)
                 {
-                    rectangle = xda73fcb97c77d998;
+                    rectangle = bounds;
                     rectangle.Inflate(-2, -2);
                     rectangle.Height += 2;
 
@@ -77,54 +72,52 @@ namespace FQ.FreeDock.Rendering
                 xae3b2752a89e7464 |= TextFormatFlags.HorizontalCenter;
                 xae3b2752a89e7464 &= ~TextFormatFlags.Default;
                 label_8:
-                TextRenderer.DrawText((IDeviceContext)x41347a961b838962, xb41faee6912a2313, x26094932cf7a9139, xda73fcb97c77d998, SystemColors.ControlText, xae3b2752a89e7464);
+                TextRenderer.DrawText((IDeviceContext)graphics, text, font, bounds, SystemColors.ControlText, xae3b2752a89e7464);
                 goto label_1;
                 label_29:
-                points[2] = new System.Drawing.Point(xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top + 2);
+                points[2] = new Point(bounds.Left + x6843d1739e949b3a + 1, bounds.Top + 2);
                 do
                 {
-                    points[3] = new System.Drawing.Point(xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2);
-                    points[4] = new System.Drawing.Point(xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Bottom - 1);
-                    using (LinearGradientBrush linearGradientBrush = new LinearGradientBrush(xda73fcb97c77d998, x477e9d1180ece053, x3421b2dea6733873, LinearGradientMode.Vertical))
-                        x41347a961b838962.FillPolygon((Brush)linearGradientBrush, points);
+                    points[3] = new System.Drawing.Point(bounds.Right - 2, bounds.Top + 2);
+                    points[4] = new System.Drawing.Point(bounds.Right - 2, bounds.Bottom - 1);
+                    using (LinearGradientBrush linearGradientBrush = new LinearGradientBrush(bounds, x477e9d1180ece053, x3421b2dea6733873, LinearGradientMode.Vertical))
+                        graphics.FillPolygon((Brush)linearGradientBrush, points);
                     if (x9f93ebd2ca5601a2)
                         goto label_23;
                     label_16:
-                    xda73fcb97c77d998 = x0bd0d09521a6c8ef;
+                    bounds = x0bd0d09521a6c8ef;
 
 
-                        xda73fcb97c77d998.X += xbd5e294caed74c4d;
-                        xda73fcb97c77d998.Width -= xbd5e294caed74c4d;
-                        continue;
+                    bounds.X += xbd5e294caed74c4d;
+                    bounds.Width -= xbd5e294caed74c4d;
+                    continue;
 
 
                     label_23:
 
 
-                        using (Pen pen = new Pen(x3421b2dea6733873))
-                        {
-                            x41347a961b838962.DrawLine(pen, xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom - 1, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Bottom - 1);
-                            goto label_16;
-                        }
-
-
+                    using (Pen pen = new Pen(x3421b2dea6733873))
+                    {
+                        graphics.DrawLine(pen, bounds.Left, bounds.Bottom - 1, bounds.Right - 1, bounds.Bottom - 1);
+                        goto label_16;
+                    }
                 }
                 while (15 == 0);
                 do
                 {
-                    if (xe058541ca798c059 != null)
+                    if (image != null)
                         goto label_11;
                     else
                         goto label_13;
                     label_9:
-                    if (xda73fcb97c77d998.Width > 8)
+                    if (bounds.Width > 8)
                         continue;
                     else
                         goto label_1;
                     label_11:
-                    x41347a961b838962.DrawImage(xe058541ca798c059, xda73fcb97c77d998.X + 4, xda73fcb97c77d998.Y + 2, x95dac044246123ac.Width, x95dac044246123ac.Height);
-                    xda73fcb97c77d998.X += x95dac044246123ac.Width + 4;
-                    xda73fcb97c77d998.Width -= x95dac044246123ac.Width + 4;
+                    graphics.DrawImage(image, bounds.X + 4, bounds.Y + 2, size.Width, size.Height);
+                    bounds.X += size.Width + 4;
+                    bounds.Width -= size.Width + 4;
                     goto label_9;
                     label_13:
                     if ((uint)x6843d1739e949b3a - (uint)xbd5e294caed74c4d >= 0U)
@@ -133,12 +126,10 @@ namespace FQ.FreeDock.Rendering
                         break;
                 }
                 while (false);
-                if (-2 != 0)
-                    goto label_7;
-                else
-                    goto label_49;
+                goto label_7;
+
             }
-            while ((uint)xbd5e294caed74c4d > uint.MaxValue);
+            while (false);
             goto label_3;
             label_40:
             return;
@@ -146,22 +137,22 @@ namespace FQ.FreeDock.Rendering
             ++rectangle.X;
             --rectangle.Width;
             label_4:
-            ControlPaint.DrawFocusRectangle(x41347a961b838962, rectangle);
+            ControlPaint.DrawFocusRectangle(graphics, rectangle);
             return;
-            label_49:
-            ;
         }
 
-        public static System.Drawing.Size xcdfce0e0f2641503(Graphics x41347a961b838962, Image xe058541ca798c059, System.Drawing.Size x95dac044246123ac, string xb41faee6912a2313, Font x26094932cf7a9139, TextFormatFlags xae3b2752a89e7464)
+        public static Size xcdfce0e0f2641503(Graphics graphics, Image image, Size size, string text, Font font, TextFormatFlags xae3b2752a89e7464)
         {
             TextFormatFlags flags = xae3b2752a89e7464;
-            return new System.Drawing.Size(TextRenderer.MeasureText((IDeviceContext)x41347a961b838962, xb41faee6912a2313, x26094932cf7a9139, new System.Drawing.Size(int.MaxValue, int.MaxValue), flags).Width + 3 + 6 + (x95dac044246123ac.Width + 4), x95dac044246123ac.Height);
+            return new Size(TextRenderer.MeasureText(graphics, text, font, new Size(int.MaxValue, int.MaxValue), flags).Width + 3 + 6 + (size.Width + 4), size.Height);
         }
 
-        public static void x272eca3f5ebfa9fc(Graphics x41347a961b838962, Rectangle xda73fcb97c77d998, Image xe058541ca798c059, System.Drawing.Size x95dac044246123ac, string xb41faee6912a2313, Font x26094932cf7a9139, Color x477e9d1180ece053, Color x3421b2dea6733873, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState x01b557925841ae51, TextFormatFlags xae3b2752a89e7464)
+        public static void x272eca3f5ebfa9fc(Graphics x41347a961b838962, Rectangle bounds, Image image,  Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState x01b557925841ae51, TextFormatFlags xae3b2752a89e7464)
         {
-            using (LinearGradientBrush linearGradientBrush = new LinearGradientBrush(xda73fcb97c77d998, x477e9d1180ece053, x3421b2dea6733873, LinearGradientMode.Vertical))
-                xa811784015ed8842.x272eca3f5ebfa9fc(x41347a961b838962, xda73fcb97c77d998, xe058541ca798c059, x95dac044246123ac, xb41faee6912a2313, x26094932cf7a9139, (Brush)linearGradientBrush, x93532ca0ace0c1ae, xa1359fb73f86c7a4, x01b557925841ae51, xae3b2752a89e7464);
+            using (LinearGradientBrush brush = new LinearGradientBrush(bounds, x477e9d1180ece053, x3421b2dea6733873, LinearGradientMode.Vertical))
+            {
+                xa811784015ed8842.x272eca3f5ebfa9fc(x41347a961b838962, bounds, image, size, text, font, brush, x93532ca0ace0c1ae, xa1359fb73f86c7a4, x01b557925841ae51, xae3b2752a89e7464);
+            }
         }
 
         public static void x272eca3f5ebfa9fc(Graphics x41347a961b838962, Rectangle xda73fcb97c77d998, Image xe058541ca798c059, System.Drawing.Size x95dac044246123ac, string xb41faee6912a2313, Font x26094932cf7a9139, Brush x6f967439eb9e4ffb, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState x01b557925841ae51, TextFormatFlags xae3b2752a89e7464)
@@ -243,13 +234,13 @@ namespace FQ.FreeDock.Rendering
             label_18:
 
 
-                if (x6f967439eb9e4ffb != null)
-                    x41347a961b838962.FillPolygon(x6f967439eb9e4ffb, points);
-                using (Pen pen = new Pen(xa1359fb73f86c7a4))
-                    x41347a961b838962.DrawPolygon(pen, points);
-                xda73fcb97c77d998.Inflate(-2, -2);
+            if (x6f967439eb9e4ffb != null)
+                x41347a961b838962.FillPolygon(x6f967439eb9e4ffb, points);
+            using (Pen pen = new Pen(xa1359fb73f86c7a4))
+                x41347a961b838962.DrawPolygon(pen, points);
+            xda73fcb97c77d998.Inflate(-2, -2);
 
-                goto label_16;
+            goto label_16;
 
 
             goto label_26;
@@ -336,9 +327,9 @@ namespace FQ.FreeDock.Rendering
             points[3] = new System.Drawing.Point(xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Bottom);
 
 
-                points[4] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom);
-                points[5] = new System.Drawing.Point(xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom - 2);
-                goto label_18;
+            points[4] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom);
+            points[5] = new System.Drawing.Point(xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom - 2);
+            goto label_18;
 
 
             label_35:
@@ -387,9 +378,9 @@ namespace FQ.FreeDock.Rendering
                     points[1] = new System.Drawing.Point(xda73fcb97c77d998.Right, xda73fcb97c77d998.Top);
 
 
-                        points[2] = new System.Drawing.Point(xda73fcb97c77d998.Right, xda73fcb97c77d998.Bottom);
-                        points[3] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom);
-                        goto label_35;
+                    points[2] = new System.Drawing.Point(xda73fcb97c77d998.Right, xda73fcb97c77d998.Bottom);
+                    points[3] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom);
+                    goto label_35;
 
 
                 default:

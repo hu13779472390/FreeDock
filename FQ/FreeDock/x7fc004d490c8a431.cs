@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
-    internal class x7fc004d490c8a431 : x890231ddf317379e
+    class x7fc004d490c8a431 : x890231ddf317379e
     {
         private x10ac79a4257c7f52 x2ee8392f53a01b93;
         private x87cf4de36131799d x5fea292ffeb2c28c;

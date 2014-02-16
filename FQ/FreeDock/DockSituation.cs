@@ -9,6 +9,6 @@
         None,
         Docked,
         Document,
-        Floating,
+        Floating
     }
 }

@@ -2,7 +2,7 @@
 
 namespace FQ.FreeDock
 {
-    internal class LayoutSettings : ApplicationSettingsBase
+    class LayoutSettings : ApplicationSettingsBase
     {
         [UserScopedSetting]
         public string LayoutXml
@@ -31,8 +31,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public LayoutSettings(string key)
-      : base(key)
+        public LayoutSettings(string key) : base(key)
         {
         }
 

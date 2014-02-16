@@ -10,6 +10,6 @@
         Standard,
         LunaBlue,
         LunaOlive,
-        LunaSilver,
+        LunaSilver
     }
 }

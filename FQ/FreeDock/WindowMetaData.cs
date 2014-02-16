@@ -8,15 +8,15 @@ namespace FQ.FreeDock
     /// </summary>
     public class WindowMetaData
     {
-        private DateTime x36addad21d4cd225 = DateTime.FromFileTime(0L);
-        private int x0c34bafa1bebd8d8 = -1;
-        private ContainerDockLocation xdcf3623df6a7e235 = ContainerDockLocation.Right;
-        private DockSituation x2097366c1b6e436a;
-        private DockSituation x86d57ad3fc8ec08d;
+        private DateTime lastFocused = DateTime.FromFileTime(0L);
+        private int dockedContentSize = -1;
+        private ContainerDockLocation lastFixedDockSide = ContainerDockLocation.Right;
+        private DockSituation lastOpenDockSituation;
+        private DockSituation lastFixedDockSituation;
         private x129cb2a2bdfd0ab2 xa93c1ee3649251c3;
         private x129cb2a2bdfd0ab2 xd322344ef33dfd34;
         private xd0aa9d0e7d3446c0 x02053c1a8559b85f;
-        private Guid xa637547ad85d295d;
+        private Guid lastFloatingWindowGuid;
 
         /// <summary>
         /// The time that the window last received keyboard focus.
@@ -26,7 +26,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x36addad21d4cd225;
+                return this.lastFocused;
             }
         }
 
@@ -38,7 +38,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xdcf3623df6a7e235;
+                return this.lastFixedDockSide;
             }
         }
 
@@ -50,10 +50,10 @@ namespace FQ.FreeDock
         {
             get
             {
-                if (this.x0c34bafa1bebd8d8 == -1)
+                if (this.dockedContentSize == -1)
                     return 200;
                 else
-                    return this.x0c34bafa1bebd8d8;
+                    return this.dockedContentSize;
             }
         }
 
@@ -61,7 +61,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x0c34bafa1bebd8d8 != -1;
+                return this.dockedContentSize != -1;
             }
         }
 
@@ -73,7 +73,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x2097366c1b6e436a;
+                return this.lastOpenDockSituation;
             }
         }
 
@@ -85,7 +85,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x86d57ad3fc8ec08d;
+                return this.lastFixedDockSituation;
             }
         }
 
@@ -117,7 +117,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xa637547ad85d295d;
+                return this.lastFloatingWindowGuid;
             }
         }
 
@@ -128,34 +128,34 @@ namespace FQ.FreeDock
             this.xd322344ef33dfd34 = new x129cb2a2bdfd0ab2();
         }
 
-        internal void x15481da58c59597a(DateTime xbcea506a33cf9111)
+        internal void x15481da58c59597a(DateTime datetime)
         {
-            this.x36addad21d4cd225 = xbcea506a33cf9111;
+            this.lastFocused = datetime;
         }
 
-        internal void xfca44c52f41f0e26(ContainerDockLocation xbcea506a33cf9111)
+        internal void xfca44c52f41f0e26(ContainerDockLocation location)
         {
-            this.xdcf3623df6a7e235 = xbcea506a33cf9111;
+            this.lastFixedDockSide = location;
         }
 
-        internal void x3ef4455ea4965093(int xbcea506a33cf9111)
+        internal void x3ef4455ea4965093(int size)
         {
-            this.x0c34bafa1bebd8d8 = xbcea506a33cf9111;
+            this.dockedContentSize = size;
         }
 
-        internal void xb0e0bc77d88737a8(DockSituation xbcea506a33cf9111)
+        internal void xb0e0bc77d88737a8(DockSituation situation)
         {
-            this.x2097366c1b6e436a = xbcea506a33cf9111;
+            this.lastOpenDockSituation = situation;
         }
 
-        internal void x0ba17c4cff658fcf(DockSituation xbcea506a33cf9111)
+        internal void x0ba17c4cff658fcf(DockSituation situation)
         {
-            this.x86d57ad3fc8ec08d = xbcea506a33cf9111;
+            this.lastFixedDockSituation = situation;
         }
 
-        internal void x87f4a9b62a380563(Guid xbcea506a33cf9111)
+        internal void x87f4a9b62a380563(Guid guid)
         {
-            this.xa637547ad85d295d = xbcea506a33cf9111;
+            this.lastFloatingWindowGuid = guid;
         }
     }
 }
