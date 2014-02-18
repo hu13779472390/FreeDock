@@ -2,18 +2,20 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Security;
 
 namespace FQ.FreeDock
 {
     class x7a797590a9beb775 : Form
     {
-        private const int x25e1af1de31299a2 = 2;
-        private const int xb615ddf284afbdf6 = 524288;
-        private const int x77bf04ec211c4a37 = 16;
-        private const int x339acab5bf3e83ae = 64;
-        private const int xb644deafcaa222c4 = 2;
-        private const int xb8a822e576f3bf60 = 1;
-        private bool x21480c2e0df4efcd;
+        private const int x25e1af1de31299a2 = 0x00000002;
+        private const int WS_EX_LAYERED = 0x00080000;
+        private const int SWP_NOACTIVATE = 0x00000010;
+        private const int SWP_SHOWWINDOW = 0x00000040;
+        private const int LWA_ALPHA = 0x00000002;
+        private const int LWA_COLORKEY = 0x00000001;
+        private const long WS_POPUP = 0x80000000L;
+        private bool hollow;
 
         protected override CreateParams CreateParams
         {
@@ -21,14 +23,14 @@ namespace FQ.FreeDock
             {
                 CreateParams createParams = base.CreateParams;
                 createParams.Style = int.MinValue;
-                createParams.ExStyle |= 524288;
+                createParams.ExStyle |= WS_EX_LAYERED;
                 return createParams;
             }
         }
 
         public x7a797590a9beb775(bool hollow)
         {
-            this.x21480c2e0df4efcd = hollow;
+            this.hollow = hollow;
             this.BackColor = SystemColors.Highlight;
             this.ShowInTaskbar = false;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
@@ -40,9 +42,10 @@ namespace FQ.FreeDock
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool SetLayeredWindowAttributes(IntPtr hwnd, int crKey, byte bAlpha, int dwFlags);
 
+        [SecuritySafeCritical]
         public void xf00ba4096f8180b1(Rectangle xda73fcb97c77d998, bool x067d6ddeefb41622)
         {
-            x7a797590a9beb775.SetWindowPos(new HandleRef((object)this, this.Handle), new HandleRef((object)this, IntPtr.Zero), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, 80);
+            x7a797590a9beb775.SetWindowPos(new HandleRef(this, this.Handle), new HandleRef(this, IntPtr.Zero), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, SWP_NOACTIVATE | SWP_SHOWWINDOW/*80*/);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -58,7 +61,7 @@ namespace FQ.FreeDock
                 e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRectangle);
                 continue;
                 label_4:
-                if (this.x21480c2e0df4efcd)
+                if (this.hollow)
                 {
                     clientRectangle = this.ClientRectangle;
                     --clientRectangle.Width;
@@ -82,11 +85,12 @@ namespace FQ.FreeDock
             ;
         }
 
+        [SecuritySafeCritical]
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
 //            x7a797590a9beb775.SetLayeredWindowAttributes(this.Handle, 0, (byte)sbyte.MinValue, 2);
-            x7a797590a9beb775.SetLayeredWindowAttributes(this.Handle, 0, 0, 2);
+            x7a797590a9beb775.SetLayeredWindowAttributes(this.Handle, 0, 127, LWA_ALPHA);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
-    internal class x8e80e1c8bce8caf7 : x890231ddf317379e
+    class x8e80e1c8bce8caf7 : x890231ddf317379e
     {
         private System.Drawing.Point xcb09bd0cee4909a3 = System.Drawing.Point.Empty;
         internal const int x7ae613ae2690dbe6 = 25;

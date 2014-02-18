@@ -6,7 +6,7 @@ using TD.Util;
 
 namespace FQ.FreeDock
 {
-    internal class x87cf4de36131799d : Control
+    class x87cf4de36131799d : Control
     {
         private x10ac79a4257c7f52 x2ee8392f53a01b93;
         private ControlLayoutSystem x6e150040c8d97700;

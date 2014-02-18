@@ -1,4 +1,6 @@
-﻿namespace FQ.FreeDock
+﻿using System.Drawing;
+
+namespace FQ.FreeDock
 {
     /// <summary>
     /// Provides event data describing how to show a context menu for a DockControl.
@@ -6,38 +8,30 @@
     /// </summary>
     public class ShowControlContextMenuEventArgs : DockControlEventArgs
     {
-        private System.Drawing.Point x13d4cb8d1bd20347 = System.Drawing.Point.Empty;
-        private ContextMenuContext x0f7b23d1c393aed9;
+        private Point position = Point.Empty;
 
         /// <summary>
         /// The context in which the menu is being shown.
         /// 
         /// </summary>
-        public ContextMenuContext Context
-        {
-            get
-            {
-                return this.x0f7b23d1c393aed9;
-            }
-        }
+        public ContextMenuContext Context { get; private set; }
 
         /// <summary>
         /// The position, in DockContainer client coordinates, to show the context menu.
         /// 
         /// </summary>
-        public System.Drawing.Point Position
+        public Point Position
         {
             get
             {
-                return this.x13d4cb8d1bd20347;
+                return this.position;
             }
         }
 
-        internal ShowControlContextMenuEventArgs(DockControl dockControl, System.Drawing.Point position, ContextMenuContext context)
-      : base(dockControl)
+        internal ShowControlContextMenuEventArgs(DockControl dockControl, Point position, ContextMenuContext context) : base(dockControl)
         {
-            this.x13d4cb8d1bd20347 = position;
-            this.x0f7b23d1c393aed9 = context;
+            this.position = position;
+            this.Context = context;
         }
     }
 }

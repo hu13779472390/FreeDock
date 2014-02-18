@@ -1,25 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\x7a797590a9beb775.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\xd0a1f65420a07725.cs">
     <Files>
-      <File FileName="FQ\FreeDock\TabControl.cs" Line="834" Column="35" />
-      <File FileName="FQ\FreeDock\TabPage.cs" Line="365" Column="31" />
-      <File FileName="FQ\FreeDock\UserDockableWindow.cs" Line="12" Column="41" />
-      <File FileName="FQ\FreeDock\DockableWindow.cs" Line="10" Column="46" />
-      <File FileName="FQ\FreeDock\DockControl.cs" Line="366" Column="1" />
-      <File FileName="FQ\FreeDock\xedb4922162c60d3d.cs" Line="8" Column="45" />
-      <File FileName="FQ\FreeDock\xd936980ea1aac341.cs" Line="7" Column="5" />
-      <File FileName="FQ\FreeDock\xd0aa9d0e7d3446c0.cs" Line="9" Column="1" />
-      <File FileName="FQ\FreeDock\xd0a1f65420a07725.cs" Line="8" Column="37" />
-      <File FileName="FQ\FreeDock\x9b2777bb8e78938b.cs" Line="63" Column="30" />
-      <File FileName="FQ\FreeDock\x8e80e1c8bce8caf7.cs" Line="84" Column="5" />
-      <File FileName="FQ\FreeDock\x807757bdf074f1b8.cs" Line="12" Column="5" />
-      <File FileName="FQ\FreeDock\x7fc004d490c8a431.cs" Line="7" Column="5" />
-      <File FileName="FQ\FreeDock\x7a797590a9beb775.cs" Line="8" Column="5" />
+      <File FileName="FQ\FreeDock\x9b2777bb8e78938b.cs" Line="111" Column="1" />
+      <File FileName="FQ\FreeDock\x8e80e1c8bce8caf7.cs" Line="7" Column="28" />
+      <File FileName="FQ\FreeDock\xd0a1f65420a07725.cs" Line="52" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Alex\FreeDock\FQ\FreeDock\x130e0425ae2d4496.cs" line="34" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

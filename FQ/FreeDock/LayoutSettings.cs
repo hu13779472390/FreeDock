@@ -13,7 +13,7 @@ namespace FQ.FreeDock
             }
             set
             {
-                this["LayoutXml"] = (object)value;
+                this["LayoutXml"] = value;
             }
         }
 

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
-    internal class x130e0425ae2d4496
+    class x130e0425ae2d4496
     {
         [DllImport("gdi32.dll")]
         private static extern IntPtr CreateBitmap(int nWidth, int nHeight, int nPlanes, int nBitsPerPixel, short[] lpvBits);
@@ -28,88 +28,60 @@ namespace FQ.FreeDock
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr GetDC(HandleRef hWnd);
 
-        public static void xda2defffc25953e0(Control xd9927c905e42526c, Rectangle xa688a683bf2cfced, bool xc346f54d9968657b, int x189455fe88a3b711)
+        // reviewd!
+        public static void xda2defffc25953e0(Control control, Rectangle rect, bool xc346f54d9968657b, int x189455fe88a3b711)
         {
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X, xa688a683bf2cfced.Y, xa688a683bf2cfced.Width, 4));
+            x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X, rect.Y, rect.Width, 4));
             if (!xc346f54d9968657b)
             {
-                if (0 == 0)
-                {
-
-
-                    x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X, xa688a683bf2cfced.Y + 4, 4, xa688a683bf2cfced.Height - 8));
-                    x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.Right - 4, xa688a683bf2cfced.Y + 4, 4, xa688a683bf2cfced.Height - 8));
-                    x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X, xa688a683bf2cfced.Bottom - 4, xa688a683bf2cfced.Width, 4));
-                    return;
-                }
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X, rect.Y + 4, 4, rect.Height - 8));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.Right - 4, rect.Y + 4, 4, rect.Height - 8));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X, rect.Bottom - 4, rect.Width, 4));
             }
             else
-                goto label_7;
-            label_3:
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X + 80, xa688a683bf2cfced.Bottom - x189455fe88a3b711, xa688a683bf2cfced.Width - 80, 4));
-            label_4:
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X + 10, xa688a683bf2cfced.Bottom - 4, 70, 4));
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X + 10, xa688a683bf2cfced.Bottom - x189455fe88a3b711, 4, x189455fe88a3b711 - 4));
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X + 76, xa688a683bf2cfced.Bottom - x189455fe88a3b711, 4, x189455fe88a3b711 - 4));
-            return;
-            label_7:
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X, xa688a683bf2cfced.Y + 4, 4, xa688a683bf2cfced.Height - 4 - x189455fe88a3b711));
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.Right - 4, xa688a683bf2cfced.Y + 4, 4, xa688a683bf2cfced.Height - 4 - x189455fe88a3b711));
-            x130e0425ae2d4496.xe5e0d1644c72aafd(xd9927c905e42526c, new Rectangle(xa688a683bf2cfced.X, xa688a683bf2cfced.Bottom - x189455fe88a3b711, 10, 4));
-
-
-            if (0 == 0)
-                goto label_3;
-
-
+            {
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X, rect.Y + 4, 4, rect.Height - 4 - x189455fe88a3b711));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.Right - 4, rect.Y + 4, 4, rect.Height - 4 - x189455fe88a3b711));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X, rect.Bottom - x189455fe88a3b711, 10, 4));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X + 80, rect.Bottom - x189455fe88a3b711, rect.Width - 80, 4));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X + 10, rect.Bottom - 4, 70, 4));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X + 10, rect.Bottom - x189455fe88a3b711, 4, x189455fe88a3b711 - 4));
+                x130e0425ae2d4496.xe5e0d1644c72aafd(control, new Rectangle(rect.X + 76, rect.Bottom - x189455fe88a3b711, 4, x189455fe88a3b711 - 4));
+            }
         }
 
-        public static void xe5e0d1644c72aafd(Control xd9927c905e42526c, Rectangle xa688a683bf2cfced)
+        public static void xe5e0d1644c72aafd(Control control, Rectangle rect)
         {
-            IntPtr num = IntPtr.Zero;
-            while (!(xa688a683bf2cfced == Rectangle.Empty))
+            if (rect != Rectangle.Empty)
             {
-                IntPtr handle1 = xd9927c905e42526c != null ? xd9927c905e42526c.Handle : IntPtr.Zero;
-                IntPtr dc = x130e0425ae2d4496.GetDC(new HandleRef((object)xd9927c905e42526c, handle1));
+                IntPtr handle1 = control != null ? control.Handle : IntPtr.Zero;
+                IntPtr dc = x130e0425ae2d4496.GetDC(new HandleRef(control, handle1));
                 IntPtr handle2 = x130e0425ae2d4496.xf7ba50da2798338e();
-                IntPtr handle3 = x130e0425ae2d4496.SelectObject(new HandleRef((object)xd9927c905e42526c, dc), new HandleRef((object)null, handle2));
-                x130e0425ae2d4496.PatBlt(new HandleRef((object)xd9927c905e42526c, dc), xa688a683bf2cfced.X, xa688a683bf2cfced.Y, xa688a683bf2cfced.Width, xa688a683bf2cfced.Height, 5898313);
-                x130e0425ae2d4496.SelectObject(new HandleRef((object)xd9927c905e42526c, dc), new HandleRef((object)null, handle3));
-                if ((uint)handle1 > uint.MaxValue || (uint)handle3 - (uint)dc >= 0U)
+                IntPtr handle3 = x130e0425ae2d4496.SelectObject(new HandleRef(control, dc), new HandleRef(null, handle2));
+                x130e0425ae2d4496.PatBlt(new HandleRef(control, dc), rect.X, rect.Y, rect.Width, rect.Height, 5898313);
+                x130e0425ae2d4496.SelectObject(new HandleRef(control, dc), new HandleRef(null, handle3));
+                if (false || (uint)handle3 - (uint)dc >= 0U)
                 {
-                    x130e0425ae2d4496.DeleteObject(new HandleRef((object)null, handle2));
-                    x130e0425ae2d4496.ReleaseDC(new HandleRef((object)xd9927c905e42526c, handle1), new HandleRef((object)null, dc));
-                    break;
+                    x130e0425ae2d4496.DeleteObject(new HandleRef(null, handle2));
+                    x130e0425ae2d4496.ReleaseDC(new HandleRef(control, handle1), new HandleRef(null, dc));
+//                    break;
                 }
-                else if (-2 == 0)
-                    ;
             }
         }
 
         private static IntPtr xf7ba50da2798338e()
         {
             short[] lpvBits = new short[8];
-            label_7:
-            int index;
-            for (index = 0; index < 8; ++index)
-                lpvBits[index] = (short)(21845 << (index & 1));
+            for (int i = 0; i < 8; ++i)
+                lpvBits[i] = (short)(21845 << (i & 1));
             IntPtr bitmap = x130e0425ae2d4496.CreateBitmap(8, 8, 1, 1, lpvBits);
             x130e0425ae2d4496.x78c6fa48e5c2be9b lb = new x130e0425ae2d4496.x78c6fa48e5c2be9b();
             IntPtr brushIndirect;
-            do
-            {
-                lb.x1e592a1c6402f4a1 = ColorTranslator.ToWin32(Color.Black);
-                lb.x7cedc2a7cb7ec88d = 3;
-                lb.x7d12b02569342309 = bitmap;
-                brushIndirect = x130e0425ae2d4496.CreateBrushIndirect(lb);
-                if ((uint)index + (uint)bitmap > uint.MaxValue)
-                    ;
-                if ((uint)bitmap + (uint)index <= uint.MaxValue)
-                    x130e0425ae2d4496.DeleteObject(new HandleRef((object)null, bitmap));
-                else
-                    goto label_7;
-            }
-            while ((int)byte.MaxValue == 0);
+            lb.x1e592a1c6402f4a1 = ColorTranslator.ToWin32(Color.Black);
+            lb.x7cedc2a7cb7ec88d = 3;
+            lb.x7d12b02569342309 = bitmap;
+            brushIndirect = x130e0425ae2d4496.CreateBrushIndirect(lb);
+            x130e0425ae2d4496.DeleteObject(new HandleRef(null, bitmap));
             return brushIndirect;
         }
 

@@ -86,27 +86,28 @@ namespace FQ.FreeDock
         {
             int num1 = rect.Left + rect.Width / 2;
             int num2 = rect.Top + rect.Height / 2;
-
             if (x533813ae5953a526)
             {
                 graphics.DrawLine(pen, num1 - 5, num2, num1 - 2, num2);
                 graphics.DrawLine(pen, num1 - 2, num2 - 3, num1 - 2, num2 + 3);
                 graphics.DrawLine(pen, num1 - 2, num2 - 2, num1 + 4, num2 - 2);
                 graphics.DrawLine(pen, num1 - 2, num2 + 1, num1 + 4, num2 + 1);
-
                 if ((uint)(x533813ae5953a526 ? 1 : 0) - (uint)num2 >= 0U)
                 {
                     graphics.DrawLine(pen, num1 - 2, num2 + 2, num1 + 4, num2 + 2);
                     graphics.DrawLine(pen, num1 + 4, num2 - 2, num1 + 4, num2 + 2);
                 }
+                else
+                {
+                    graphics.DrawLine(pen, num1 - 3, num2 + 2, num1 + 3, num2 + 2);
+                    graphics.DrawLine(pen, num1 - 2, num2 - 3, num1 - 2, num2 + 2);
+                    graphics.DrawLine(pen, num1 - 2, num2 - 3, num1 + 2, num2 - 3);
+                    graphics.DrawLine(pen, num1 + 1, num2 - 3, num1 + 1, num2 + 2);
+                    graphics.DrawLine(pen, num1 + 2, num2 - 3, num1 + 2, num2 + 2);
+                    graphics.DrawLine(pen, num1, num2 + 2, num1, num2 + 5);
+                }
+                return;
             }
-
-            graphics.DrawLine(pen, num1 - 3, num2 + 2, num1 + 3, num2 + 2);
-            graphics.DrawLine(pen, num1 - 2, num2 - 3, num1 - 2, num2 + 2);
-            graphics.DrawLine(pen, num1 - 2, num2 - 3, num1 + 2, num2 - 3);
-            graphics.DrawLine(pen, num1 + 1, num2 - 3, num1 + 1, num2 + 2);
-            graphics.DrawLine(pen, num1 + 2, num2 - 3, num1 + 2, num2 + 2);
-            graphics.DrawLine(pen, num1, num2 + 2, num1, num2 + 5);
         }
 
         public static void xb176aa01ddab9f3e(Graphics graphics, Rectangle rect, Pen pen)

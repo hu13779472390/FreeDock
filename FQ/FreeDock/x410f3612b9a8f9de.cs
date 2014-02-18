@@ -4,25 +4,26 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Security;
 
 namespace FQ.FreeDock
 {
-    internal class x410f3612b9a8f9de : DockContainer
+    class x410f3612b9a8f9de : DockContainer
     {
         private bool x50765ed4559630d6 = true;
         private const int x339acab5bf3e83ae = 64;
         private const int x77bf04ec211c4a37 = 16;
         private const int xdbb7427772b219d6 = 128;
         private const int x4c4ed64783077b76 = 4;
-        private xd936980ea1aac341 xa6607dfd4b3038ad;
-        private ControlLayoutSystem x6fd7c9ad69859c3e;
-        private Guid xb51cd75f17ace1ec;
+        private xd936980ea1aac341 form;
+        private ControlLayoutSystem layoutSystem;
+        private Guid guid;
 
         public Guid x0217cda8370c1f17
         {
             get
             {
-                return this.xb51cd75f17ace1ec;
+                return this.guid;
             }
         }
 
@@ -73,7 +74,7 @@ namespace FQ.FreeDock
                 }
                 else
                 {
-                    this.Manager.OwnerForm.AddOwnedForm((Form)this.xa6607dfd4b3038ad);
+                    this.Manager.OwnerForm.AddOwnedForm((Form)this.form);
                     if (3 != 0)
                     {
                         this.Font = new Font(this.Manager.OwnerForm.Font, this.Manager.OwnerForm.Font.Style);
@@ -95,7 +96,7 @@ namespace FQ.FreeDock
                 if (0 == 0)
                     goto label_6;
                 label_11:
-                this.Manager.OwnerForm.RemoveOwnedForm((Form)this.xa6607dfd4b3038ad);
+                this.Manager.OwnerForm.RemoveOwnedForm((Form)this.form);
                 goto label_8;
             }
         }
@@ -104,7 +105,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return (Form)this.xa6607dfd4b3038ad;
+                return (Form)this.form;
             }
         }
 
@@ -112,7 +113,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xa6607dfd4b3038ad.Bounds;
+                return this.form.Bounds;
             }
         }
 
@@ -120,11 +121,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xa6607dfd4b3038ad.Size;
+                return this.form.Size;
             }
             set
             {
-                this.xa6607dfd4b3038ad.Size = value;
+                this.form.Size = value;
             }
         }
 
@@ -132,11 +133,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xa6607dfd4b3038ad.Location;
+                return this.form.Location;
             }
             set
             {
-                this.xa6607dfd4b3038ad.Location = value;
+                this.form.Location = value;
             }
         }
 
@@ -174,22 +175,22 @@ namespace FQ.FreeDock
             label_2:
             if (-1 != 0)
             {
-                this.xa6607dfd4b3038ad.Controls.Add((Control)this);
+                this.form.Controls.Add((Control)this);
                 this.Dock = DockStyle.Fill;
                 goto label_9;
             }
             else
                 goto label_10;
             label_5:
-            this.xa6607dfd4b3038ad.Deactivate += new EventHandler(((DockContainer)this).x19e788b09b195d4f);
+            this.form.Deactivate += new EventHandler(((DockContainer)this).x19e788b09b195d4f);
             if (1 != 0)
             {
-                this.xa6607dfd4b3038ad.Closing += new CancelEventHandler(this.x9218bee68262250e);
-                this.xa6607dfd4b3038ad.DoubleClick += new EventHandler(this.xe1f5f125062dc4fb);
+                this.form.Closing += new CancelEventHandler(this.x9218bee68262250e);
+                this.form.DoubleClick += new EventHandler(this.xe1f5f125062dc4fb);
                 this.LayoutSystem.x7e9646eed248ed11 += new EventHandler(this.x8e9e04a70e31e166);
                 this.x8e9e04a70e31e166((object)this.LayoutSystem, EventArgs.Empty);
                 this.Manager = manager;
-                this.xb51cd75f17ace1ec = guid;
+                this.guid = guid;
                 goto label_2;
             }
             else
@@ -202,8 +203,8 @@ namespace FQ.FreeDock
             label_10:
             if (manager != null)
             {
-                this.xa6607dfd4b3038ad = new xd936980ea1aac341(this);
-                this.xa6607dfd4b3038ad.Activated += new EventHandler(((DockContainer)this).xa2414c47d888068e);
+                this.form = new xd936980ea1aac341(this);
+                this.form.Activated += new EventHandler(((DockContainer)this).xa2414c47d888068e);
                 if (int.MinValue != 0)
                 {
                     if (int.MaxValue != 0)
@@ -230,20 +231,20 @@ namespace FQ.FreeDock
             {
                 if (this.IsDisposed)
                 {
-                   goto label_3;
+                    goto label_3;
                 }
                 else
                     goto label_5;
                 label_4:
-                this.xa6607dfd4b3038ad.Deactivate -= new EventHandler(((DockContainer)this).x19e788b09b195d4f);
-                this.xa6607dfd4b3038ad.Closing -= new CancelEventHandler(this.x9218bee68262250e);
-                this.xa6607dfd4b3038ad.DoubleClick -= new EventHandler(this.xe1f5f125062dc4fb);
+                this.form.Deactivate -= new EventHandler(((DockContainer)this).x19e788b09b195d4f);
+                this.form.Closing -= new CancelEventHandler(this.x9218bee68262250e);
+                this.form.DoubleClick -= new EventHandler(this.xe1f5f125062dc4fb);
                 LayoutUtilities.xa7513d57b4844d46((Control)this);
-                this.xa6607dfd4b3038ad.Dispose();
+                this.form.Dispose();
                 goto label_3;
                 label_5:
                 this.LayoutSystem.x7e9646eed248ed11 -= new EventHandler(this.x8e9e04a70e31e166);
-                this.xa6607dfd4b3038ad.Activated -= new EventHandler(((DockContainer)this).xa2414c47d888068e);
+                this.form.Activated -= new EventHandler(((DockContainer)this).xa2414c47d888068e);
                 goto label_4;
             }
             label_3:
@@ -252,14 +253,15 @@ namespace FQ.FreeDock
 
         public void x35579b297303ed43()
         {
-            ((Control)this.xa6607dfd4b3038ad).Show();
+            ((Control)this.form).Show();
         }
 
         public void x5486e0b5e830d25c()
         {
-            this.xa6607dfd4b3038ad.Hide();
+            this.form.Hide();
         }
 
+        [SecuritySafeCritical]
         public void x159713d3b60fae0c(Rectangle xda73fcb97c77d998, bool x789c645a15deb49b, bool x17cc8f73454a0462)
         {
             int flags = 0;
@@ -293,11 +295,11 @@ namespace FQ.FreeDock
                 goto label_12;
 
 
-            x410f3612b9a8f9de.SetWindowPos(new HandleRef((object)this, this.xa6607dfd4b3038ad.Handle), new HandleRef((object)this, handle), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, flags);
-            this.xa6607dfd4b3038ad.Visible = x789c645a15deb49b;
+            x410f3612b9a8f9de.SetWindowPos(new HandleRef((object)this, this.form.Handle), new HandleRef((object)this, handle), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, flags);
+            this.form.Visible = x789c645a15deb49b;
             if (!x789c645a15deb49b)
                 return;
-            IEnumerator enumerator = this.xa6607dfd4b3038ad.Controls.GetEnumerator();
+            IEnumerator enumerator = this.form.Controls.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
@@ -323,51 +325,36 @@ namespace FQ.FreeDock
         private void xe20c835979d60df8(DockControl x321bff1c322e5433, DockControl x31b34ee91c89cf69)
         {
             if (x31b34ee91c89cf69 != null)
-                this.xa6607dfd4b3038ad.Text = x31b34ee91c89cf69.Text;
+                this.form.Text = x31b34ee91c89cf69.Text;
             else
-                this.xa6607dfd4b3038ad.Text = "";
+                this.form.Text = "";
         }
 
         public void xd1bdd0ee5924b59e()
         {
-            this.x8e9e04a70e31e166((object)null, (EventArgs)null);
+            this.x8e9e04a70e31e166(null, (EventArgs)null);
         }
 
-        private void x8e9e04a70e31e166(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        // reviewd
+        private void x8e9e04a70e31e166(object sender, EventArgs e)
         {
-            if (this.x6fd7c9ad69859c3e != null)
+            if (this.layoutSystem != null)
             {
-                if (0 == 0)
-                {
-                    if (0 != 0)
-                        return;
-                    this.x6fd7c9ad69859c3e.xcc55983eb55360ac -= new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
-                    if (-1 != 0)
-                        goto label_4;
-                    else
-                        goto label_6;
-                }
+                this.layoutSystem.xcc55983eb55360ac -= new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
             }
-            else
-                goto label_4;
-            label_2:
-            do
+
+            if (this.HasSingleControlLayoutSystem)
             {
-                this.xa6607dfd4b3038ad.Text = "";
+                this.layoutSystem = (ControlLayoutSystem)this.LayoutSystem.LayoutSystems[0];
+                this.layoutSystem.xcc55983eb55360ac += new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
+                this.xe20c835979d60df8(null, this.layoutSystem.SelectedControl);          
             }
-            while (15 == 0);
-            this.x6fd7c9ad69859c3e = (ControlLayoutSystem)null;
+            this.form.Text = "";
+            this.layoutSystem = null;
             return;
-            label_4:
-            if (!this.HasSingleControlLayoutSystem)
-                goto label_2;
-            label_6:
-            this.x6fd7c9ad69859c3e = (ControlLayoutSystem)this.LayoutSystem.LayoutSystems[0];
-            this.x6fd7c9ad69859c3e.xcc55983eb55360ac += new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
-            this.xe20c835979d60df8((DockControl)null, this.x6fd7c9ad69859c3e.SelectedControl);
         }
 
-        private void x9218bee68262250e(object xe0292b9ed559da7d, CancelEventArgs xfbf34718e704c6bc)
+        private void x9218bee68262250e(object sender, CancelEventArgs e)
         {
             if (!this.x50765ed4559630d6)
                 return;
@@ -424,18 +411,18 @@ namespace FQ.FreeDock
                 ;
             }
             while ((uint)index2 - (uint)index1 > uint.MaxValue);
-            xfbf34718e704c6bc.Cancel = true;
+            e.Cancel = true;
             return;
             label_15:
             return;
             label_5:
-            xfbf34718e704c6bc.Cancel = true;
+            e.Cancel = true;
             return;
             label_10:
             ;
         }
 
-        private void xe1f5f125062dc4fb(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        private void xe1f5f125062dc4fb(object sender, EventArgs e)
         {
             Form activeForm = Form.ActiveForm;
             label_15:
@@ -504,7 +491,7 @@ namespace FQ.FreeDock
 
         internal void x5b7f6ddd07ded8cd()
         {
-            this.xa6607dfd4b3038ad.Activate();
+            this.form.Activate();
         }
     }
 }

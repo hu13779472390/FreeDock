@@ -64,7 +64,7 @@ namespace FQ.FreeDock.Design
                                             break;
                                     }
                                     else
-                                        TypeDescriptor.GetProperties((object)dockControl)["Collapsed"].SetValue((object)dockControl, value);
+                                        TypeDescriptor.GetProperties(dockControl)["Collapsed"].SetValue(dockControl, value);
 
                                 goto label_8;
                             }
@@ -216,9 +216,8 @@ namespace FQ.FreeDock.Design
 
         private void x5ba88706ad55272f(object xe0292b9ed559da7d, ControlEventArgs xfbf34718e704c6bc)
         {
-            if (this.dockControl.Controls.Count != 0 && this.dockControl.Controls.Count != 1)
-                return;
-            this.dockControl.Invalidate();
+            if (this.dockControl.Controls.Count > 1)
+                this.dockControl.Invalidate();
         }
     }
 }

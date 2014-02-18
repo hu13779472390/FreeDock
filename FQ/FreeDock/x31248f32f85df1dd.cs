@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using FQ.FreeDock.Rendering;
+using System.Security;
 
 namespace FQ.FreeDock
 {
@@ -178,7 +179,7 @@ namespace FQ.FreeDock
             bool flag2 = this.x8caac3836061e4ad.Contains(position);
             int index1;
             int index2 = 0;
-            object[] objArray1 = {};
+            object[] objArray1 = { };
             do
             {
                 if (true)
@@ -566,7 +567,7 @@ namespace FQ.FreeDock
                 x11d58b056c032b03 = this.xede53ab1a4b2e20b(x6e150040c8d97700.DockContainer, x6e150040c8d97700, x13d4cb8d1bd20347, false);
                 if (x11d58b056c032b03.type != xedb4922162c60d3d.DockTargetType.Undefined)
                 {
-                     goto label_12;
+                    goto label_12;
                 }
                 else
                     goto label_17;
@@ -605,9 +606,9 @@ namespace FQ.FreeDock
             private x31248f32f85df1dd x91f347c6e97f1846;
             private ControlLayoutSystem x6e150040c8d97700;
             private bool x3321191c6256921e;
-            private Bitmap xaf410773a496d7d0;
+            private Bitmap bitmap;
             private bool x3b280f462145bf12;
-            private Timer x1700d731d6397130;
+            private Timer timer;
             private int x1a5b1715d3a0d7a6;
             private bool x9063896ecf738664;
             private DockStyle xca9af438b5818619;
@@ -670,30 +671,21 @@ namespace FQ.FreeDock
 
             private x23d0185c2770c169()
             {
-                do
-                {
-                    this.FormBorderStyle = FormBorderStyle.None;
-                    this.ShowInTaskbar = false;
-                    this.StartPosition = FormStartPosition.Manual;
-                    this.x1700d731d6397130 = new Timer();
-                    this.x1700d731d6397130.Interval = 50;
-                    if (int.MinValue != 0)
-                        this.x1700d731d6397130.Tick += new EventHandler(this.xa1ebc192abdef013);
-                    this.xaf410773a496d7d0 = new Bitmap(88, 88, PixelFormat.Format32bppArgb);
-                }
-                while (-1 == 0);
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.ShowInTaskbar = false;
+                this.StartPosition = FormStartPosition.Manual;
+                this.timer = new Timer();
+                this.timer.Interval = 50;
+                this.timer.Tick += new EventHandler(this.OnTimer);
+                this.bitmap = new Bitmap(88, 88, PixelFormat.Format32bppArgb);
             }
 
-            public x23d0185c2770c169(x31248f32f85df1dd manager, Rectangle fc, DockStyle dockStyle)
-        : this()
+            public x23d0185c2770c169(x31248f32f85df1dd manager, Rectangle fc, DockStyle dockStyle) : this()
             {
                 this.x91f347c6e97f1846 = manager;
                 this.xca9af438b5818619 = dockStyle;
                 DockStyle dockStyle1 = dockStyle;
-                if (0 == 0)
-                    goto label_5;
-                else
-                    goto label_9;
+                goto label_5;
                 label_1:
                 this.xda73fcb97c77d998 = new Rectangle(fc.X + fc.Width / 2 - 44, fc.Y + fc.Height / 2 - 44, 88, 88);
                 label_2:
@@ -747,7 +739,7 @@ namespace FQ.FreeDock
 
             private void x912beb3fd0dd9feb()
             {
-                using (Graphics x41347a961b838962 = Graphics.FromImage((Image)this.xaf410773a496d7d0))
+                using (Graphics x41347a961b838962 = Graphics.FromImage((Image)this.bitmap))
                 {
                     xa811784015ed8842.x91433b5e99eb7cac(x41347a961b838962, Color.Transparent);
                     if (1 != 0)
@@ -811,7 +803,7 @@ namespace FQ.FreeDock
                     label_21:
                     if (this.xca9af438b5818619 == DockStyle.Left)
                     {
-                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("TD.SandDock.Resources.dockinghintleft.png")))
+                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintleft.png")))
                         {
                             x41347a961b838962.DrawImageUnscaled(image, 0, 29);
                             goto label_29;
@@ -822,7 +814,7 @@ namespace FQ.FreeDock
                     {
                         if (0 == 0)
                         {
-                            using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("TD.SandDock.Resources.dockinghintright.png")))
+                            using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintright.png")))
                                 x41347a961b838962.DrawImageUnscaled(image, 57, 29);
                         }
                         else
@@ -874,7 +866,7 @@ namespace FQ.FreeDock
                     else
                         goto label_66;
                     label_60:
-                    using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("TD.SandDock.Resources.dockinghintcenter.png")))
+                    using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintcenter.png")))
                     {
                         x41347a961b838962.DrawImageUnscaled(image, 0, 0);
                         goto label_29;
@@ -891,7 +883,7 @@ namespace FQ.FreeDock
                                 else
                                     goto label_58;
                                 label_38:
-                                using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("TD.SandDock.Resources.dockinghintbottom.png")))
+                                using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintbottom.png")))
                                 {
                                     x41347a961b838962.DrawImageUnscaled(image, 29, 57);
                                     goto label_29;
@@ -914,7 +906,7 @@ namespace FQ.FreeDock
                                 }
                                 else
                                 {
-                                    using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("TD.SandDock.Resources.dockinghinttop.png")))
+                                    using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghinttop.png")))
                                     {
                                         x41347a961b838962.DrawImageUnscaled(image, 29, 0);
                                         goto label_29;
@@ -969,16 +961,16 @@ namespace FQ.FreeDock
                         goto label_6;
                 }
                 label_71:
-                this.x0ecee64b07d2d5b1(this.xaf410773a496d7d0, byte.MaxValue);
+                this.x0ecee64b07d2d5b1(this.bitmap, byte.MaxValue);
             }
 
             protected override void Dispose(bool disposing)
             {
                 if (disposing)
                 {
-                    this.xaf410773a496d7d0.Dispose();
-                    this.x1700d731d6397130.Tick -= new EventHandler(this.xa1ebc192abdef013);
-                    this.x1700d731d6397130.Dispose();
+                    this.bitmap.Dispose();
+                    this.timer.Tick -= new EventHandler(this.OnTimer);
+                    this.timer.Dispose();
                 }
                 base.Dispose(disposing);
             }
@@ -1351,14 +1343,14 @@ namespace FQ.FreeDock
                 if (this.x3b280f462145bf12)
                     return;
                 label_2:
-                if (!this.x1700d731d6397130.Enabled)
+                if (!this.timer.Enabled)
                     return;
                 label_10:
                 this.x1a5b1715d3a0d7a6 = Environment.TickCount;
                 this.x3b280f462145bf12 = true;
                 if (-2 != 0)
                 {
-                    this.x1700d731d6397130.Start();
+                    this.timer.Start();
                     if (2 != 0)
                     {
                         if ((int)byte.MaxValue != 0)
@@ -1378,19 +1370,20 @@ namespace FQ.FreeDock
 
             public void x35579b297303ed43()
             {
-                this.x0ecee64b07d2d5b1(this.xaf410773a496d7d0, (byte)0);
+                this.x0ecee64b07d2d5b1(this.bitmap, 0);
                 this.x2c6f5ac62ee048e5();
                 this.x1a5b1715d3a0d7a6 = Environment.TickCount;
                 this.x3b280f462145bf12 = false;
-                this.x1700d731d6397130.Start();
+                this.timer.Start();
             }
 
+            [SecuritySafeCritical]
             public void x2c6f5ac62ee048e5()
             {
-                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef((object)this, this.Handle), -1, this.xda73fcb97c77d998.X, this.xda73fcb97c77d998.Y, this.xda73fcb97c77d998.Width, this.xda73fcb97c77d998.Height, 80);
+                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.xda73fcb97c77d998.X, this.xda73fcb97c77d998.Y, this.xda73fcb97c77d998.Width, this.xda73fcb97c77d998.Height, 80);
             }
 
-            private void xa1ebc192abdef013(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+            private void OnTimer(object sender, EventArgs e)
             {
                 int num1 = Environment.TickCount - this.x1a5b1715d3a0d7a6;
                 if (num1 <= 200)
@@ -1405,7 +1398,7 @@ namespace FQ.FreeDock
                 double num3 = !this.x3b280f462145bf12 ? num2 * (double)byte.MaxValue : (1.0 - num2) * (double)byte.MaxValue;
                 do
                 {
-                    this.x0ecee64b07d2d5b1(this.xaf410773a496d7d0, (byte)num3);
+                    this.x0ecee64b07d2d5b1(this.bitmap, (byte)num3);
                     if (num1 >= 200)
                         goto label_8;
                 }
@@ -1427,7 +1420,7 @@ namespace FQ.FreeDock
                 base.Dispose();
                 return;
                 label_8:
-                this.x1700d731d6397130.Stop();
+                this.timer.Stop();
                 this.Visible = !this.x3b280f462145bf12;
                 goto label_4;
                 label_12:

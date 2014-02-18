@@ -59,7 +59,7 @@ namespace FQ.FreeDock
         /// Initializes a new instance of the TabbedDocument class.
         /// 
         /// </summary>
-        public TabbedDocument()
+        public TabbedDocument() : base()
         {
             this.x84eb05aa1ce8e247();
         }
@@ -69,8 +69,7 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         /// <param name="manager">The SandDockManager responsible for layout of the control.</param><param name="control">The control to host within the DockControl.</param><param name="text">The text of the DockControl.</param>
-        public TabbedDocument(SandDockManager manager, Control control, string text)
-      : base(manager, control, text)
+        public TabbedDocument(SandDockManager manager, Control control, string text) : base(manager, control, text)
         {
             this.x84eb05aa1ce8e247();
         }

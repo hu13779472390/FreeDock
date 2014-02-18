@@ -14,7 +14,7 @@ namespace FQ.FreeDock.Rendering
     public class Office2007Renderer : RendererBase
     {
         private Office2007ColorScheme x62a65b2c0f145432 = Office2007ColorScheme.Black;
-        private Color x21357dc320fa442f;
+        private Color background;
         private Color xf78d540f2ad4eefe;
         private Color x2a8ba610037adcf2;
         private Color xf03842e8454f12ef;
@@ -40,7 +40,7 @@ namespace FQ.FreeDock.Rendering
         private ColorBlend x2f53a4063520f7b7;
         private ColorBlend xf320905c8fa15baa;
         private ColorBlend x928270a1d0f072fb;
-        private ColorBlend xf62715f1e5e2cfba;
+        private ColorBlend documentContainerBackground;
         private ColorBlend x854213a69311962a;
         private ColorBlend x642be9cb364d5c7e;
         private ColorBlend x55f5ad59d4c9fe0a;
@@ -224,13 +224,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xf62715f1e5e2cfba;
+                return this.documentContainerBackground;
             }
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
-                this.xf62715f1e5e2cfba = value;
+                    throw new ArgumentNullException("value is null");
+                this.documentContainerBackground = value;
             }
         }
 
@@ -522,11 +522,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x21357dc320fa442f;
+                return this.background;
             }
             set
             {
-                this.x21357dc320fa442f = value;
+                this.background = value;
             }
         }
 
@@ -781,11 +781,11 @@ namespace FQ.FreeDock.Rendering
             return colorBlend;
         }
 
-        private LinearGradientBrush xb9d757f2231cc2a8(Rectangle xda73fcb97c77d998, ColorBlend xdf5de570fec6a668, LinearGradientMode xa4aa8b4150b11435)
+        private LinearGradientBrush xb9d757f2231cc2a8(Rectangle bounds, ColorBlend colorBlend, LinearGradientMode xa4aa8b4150b11435)
         {
-            return new LinearGradientBrush(xda73fcb97c77d998, Color.Black, Color.White, xa4aa8b4150b11435)
+            return new LinearGradientBrush(bounds, Color.Black, Color.White, xa4aa8b4150b11435)
             {
-                InterpolationColors = xdf5de570fec6a668
+                InterpolationColors = colorBlend
             };
         }
 
@@ -1664,34 +1664,36 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawDockContainerBackground(Graphics graphics, DockContainer container, Rectangle bounds)
         {
-            if (bounds.Width <= 0)
+            if (bounds.Width <= 0 || bounds.Height <= 0)
                 return;
-            if (-1 != 0)
-                goto label_5;
-            label_2:
-            do
-            {
-                xa811784015ed8842.x91433b5e99eb7cac(graphics, this.Background);
-                if (int.MinValue != 0)
-                    goto label_12;
-            }
-            while ((int)byte.MaxValue != 0);
-            goto label_4;
-            label_12:
-            return;
-            label_4:
+
             if (container is DocumentContainer)
-                goto label_7;
+            {
+                using (Brush brush = this.xb9d757f2231cc2a8(bounds, this.DocumentContainerBackground, LinearGradientMode.Vertical))
+                {
+                    graphics.FillRectangle(brush, bounds);
+                }
+            }
             else
-                goto label_2;
-            label_5:
-            if (bounds.Height <= 0)
-                return;
-            if (0 == 0)
-                goto label_4;
-            label_7:
-            using (Brush brush = (Brush)this.xb9d757f2231cc2a8(bounds, this.DocumentContainerBackground, LinearGradientMode.Vertical))
-                graphics.FillRectangle(brush, bounds);
+                xa811784015ed8842.x91433b5e99eb7cac(graphics, this.Background);
+
+//            goto label_4;
+//
+//            return;
+//
+//            label_4:
+//            if (container is DocumentContainer)
+//                goto label_7;
+//            else
+//                goto label_2;
+//            label_5:
+//            if (bounds.Height <= 0)
+//                return;
+//            goto label_4;
+//            label_7:
+//            using (Brush brush = this.xb9d757f2231cc2a8(bounds, this.DocumentContainerBackground, LinearGradientMode.Vertical))
+//                graphics.FillRectangle(brush, bounds);
+//            return;
         }
 
         /// <summary>
@@ -1731,7 +1733,7 @@ namespace FQ.FreeDock.Rendering
                 if (bounds.Height > 0)
                 {
                     using (LinearGradientBrush linearGradientBrush = this.xb9d757f2231cc2a8(bounds, focused ? this.ActiveTitleBarBackground : this.InactiveTitleBarBackground, LinearGradientMode.Vertical))
-                        graphics.FillRectangle((Brush)linearGradientBrush, bounds);
+                        graphics.FillRectangle(linearGradientBrush, bounds);
                 }
             }
             else

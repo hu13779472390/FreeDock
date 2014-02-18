@@ -228,7 +228,7 @@ namespace FQ.FreeDock
                 this.xb9835bbd335d127e = value;
                 if (-1 == 0)
                     return;
-                this.x1f43ebe301d1df45 = (x0a9f5257a10031b2)null;
+                this.x1f43ebe301d1df45 = null;
                 if (!this.xb9835bbd335d127e)
                     goto label_7;
                 else
@@ -1671,32 +1671,19 @@ namespace FQ.FreeDock
             x38870620fd380a6b.DrawDocumentStripButton(x41347a961b838962, x128517d7ded59312.xda73fcb97c77d998, x271bd5d42b3ea793, state);
         }
 
+        // reviewed
         internal virtual void xd541e2fc281b554b()
         {
             if (this.x10ac79a4257c7f52 != null)
             {
-                if (1 != 0)
-                    ;
-            }
-            else
-                goto label_7;
-            label_2:
-            if (this.x10ac79a4257c7f52.x23498f53d87354d4 != this)
+                if (this.x10ac79a4257c7f52.x23498f53d87354d4 == this)
+                    this.x10ac79a4257c7f52.xbb5f70c792fb9034(this.xb48529af1739dd06);
+            } 
+            else 
             {
-                if (0 == 0)
-                    return;
+                if (this.IsInContainer)
+                   this.DockContainer.Invalidate(this.xb48529af1739dd06);
             }
-            else
-            {
-                this.x10ac79a4257c7f52.xbb5f70c792fb9034(this.xb48529af1739dd06);
-                return;
-            }
-            label_7:
-            if (!this.IsInContainer)
-                return;
-            this.DockContainer.Invalidate(this.xb48529af1739dd06);
-            if (0 != 0 || 2 == 0)
-                goto label_2;
         }
 
         internal override void x46ff430ed3944e0f(xedb4922162c60d3d.DockTarget x11d58b056c032b03)

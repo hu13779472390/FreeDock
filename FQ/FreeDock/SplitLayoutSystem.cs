@@ -24,7 +24,7 @@ namespace FQ.FreeDock
     public class SplitLayoutSystem : LayoutSystemBase
     {
         internal const int x51b0f429bd564626 = 4;
-        private SplitLayoutSystem.LayoutSystemBaseCollection x820c504c9c557c92;
+        private SplitLayoutSystem.LayoutSystemBaseCollection layoutSystems;
         private Orientation splitMode;
         private ArrayList x366d4cf7098f9c63;
         private x8e80e1c8bce8caf7 x372569d2ea29984e;
@@ -189,7 +189,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x820c504c9c557c92;
+                return this.layoutSystems;
             }
         }
 
@@ -201,7 +201,7 @@ namespace FQ.FreeDock
         /// </summary>
         public SplitLayoutSystem()
         {
-            this.x820c504c9c557c92 = new SplitLayoutSystem.LayoutSystemBaseCollection(this);
+            this.layoutSystems = new SplitLayoutSystem.LayoutSystemBaseCollection(this);
             this.x366d4cf7098f9c63 = new ArrayList();
         }
 
@@ -227,7 +227,7 @@ namespace FQ.FreeDock
       : this(desiredWidth, desiredHeight)
         {
             this.splitMode = splitMode;
-            this.x820c504c9c557c92.AddRange(layoutSystems);
+            this.layoutSystems.AddRange(layoutSystems);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace FQ.FreeDock
         {
             this.WorkingSize = workingSize;
             this.splitMode = splitMode;
-            this.x820c504c9c557c92.AddRange(layoutSystems);
+            this.layoutSystems.AddRange(layoutSystems);
         }
 
         /// <summary>
@@ -669,7 +669,7 @@ namespace FQ.FreeDock
 
         private void xd78391e378ab076b(SplitLayoutSystem xb25822984a90695b, ArrayList x8da10969b0e2a75e)
         {
-            IEnumerator enumerator1 = xb25822984a90695b.x820c504c9c557c92.GetEnumerator();
+            IEnumerator enumerator1 = xb25822984a90695b.layoutSystems.GetEnumerator();
             try
             {
                 label_2:
@@ -866,10 +866,10 @@ namespace FQ.FreeDock
             x5aa50bbadb0a1e6c = xc13a8191724b6d55;
             int index2 = index1 + 1;
             label_3:
-            while (index2 < this.x820c504c9c557c92.Count)
+            while (index2 < this.layoutSystems.Count)
             {
                 label_6:
-                if (!(this.x820c504c9c557c92[index2] is ControlLayoutSystem))
+                if (!(this.layoutSystems[index2] is ControlLayoutSystem))
                     goto label_11;
                 else
                     goto label_7;
@@ -882,7 +882,7 @@ namespace FQ.FreeDock
                 else
                     goto label_10;
                 label_7:
-                while (((ControlLayoutSystem)this.x820c504c9c557c92[index2]).Collapsed)
+                while (((ControlLayoutSystem)this.layoutSystems[index2]).Collapsed)
                 {
                     label_2:
                     do
@@ -1012,70 +1012,35 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
+        // reviewe done
         protected internal override void OnMouseMove(MouseEventArgs e)
         {
-            bool flag = false;
-            label_17:
-            if (-2 != 0)
-                goto label_15;
-            label_2:
-            base.OnMouseMove(e);
-            if (((flag ? 1 : 0) | 3) != 0)
-                return;
-            if (-1 == 0)
+            if (e.Button == MouseButtons.Left)
             {
-                if (true)
-                    goto label_9;
+                if (this.x531514c39973cbc6 != null)
+                {
+                    this.x531514c39973cbc6.OnMouseMove(Cursor.Position);
+                    return;
+                }
+
+                if (this.x372569d2ea29984e != null)
+                {
+                    this.x372569d2ea29984e.OnMouseMove(new Point(e.X, e.Y));
+                    return;
+                }
             }
-            else
-                goto label_17;
-            label_6:
-            if (false)
-                goto label_10;
-            label_7:
-            flag = this.x090b65ef9b096e0b(e.X, e.Y);
+
+            bool flag = this.x090b65ef9b096e0b(e.X, e.Y);
             if (!flag)
             {
-                if (0 == 0)
-                {
-                    Cursor.Current = Cursors.Default;
-                    goto label_2;
-                }
-                else
-                    goto label_6;
+                Cursor.Current = Cursors.Default;
             }
             else
             {
                 Cursor.Current = this.splitMode != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
-                goto label_2;
             }
-            label_9:
-            this.x372569d2ea29984e.OnMouseMove(new System.Drawing.Point(e.X, e.Y));
-            return;
-            label_10:
-            if (this.x372569d2ea29984e != null)
-                goto label_9;
-            else
-                goto label_7;
-            label_15:
-            if (false)
-                return;
-            if (-2 != 0)
-            {
-                if (e.Button == MouseButtons.Left)
-                {
-                    if (this.x531514c39973cbc6 != null)
-                        this.x531514c39973cbc6.OnMouseMove(Cursor.Position);
-                    else
-                        goto label_10;
-                }
-                else
-                    goto label_7;
-            }
-            else if (4 != 0)
-                goto label_9;
-            else
-                goto label_2;
+
+            base.OnMouseMove(e);
         }
 
         internal override bool xe302f2203dc14a18(ContainerDockLocation xb9c2cfae130d9256)
@@ -1092,7 +1057,7 @@ namespace FQ.FreeDock
             finally
             {
                 IDisposable disposable = enumerator as IDisposable;
-                if (3 == 0 || disposable != null)
+                if (disposable != null)
                     disposable.Dispose();
             }
             return true;
@@ -1102,9 +1067,8 @@ namespace FQ.FreeDock
         {
             if (this.DockContainer != null)
                 this.DockContainer.x7e9646eed248ed11();
-            if (this.x7e9646eed248ed11 == null)
-                return;
-            this.x7e9646eed248ed11((object)this, EventArgs.Empty);
+            if (this.x7e9646eed248ed11 != null)
+                this.x7e9646eed248ed11(this, EventArgs.Empty);
         }
 
         internal void x3e0280cae730d1f2()
@@ -1113,9 +1077,8 @@ namespace FQ.FreeDock
             {
                 this.DockContainer.xec9697acef66c1bc((LayoutSystemBase)this, this.Bounds);
             }
-            if (this.DockContainer == null)
-                return;
-            this.DockContainer.Invalidate(this.Bounds);
+            if (this.DockContainer != null)
+                this.DockContainer.Invalidate(this.Bounds);
         }
 
         internal override void x56e964269d48cfcc(DockContainer x0467b00af7810f0c)
@@ -1125,96 +1088,39 @@ namespace FQ.FreeDock
                 layoutSystemBase.x56e964269d48cfcc(x0467b00af7810f0c);
         }
 
-        private LayoutSystemBase[] x10878bfc002a3aaf(out int x10f4d88af727adbc)
+        private LayoutSystemBase[] x10878bfc002a3aaf(out int count)
         {
-            x10f4d88af727adbc = 0;
-            LayoutSystemBase[] layoutSystemBaseArray1 = new LayoutSystemBase[this.LayoutSystems.Count];
+            count = 0;
+            LayoutSystemBase[] layouts = new LayoutSystemBase[this.LayoutSystems.Count];
             IEnumerator enumerator = this.LayoutSystems.GetEnumerator();
             try
             {
-                label_2:
                 while (enumerator.MoveNext())
                 {
-                    label_18:
-                    LayoutSystemBase layoutSystemBase1 = (LayoutSystemBase)enumerator.Current;
-                    if (layoutSystemBase1 is ControlLayoutSystem)
-                        goto label_16;
-                    else
-                        goto label_13;
-                    label_8:
-                    int num1;
-                    int num2;
-                    while (!(layoutSystemBase1 is SplitLayoutSystem))
+                    LayoutSystemBase layout = (LayoutSystemBase)enumerator.Current;
+                    if (layout is ControlLayoutSystem)
                     {
-                        if (true)
+                        ControlLayoutSystem controlLayoutSystem = (ControlLayoutSystem)layout;
+                        if (!controlLayoutSystem.Collapsed)
                         {
-                            if (false)
-                            {
-                                if ((uint)num2 - (uint)num1 < 0U && (num2 | -1) == 0)
-                                    goto label_9;
-                            }
-                            else
-                                goto label_2;
+                            layouts[count++] = layout;
                         }
                         else
-                            goto label_3;
+                        {
+                            if (this.IsInContainer && !this.DockContainer.x0c2484ccd29b8358)
+                            {
+                                layouts[count++] = layout;
+                            }
+                        }
                     }
-                    goto label_11;
-                    label_3:
-                    SplitLayoutSystem splitLayoutSystem;
-                    if (splitLayoutSystem.x7ca4fdcb31f9824a())
+                    else if (layout is SplitLayoutSystem)
                     {
-                        LayoutSystemBase[] layoutSystemBaseArray2 = layoutSystemBaseArray1;
-                        num1 = x10f4d88af727adbc++;
-                        int index = num1;
-                        LayoutSystemBase layoutSystemBase2 = layoutSystemBase1;
-                        layoutSystemBaseArray2[index] = layoutSystemBase2;
-                        continue;
+                        SplitLayoutSystem splitLayoutSystem = (SplitLayoutSystem)layout;
+                        if (splitLayoutSystem.x7ca4fdcb31f9824a())
+                        {
+                            layouts[count++] = layout;
+                        }
                     }
-                    else
-                        continue;
-                    label_11:
-                    splitLayoutSystem = (SplitLayoutSystem)layoutSystemBase1;
-                    goto label_3;
-                    label_9:
-                    ControlLayoutSystem controlLayoutSystem;
-                    if (!controlLayoutSystem.Collapsed)
-                        goto label_14;
-                    label_10:
-                    if (!this.IsInContainer)
-                    {
-                        if (0 != 0)
-                            goto label_8;
-                        else
-                            continue;
-                    }
-                    else if (this.DockContainer.x0c2484ccd29b8358)
-                        continue;
-                    label_14:
-                    LayoutSystemBase[] layoutSystemBaseArray3 = layoutSystemBaseArray1;
-                    num2 = x10f4d88af727adbc++;
-                    int index1 = num2;
-                    LayoutSystemBase layoutSystemBase3 = layoutSystemBase1;
-                    layoutSystemBaseArray3[index1] = layoutSystemBase3;
-                    if ((uint)num2 > uint.MaxValue)
-                    {
-                        if ((uint)num2 + (uint)num2 > uint.MaxValue)
-                            goto label_10;
-                        else
-                            goto label_18;
-                    }
-                    else if (0 == 0)
-                        continue;
-                    else
-                        goto label_8;
-                    label_13:
-                    if (false)
-                        goto label_8;
-                    else
-                        goto label_8;
-                    label_16:
-                    controlLayoutSystem = (ControlLayoutSystem)layoutSystemBase1;
-                    goto label_9;
                 }
             }
             finally
@@ -1223,7 +1129,7 @@ namespace FQ.FreeDock
                 if (disposable != null)
                     disposable.Dispose();
             }
-            return layoutSystemBaseArray1;
+            return layouts;
         }
 
         /// <summary>
@@ -1232,60 +1138,80 @@ namespace FQ.FreeDock
         /// </summary>
         protected internal override void Layout(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
         {
-
             base.Layout(renderer, graphics, bounds, floating);
-            float num8 = 0;
-            float num9 = 0;
-            int index6 = 0;
-            int index3 = 0;
-            int num1;
-            if (true)
-                goto label_63;
-            label_55:
+            int x10f4d88af727adbc;
+            LayoutSystemBase[] layoutSystemBaseArray = this.x10878bfc002a3aaf(out x10f4d88af727adbc);
+            if (x10f4d88af727adbc == 0)
+                return;
+
+            if (x10f4d88af727adbc > 1)
+                floating = false;
+      
+            int num4 = this.splitMode == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
+
             float num2 = 0.0f;
             int index1 = 0;
-            float num3 = 0;
-            if ((uint)num3 - (uint)(floating ? 1 : 0) >= 0U)
-                goto label_54;
-            label_49:
-            int x10f4d88af727adbc = 0;
-            LayoutSystemBase[] layoutSystemBaseArray;
+//            float num3;
+            SizeF[] sizeFArray = {};
             int index2 = 0;
-            SizeF[] sizeFArray = { };
-            for (; index2 < x10f4d88af727adbc; ++index2)
-                sizeFArray[index2] = layoutSystemBaseArray[index2].WorkingSize;
-            int num4;
-            if ((double)num4 == (double)num2)
-                goto label_21;
-            else
-                goto label_47;
-            label_8:
-            index3 = 0;
-            int num5 = 0;
-            int num6;
-            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(num5, bounds.Y, num6, bounds.Height), floating);
-            label_9:
-            num5 += num6 + 4;
-            ++index3;
-            label_10:
-            int index4 = 0;
-            while (index3 < x10f4d88af727adbc)
+            if (!floating)
             {
-                num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
-                if (this.splitMode != Orientation.Horizontal)
+                while (index1 < x10f4d88af727adbc)
                 {
-                    if (index3 == x10f4d88af727adbc - 1)
+                    num2 += this.splitMode == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
+                    ++index1;
+                }
+                this.x366d4cf7098f9c63.Clear();
+                if (num4 <= 0)
+                {
+                    return;
+                }
+                else
+                {
+                    sizeFArray = new SizeF[x10f4d88af727adbc];
+                    index2 = 0;
+                }
+            }
+            label_49:
+
+             for (int i = 0; i < x10f4d88af727adbc; ++i)
+                sizeFArray[i] = layoutSystemBaseArray[i].WorkingSize;
+
+            float num9 = 0;
+            float num8=0;
+            int index6 = 0;
+            int index3=0;
+            int num5 = 0;
+            int num7;
+            int index4 = 0;
+            int num6;
+            if ((double)num4 == (double)num2) // num == 0
+            {
+      
+                if (this.splitMode == Orientation.Horizontal)
+                    num7 = bounds.Y;
+                else
+                    goto label_24;
+                num5 = num7;
+                index3 = 0;
+
+     
+                while (index3 < x10f4d88af727adbc)
+                {
+                    num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
+                    if (this.splitMode != Orientation.Horizontal)
                     {
-                        num6 = bounds.Right - num5;
-                        goto label_8;
+                        if (index3 == x10f4d88af727adbc - 1)
+                        {
+                            num6 = bounds.Right - num5;
+                            goto label_8;
+                        }
+                        else
+                            goto label_8;
                     }
                     else
-                        goto label_8;
-                }
-                else if (true)
-                {
-                    if (true)
                     {
+
                         if ((uint)index2 - (uint)index4 >= 0U)
                         {
                             if (index3 == x10f4d88af727adbc - 1)
@@ -1305,17 +1231,69 @@ namespace FQ.FreeDock
                             else
                                 break;
                         }
+
+                    }
+                }
+                goto label_7;
+            }
+            else
+            {
+                goto label_47;
+            }
+
+   
+
+            label_8:
+            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(num5, bounds.Y, num6, bounds.Height), floating);
+            label_9:
+            num5 += num6 + 4;
+            ++index3;
+
+
+
+            label_10:
+            while (index3 < x10f4d88af727adbc)
+            {
+                num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
+                if (this.splitMode != Orientation.Horizontal)
+                {
+                    if (index3 == x10f4d88af727adbc - 1)
+                    {
+                        num6 = bounds.Right - num5;
+                        goto label_8;
                     }
                     else
-                        goto label_24;
+                        goto label_8;
                 }
                 else
-                    goto label_1;
+                {
+
+                    if ((uint)index2 - (uint)index4 >= 0U)
+                    {
+                        if (index3 == x10f4d88af727adbc - 1)
+                            goto label_19;
+                        label_12:
+                        layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(bounds.X, num5, bounds.Width, num6), floating);
+                        if ((uint)index2 + (uint)num6 < 0U)
+                            goto label_44;
+                        else
+                            goto label_9;
+                        label_19:
+                        if ((uint)index4 <= uint.MaxValue)
+                        {
+                            num6 = bounds.Bottom - num5;
+                            goto label_12;
+                        }
+                        else
+                            break;
+                    }
+
+                }
             }
             goto label_7;
             label_1:
-            this.x366d4cf7098f9c63.Add((object)bounds);
-            int index5;
+            this.x366d4cf7098f9c63.Add(bounds);
+            int index5 = 0;
             ++index5;
             label_2:
             if (index5 >= x10f4d88af727adbc - 1)
@@ -1336,8 +1314,9 @@ namespace FQ.FreeDock
             label_7:
             index5 = 0;
             goto label_2;
+
             label_21:
-            int num7;
+
             if (this.splitMode == Orientation.Horizontal)
                 num7 = bounds.Y;
             else
@@ -1346,28 +1325,26 @@ namespace FQ.FreeDock
             num5 = num7;
             index3 = 0;
             goto label_10;
+
             label_24:
             num7 = bounds.X;
             goto label_23;
             label_32:
-            index6 = 0;
-            num8 = 0;
+
+
             while (index6 < x10f4d88af727adbc)
             {
                 num2 += this.splitMode == Orientation.Horizontal ? sizeFArray[index6].Height : sizeFArray[index6].Width;
                 ++index6;
-                if (true)
+
+                if ((uint)index6 - (uint)index3 >= 0U)
                 {
-                    if ((uint)index6 - (uint)index3 >= 0U)
-                    {
-                        if ((uint)num8 - (uint)index4 < 0U)
-                            goto label_27;
-                    }
-                    else
-                        goto label_56;
+                    if ((uint)num8 - (uint)index4 < 0U)
+                        goto label_27;
                 }
                 else
-                    goto label_8;
+                    goto label_56;
+
             }
             goto label_31;
             label_27:
@@ -1376,25 +1353,17 @@ namespace FQ.FreeDock
             label_31:
             num8 = (float)num4 - num2;
             label_56:
-            if ((uint)index4 + (uint)index2 <= uint.MaxValue)
+
+            if (this.splitMode == Orientation.Horizontal)
             {
-                if ((x10f4d88af727adbc & 0) == 0)
-                {
-                    if (0 != 0 || this.splitMode == Orientation.Horizontal)
-                    {
-                        sizeFArray[0].Height += num8;
-                        goto label_21;
-                    }
-                    else
-                        goto label_27;
-                }
-                else
-                    goto label_31;
+                sizeFArray[0].Height += num8;
+                goto label_21;
             }
             else
-                goto label_21;
+                goto label_27;
+
             label_35:
-            num9 = 0;
+
             if (index4 >= x10f4d88af727adbc)
             {
                 num2 = 0.0f;
@@ -1424,15 +1393,11 @@ namespace FQ.FreeDock
                 goto label_38;
             }
             label_42:
-            if (true)
-            {
-                if ((uint)index3 - (uint)index6 < 0U)
-                    return;
-                else
-                    goto label_35;
-            }
+            if ((uint)index3 - (uint)index6 < 0U)
+                return;
             else
-                goto label_32;
+                goto label_35;
+
             label_44:
             num9 += num8 * (num9 / num2);
             goto label_40;
@@ -1440,48 +1405,254 @@ namespace FQ.FreeDock
             num8 = (float)num4 - num2;
             index4 = 0;
             goto label_35;
-            label_54:
-            while (index1 < x10f4d88af727adbc)
-            {
-                num2 += this.splitMode == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
-                if (true)
-                    ++index1;
-            }
-            this.x366d4cf7098f9c63.Clear();
-            if ((uint)num2 <= uint.MaxValue && num4 <= 0)
-            {
-                if ((uint)num3 <= uint.MaxValue)
-                    return;
-                else
-                    return;
-            }
-            else
-            {
-                sizeFArray = new SizeF[x10f4d88af727adbc];
-                index2 = 0;
-                goto label_49;
-            }
-            label_63:
-            layoutSystemBaseArray = this.x10878bfc002a3aaf(out x10f4d88af727adbc);
-            if (x10f4d88af727adbc == 0)
-                return;
-            int num10;
-            do
-            {
-                if (x10f4d88af727adbc > 1)
-                    goto label_61;
-                label_58:
-                num4 = this.splitMode == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
-                continue;
-                label_61:
-                floating = false;
-                goto label_58;
-            }
-            while (false);
-            goto label_55;
-        }
-
-        internal override void x84b6f3c22477dacb(RendererBase x38870620fd380a6b, Graphics x41347a961b838962, Font x26094932cf7a9139)
+                    }
+        //        protected internal void Layout_org(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
+        //        {
+        //            base.Layout(renderer, graphics, bounds, floating);
+        //            int num1;
+        //            if ((uint)num1 - (uint)num1 >= 0U)
+        //                goto label_63;
+        //            label_55:
+        //            float num2 = 0.0f;
+        //            int index1 = 0;
+        //            float num3;
+        //            if ((uint)num3 - (uint)floating >= 0U)
+        //                goto label_54;
+        //            label_49:
+        //            int x10f4d88af727adbc;
+        //            LayoutSystemBase[] layoutSystemBaseArray;
+        //            int index2;
+        //            SizeF[] sizeFArray;
+        //            for (; index2 < x10f4d88af727adbc; ++index2)
+        //                sizeFArray[index2] = layoutSystemBaseArray[index2].WorkingSize;
+        //            int num4;
+        //            if ((double)num4 == (double)num2)
+        //                goto label_21;
+        //            else
+        //                goto label_47;
+        //            label_8:
+        //            int index3;
+        //            int num5;
+        //            int num6;
+        //            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(num5, bounds.Y, num6, bounds.Height), floating);
+        //            label_9:
+        //            num5 += num6 + 4;
+        //            ++index3;
+        //            label_10:
+        //            int index4;
+        //            while (index3 < x10f4d88af727adbc)
+        //            {
+        //                num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
+        //                if (this.splitMode != Orientation.Horizontal)
+        //                {
+        //                    if (index3 == x10f4d88af727adbc - 1)
+        //                    {
+        //                        num6 = bounds.Right - num5;
+        //                        goto label_8;
+        //                    }
+        //                    else
+        //                        goto label_8;
+        //                }
+        //                else if ((num1 & 0) == 0)
+        //                {
+        //                    if ((index4 | 3) != 0)
+        //                    {
+        //                        if ((uint)index2 - (uint)index4 >= 0U)
+        //                        {
+        //                            if (index3 == x10f4d88af727adbc - 1)
+        //                                goto label_19;
+        //                            label_12:
+        //                            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(bounds.X, num5, bounds.Width, num6), floating);
+        //                            if ((uint)index2 + (uint)num6 < 0U)
+        //                                goto label_44;
+        //                            else
+        //                                goto label_9;
+        //                            label_19:
+        //                            if ((uint)index4 <= uint.MaxValue)
+        //                            {
+        //                                num6 = bounds.Bottom - num5;
+        //                                goto label_12;
+        //                            }
+        //                            else
+        //                                break;
+        //                        }
+        //                    }
+        //                    else
+        //                        goto label_24;
+        //                }
+        //                else
+        //                    goto label_1;
+        //            }
+        //            goto label_7;
+        //            label_1:
+        //            this.x366d4cf7098f9c63.Add((object)bounds);
+        //            int index5;
+        //            ++index5;
+        //            label_2:
+        //            if (index5 >= x10f4d88af727adbc - 1)
+        //                return;
+        //            bounds = layoutSystemBaseArray[index5].Bounds;
+        //            if (this.splitMode != Orientation.Horizontal)
+        //            {
+        //                bounds.Offset(bounds.Width, 0);
+        //                bounds.Width = 4;
+        //                goto label_1;
+        //            }
+        //            else
+        //            {
+        //                bounds.Offset(0, bounds.Height);
+        //                bounds.Height = 4;
+        //                goto label_1;
+        //            }
+        //            label_7:
+        //            index5 = 0;
+        //            goto label_2;
+        //            label_21:
+        //            int num7;
+        //            if (this.splitMode == Orientation.Horizontal)
+        //                num7 = bounds.Y;
+        //            else
+        //                goto label_24;
+        //            label_23:
+        //            num5 = num7;
+        //            index3 = 0;
+        //            goto label_10;
+        //            label_24:
+        //            num7 = bounds.X;
+        //            goto label_23;
+        //            label_32:
+        //            int index6 = 0;
+        //            float num8;
+        //            while (index6 < x10f4d88af727adbc)
+        //            {
+        //                num2 += this.splitMode == Orientation.Horizontal ? sizeFArray[index6].Height : sizeFArray[index6].Width;
+        //                ++index6;
+        //                if ((uint)num6 + (uint)index3 <= uint.MaxValue)
+        //                {
+        //                    if ((uint)index6 - (uint)index3 >= 0U)
+        //                    {
+        //                        if ((uint)num8 - (uint)index4 < 0U)
+        //                            goto label_27;
+        //                    }
+        //                    else
+        //                        goto label_56;
+        //                }
+        //                else
+        //                    goto label_8;
+        //            }
+        //            goto label_31;
+        //            label_27:
+        //            sizeFArray[0].Width += num8;
+        //            goto label_21;
+        //            label_31:
+        //            num8 = (float)num4 - num2;
+        //            label_56:
+        //            if ((uint)index4 + (uint)index2 <= uint.MaxValue)
+        //            {
+        //                if ((x10f4d88af727adbc & 0) == 0)
+        //                {
+        //                    if (0 != 0 || this.splitMode == Orientation.Horizontal)
+        //                    {
+        //                        sizeFArray[0].Height += num8;
+        //                        goto label_21;
+        //                    }
+        //                    else
+        //                        goto label_27;
+        //                }
+        //                else
+        //                    goto label_31;
+        //            }
+        //            else
+        //                goto label_21;
+        //            label_35:
+        //            float num9;
+        //            if (index4 >= x10f4d88af727adbc)
+        //            {
+        //                num2 = 0.0f;
+        //                if ((uint)num6 <= uint.MaxValue)
+        //                    goto label_32;
+        //            }
+        //            else
+        //            {
+        //                num9 = this.splitMode != Orientation.Horizontal ? sizeFArray[index4].Width : sizeFArray[index4].Height;
+        //                goto label_44;
+        //            }
+        //            label_40:
+        //            if (this.splitMode == Orientation.Horizontal)
+        //                goto label_39;
+        //            else
+        //                goto label_41;
+        //            label_38:
+        //            ++index4;
+        //            goto label_42;
+        //            label_39:
+        //            sizeFArray[index4].Height = num9;
+        //            goto label_38;
+        //            label_41:
+        //            if ((uint)num4 >= 0U)
+        //            {
+        //                sizeFArray[index4].Width = num9;
+        //                goto label_38;
+        //            }
+        //            label_42:
+        //            if ((uint)index6 + (uint)num5 >= 0U)
+        //            {
+        //                if ((uint)index3 - (uint)index6 < 0U)
+        //                    return;
+        //                else
+        //                    goto label_35;
+        //            }
+        //            else
+        //                goto label_32;
+        //            label_44:
+        //            num9 += num8 * (num9 / num2);
+        //            goto label_40;
+        //            label_47:
+        //            num8 = (float)num4 - num2;
+        //            index4 = 0;
+        //            goto label_35;
+        //            label_54:
+        //            while (index1 < x10f4d88af727adbc)
+        //            {
+        //                num2 += this.splitMode == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
+        //                if ((uint)num1 >= 0U)
+        //                    ++index1;
+        //            }
+        //            this.x366d4cf7098f9c63.Clear();
+        //            if ((uint)num2 <= uint.MaxValue && num4 <= 0)
+        //            {
+        //                if ((uint)num3 <= uint.MaxValue)
+        //                    return;
+        //                else
+        //                    return;
+        //            }
+        //            else
+        //            {
+        //                sizeFArray = new SizeF[x10f4d88af727adbc];
+        //                index2 = 0;
+        //                goto label_49;
+        //            }
+        //            label_63:
+        //            layoutSystemBaseArray = this.x10878bfc002a3aaf(out x10f4d88af727adbc);
+        //            if (x10f4d88af727adbc == 0)
+        //                return;
+        //            int num10;
+        //            do
+        //            {
+        //                if (x10f4d88af727adbc > 1)
+        //                    goto label_61;
+        //                label_58:
+        //                num4 = this.splitMode == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
+        //                continue;
+        //                label_61:
+        //                floating = false;
+        //                goto label_58;
+        //            }
+        //            while ((num10 | int.MinValue) == 0);
+        //            goto label_55;
+        //        }
+        //
+        internal override void x84b6f3c22477dacb(RendererBase render, Graphics graphics, Font font)
         {
             if (this.DockContainer == null)
                 return;
@@ -1501,7 +1672,7 @@ namespace FQ.FreeDock
                 while (enumerator1.MoveNext())
                 {
                     Rectangle bounds = (Rectangle)enumerator1.Current;
-                    x38870620fd380a6b.DrawSplitter(container, (Control)this.DockContainer, x41347a961b838962, bounds, this.splitMode);
+                    render.DrawSplitter(container, (Control)this.DockContainer, graphics, bounds, this.splitMode);
                 }
             }
             finally
@@ -1546,10 +1717,10 @@ namespace FQ.FreeDock
                         goto label_24;
                 }
                 label_23:
-                x41347a961b838962.SetClip(layoutSystemBase.Bounds);
-                layoutSystemBase.x84b6f3c22477dacb(x38870620fd380a6b, x41347a961b838962, x26094932cf7a9139);
+                graphics.SetClip(layoutSystemBase.Bounds);
+                layoutSystemBase.x84b6f3c22477dacb(render, graphics, font);
                 Region clip;
-                x41347a961b838962.Clip = clip;
+                graphics.Clip = clip;
                 if (4 == 0 || 0 != 0)
                 {
                     if (4 != 0)
@@ -1560,7 +1731,7 @@ namespace FQ.FreeDock
                 else
                     goto label_19;
                 label_24:
-                clip = x41347a961b838962.Clip;
+                clip = graphics.Clip;
                 goto label_23;
                 label_26:
                 layoutSystemBase = (LayoutSystemBase)enumerator2.Current;
@@ -1648,7 +1819,7 @@ namespace FQ.FreeDock
 
         internal bool x7ca4fdcb31f9824a()
         {
-            IEnumerator enumerator = this.x820c504c9c557c92.GetEnumerator();
+            IEnumerator enumerator = this.layoutSystems.GetEnumerator();
             bool flag;
             try
             {
@@ -1758,20 +1929,21 @@ namespace FQ.FreeDock
             protected override void OnClear()
             {
                 base.OnClear();
+
                 IEnumerator enumerator = this.GetEnumerator();
                 try
                 {
                     while (enumerator.MoveNext())
                     {
                         LayoutSystemBase layoutSystemBase = (LayoutSystemBase)enumerator.Current;
-                        layoutSystemBase.xb6a159a84cb992d6 = (SplitLayoutSystem)null;
-                        layoutSystemBase.x56e964269d48cfcc((DockContainer)null);
+                        layoutSystemBase.xb6a159a84cb992d6 = null;
+                        layoutSystemBase.x56e964269d48cfcc(null);
                     }
                 }
                 finally
                 {
                     IDisposable disposable = enumerator as IDisposable;
-                    if (2 == 0 || disposable != null)
+                    if (disposable != null)
                         disposable.Dispose();
                 }
             }
@@ -1783,16 +1955,11 @@ namespace FQ.FreeDock
             protected override void OnClearComplete()
             {
                 base.OnClearComplete();
-                if (0 == 0 || -2 == 0)
-                    goto label_4;
-                label_1:
-                if (int.MinValue != 0)
-                    return;
-                label_4:
-                if (this.xd7a3953bce504b63)
-                    return;
-                this.x8e9e04a70e31e166();
-                goto label_1;
+                if (!this.xd7a3953bce504b63)
+                {
+                    this.x8e9e04a70e31e166();
+                }
+
             }
 
             /// <summary>
@@ -1802,14 +1969,13 @@ namespace FQ.FreeDock
             protected override void OnInsertComplete(int index, object value)
             {
                 base.OnInsertComplete(index, value);
-                if ((int)byte.MaxValue == 0)
-                    return;
                 LayoutSystemBase layoutSystemBase = (LayoutSystemBase)value;
                 layoutSystemBase.xb6a159a84cb992d6 = this.xb6a159a84cb992d6;
                 layoutSystemBase.x56e964269d48cfcc(this.xb6a159a84cb992d6.DockContainer);
-                if (this.xd7a3953bce504b63)
-                    return;
-                this.x8e9e04a70e31e166();
+                if (!this.xd7a3953bce504b63)
+                {
+                    this.x8e9e04a70e31e166();
+                }
             }
 
             /// <summary>
@@ -1930,7 +2096,7 @@ namespace FQ.FreeDock
             {
                 if (layoutSystem.xb6a159a84cb992d6 != null)
                     throw new ArgumentException("Layout system already has a parent. You must first remove it from its parent.");
-                this.List.Insert(index, (object)layoutSystem);
+                this.List.Insert(index, layoutSystem);
             }
 
             /// <summary>
@@ -1940,7 +2106,7 @@ namespace FQ.FreeDock
             /// <param name="layoutSystem">The layout system to remove.</param>
             public void Remove(LayoutSystemBase layoutSystem)
             {
-                this.List.Remove((object)layoutSystem);
+                this.List.Remove(layoutSystem);
             }
 
             /// <summary>
@@ -1953,7 +2119,7 @@ namespace FQ.FreeDock
             /// </returns>
             public bool Contains(LayoutSystemBase layoutSystem)
             {
-                return this.List.Contains((object)layoutSystem);
+                return this.List.Contains(layoutSystem);
             }
 
             /// <summary>
@@ -1966,7 +2132,7 @@ namespace FQ.FreeDock
             /// </returns>
             public int IndexOf(LayoutSystemBase layoutSystem)
             {
-                return this.List.IndexOf((object)layoutSystem);
+                return this.List.IndexOf(layoutSystem);
             }
 
             /// <summary>
@@ -1976,7 +2142,7 @@ namespace FQ.FreeDock
             /// <param name="array">The array to be copied in to.</param><param name="index">The index to start at.</param>
             public void CopyTo(LayoutSystemBase[] array, int index)
             {
-                this.List.CopyTo((Array)array, index);
+                this.List.CopyTo(array, index);
             }
         }
     }
