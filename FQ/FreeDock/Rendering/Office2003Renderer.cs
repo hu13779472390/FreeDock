@@ -11,7 +11,7 @@ namespace FQ.FreeDock.Rendering
     /// </summary>
     public class Office2003Renderer : ThemeAwareRendererBase
     {
-        private System.Drawing.Size x95dac044246123ac = new System.Drawing.Size(16, 16);
+        private Size x95dac044246123ac = new Size(16, 16);
         private Color x5bdc84993d5749e9;
         private Color xf6500c4730a3d95a;
         private Color xfc7b03fc2744e317;

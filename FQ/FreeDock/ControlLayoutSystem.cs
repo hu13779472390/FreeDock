@@ -25,7 +25,7 @@ namespace FQ.FreeDock
     public class ControlLayoutSystem : LayoutSystemBase
     {
         private Guid xb51cd75f17ace1ec = Guid.NewGuid();
-        private System.Drawing.Point x6afebf16b45c02e0 = System.Drawing.Point.Empty;
+        private Point x6afebf16b45c02e0 = Point.Empty;
         private const int x1e9b7c427b6c44fa = 19;
         private const int x26539fe4604823df = 15;
         private ControlLayoutSystem.DockControlCollection xe477cc01ecfef1fb;
@@ -36,7 +36,7 @@ namespace FQ.FreeDock
         internal Rectangle xc78399ba98eab19f;
         private DockControl xbf5c00c8e3dd85fc;
         private bool xf111a0cc60fdac46;
-        private x10ac79a4257c7f52 x4fb7dbcd13b8ce4b;
+        private AutoHideBar x4fb7dbcd13b8ce4b;
         private x0a9f5257a10031b2 x26e80f23e22a05ae;
         private x0a9f5257a10031b2 x65911b61bef3a921;
         private x0a9f5257a10031b2 x3b444f64233558c3;
@@ -186,7 +186,7 @@ namespace FQ.FreeDock
             }
         }
 
-        internal x10ac79a4257c7f52 x10ac79a4257c7f52
+        internal AutoHideBar x10ac79a4257c7f52
         {
             get
             {
@@ -281,7 +281,7 @@ namespace FQ.FreeDock
                             disposable.Dispose();
                     }
                     label_20:
-                    x10ac79a4257c7f52 autoHideBar = this.DockContainer.Manager.GetAutoHideBar(this.DockContainer.Dock);
+                    AutoHideBar autoHideBar = this.DockContainer.Manager.GetAutoHideBar(this.DockContainer.Dock);
                     if (autoHideBar != null)
                     {
                         if (4 == 0)
@@ -627,7 +627,7 @@ namespace FQ.FreeDock
             this.x10ac79a4257c7f52.xcdb145600c1b7224(true);
         }
 
-        internal void xa85d8c17921cc878(x10ac79a4257c7f52 x4fb7dbcd13b8ce4b)
+        internal void xa85d8c17921cc878(AutoHideBar x4fb7dbcd13b8ce4b)
         {
             this.x4fb7dbcd13b8ce4b = x4fb7dbcd13b8ce4b;
         }
@@ -1001,12 +1001,12 @@ namespace FQ.FreeDock
             return flag;
         }
 
-        internal virtual string xe0e7b93bedab6c05(System.Drawing.Point x13d4cb8d1bd20347)
+        internal virtual string xe0e7b93bedab6c05(Point location)
         {
-            DockControl controlAt = this.GetControlAt(x13d4cb8d1bd20347);
+            DockControl controlAt = this.GetControlAt(location);
             if (controlAt == null)
             {
-                x0a9f5257a10031b2 x0a9f5257a10031b2 = this.x07083a4bfd59263d(x13d4cb8d1bd20347.X, x13d4cb8d1bd20347.Y);
+                x0a9f5257a10031b2 x0a9f5257a10031b2 = this.x07083a4bfd59263d(location.X, location.Y);
                 if (x0a9f5257a10031b2 == this.x26e80f23e22a05ae)
                     return SandDockLanguage.CloseText;
                 if (x0a9f5257a10031b2 == this.x65911b61bef3a921)
@@ -1437,7 +1437,7 @@ namespace FQ.FreeDock
                 label_24:
                 if ((uint)(focused ? 1 : 0) - (uint)(drawSeparator ? 1 : 0) < 0U)
                 {
-                     goto label_14;
+                    goto label_14;
                 }
                 else
                     goto label_18;
@@ -1670,7 +1670,6 @@ namespace FQ.FreeDock
                 state |= DrawItemState.Disabled;
             x38870620fd380a6b.DrawDocumentStripButton(x41347a961b838962, x128517d7ded59312.xda73fcb97c77d998, x271bd5d42b3ea793, state);
         }
-
         // reviewed
         internal virtual void xd541e2fc281b554b()
         {
@@ -1678,11 +1677,11 @@ namespace FQ.FreeDock
             {
                 if (this.x10ac79a4257c7f52.x23498f53d87354d4 == this)
                     this.x10ac79a4257c7f52.xbb5f70c792fb9034(this.xb48529af1739dd06);
-            } 
-            else 
+            }
+            else
             {
                 if (this.IsInContainer)
-                   this.DockContainer.Invalidate(this.xb48529af1739dd06);
+                    this.DockContainer.Invalidate(this.xb48529af1739dd06);
             }
         }
 
@@ -2239,7 +2238,7 @@ namespace FQ.FreeDock
             else
                 goto label_38;
             label_15:
-            x10ac79a4257c7f52 autoHideBar;
+            AutoHideBar autoHideBar;
             autoHideBar.x7fdaeb05cb5e84f3.xd6b6ed77479ef68c(this);
             return;
             label_24:
@@ -2496,7 +2495,7 @@ namespace FQ.FreeDock
             else
                 goto label_22;
             label_4:
-            int num2;
+            int num2 = 0;
             int y = 0;
             if (!this.xbf5c00c8e3dd85fc.ShowOptions)
             {
@@ -2682,7 +2681,7 @@ namespace FQ.FreeDock
 
         private void x7fd1f193b21c8833()
         {
-            foreach (DockControl dockControl in (CollectionBase) this.Controls)
+            foreach (DockControl dockControl in this.Controls)
                 dockControl.x44fd51d909a57a2a();
         }
 
@@ -2693,17 +2692,11 @@ namespace FQ.FreeDock
         protected internal override void Layout(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
         {
             base.Layout(renderer, graphics, bounds, floating);
-            if (4 == 0)
+            this.x7fd1f193b21c8833();
+            if (this.Collapsed && this.DockContainer.x0c2484ccd29b8358)
                 return;
-            do
-            {
-                this.x7fd1f193b21c8833();
-                if (0 == 0 && !this.Collapsed || !this.DockContainer.x0c2484ccd29b8358)
-                    this.CalculateLayout(renderer, bounds, floating, out this.xb48529af1739dd06, out this.xa358da7dd5364cab, out this.x21ed2ecc088ef4e4, out this.xc78399ba98eab19f);
-                else
-                    goto label_24;
-            }
-            while (false);
+
+            this.CalculateLayout(renderer, bounds, floating, out this.xb48529af1739dd06, out this.xa358da7dd5364cab, out this.x21ed2ecc088ef4e4, out this.xc78399ba98eab19f);
             this.xd30df1068ed42e28 = true;
             try
             {
@@ -2715,50 +2708,21 @@ namespace FQ.FreeDock
                     if (dockControl != this.SelectedControl)
                         dockControl.xbdd4aaac1291a8c7(false);
                 }
-                IEnumerator enumerator = this.xe477cc01ecfef1fb.GetEnumerator();
-                try
+
+                foreach (DockControl control  in this.xe477cc01ecfef1fb)
                 {
-                    while (true)
+                    if (control == this.SelectedControl)
                     {
-                        DockControl control;
-                        do
-                        {
-                            if (enumerator.MoveNext())
-                                goto label_19;
-                            else
-                                goto label_18;
-                            label_16:
-                            continue;
-                            label_18:
-                            if (0 != 0)
-                                goto label_16;
-                            else
-                                goto label_1;
-                            label_19:
-                            control = (DockControl)enumerator.Current;
-                            goto label_16;
-                        }
-                        while (control != this.SelectedControl);
                         Rectangle rectangle = renderer.AdjustDockControlClientBounds(this, control, this.x21ed2ecc088ef4e4);
                         control.Bounds = rectangle;
                         control.xbdd4aaac1291a8c7(true);
                     }
-                    label_1:
-                    return;
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
                 }
             }
             finally
             {
                 this.xd30df1068ed42e28 = false;
             }
-            label_24:
-            ;
         }
 
         private void x5d6e30ce9634c49e(RendererBase x38870620fd380a6b, Graphics x41347a961b838962, Rectangle xa358da7dd5364cab)
@@ -3388,7 +3352,7 @@ namespace FQ.FreeDock
             /// <param name="array">The array to be copied in to.</param><param name="index">The index to start at.</param>
             public void CopyTo(DockControl[] array, int index)
             {
-                this.List.CopyTo((Array)array, index);
+                this.List.CopyTo(array, index);
             }
         }
 

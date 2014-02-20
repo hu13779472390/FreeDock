@@ -42,7 +42,7 @@ namespace FQ.FreeDock.Rendering
             if (!(value is string))
                 return base.ConvertFrom(context, culture, value);
 
-            string render = (string)value;
+            string render = value as string;
             if (render == null)
                 return null;
 

@@ -24,6 +24,8 @@ namespace FQ.FreeDock
     [Designer(typeof(DockControlDesigner))]
     public abstract class DockControl : ContainerControl
     {
+        private const int WM_MOUSEACTIVATE = 0x21;
+
         internal Rectangle x123e054dab107457 = Rectangle.Empty;
         internal Rectangle x700c42042910e68b = Rectangle.Empty;
         private string xd84978f0dad7afcd = "";
@@ -2793,9 +2795,8 @@ namespace FQ.FreeDock
         /// <param name="e">The arguments associated with the event.</param>
         protected internal virtual void OnAutoHidePopupClosed(EventArgs e)
         {
-            if (this.AutoHidePopupClosed == null)
-                return;
-            this.AutoHidePopupClosed((object)this, e);
+            if (this.AutoHidePopupClosed != null)
+                this.AutoHidePopupClosed(this, e);
         }
 
         /// <summary>
@@ -2805,9 +2806,8 @@ namespace FQ.FreeDock
         /// <param name="e">The arguments associated with the event.</param>
         protected internal virtual void OnAutoHidePopupOpened(EventArgs e)
         {
-            if (this.AutoHidePopupOpened == null)
-                return;
-            this.AutoHidePopupOpened((object)this, e);
+            if (this.AutoHidePopupOpened != null)
+                this.AutoHidePopupOpened(this, e);
         }
 
         internal void xb2b69aae23a4ae6d(ControlLayoutSystem x6e150040c8d97700)
@@ -2926,8 +2926,6 @@ namespace FQ.FreeDock
                     this.Manager = null;
             }
             base.Dispose(disposing);
-
-
         }
 
         /// <summary>
@@ -2937,7 +2935,7 @@ namespace FQ.FreeDock
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            if (m.Msg == 33 && !this.ContainsFocus)
+            if (m.Msg == WM_MOUSEACTIVATE && !this.ContainsFocus)
             {
                 this.Activate();
             }

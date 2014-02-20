@@ -1,16 +1,33 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\xd0a1f65420a07725.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\x7a797590a9beb775.cs">
     <Files>
-      <File FileName="FQ\FreeDock\x9b2777bb8e78938b.cs" Line="111" Column="1" />
-      <File FileName="FQ\FreeDock\x8e80e1c8bce8caf7.cs" Line="7" Column="28" />
-      <File FileName="FQ\FreeDock\xd0a1f65420a07725.cs" Line="52" Column="14" />
+      <File FileName="FQ\FreeDock\xedb4922162c60d3d.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\xd936980ea1aac341.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\xd0aa9d0e7d3446c0.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\xd0a1f65420a07725.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x9b2777bb8e78938b.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x8e80e1c8bce8caf7.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x890231ddf317379e.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x87cf4de36131799d.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x807757bdf074f1b8.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x7fc004d490c8a431.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x7a797590a9beb775.cs" Line="18" Column="29" />
+      <File FileName="FQ\FreeDock\x60f3af502af1d663.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x5678bb8d80c0f12e.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x44c2ba9761cb4dd2.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x443cc432acaadb1d.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x410f3612b9a8f9de.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x31248f32f85df1dd.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x245a5abec1c73d3a.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\x130e0425ae2d4496.cs" Line="1" Column="1" />
+      <File FileName="FQ\Util\Tooltips.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\ControlLayoutSystem.cs" Line="593" Column="1" />
+      <File FileName="FQ\FreeDock\SandDockLanguage.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\Alex\FreeDock\FQ\FreeDock\x130e0425ae2d4496.cs" line="34" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

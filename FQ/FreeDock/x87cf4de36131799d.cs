@@ -2,13 +2,13 @@
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using TD.Util;
+using FQ.Util;
 
 namespace FQ.FreeDock
 {
     class x87cf4de36131799d : Control
     {
-        private x10ac79a4257c7f52 x2ee8392f53a01b93;
+        private AutoHideBar autoHideBar;
         private ControlLayoutSystem x6e150040c8d97700;
         private x7fc004d490c8a431 x372569d2ea29984e;
         private Rectangle x21ed2ecc088ef4e4;
@@ -19,7 +19,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                if (this.x2ee8392f53a01b93.Dock == DockStyle.Left || this.x2ee8392f53a01b93.Dock == DockStyle.Right)
+                if (this.autoHideBar.Dock == DockStyle.Left || this.autoHideBar.Dock == DockStyle.Right)
                     return this.x21ed2ecc088ef4e4.Width;
                 else
                     return this.x21ed2ecc088ef4e4.Height;
@@ -67,7 +67,7 @@ namespace FQ.FreeDock
                     }
                     while (0 != 0);
                     label_9:
-                    switch (this.x2ee8392f53a01b93.Dock)
+                    switch (this.autoHideBar.Dock)
                     {
                         case DockStyle.Top:
                             goto label_5;
@@ -126,11 +126,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x2ee8392f53a01b93.x460ab163f44a604d.AllowDockContainerResize;
+                return this.autoHideBar.x460ab163f44a604d.AllowDockContainerResize;
             }
         }
 
-        public x87cf4de36131799d(x10ac79a4257c7f52 bar)
+        public x87cf4de36131799d(AutoHideBar bar)
         {
             if (8 != 0 && 0 == 0)
                 goto label_2;
@@ -139,17 +139,17 @@ namespace FQ.FreeDock
             this.BackColor = SystemColors.Control;
             return;
             label_2:
-            this.x2ee8392f53a01b93 = bar;
+            this.autoHideBar = bar;
             this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.Selectable, false);
-            this.xac1c850120b1f254 = new Tooltips((Control)this);
+            this.xac1c850120b1f254 = new Tooltips(this);
             this.xac1c850120b1f254.xa6e4f463e64a5987 = false;
             goto label_1;
         }
 
         private void x81dc33c66d5e1e33(System.Drawing.Point xcb09bd0cee4909a3)
         {
-            this.x372569d2ea29984e = new x7fc004d490c8a431(this.x2ee8392f53a01b93, this, xcb09bd0cee4909a3);
+            this.x372569d2ea29984e = new x7fc004d490c8a431(this.autoHideBar, this, xcb09bd0cee4909a3);
             this.x372569d2ea29984e.x868a32060451dd2e += new EventHandler(this.xfae511fd7c4fb447);
             this.x372569d2ea29984e.x67ecc0d0e7c9a202 += new x7fc004d490c8a431.ResizingManagerFinishedEventHandler(this.xc555e814c1720baf);
         }
@@ -182,13 +182,13 @@ namespace FQ.FreeDock
             else
                 goto label_10;
             label_3:
-            this.x6e150040c8d97700.LayoutCollapsed(this.x2ee8392f53a01b93.x460ab163f44a604d.Renderer, this.x21ed2ecc088ef4e4);
+            this.x6e150040c8d97700.LayoutCollapsed(this.autoHideBar.x460ab163f44a604d.Renderer, this.x21ed2ecc088ef4e4);
             if ((int)byte.MaxValue == 0)
                 return;
             this.Invalidate();
             return;
             label_10:
-            switch (this.x2ee8392f53a01b93.Dock)
+            switch (this.autoHideBar.Dock)
             {
                 case DockStyle.Top:
                     this.x59f159fe47159543 = new Rectangle(this.x21ed2ecc088ef4e4.X, this.x21ed2ecc088ef4e4.Bottom - 4, this.x21ed2ecc088ef4e4.Width, 4);
@@ -250,7 +250,7 @@ namespace FQ.FreeDock
                 else
                     break;
                 label_6:
-                this.xac1c850120b1f254 = (Tooltips)null;
+                this.xac1c850120b1f254 = null;
                 goto label_2;
                 label_8:
                 if (int.MaxValue != 0)
@@ -261,8 +261,8 @@ namespace FQ.FreeDock
                 else
                     goto label_14;
                 label_10:
-                this.x2ee8392f53a01b93.xcdb145600c1b7224(true);
-                this.x2ee8392f53a01b93 = (x10ac79a4257c7f52)null;
+                this.autoHideBar.xcdb145600c1b7224(true);
+                this.autoHideBar = (AutoHideBar)null;
                 label_11:
                 this.x5a9cbf8ad0ee9896 = (ControlLayoutSystem)null;
                 if (this.xac1c850120b1f254 != null)
@@ -288,13 +288,13 @@ namespace FQ.FreeDock
                 if (!this.ContainsFocus)
                     goto label_10;
                 label_15:
-                if (this.x2ee8392f53a01b93.x460ab163f44a604d.OwnerForm != null && this.x2ee8392f53a01b93.x460ab163f44a604d.OwnerForm.IsMdiContainer)
+                if (this.autoHideBar.x460ab163f44a604d.OwnerForm != null && this.autoHideBar.x460ab163f44a604d.OwnerForm.IsMdiContainer)
                 {
                     if (0 == 0)
                     {
-                        if (this.x2ee8392f53a01b93.x460ab163f44a604d.OwnerForm.ActiveMdiChild != null)
+                        if (this.autoHideBar.x460ab163f44a604d.OwnerForm.ActiveMdiChild != null)
                         {
-                            this.x2ee8392f53a01b93.x460ab163f44a604d.OwnerForm.ActiveControl = (Control)this.x2ee8392f53a01b93.x460ab163f44a604d.OwnerForm.ActiveMdiChild;
+                            this.autoHideBar.x460ab163f44a604d.OwnerForm.ActiveControl = (Control)this.autoHideBar.x460ab163f44a604d.OwnerForm.ActiveMdiChild;
 //                            if ((uint)disposing - (uint)disposing < 0U)
 //                            {
 //                                if (((disposing ? 1 : 0) & 0) != 0)
@@ -428,7 +428,7 @@ namespace FQ.FreeDock
             Cursor.Current = Cursors.VSplit;
             goto label_8;
             label_25:
-            if (this.x2ee8392f53a01b93.Dock != DockStyle.Left && this.x2ee8392f53a01b93.Dock != DockStyle.Right)
+            if (this.autoHideBar.Dock != DockStyle.Left && this.autoHideBar.Dock != DockStyle.Right)
             {
                 if (0 == 0)
                 {
@@ -573,7 +573,7 @@ namespace FQ.FreeDock
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            this.x2ee8392f53a01b93.x460ab163f44a604d.Renderer.StartRenderSession(HotkeyPrefix.None);
+            this.autoHideBar.x460ab163f44a604d.Renderer.StartRenderSession(HotkeyPrefix.None);
             if (0 == 0)
                 goto label_8;
             label_1:
@@ -583,13 +583,13 @@ namespace FQ.FreeDock
             if (this.x61fa1911d2d31a75)
                 goto label_7;
             label_3:
-            this.x2ee8392f53a01b93.x460ab163f44a604d.Renderer.FinishRenderSession();
+            this.autoHideBar.x460ab163f44a604d.Renderer.FinishRenderSession();
             if (0 == 0)
                 return;
             else
                 goto label_8;
             label_7:
-            this.x2ee8392f53a01b93.x460ab163f44a604d.Renderer.DrawSplitter((Control)null, (Control)this, e.Graphics, this.x59f159fe47159543, this.x2ee8392f53a01b93.Dock == DockStyle.Top || this.x2ee8392f53a01b93.Dock == DockStyle.Bottom ? Orientation.Horizontal : Orientation.Vertical);
+            this.autoHideBar.x460ab163f44a604d.Renderer.DrawSplitter((Control)null, (Control)this, e.Graphics, this.x59f159fe47159543, this.autoHideBar.Dock == DockStyle.Top || this.autoHideBar.Dock == DockStyle.Bottom ? Orientation.Horizontal : Orientation.Vertical);
             goto label_3;
             label_8:
             if (-2 != 0)
@@ -597,7 +597,7 @@ namespace FQ.FreeDock
             else
                 goto label_9;
             label_4:
-            this.x6e150040c8d97700.x84b6f3c22477dacb(this.x2ee8392f53a01b93.x460ab163f44a604d.Renderer, e.Graphics, this.Font);
+            this.x6e150040c8d97700.x84b6f3c22477dacb(this.autoHideBar.x460ab163f44a604d.Renderer, e.Graphics, this.Font);
             goto label_2;
             label_5:
             if (this.x6e150040c8d97700 != null)

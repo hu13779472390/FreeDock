@@ -1045,7 +1045,7 @@ namespace FQ.FreeDock
             label_28:
             if (this.x74e31f9641656e0b)
             {
-                IEnumerator enumerator = this.x91f347c6e97f1846.xd27fa35d10494112.GetEnumerator();
+                IEnumerator enumerator = this.x91f347c6e97f1846.dockContainers.GetEnumerator();
                 try
                 {
                     label_35:

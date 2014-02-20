@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FQ.FreeDock
 {
-    internal class x60f3af502af1d663
+    class x60f3af502af1d663
     {
         public static bool x2e20a402b77c44dc
         {
@@ -19,8 +19,9 @@ namespace FQ.FreeDock
             get
             {
                 StringBuilder pszThemeFileName = new StringBuilder(512);
-                x60f3af502af1d663.GetCurrentThemeName(pszThemeFileName, pszThemeFileName.Capacity, (StringBuilder)null, 0, (StringBuilder)null, 0);
-                return ((object)pszThemeFileName).ToString();
+                x60f3af502af1d663.GetCurrentThemeName(pszThemeFileName, pszThemeFileName.Capacity, null, 0, null, 0);
+                return pszThemeFileName.ToString();
+//                return "noluna";
             }
         }
 
@@ -29,8 +30,9 @@ namespace FQ.FreeDock
             get
             {
                 StringBuilder pszColorBuff = new StringBuilder(512);
-                x60f3af502af1d663.GetCurrentThemeName((StringBuilder)null, 0, pszColorBuff, pszColorBuff.Capacity, (StringBuilder)null, 0);
+                x60f3af502af1d663.GetCurrentThemeName(null, 0, pszColorBuff, pszColorBuff.Capacity, (StringBuilder)null, 0);
                 return ((object)pszColorBuff).ToString();
+//                return "noluna";
             }
         }
 

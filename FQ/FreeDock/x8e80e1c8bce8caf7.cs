@@ -6,7 +6,7 @@ namespace FQ.FreeDock
 {
     class x8e80e1c8bce8caf7 : x890231ddf317379e
     {
-        private System.Drawing.Point xcb09bd0cee4909a3 = System.Drawing.Point.Empty;
+        private Point xcb09bd0cee4909a3 = Point.Empty;
         internal const int x7ae613ae2690dbe6 = 25;
         private DockContainer xd3311d815ca25f02;
         private SplitLayoutSystem xd0bab8a0f8013a7b;

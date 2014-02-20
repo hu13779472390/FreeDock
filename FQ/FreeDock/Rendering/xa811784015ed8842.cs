@@ -9,13 +9,7 @@ namespace FQ.FreeDock.Rendering
     {
         internal static void x91433b5e99eb7cac(Graphics graphics, Color color)
         {
-            try
-            {
-                graphics.Clear(color);
-            }
-            catch
-            {
-            }
+            graphics.Clear(color);
         }
 
         public static void xf8aac789a7846004(Graphics graphics, Rectangle bounds, Rectangle x0bd0d09521a6c8ef, Image image, Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Brush brush, Color xa1359fb73f86c7a4, Color xfca0e3085d5a7f42, Color x228f9881a1be0e5d, bool x9f93ebd2ca5601a2, int x6843d1739e949b3a, int xbd5e294caed74c4d, TextFormatFlags xae3b2752a89e7464, bool xb0f87b71823b1d4e)
@@ -147,7 +141,7 @@ namespace FQ.FreeDock.Rendering
             return new Size(TextRenderer.MeasureText(graphics, text, font, new Size(int.MaxValue, int.MaxValue), flags).Width + 3 + 6 + (size.Width + 4), size.Height);
         }
 
-        public static void x272eca3f5ebfa9fc(Graphics x41347a961b838962, Rectangle bounds, Image image,  Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState x01b557925841ae51, TextFormatFlags xae3b2752a89e7464)
+        public static void x272eca3f5ebfa9fc(Graphics x41347a961b838962, Rectangle bounds, Image image, Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState x01b557925841ae51, TextFormatFlags xae3b2752a89e7464)
         {
             using (LinearGradientBrush brush = new LinearGradientBrush(bounds, x477e9d1180ece053, x3421b2dea6733873, LinearGradientMode.Vertical))
             {

@@ -11,11 +11,6 @@ namespace FQ.FreeDock
     /// </summary>
     public sealed class SandDockLanguage
     {
-        //        private static string closeText = "Close";
-        //        private static string autoHideText;
-        //        private static string scrollLeftText;
-        //        private static string scrollRightText;
-        //        private static string windowPositionText;
         private static string activeFilesText;
         private static string x39981e4ce91f2127;
         private static string x0c2979d11a5a497d;
@@ -34,9 +29,7 @@ namespace FQ.FreeDock
             }
             set
             {
-                if (value == null)
-                    value = string.Empty;
-                SandDockLanguage.activeFilesText = value;
+                SandDockLanguage.activeFilesText = value ?? string.Empty;
             }
         }
 
@@ -81,11 +74,12 @@ namespace FQ.FreeDock
             SandDockLanguage.x72913f986fffe0b3 = "Ensure that you do not attempt to save any designer that opens with errors, as this can result in loss of work. Note that you may receive this message multiple times, once for each component instance in your designer.";
             SandDockLanguage.x39981e4ce91f2127 = "Visual Studio is attempting to load designers from a different assembly than the one your components are being created with. This will result in failure to load your designed component. This message is being displayed because SandDock has detected this condition and will give you more information that will help you to correct the problem.";
 
+            SandDockLanguage.CloseText = "Close";
             SandDockLanguage.AutoHideText = "Auto Hide";
             SandDockLanguage.ScrollLeftText = "Scroll Left";
             SandDockLanguage.ScrollRightText = "Scroll Right";
             SandDockLanguage.WindowPositionText = "Window  Position";
-            SandDockLanguage.activeFilesText = "Active Files";
+            SandDockLanguage.ActiveFilesText = "Active Files";
         }
 
         private SandDockLanguage()
@@ -109,7 +103,7 @@ namespace FQ.FreeDock
                 strArray1[3] = Environment.NewLine;
                 strArray1[4] = SandDockLanguage.x72913f986fffe0b3;
                 text = string.Concat(strArray1);
-                int num = (int)MessageBox.Show(text, "Visual Studio Error Detected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(text, "Visual Studio Error Detected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                 goto label_9;
 

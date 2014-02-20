@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace FQ.FreeDock
 {
-    internal class x44c2ba9761cb4dd2 : TypeConverter
+    class x44c2ba9761cb4dd2 : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {

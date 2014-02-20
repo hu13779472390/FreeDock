@@ -15,7 +15,7 @@ namespace FQ.FreeDock.Rendering
     [TypeConverter(typeof(x9c9262004128fe00))]
     public abstract class RendererBase : ITabControlRenderer, IDisposable
     {
-        private System.Drawing.Size imageSize = new System.Drawing.Size(16, 16);
+        private Size imageSize = new Size(16, 16);
         private bool customColors;
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace FQ.FreeDock.Rendering
         /// Gets the size of images used inside tabs.
         /// 
         /// </summary>
-        public virtual System.Drawing.Size ImageSize
+        public virtual Size ImageSize
         {
             get
             {
@@ -134,7 +134,7 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public abstract System.Drawing.Size TabControlPadding { get; }
+        public abstract Size TabControlPadding { get; }
 
         /// <summary>
         /// Overridden.
@@ -213,13 +213,13 @@ namespace FQ.FreeDock.Rendering
         /// 
         /// </summary>
         /// <param name="window">The window in question.</param><param name="backColor">The background color of the window.</param><param name="borderColor">The border color of the window.</param>
-        public virtual void ModifyDefaultWindowColors(DockControl window, ref System.Drawing.Color backColor, ref System.Drawing.Color borderColor)
+        public virtual void ModifyDefaultWindowColors(DockControl window, ref Color backColor, ref Color borderColor)
         {
         }
 
-        private void x985016783c040310(object xe0292b9ed559da7d, UserPreferenceChangedEventArgs xfbf34718e704c6bc)
+        private void x985016783c040310(object sender, UserPreferenceChangedEventArgs e)
         {
-            if (xfbf34718e704c6bc.Category != UserPreferenceCategory.Color || this.customColors)
+            if (e.Category != UserPreferenceCategory.Color || this.customColors)
                 return;
             this.GetColorsFromSystem();
         }
@@ -232,13 +232,13 @@ namespace FQ.FreeDock.Rendering
         /// <returns>
         /// The new colour produced after mixing.
         /// </returns>
-        protected internal static System.Drawing.Color InterpolateColors(System.Drawing.Color c1, System.Drawing.Color c2, float percentage)
+        protected internal static Color InterpolateColors(Color c1, Color c2, float percentage)
         {
             int A = (int)((float)c1.A + (float)(c2.A - c1.A) * percentage);
             int R = (int)((float)c1.R + (float)(c2.R - c1.R) * percentage);
             int G = (int)((float)c1.G + (float)(c2.G - c1.G) * percentage);
             int B = (int)((float)c1.B + (float)(c2.B - c1.B) * percentage);
-            return System.Drawing.Color.FromArgb(A, R, G, B);
+            return Color.FromArgb(A, R, G, B);
 
         }
 
@@ -272,7 +272,7 @@ namespace FQ.FreeDock.Rendering
         /// <returns>
         /// The minimum size of the document tab.
         /// </returns>
-        protected internal abstract System.Drawing.Size MeasureDocumentStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state);
+        protected internal abstract Size MeasureDocumentStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state);
 
         /// <summary>
         /// Measures a tabstrip tab in order to find the minimum required size.
@@ -282,7 +282,7 @@ namespace FQ.FreeDock.Rendering
         /// <returns>
         /// The minimum size of the document tab.
         /// </returns>
-        protected internal abstract System.Drawing.Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state);
+        protected internal abstract Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state);
 
         /// <summary>
         /// Draws the background of a document strip.
@@ -296,21 +296,21 @@ namespace FQ.FreeDock.Rendering
         /// 
         /// </summary>
         /// <param name="graphics">The Graphics object to draw with.</param><param name="bounds">The bounds to draw within.</param><param name="backColor">The background colour of the selected control.</param>
-        protected internal abstract void DrawControlClientBackground(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor);
+        protected internal abstract void DrawControlClientBackground(Graphics graphics, Rectangle bounds, Color backColor);
 
         /// <summary>
         /// Draws the background of the client area of a document.
         /// 
         /// </summary>
         /// <param name="graphics">The Graphics object to draw with.</param><param name="bounds">The bounds to draw within.</param><param name="backColor">The background colour of the selected document.</param>
-        protected internal abstract void DrawDocumentClientBackground(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor);
+        protected internal abstract void DrawDocumentClientBackground(Graphics graphics, Rectangle bounds, Color backColor);
 
         /// <summary>
         /// Draws a tab in a document strip.
         /// 
         /// </summary>
         /// <param name="graphics">The Graphics object to draw with.</param><param name="bounds">The bounds occupied by the tab.</param><param name="contentBounds">The bounds around the content of the tab (without any buttons).</param><param name="image">The image associated with the tab.</param><param name="text">The text associated with the tab.</param><param name="font">The font to draw text with.</param><param name="backColor">The background colour of the tab.</param><param name="foreColor">The foreground colour of the tab.</param><param name="state">The state of the tab.</param><param name="drawSeparator">Whether to draw a separator after the tab.</param>
-        protected internal abstract void DrawDocumentStripTab(Graphics graphics, Rectangle bounds, Rectangle contentBounds, Image image, string text, Font font, System.Drawing.Color backColor, System.Drawing.Color foreColor, DrawItemState state, bool drawSeparator);
+        protected internal abstract void DrawDocumentStripTab(Graphics graphics, Rectangle bounds, Rectangle contentBounds, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool drawSeparator);
 
         /// <summary>
         /// Draws the background of a <see cref="T:TD.SandDock.DockContainer"/>.
@@ -366,7 +366,7 @@ namespace FQ.FreeDock.Rendering
         /// 
         /// </summary>
         /// <param name="graphics">The Graphics object to draw with.</param><param name="bounds">The bounds to draw within.</param><param name="image">The image associated with this tab.</param><param name="text">The text associated with this tab.</param><param name="font">The font to draw the text with.</param><param name="backColor">The background colour of the tab.</param><param name="foreColor">The foreground colour of the tab.</param><param name="state">The state of the tab. This is equal to DrawItemState.Default by default.</param><param name="drawSeparator">Whether to draw a separator at the right of this tab.</param>
-        protected internal abstract void DrawTabStripTab(Graphics graphics, Rectangle bounds, Image image, string text, Font font, System.Drawing.Color backColor, System.Drawing.Color foreColor, DrawItemState state, bool drawSeparator);
+        protected internal abstract void DrawTabStripTab(Graphics graphics, Rectangle bounds, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool drawSeparator);
 
         /// <summary>
         /// Draws the background of the area occupied by collapsed control layout systems.
@@ -380,7 +380,7 @@ namespace FQ.FreeDock.Rendering
         /// 
         /// </summary>
         /// <param name="graphics">The Graphics object to draw with.</param><param name="bounds">The bounds to draw within.</param><param name="dockSide">The orientation of this tab. This will never be DockSide.None.</param><param name="image">The image associated with this tab.</param><param name="text">The text associated with this tab. This will be a zero-length string unless the tab is selected.</param><param name="font">The font to draw the text with.</param><param name="backColor">The background colour of the tab.</param><param name="foreColor">The foreground colour of the tab.</param><param name="state">The state of the tab. This is equal to DrawItemState.Default by default.</param><param name="vertical">Whether this tab is drawn vertically.</param>
-        protected internal abstract void DrawCollapsedTab(Graphics graphics, Rectangle bounds, DockSide dockSide, Image image, string text, Font font, System.Drawing.Color backColor, System.Drawing.Color foreColor, DrawItemState state, bool vertical);
+        protected internal abstract void DrawCollapsedTab(Graphics graphics, Rectangle bounds, DockSide dockSide, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool vertical);
 
         /// <summary>
         /// Draws the background of a titlebar within a control layout system.
@@ -413,11 +413,11 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public virtual void DrawFakeTabControlBackgroundExtension(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor)
+        public virtual void DrawFakeTabControlBackgroundExtension(Graphics graphics, Rectangle bounds, Color backColor)
         {
-            using (SolidBrush solidBrush = new SolidBrush(backColor))
+            using (SolidBrush brush = new SolidBrush(backColor))
             {
-                graphics.FillRectangle(solidBrush, bounds);
+                graphics.FillRectangle(brush, bounds);
             }
         }
 
@@ -434,11 +434,11 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public virtual void DrawTabControlBackground(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor, bool client)
+        public virtual void DrawTabControlBackground(Graphics graphics, Rectangle bounds, Color backColor, bool client)
         {
-            using (SolidBrush solidBrush = new SolidBrush(backColor))
+            using (SolidBrush brush = new SolidBrush(backColor))
             {
-                graphics.FillRectangle(solidBrush, bounds);
+                graphics.FillRectangle(brush, bounds);
             }
         }
 
@@ -446,7 +446,7 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public virtual System.Drawing.Size MeasureTabControlTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
+        public virtual Size MeasureTabControlTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
         {
             return this.MeasureDocumentStripTab(graphics, image, text, font, state);
         }
@@ -455,7 +455,7 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public virtual void DrawTabControlTab(Graphics graphics, Rectangle bounds, Image image, string text, Font font, System.Drawing.Color backColor, System.Drawing.Color foreColor, DrawItemState state, bool drawSeparator)
+        public virtual void DrawTabControlTab(Graphics graphics, Rectangle bounds, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool drawSeparator)
         {
             this.DrawDocumentStripTab(graphics, bounds, bounds, image, text, font, backColor, foreColor, state, drawSeparator);
         }
@@ -464,7 +464,7 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public virtual void DrawTabControlTabStripBackground(Graphics graphics, Rectangle bounds, System.Drawing.Color backColor)
+        public virtual void DrawTabControlTabStripBackground(Graphics graphics, Rectangle bounds, Color backColor)
         {
             this.DrawDocumentStripBackground(graphics, bounds);
         }

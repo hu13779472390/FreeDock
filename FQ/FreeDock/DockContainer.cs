@@ -7,7 +7,7 @@ using System.Drawing.Text;
 using System.Windows.Forms;
 using FQ.FreeDock.Design;
 using FQ.FreeDock.Rendering;
-using TD.Util;
+using FQ.Util;
 
 namespace FQ.FreeDock
 {
@@ -477,7 +477,6 @@ namespace FQ.FreeDock
             this.tooltips.xa6e4f463e64a5987 = false;
             this.tooltips.x9b21ee8e7ceaada3 += new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
             this.BackColor = SystemColors.Control;
-            return;
         }
 
         internal virtual void x5fc4eceec879ff0f()
@@ -657,11 +656,11 @@ namespace FQ.FreeDock
         /// The layout system found. If no layout system was found, a null reference is returned.
         /// </returns>
         // reviewed
-        public LayoutSystemBase GetLayoutSystemAt(Point position)
+        public LayoutSystemBase GetLayoutSystemAt(Point location)
         {
             foreach (LayoutSystemBase layout in this.x83627743ea4ce5a2)
             {
-                if (layout.Bounds.Contains(position) && layout is ControlLayoutSystem && !((ControlLayoutSystem)layout).Collapsed)
+                if (layout.Bounds.Contains(location) && layout is ControlLayoutSystem && !((ControlLayoutSystem)layout).Collapsed)
                 {
                     return layout;
                 }
@@ -1407,11 +1406,11 @@ namespace FQ.FreeDock
                 this.Manager.OnDockingFinished(e);
         }
 
-        private string xa3a7472ac4e61f76(System.Drawing.Point xb9c2cfae130d9256)
+        private string xa3a7472ac4e61f76(Point location)
         {
-            LayoutSystemBase layoutSystemAt = this.GetLayoutSystemAt(xb9c2cfae130d9256);
+            LayoutSystemBase layoutSystemAt = this.GetLayoutSystemAt(location);
             if (layoutSystemAt is ControlLayoutSystem)
-                return ((ControlLayoutSystem)layoutSystemAt).xe0e7b93bedab6c05(xb9c2cfae130d9256);
+                return ((ControlLayoutSystem)layoutSystemAt).xe0e7b93bedab6c05(location);
             else
                 return "";
         }

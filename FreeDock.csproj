@@ -72,7 +72,6 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="FQ\FreeDock\DocumentContainer.cs" />
-    <Compile Include="FQ\FreeDock\x10ac79a4257c7f52.cs" />
     <Compile Include="FQ\FreeDock\SandDockManager.cs" />
     <Compile Include="FQ\FreeDock\ShowControlContextMenuEventHandler.cs" />
     <Compile Include="FQ\FreeDock\ShowControlContextMenuEventArgs.cs" />
@@ -157,6 +156,7 @@
     <Compile Include="FQ\FreeDock\Design\DockContainerDesigner.cs" />
     <Compile Include="FQ\FreeDock\Design\DocumentContainerDesigner.cs" />
     <Compile Include="FQ\Util\Tooltips.cs" />
+    <Compile Include="c:\Users\Alex\FreeDock\FQ\FreeDock\AutoHideBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintbottom.png" />

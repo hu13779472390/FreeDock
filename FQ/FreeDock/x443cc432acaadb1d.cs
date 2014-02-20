@@ -29,11 +29,12 @@ namespace FQ.FreeDock
             {
                 // true if App is not in Terminal Services console session
                 return x443cc432acaadb1d.GetSystemMetrics(SM_REMOTESESSION) != 0;
+                return true;
             }
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int GetSysColor(int nIndex);
+//        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+//        private static extern int GetSysColor(int nIndex);
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();

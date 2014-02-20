@@ -722,24 +722,22 @@ namespace FQ.FreeDock
                     goto label_1;
             }
 
-            public x23d0185c2770c169(x31248f32f85df1dd manager, ControlLayoutSystem layoutSystem)
-        : this()
+            public x23d0185c2770c169(x31248f32f85df1dd manager, ControlLayoutSystem layoutSystem) : this()
             {
                 this.x91f347c6e97f1846 = manager;
                 this.x6e150040c8d97700 = layoutSystem;
                 this.xda73fcb97c77d998 = new Rectangle(layoutSystem.DockContainer.PointToScreen(layoutSystem.Bounds.Location), layoutSystem.Bounds.Size);
                 this.xda73fcb97c77d998 = new Rectangle(this.xda73fcb97c77d998.X + this.xda73fcb97c77d998.Width / 2 - 44, this.xda73fcb97c77d998.Y + this.xda73fcb97c77d998.Height / 2 - 44, 88, 88);
-                if (0 != 0)
-                    ;
                 this.x912beb3fd0dd9feb();
             }
 
             [DllImport("user32.dll")]
             private static extern bool SetWindowPos(HandleRef hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int flags);
-
+            private const int SWP_DRAWFRAME = 0x0010;
+            private const int SWP_SHOWWINDOW = 0x0040;
             private void x912beb3fd0dd9feb()
             {
-                using (Graphics x41347a961b838962 = Graphics.FromImage((Image)this.bitmap))
+                using (Graphics x41347a961b838962 = Graphics.FromImage(this.bitmap))
                 {
                     xa811784015ed8842.x91433b5e99eb7cac(x41347a961b838962, Color.Transparent);
                     if (1 != 0)
@@ -1377,10 +1375,12 @@ namespace FQ.FreeDock
                 this.timer.Start();
             }
 
+            // FIXME:edit here
             [SecuritySafeCritical]
             public void x2c6f5ac62ee048e5()
             {
-                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.xda73fcb97c77d998.X, this.xda73fcb97c77d998.Y, this.xda73fcb97c77d998.Width, this.xda73fcb97c77d998.Height, 80);
+//                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.xda73fcb97c77d998.X, this.xda73fcb97c77d998.Y, this.xda73fcb97c77d998.Width, this.xda73fcb97c77d998.Height, SWP_DRAWFRAME | SWP_SHOWWINDOW/*80*/);
+                this.Bounds = this.xda73fcb97c77d998;
             }
 
             private void OnTimer(object sender, EventArgs e)

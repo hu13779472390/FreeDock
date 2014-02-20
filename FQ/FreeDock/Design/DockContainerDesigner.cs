@@ -12,7 +12,7 @@ namespace FQ.FreeDock.Design
 {
     class DockContainerDesigner : ParentControlDesigner
     {
-        private System.Drawing.Point x6afebf16b45c02e0 = System.Drawing.Point.Empty;
+        private Point x6afebf16b45c02e0 = Point.Empty;
         private DockContainer x0467b00af7810f0c;
         private DockControl xaaafffc15ba630b7;
         private xedb4922162c60d3d x531514c39973cbc6;

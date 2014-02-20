@@ -1,5 +1,4 @@
-﻿//using Divelements.Util.Registration;
-using System;
+﻿using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -32,22 +31,22 @@ namespace FQ.FreeDock
     /// </remarks>
     [DefaultEvent("ActiveTabbedDocumentChanged")]
     [ToolboxBitmap(typeof(SandDockManager))]
-    [Designer("TD.SandDock.Design.SandDockManagerDesigner, SandDock.Design, Version=1.0.0.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3")]
+    [Designer("FQ.FreeDock.Design.SandDockManagerDesigner, SandDock.Design, Version=1.0.0.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3")]
     public class SandDockManager : Component
     {
-        private DockingHints x48cee1d69929b4fe = DockingHints.TranslucentFill;
-        private DockingManager x531514c39973cbc6 = DockingManager.Whidbey;
+        private DockingHints dockingHints = DockingHints.TranslucentFill;
+        private DockingManager dockingManager = DockingManager.Whidbey;
         private int xdca928fc295dbb2a = 30;
         private int xb3f3aa0fff672c52 = 500;
         private bool xf702e23ec6dfb474 = true;
         private bool xab09a805ddd3c3a1 = true;
         private bool xd76156c80fb2abda = true;
         private bool x46d0951c16d6ad61 = true;
-        private FQ.FreeDock.Rendering.BorderStyle xacfbd7a08ba56c78 = FQ.FreeDock.Rendering.BorderStyle.Flat;
+        private FQ.FreeDock.Rendering.BorderStyle borderStyle = FQ.FreeDock.Rendering.BorderStyle.Flat;
         private DocumentOverflowMode x8362acb4106ff84c = DocumentOverflowMode.Scrollable;
         private DocumentContainerWindowOpenPosition xf57f78376726d093 = DocumentContainerWindowOpenPosition.Last;
-        internal ArrayList xd27fa35d10494112;
-        internal ArrayList xa90af1bb0ada0f53;
+        internal ArrayList dockContainers;
+        internal ArrayList autoHideBars;
         private Hashtable x8fb2a5bf0df0416f;
         private DockControl x4daa1b665423612a;
         private RendererBase x38870620fd380a6b;
@@ -113,14 +112,13 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xacfbd7a08ba56c78;
+                return this.borderStyle;
             }
             set
             {
-                this.xacfbd7a08ba56c78 = value;
-                if (this.DocumentContainer == null)
-                    return;
-                this.DocumentContainer.x64b4c49ed703037e = this.xacfbd7a08ba56c78;
+                this.borderStyle = value;
+                if (this.DocumentContainer != null)
+                    this.DocumentContainer.x64b4c49ed703037e = this.borderStyle;
             }
         }
 
@@ -386,9 +384,9 @@ namespace FQ.FreeDock
             set
             {
                 this.xb379517eb20fde45 = value;
-                foreach (Control control in this.xd27fa35d10494112)
+                foreach (Control control in this.dockContainers)
                     control.AllowDrop = value;
-                foreach (Control control in this.xa90af1bb0ada0f53)
+                foreach (Control control in this.autoHideBars)
                     control.AllowDrop = value;
             }
         }
@@ -472,7 +470,7 @@ namespace FQ.FreeDock
                 if (value == this.x7478f4855b6bd03d)
                     return;
                 ArrayList arrayList = new ArrayList();
-                foreach (DockContainer dockContainer in this.xd27fa35d10494112)
+                foreach (DockContainer dockContainer in this.dockContainers)
                 {
                     if (dockContainer.Parent != null && dockContainer.Parent != value)
                         arrayList.Add((object)dockContainer);
@@ -515,11 +513,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x48cee1d69929b4fe;
+                return this.dockingHints;
             }
             set
             {
-                this.x48cee1d69929b4fe = value;
+                this.dockingHints = value;
             }
         }
 
@@ -572,11 +570,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x531514c39973cbc6;
+                return this.dockingManager;
             }
             set
             {
-                this.x531514c39973cbc6 = value;
+                this.dockingManager = value;
             }
         }
 
@@ -820,9 +818,9 @@ namespace FQ.FreeDock
         public SandDockManager()
         {
             this.x38870620fd380a6b = (RendererBase)new WhidbeyRenderer();
-            this.xd27fa35d10494112 = new ArrayList();
+            this.dockContainers = new ArrayList();
             this.x8fb2a5bf0df0416f = new Hashtable();
-            this.xa90af1bb0ada0f53 = new ArrayList();
+            this.autoHideBars = new ArrayList();
         }
 
         /// <summary>
@@ -1037,12 +1035,12 @@ namespace FQ.FreeDock
             this.SetActiveTabbedDocument(this.FindMostRecentlyUsedWindow(DockSituation.Document));
         }
 
-        internal x10ac79a4257c7f52 GetAutoHideBar(DockStyle dock)
+        internal AutoHideBar GetAutoHideBar(DockStyle dock)
         {
             if (dock == DockStyle.Fill || dock == DockStyle.None)
-                return (x10ac79a4257c7f52)null;
-            x10ac79a4257c7f52 x10ac79a4257c7f52_1;
-            foreach (x10ac79a4257c7f52 x10ac79a4257c7f52_2 in this.xa90af1bb0ada0f53)
+                return (AutoHideBar)null;
+            AutoHideBar x10ac79a4257c7f52_1;
+            foreach (AutoHideBar x10ac79a4257c7f52_2 in this.autoHideBars)
             {
                 if (x10ac79a4257c7f52_2.Dock == dock)
                 {
@@ -1057,7 +1055,7 @@ namespace FQ.FreeDock
             this.DockSystemContainer.SuspendLayout();
             try
             {
-                x10ac79a4257c7f52 x10ac79a4257c7f52_2 = new x10ac79a4257c7f52();
+                AutoHideBar x10ac79a4257c7f52_2 = new AutoHideBar();
                 x10ac79a4257c7f52_2.x460ab163f44a604d = this;
                 do
                 {
@@ -2291,7 +2289,7 @@ namespace FQ.FreeDock
             else
                 goto label_10;
             label_6:
-            if (this.xd27fa35d10494112.Contains((object)control) && !(control is DocumentContainer))
+            if (this.dockContainers.Contains((object)control) && !(control is DocumentContainer))
                 arrayList.Add((object)control);
             ++index;
             goto label_3;
@@ -2308,7 +2306,7 @@ namespace FQ.FreeDock
         private x410f3612b9a8f9de[] GetFloatingDockContainerList()
         {
             ArrayList arrayList = new ArrayList();
-            IEnumerator enumerator = this.xd27fa35d10494112.GetEnumerator();
+            IEnumerator enumerator = this.dockContainers.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
@@ -2809,7 +2807,7 @@ namespace FQ.FreeDock
         /// </returns>
         public DockContainer[] GetDockContainers()
         {
-            return (DockContainer[])this.xd27fa35d10494112.ToArray(typeof(DockContainer));
+            return (DockContainer[])this.dockContainers.ToArray(typeof(DockContainer));
         }
 
         private bool ShouldSerializeRenderer()
@@ -2824,13 +2822,13 @@ namespace FQ.FreeDock
 
         private void PropagateNewRenderer()
         {
-            foreach (DockContainer dockContainer in this.xd27fa35d10494112)
+            foreach (DockContainer dockContainer in this.dockContainers)
                 dockContainer.x4481febbc2e58301();
-            IEnumerator enumerator = this.xa90af1bb0ada0f53.GetEnumerator();
+            IEnumerator enumerator = this.autoHideBars.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
-                    ((x10ac79a4257c7f52)enumerator.Current).x4481febbc2e58301();
+                    ((AutoHideBar)enumerator.Current).x4481febbc2e58301();
             }
             finally
             {
@@ -2873,9 +2871,9 @@ namespace FQ.FreeDock
             this.x1f1a3b29d7ed7776 = (DocumentContainer)container;
             goto label_4;
             label_9:
-            while (!this.xd27fa35d10494112.Contains((object)container))
+            while (!this.dockContainers.Contains((object)container))
             {
-                this.xd27fa35d10494112.Add((object)container);
+                this.dockContainers.Add((object)container);
                 if (int.MaxValue != 0)
                     goto label_6;
             }
@@ -2908,35 +2906,34 @@ namespace FQ.FreeDock
 
         internal void UnregisterDockContainer(DockContainer container)
         {
-            if (this.xd27fa35d10494112.Contains((object)container))
-                this.xd27fa35d10494112.Remove((object)container);
+            if (this.dockContainers.Contains((object)container))
+                this.dockContainers.Remove((object)container);
             if (this.x1f1a3b29d7ed7776 != container)
                 return;
             this.x1f1a3b29d7ed7776 = (DocumentContainer)null;
         }
 
-        internal void RegisterAutoHideBar(x10ac79a4257c7f52 bar)
+        internal void RegisterAutoHideBar(AutoHideBar bar)
         {
-            if (!this.xa90af1bb0ada0f53.Contains((object)bar))
-                this.xa90af1bb0ada0f53.Add((object)bar);
+            if (!this.autoHideBars.Contains(bar))
+                this.autoHideBars.Add(bar);
             bar.AllowDrop = this.SelectTabsOnDrag;
         }
 
-        internal void UnregisterAutoHideBar(x10ac79a4257c7f52 bar)
+        internal void UnregisterAutoHideBar(AutoHideBar bar)
         {
-            if (!this.xa90af1bb0ada0f53.Contains((object)bar))
-                return;
-            this.xa90af1bb0ada0f53.Remove((object)bar);
+            if (this.autoHideBars.Contains(bar))
+                this.autoHideBars.Remove(bar);
         }
 
         internal DockContainer FindDockedContainer(DockStyle dockStyle)
         {
-            foreach (DockContainer dockContainer in this.xd27fa35d10494112)
+            foreach (DockContainer dockContainer in this.dockContainers)
             {
                 if (dockContainer.Dock == dockStyle && !dockContainer.IsFloating)
                     return dockContainer;
             }
-            return (DockContainer)null;
+            return null;
         }
 
         /// <summary>
@@ -3004,15 +3001,15 @@ namespace FQ.FreeDock
                 else
                     goto label_8;
                 label_6:
-                x10ac79a4257c7f52[] x10ac79a4257c7f52Array1;
+                AutoHideBar[] x10ac79a4257c7f52Array1;
                 for (int index = 0; index < x10ac79a4257c7f52Array1.Length; ++index)
                     x10ac79a4257c7f52Array1[index].Dispose();
-                this.xa90af1bb0ada0f53.Clear();
+                this.autoHideBars.Clear();
                 goto label_5;
                 label_8:
-                x10ac79a4257c7f52[] x10ac79a4257c7f52Array2 = new x10ac79a4257c7f52[this.xa90af1bb0ada0f53.Count];
+                AutoHideBar[] x10ac79a4257c7f52Array2 = new AutoHideBar[this.autoHideBars.Count];
                 label_9:
-                this.xa90af1bb0ada0f53.CopyTo((Array)x10ac79a4257c7f52Array2);
+                this.autoHideBars.CopyTo((Array)x10ac79a4257c7f52Array2);
                 int index1;
                 if (false)
                     return;
@@ -3025,14 +3022,14 @@ namespace FQ.FreeDock
                     if (int.MaxValue != 0)
                         goto label_15;
                     label_12:
-                    this.xd27fa35d10494112.Clear();
+                    this.dockContainers.Clear();
                     goto label_8;
                     label_15:
-                    DockContainer[] dockContainerArray1 = new DockContainer[this.xd27fa35d10494112.Count];
+                    DockContainer[] dockContainerArray1 = new DockContainer[this.dockContainers.Count];
                     int num2;
                     if (true)
                     {
-                        this.xd27fa35d10494112.CopyTo((Array)dockContainerArray1);
+                        this.dockContainers.CopyTo((Array)dockContainerArray1);
                         DockContainer[] dockContainerArray2 = dockContainerArray1;
                         for (index1 = 0; index1 < dockContainerArray2.Length; ++index1)
                             dockContainerArray2[index1].Dispose();
@@ -3146,7 +3143,7 @@ namespace FQ.FreeDock
                     if (true)
                     {
                         int num7 = 0;
-                        IEnumerator enumerator1 = this.xd27fa35d10494112.GetEnumerator();
+                        IEnumerator enumerator1 = this.dockContainers.GetEnumerator();
                         try
                         {
                             while (enumerator1.MoveNext())
@@ -3262,7 +3259,7 @@ namespace FQ.FreeDock
                 {
                     arrayList1 = new ArrayList();
                     num4 = 0;
-                    IEnumerator enumerator = this.xd27fa35d10494112.GetEnumerator();
+                    IEnumerator enumerator = this.dockContainers.GetEnumerator();
                     try
                     {
                         while (true)
@@ -3380,7 +3377,7 @@ namespace FQ.FreeDock
 
         private void OnOwnerFormActivated(object sender, EventArgs e)
         {
-            foreach (DockContainer dockContainer in this.xd27fa35d10494112)
+            foreach (DockContainer dockContainer in this.dockContainers)
             {
                 if (0 != 0)
                     break;
@@ -3391,7 +3388,7 @@ namespace FQ.FreeDock
 
         private void OnOwnerFormDeactivated(object sender, EventArgs e)
         {
-            foreach (DockContainer dockContainer in this.xd27fa35d10494112)
+            foreach (DockContainer dockContainer in this.dockContainers)
             {
                 if (!dockContainer.IsFloating)
                     dockContainer.x19e788b09b195d4f(sender, e);

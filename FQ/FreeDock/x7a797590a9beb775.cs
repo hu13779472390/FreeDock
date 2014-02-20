@@ -45,7 +45,7 @@ namespace FQ.FreeDock
         [SecuritySafeCritical]
         public void xf00ba4096f8180b1(Rectangle xda73fcb97c77d998, bool x067d6ddeefb41622)
         {
-            x7a797590a9beb775.SetWindowPos(new HandleRef(this, this.Handle), new HandleRef(this, IntPtr.Zero), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, SWP_NOACTIVATE | SWP_SHOWWINDOW/*80*/);
+            x7a797590a9beb775.SetWindowPos(new HandleRef(this, this.Handle), new HandleRef(this, IntPtr.Zero), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, 80);
         }
 
         protected override void OnPaint(PaintEventArgs e)

@@ -6,7 +6,7 @@ namespace FQ.FreeDock
 {
     class x7fc004d490c8a431 : x890231ddf317379e
     {
-        private x10ac79a4257c7f52 x2ee8392f53a01b93;
+        private AutoHideBar x2ee8392f53a01b93;
         private x87cf4de36131799d x5fea292ffeb2c28c;
         private System.Drawing.Point xcb09bd0cee4909a3;
         private int xe7e5c1179f5c7ae1;
@@ -16,7 +16,7 @@ namespace FQ.FreeDock
 
         public event x7fc004d490c8a431.ResizingManagerFinishedEventHandler x67ecc0d0e7c9a202;
 
-        public x7fc004d490c8a431(x10ac79a4257c7f52 bar, x87cf4de36131799d popupContainer, System.Drawing.Point startPoint)
+        public x7fc004d490c8a431(AutoHideBar bar, x87cf4de36131799d popupContainer, System.Drawing.Point startPoint)
       : base((Control)bar, bar.x460ab163f44a604d != null ? bar.x460ab163f44a604d.DockingHints : DockingHints.TranslucentFill, false)
         {
             int num1;

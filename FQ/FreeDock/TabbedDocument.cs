@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FQ.FreeDock
@@ -13,11 +14,11 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
-        protected override System.Drawing.Size DefaultSize
+        protected override Size DefaultSize
         {
             get
             {
-                return new System.Drawing.Size(550, 400);
+                return new Size(550, 400);
             }
         }
 

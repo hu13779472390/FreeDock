@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FQ.FreeDock
@@ -25,9 +26,9 @@ namespace FQ.FreeDock
         /// The position, in control coordinates, at which to show a menu.
         /// 
         /// </summary>
-        public System.Drawing.Point Position { get; private set; }
+        public Point Position { get; private set; }
 
-        internal ActiveFilesListEventArgs(DockControl[] windows, Control control, System.Drawing.Point position)
+        internal ActiveFilesListEventArgs(DockControl[] windows, Control control, Point position)
         {
             this.Windows = windows;
             this.Control = control;

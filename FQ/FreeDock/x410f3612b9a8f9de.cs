@@ -19,6 +19,10 @@ namespace FQ.FreeDock
         private ControlLayoutSystem layoutSystem;
         private Guid guid;
 
+        private const int SWP_HIDEWINDOW = 0x0080;
+        private const int SWP_SHOWWINDOW = 0x0040;
+        private const int SWP_NOACTIVATE = 0x0010;
+
         public Guid x0217cda8370c1f17
         {
             get
@@ -117,7 +121,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public System.Drawing.Size xb1090c5821a633b5
+        public Size xb1090c5821a633b5
         {
             get
             {
@@ -129,7 +133,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public System.Drawing.Point x12992900724b93dc
+        public Point x12992900724b93dc
         {
             get
             {
@@ -282,7 +286,7 @@ namespace FQ.FreeDock
             handle = IntPtr.Zero;
             goto label_15;
             label_14:
-            flags |= 16;
+            flags |= SWP_NOACTIVATE;
  
             goto label_11;
             label_15:
@@ -294,8 +298,10 @@ namespace FQ.FreeDock
             else
                 goto label_12;
 
+            // FIXME:edit here
+//            x410f3612b9a8f9de.SetWindowPos(new HandleRef(this, this.form.Handle), new HandleRef(this, handle), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, flags);
+            this.form.Bounds = xda73fcb97c77d998; 
 
-            x410f3612b9a8f9de.SetWindowPos(new HandleRef((object)this, this.form.Handle), new HandleRef((object)this, handle), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, flags);
             this.form.Visible = x789c645a15deb49b;
             if (!x789c645a15deb49b)
                 return;
@@ -315,10 +321,10 @@ namespace FQ.FreeDock
             label_17:
             return;
             label_13:
-            flags |= 128;
+            flags |= SWP_HIDEWINDOW;
             goto label_10;
             label_16:
-            flags |= 64;
+            flags |= SWP_SHOWWINDOW;
             goto label_10;
         }
 

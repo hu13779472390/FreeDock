@@ -505,26 +505,18 @@ namespace FQ.FreeDock.Rendering
             base.GetColorsFromSystem();
             if (!SystemInformation.HighContrast)
             {
-                if (3 == 0)
-                    return;
                 this.x80caa5727f6ffe52 = SystemColors.ControlLightLight;
                 this.x0b2889b8ff5ec580 = SystemColors.ControlLightLight;
                 this.x9196c174a89a4ce4 = SystemColors.ControlLightLight;
                 this.x0e8b6412ec502dbf = SystemColors.Control;
-                if (0 == 0)
-                    return;
             }
             else
-                goto label_7;
-            label_5:
-            this.x9196c174a89a4ce4 = SystemColors.Control;
-            this.x0e8b6412ec502dbf = SystemColors.Control;
-            return;
-            label_7:
-            this.x80caa5727f6ffe52 = SystemColors.Control;
-            this.x0b2889b8ff5ec580 = SystemColors.Control;
-            if (0 == 0)
-                goto label_5;
+            {
+                this.x80caa5727f6ffe52 = SystemColors.Control;
+                this.x0b2889b8ff5ec580 = SystemColors.Control;
+                this.x9196c174a89a4ce4 = SystemColors.Control;
+                this.x0e8b6412ec502dbf = SystemColors.Control;
+            }
         }
 
         /// <summary>
@@ -882,7 +874,7 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override System.Drawing.Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
+        protected internal override Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
         {
             return xa811784015ed8842.xcdfce0e0f2641503(graphics, image, this.ImageSize, text, font, this.TextFormat);
         }
@@ -891,12 +883,12 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override System.Drawing.Size MeasureDocumentStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
+        protected internal override Size MeasureDocumentStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
         {
             TextFormatFlags flags = this.TextFormat & ~TextFormatFlags.NoPrefix;
             int width;
             using (Font font1 = new Font(font, FontStyle.Bold))
-                width = TextRenderer.MeasureText((IDeviceContext)graphics, text, font1, new System.Drawing.Size(int.MaxValue, int.MaxValue), flags).Width;
+                width = TextRenderer.MeasureText((IDeviceContext)graphics, text, font1, new Size(int.MaxValue, int.MaxValue), flags).Width;
             int num = width + 14;
             if ((num | 4) == 0 || image != null)
                 goto label_3;

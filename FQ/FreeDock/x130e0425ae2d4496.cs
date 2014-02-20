@@ -64,7 +64,6 @@ namespace FQ.FreeDock
                 {
                     x130e0425ae2d4496.DeleteObject(new HandleRef(null, handle2));
                     x130e0425ae2d4496.ReleaseDC(new HandleRef(control, handle1), new HandleRef(null, dc));
-//                    break;
                 }
             }
         }
@@ -73,7 +72,7 @@ namespace FQ.FreeDock
         {
             short[] lpvBits = new short[8];
             for (int i = 0; i < 8; ++i)
-                lpvBits[i] = (short)(21845 << (i & 1));
+                lpvBits[i] = (short)(21845 << (i & 1)); 
             IntPtr bitmap = x130e0425ae2d4496.CreateBitmap(8, 8, 1, 1, lpvBits);
             x130e0425ae2d4496.x78c6fa48e5c2be9b lb = new x130e0425ae2d4496.x78c6fa48e5c2be9b();
             IntPtr brushIndirect;
@@ -83,6 +82,11 @@ namespace FQ.FreeDock
             brushIndirect = x130e0425ae2d4496.CreateBrushIndirect(lb);
             x130e0425ae2d4496.DeleteObject(new HandleRef(null, bitmap));
             return brushIndirect;
+
+//            Image image = Image.FromFile("bitmap file path");
+//            TextureBrush textureBrush = new TextureBrush(image);
+//            return new TextureBrush(image);
+//            return IntPtr.Zero;
         }
 
         [StructLayout(LayoutKind.Sequential)]
