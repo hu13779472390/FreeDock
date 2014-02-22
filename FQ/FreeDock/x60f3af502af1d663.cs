@@ -4,17 +4,18 @@ using System.Text;
 
 namespace FQ.FreeDock
 {
+    // j
     class x60f3af502af1d663
     {
-        public static bool x2e20a402b77c44dc
+        public static bool OriginalTheme
         {
             get
             {
-                return Path.GetFileName(x60f3af502af1d663.x43a4294aa97fcbd9).ToLower() == "luna.msstyles";
+                return Path.GetFileName(x60f3af502af1d663.ThemeFilename).ToLower() == "luna.msstyles";
             }
         }
 
-        public static string x43a4294aa97fcbd9
+        public static string ThemeFilename
         {
             get
             {
@@ -25,7 +26,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public static string x4f15c2ab6fab0941
+        public static string ColorScheme
         {
             get
             {

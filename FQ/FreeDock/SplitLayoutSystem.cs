@@ -717,522 +717,98 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
+        // reviewed with 2.4
         protected internal override void Layout(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
         {
             base.Layout(renderer, graphics, bounds, floating);
-            int x10f4d88af727adbc;
-            LayoutSystemBase[] layoutSystemBaseArray = this.x10878bfc002a3aaf(out x10f4d88af727adbc);
-            if (x10f4d88af727adbc == 0)
-                return;
+            int num1;
+            LayoutSystemBase[] layoutSystemBaseArray = this.x10878bfc002a3aaf(out num1);
+            SizeF[] sizeFArray = new SizeF[num1];
+            for (int i = 0; i < num1; ++i)
+                 sizeFArray[i] = layoutSystemBaseArray[i].WorkingSize;
 
-            if (x10f4d88af727adbc > 1)
+            if (num1 == 0)
+                return;
+            if (num1 > 1)
                 floating = false;
-      
-            int num4 = this.splitMode == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
-
-            float num2 = 0.0f;
-            int index1 = 0;
-//            float num3;
-            SizeF[] sizeFArray = { };
-            int index2 = 0;
-            if (!floating)
+            for (int index = 0; index < num1; ++index)
             {
-                while (index1 < x10f4d88af727adbc)
+                if (this.SplitMode == Orientation.Horizontal)
                 {
-                    num2 += this.splitMode == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
-                    ++index1;
+                    if ((double) sizeFArray[index].Height <= 0.0)
+                        sizeFArray[index].Height = 400f;
+                    sizeFArray[index].Width = (float) bounds.Width;
                 }
-                this.x366d4cf7098f9c63.Clear();
-                if (num4 <= 0)
+                if (this.SplitMode == Orientation.Vertical)
                 {
-                    return;
-                }
-                else
-                {
-                    sizeFArray = new SizeF[x10f4d88af727adbc];
-                    index2 = 0;
+                    if ((double) sizeFArray[index].Width <= 0.0)
+                        sizeFArray[index].Width = 250f;
+                    sizeFArray[index].Height = (float) bounds.Height;
                 }
             }
-            label_49:
-
-            for (int i = 0; i < x10f4d88af727adbc; ++i)
-                sizeFArray[i] = layoutSystemBaseArray[i].WorkingSize;
-
-            float num9 = 0;
-            float num8 = 0;
-            int index6 = 0;
-            int index3 = 0;
-            int num5 = 0;
-            int num7;
-            int index4 = 0;
-            int num6;
-            if ((double)num4 == (double)num2) // num == 0
-            {
-      
-                if (this.splitMode == Orientation.Horizontal)
-                    num7 = bounds.Y;
-                else
-                    goto label_24;
-                num5 = num7;
-                index3 = 0;
-
-     
-                while (index3 < x10f4d88af727adbc)
-                {
-                    num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
-                    if (this.splitMode != Orientation.Horizontal)
-                    {
-                        if (index3 == x10f4d88af727adbc - 1)
-                        {
-                            num6 = bounds.Right - num5;
-                            goto label_8;
-                        }
-                        else
-                            goto label_8;
-                    }
-                    else
-                    {
-
-                        if ((uint)index2 - (uint)index4 >= 0U)
-                        {
-                            if (index3 == x10f4d88af727adbc - 1)
-                                goto label_19;
-                            label_12:
-                            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(bounds.X, num5, bounds.Width, num6), floating);
-                            if ((uint)index2 + (uint)num6 < 0U)
-                                goto label_44;
-                            else
-                                goto label_9;
-                            label_19:
-                            if ((uint)index4 <= uint.MaxValue)
-                            {
-                                num6 = bounds.Bottom - num5;
-                                goto label_12;
-                            }
-                            else
-                                break;
-                        }
-
-                    }
-                }
-                goto label_7;
-            }
-            else
-            {
-                goto label_47;
-            }
-
-   
-
-            label_8:
-            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(num5, bounds.Y, num6, bounds.Height), floating);
-            label_9:
-            num5 += num6 + 4;
-            ++index3;
-
-
-
-            label_10:
-            while (index3 < x10f4d88af727adbc)
-            {
-                num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
-                if (this.splitMode != Orientation.Horizontal)
-                {
-                    if (index3 == x10f4d88af727adbc - 1)
-                    {
-                        num6 = bounds.Right - num5;
-                        goto label_8;
-                    }
-                    else
-                        goto label_8;
-                }
-                else
-                {
-
-                    if ((uint)index2 - (uint)index4 >= 0U)
-                    {
-                        if (index3 == x10f4d88af727adbc - 1)
-                            goto label_19;
-                        label_12:
-                        layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(bounds.X, num5, bounds.Width, num6), floating);
-                        if ((uint)index2 + (uint)num6 < 0U)
-                            goto label_44;
-                        else
-                            goto label_9;
-                        label_19:
-                        if ((uint)index4 <= uint.MaxValue)
-                        {
-                            num6 = bounds.Bottom - num5;
-                            goto label_12;
-                        }
-                        else
-                            break;
-                    }
-
-                }
-            }
-            goto label_7;
-            label_1:
-            this.x366d4cf7098f9c63.Add(bounds);
-            int index5 = 0;
-            ++index5;
-            label_2:
-            if (index5 >= x10f4d88af727adbc - 1)
+            int num2 = this.SplitMode == Orientation.Horizontal ? bounds.Height - (num1 - 1) * 4 : bounds.Width - (num1 - 1) * 4;
+            float num3 = 0.0f;
+            for (int index = 0; index < num1; ++index)
+                num3 += this.SplitMode == Orientation.Horizontal ? layoutSystemBaseArray[index].WorkingSize.Height : layoutSystemBaseArray[index].WorkingSize.Width;
+            this.x366d4cf7098f9c63.Clear();
+            if (num2 <= 0)
                 return;
-            bounds = layoutSystemBaseArray[index5].Bounds;
-            if (this.splitMode != Orientation.Horizontal)
+            if ((double) num2 != (double) num3)
             {
-                bounds.Offset(bounds.Width, 0);
-                bounds.Width = 4;
-                goto label_1;
-            }
-            else
-            {
-                bounds.Offset(0, bounds.Height);
-                bounds.Height = 4;
-                goto label_1;
-            }
-            label_7:
-            index5 = 0;
-            goto label_2;
-
-            label_21:
-
-            if (this.splitMode == Orientation.Horizontal)
-                num7 = bounds.Y;
-            else
-                goto label_24;
-            label_23:
-            num5 = num7;
-            index3 = 0;
-            goto label_10;
-
-            label_24:
-            num7 = bounds.X;
-            goto label_23;
-            label_32:
-
-
-            while (index6 < x10f4d88af727adbc)
-            {
-                num2 += this.splitMode == Orientation.Horizontal ? sizeFArray[index6].Height : sizeFArray[index6].Width;
-                ++index6;
-
-                if ((uint)index6 - (uint)index3 >= 0U)
+                float num4 = (float) num2 - num3;
+                for (int index = 0; index < num1; ++index)
                 {
-                    if ((uint)num8 - (uint)index4 < 0U)
-                        goto label_27;
+                    float num5 = this.SplitMode == Orientation.Horizontal ? layoutSystemBaseArray[index].WorkingSize.Height : layoutSystemBaseArray[index].WorkingSize.Width;
+                    float num6 = num5 + num4 * (num5 / num3);
+                    if (this.SplitMode == Orientation.Horizontal)
+                        sizeFArray[index].Height = num6;
+                    else
+                        sizeFArray[index].Width = num6;
+                }
+                float num7 = 0.0f;
+                for (int index = 0; index < num1; ++index)
+                    num7 += this.SplitMode == Orientation.Horizontal ? layoutSystemBaseArray[index].WorkingSize.Height : layoutSystemBaseArray[index].WorkingSize.Width;
+                float num8 = (float) num2 - num7;
+                if (this.SplitMode == Orientation.Horizontal)
+                    sizeFArray[0].Height += num8;
+                else
+                    sizeFArray[0].Width += num8;
+            }
+            int num9 = this.SplitMode == Orientation.Horizontal ? bounds.Y : bounds.X;
+            for (int index = 0; index < num1; ++index)
+            {
+                int num4 = Math.Max(this.SplitMode == Orientation.Horizontal ? (int) Math.Round((double) layoutSystemBaseArray[index].WorkingSize.Height, 0) : (int) Math.Round((double) layoutSystemBaseArray[index].WorkingSize.Width, 0), 4);
+                if (this.SplitMode == Orientation.Horizontal)
+                {
+                    if (index == num1 - 1)
+                        num4 = bounds.Bottom - num9;
+                    layoutSystemBaseArray[index].Layout(renderer, graphics, new Rectangle(bounds.X, num9, bounds.Width, num4), floating);
                 }
                 else
-                    goto label_56;
-
+                {
+                    if (index == num1 - 1)
+                        num4 = bounds.Right - num9;
+                    layoutSystemBaseArray[index].Layout(renderer, graphics, new Rectangle(num9, bounds.Y, num4, bounds.Height), floating);
+                }
+                num9 += num4 + 4;
             }
-            goto label_31;
-            label_27:
-            sizeFArray[0].Width += num8;
-            goto label_21;
-            label_31:
-            num8 = (float)num4 - num2;
-            label_56:
-
-            if (this.splitMode == Orientation.Horizontal)
+            for (int index = 0; index < num1 - 1; ++index)
             {
-                sizeFArray[0].Height += num8;
-                goto label_21;
+                bounds = layoutSystemBaseArray[index].Bounds;
+                if (this.SplitMode == Orientation.Horizontal)
+                {
+                    bounds.Offset(0, bounds.Height);
+                    bounds.Height = 4;
+                }
+                else
+                {
+                    bounds.Offset(bounds.Width, 0);
+                    bounds.Width = 4;
+                }
+                this.x366d4cf7098f9c63.Add(bounds);
             }
-            else
-                goto label_27;
-
-            label_35:
-
-            if (index4 >= x10f4d88af727adbc)
-            {
-                num2 = 0.0f;
-                if (true)
-                    goto label_32;
-            }
-            else
-            {
-                num9 = this.splitMode != Orientation.Horizontal ? sizeFArray[index4].Width : sizeFArray[index4].Height;
-                goto label_44;
-            }
-            label_40:
-            if (this.splitMode == Orientation.Horizontal)
-                goto label_39;
-            else
-                goto label_41;
-            label_38:
-            ++index4;
-            goto label_42;
-            label_39:
-            sizeFArray[index4].Height = num9;
-            goto label_38;
-            label_41:
-            if ((uint)num4 >= 0U)
-            {
-                sizeFArray[index4].Width = num9;
-                goto label_38;
-            }
-            label_42:
-            if ((uint)index3 - (uint)index6 < 0U)
-                return;
-            else
-                goto label_35;
-
-            label_44:
-            num9 += num8 * (num9 / num2);
-            goto label_40;
-            label_47:
-            num8 = (float)num4 - num2;
-            index4 = 0;
-            goto label_35;
         }
-        //        protected internal void Layout_org(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
-        //        {
-        //            base.Layout(renderer, graphics, bounds, floating);
-        //            int num1;
-        //            if ((uint)num1 - (uint)num1 >= 0U)
-        //                goto label_63;
-        //            label_55:
-        //            float num2 = 0.0f;
-        //            int index1 = 0;
-        //            float num3;
-        //            if ((uint)num3 - (uint)floating >= 0U)
-        //                goto label_54;
-        //            label_49:
-        //            int x10f4d88af727adbc;
-        //            LayoutSystemBase[] layoutSystemBaseArray;
-        //            int index2;
-        //            SizeF[] sizeFArray;
-        //            for (; index2 < x10f4d88af727adbc; ++index2)
-        //                sizeFArray[index2] = layoutSystemBaseArray[index2].WorkingSize;
-        //            int num4;
-        //            if ((double)num4 == (double)num2)
-        //                goto label_21;
-        //            else
-        //                goto label_47;
-        //            label_8:
-        //            int index3;
-        //            int num5;
-        //            int num6;
-        //            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(num5, bounds.Y, num6, bounds.Height), floating);
-        //            label_9:
-        //            num5 += num6 + 4;
-        //            ++index3;
-        //            label_10:
-        //            int index4;
-        //            while (index3 < x10f4d88af727adbc)
-        //            {
-        //                num6 = Math.Max(this.splitMode != Orientation.Horizontal ? Convert.ToInt32(sizeFArray[index3].Width) : Convert.ToInt32(sizeFArray[index3].Height), 4);
-        //                if (this.splitMode != Orientation.Horizontal)
-        //                {
-        //                    if (index3 == x10f4d88af727adbc - 1)
-        //                    {
-        //                        num6 = bounds.Right - num5;
-        //                        goto label_8;
-        //                    }
-        //                    else
-        //                        goto label_8;
-        //                }
-        //                else if ((num1 & 0) == 0)
-        //                {
-        //                    if ((index4 | 3) != 0)
-        //                    {
-        //                        if ((uint)index2 - (uint)index4 >= 0U)
-        //                        {
-        //                            if (index3 == x10f4d88af727adbc - 1)
-        //                                goto label_19;
-        //                            label_12:
-        //                            layoutSystemBaseArray[index3].Layout(renderer, graphics, new Rectangle(bounds.X, num5, bounds.Width, num6), floating);
-        //                            if ((uint)index2 + (uint)num6 < 0U)
-        //                                goto label_44;
-        //                            else
-        //                                goto label_9;
-        //                            label_19:
-        //                            if ((uint)index4 <= uint.MaxValue)
-        //                            {
-        //                                num6 = bounds.Bottom - num5;
-        //                                goto label_12;
-        //                            }
-        //                            else
-        //                                break;
-        //                        }
-        //                    }
-        //                    else
-        //                        goto label_24;
-        //                }
-        //                else
-        //                    goto label_1;
-        //            }
-        //            goto label_7;
-        //            label_1:
-        //            this.x366d4cf7098f9c63.Add((object)bounds);
-        //            int index5;
-        //            ++index5;
-        //            label_2:
-        //            if (index5 >= x10f4d88af727adbc - 1)
-        //                return;
-        //            bounds = layoutSystemBaseArray[index5].Bounds;
-        //            if (this.splitMode != Orientation.Horizontal)
-        //            {
-        //                bounds.Offset(bounds.Width, 0);
-        //                bounds.Width = 4;
-        //                goto label_1;
-        //            }
-        //            else
-        //            {
-        //                bounds.Offset(0, bounds.Height);
-        //                bounds.Height = 4;
-        //                goto label_1;
-        //            }
-        //            label_7:
-        //            index5 = 0;
-        //            goto label_2;
-        //            label_21:
-        //            int num7;
-        //            if (this.splitMode == Orientation.Horizontal)
-        //                num7 = bounds.Y;
-        //            else
-        //                goto label_24;
-        //            label_23:
-        //            num5 = num7;
-        //            index3 = 0;
-        //            goto label_10;
-        //            label_24:
-        //            num7 = bounds.X;
-        //            goto label_23;
-        //            label_32:
-        //            int index6 = 0;
-        //            float num8;
-        //            while (index6 < x10f4d88af727adbc)
-        //            {
-        //                num2 += this.splitMode == Orientation.Horizontal ? sizeFArray[index6].Height : sizeFArray[index6].Width;
-        //                ++index6;
-        //                if ((uint)num6 + (uint)index3 <= uint.MaxValue)
-        //                {
-        //                    if ((uint)index6 - (uint)index3 >= 0U)
-        //                    {
-        //                        if ((uint)num8 - (uint)index4 < 0U)
-        //                            goto label_27;
-        //                    }
-        //                    else
-        //                        goto label_56;
-        //                }
-        //                else
-        //                    goto label_8;
-        //            }
-        //            goto label_31;
-        //            label_27:
-        //            sizeFArray[0].Width += num8;
-        //            goto label_21;
-        //            label_31:
-        //            num8 = (float)num4 - num2;
-        //            label_56:
-        //            if ((uint)index4 + (uint)index2 <= uint.MaxValue)
-        //            {
-        //                if ((x10f4d88af727adbc & 0) == 0)
-        //                {
-        //                    if (0 != 0 || this.splitMode == Orientation.Horizontal)
-        //                    {
-        //                        sizeFArray[0].Height += num8;
-        //                        goto label_21;
-        //                    }
-        //                    else
-        //                        goto label_27;
-        //                }
-        //                else
-        //                    goto label_31;
-        //            }
-        //            else
-        //                goto label_21;
-        //            label_35:
-        //            float num9;
-        //            if (index4 >= x10f4d88af727adbc)
-        //            {
-        //                num2 = 0.0f;
-        //                if ((uint)num6 <= uint.MaxValue)
-        //                    goto label_32;
-        //            }
-        //            else
-        //            {
-        //                num9 = this.splitMode != Orientation.Horizontal ? sizeFArray[index4].Width : sizeFArray[index4].Height;
-        //                goto label_44;
-        //            }
-        //            label_40:
-        //            if (this.splitMode == Orientation.Horizontal)
-        //                goto label_39;
-        //            else
-        //                goto label_41;
-        //            label_38:
-        //            ++index4;
-        //            goto label_42;
-        //            label_39:
-        //            sizeFArray[index4].Height = num9;
-        //            goto label_38;
-        //            label_41:
-        //            if ((uint)num4 >= 0U)
-        //            {
-        //                sizeFArray[index4].Width = num9;
-        //                goto label_38;
-        //            }
-        //            label_42:
-        //            if ((uint)index6 + (uint)num5 >= 0U)
-        //            {
-        //                if ((uint)index3 - (uint)index6 < 0U)
-        //                    return;
-        //                else
-        //                    goto label_35;
-        //            }
-        //            else
-        //                goto label_32;
-        //            label_44:
-        //            num9 += num8 * (num9 / num2);
-        //            goto label_40;
-        //            label_47:
-        //            num8 = (float)num4 - num2;
-        //            index4 = 0;
-        //            goto label_35;
-        //            label_54:
-        //            while (index1 < x10f4d88af727adbc)
-        //            {
-        //                num2 += this.splitMode == Orientation.Horizontal ? layoutSystemBaseArray[index1].WorkingSize.Height : layoutSystemBaseArray[index1].WorkingSize.Width;
-        //                if ((uint)num1 >= 0U)
-        //                    ++index1;
-        //            }
-        //            this.x366d4cf7098f9c63.Clear();
-        //            if ((uint)num2 <= uint.MaxValue && num4 <= 0)
-        //            {
-        //                if ((uint)num3 <= uint.MaxValue)
-        //                    return;
-        //                else
-        //                    return;
-        //            }
-        //            else
-        //            {
-        //                sizeFArray = new SizeF[x10f4d88af727adbc];
-        //                index2 = 0;
-        //                goto label_49;
-        //            }
-        //            label_63:
-        //            layoutSystemBaseArray = this.x10878bfc002a3aaf(out x10f4d88af727adbc);
-        //            if (x10f4d88af727adbc == 0)
-        //                return;
-        //            int num10;
-        //            do
-        //            {
-        //                if (x10f4d88af727adbc > 1)
-        //                    goto label_61;
-        //                label_58:
-        //                num4 = this.splitMode == Orientation.Horizontal ? bounds.Height - (x10f4d88af727adbc - 1) * 4 : bounds.Width - (x10f4d88af727adbc - 1) * 4;
-        //                continue;
-        //                label_61:
-        //                floating = false;
-        //                goto label_58;
-        //            }
-        //            while ((num10 | int.MinValue) == 0);
-        //            goto label_55;
-        //        }
-        //
+
         internal override void x84b6f3c22477dacb(RendererBase render, Graphics graphics, Font font)
         {
             if (this.DockContainer == null)
@@ -1351,7 +927,7 @@ namespace FQ.FreeDock
             /// Returns the layout system at the specified index in the collection.
             /// 
             /// </summary>
-            public LayoutSystemBase this [int index]
+            public LayoutSystemBase this[int index]
             {
                 get
                 {

@@ -197,7 +197,7 @@ namespace FQ.FreeDock
             }
             return;
             label_10:
-            x592a8acce305e2d8.x703937d70a13725c = new Guid(xeaa9dbf1fba9aca8.Attributes[x05bcae9c376a7a50 + "WindowGroupGuid"].Value);
+            x592a8acce305e2d8.Guid = new Guid(xeaa9dbf1fba9aca8.Attributes[x05bcae9c376a7a50 + "WindowGroupGuid"].Value);
             goto label_8;
         }
 
@@ -285,7 +285,7 @@ namespace FQ.FreeDock
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
             xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "WorkingSize", SandDockManager.ConvertSizeFToString(x592a8acce305e2d8.x3a4e0c379519d4a2));
-            xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "WindowGroupGuid", x592a8acce305e2d8.x703937d70a13725c.ToString());
+            xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "WindowGroupGuid", x592a8acce305e2d8.Guid.ToString());
             xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "IndexInWindowGroup", converter.ConvertToString((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)x592a8acce305e2d8.x8c8f170696764fac));
             xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "SplitPath", x245a5abec1c73d3a.x8c8bb4495a487cc5(x592a8acce305e2d8.x61743036ad30763d));
         }

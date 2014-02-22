@@ -10,7 +10,7 @@ namespace FQ.FreeDock
     class AutoHideBar : Control
     {
         private SandDockManager manager;
-        private AutoHideBar.x01c0afa1afffb431 x820c504c9c557c92;
+        private AutoHideBar.ControlLayoutCollection layoutSystems;
         private Timer x537a4001020fd4c7;
         private Timer x2076b5c9f1eb82ef;
         private Point xa639e9f791585165;
@@ -19,11 +19,11 @@ namespace FQ.FreeDock
         private Rectangle x792c0fd4639cad90;
         private bool x297f71a96c16086c;
 
-        public AutoHideBar.x01c0afa1afffb431 x7fdaeb05cb5e84f3
+        public AutoHideBar.ControlLayoutCollection LayoutSystems
         {
             get
             {
-                return this.x820c504c9c557c92;
+                return this.layoutSystems;
             }
         }
 
@@ -108,7 +108,7 @@ namespace FQ.FreeDock
         {
             this.SetStyle(ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.Selectable, false);
-            this.x820c504c9c557c92 = new AutoHideBar.x01c0afa1afffb431(this);
+            this.layoutSystems = new AutoHideBar.ControlLayoutCollection(this);
             this.x537a4001020fd4c7 = new Timer();
             this.x537a4001020fd4c7.Interval = SystemInformation.DoubleClickTime;
             this.x537a4001020fd4c7.Tick += new EventHandler(this.x79a58a5d2c65c5a4);
@@ -134,7 +134,7 @@ namespace FQ.FreeDock
         private void x7e9646eed248ed11()
         {
             int num1 = 0;
-            if (this.ShowingLayoutSystem != null && !this.x7fdaeb05cb5e84f3.x263d579af1d0d43f(this.ShowingLayoutSystem))
+            if (this.ShowingLayoutSystem != null && !this.LayoutSystems.Contains(this.ShowingLayoutSystem))
                 goto label_59;
             label_2:
             if (this.Manager == null)
@@ -144,7 +144,7 @@ namespace FQ.FreeDock
             int num3;
             using (Graphics graphics = this.CreateGraphics())
             {
-                foreach (ControlLayoutSystem controlLayoutSystem in (CollectionBase) this.x7fdaeb05cb5e84f3)
+                foreach (ControlLayoutSystem controlLayoutSystem in (CollectionBase) this.LayoutSystems)
                 {
                     int num4 = num1 + 3;
                     if (0 == 0)
@@ -279,7 +279,7 @@ namespace FQ.FreeDock
                     }
                 }
             }
-            this.Visible = this.x7fdaeb05cb5e84f3.Count != 0;
+            this.Visible = this.LayoutSystems.Count != 0;
             if (false)
                 return;
             this.Invalidate();
@@ -291,7 +291,7 @@ namespace FQ.FreeDock
 
         private DockControl x37c93a224e23ba95(System.Drawing.Point x13d4cb8d1bd20347)
         {
-            IEnumerator enumerator1 = this.x7fdaeb05cb5e84f3.GetEnumerator();
+            IEnumerator enumerator1 = this.LayoutSystems.GetEnumerator();
             try
             {
                 label_11:
@@ -367,7 +367,7 @@ namespace FQ.FreeDock
                     this.Manager.Renderer.StartRenderSession(HotkeyPrefix.None);
                     break;
             }
-            IEnumerator enumerator1 = this.x7fdaeb05cb5e84f3.GetEnumerator();
+            IEnumerator enumerator1 = this.LayoutSystems.GetEnumerator();
             try
             {
                 label_23:
@@ -1021,7 +1021,7 @@ namespace FQ.FreeDock
             if (this.x5fea292ffeb2c28c != null)
                 goto label_4;
             label_1:
-            this.x7fdaeb05cb5e84f3.Clear();
+            this.LayoutSystems.Clear();
             goto label_2;
             label_4:
             this.x5fea292ffeb2c28c.Dispose();
@@ -1032,62 +1032,69 @@ namespace FQ.FreeDock
             goto label_3;
         }
 
-        public void xbb5f70c792fb9034(Rectangle xda73fcb97c77d998)
+        public void xbb5f70c792fb9034(Rectangle bounds)
         {
-            this.x5fea292ffeb2c28c.Invalidate(xda73fcb97c77d998);
+            this.x5fea292ffeb2c28c.Invalidate(bounds);
         }
 
-        public class x01c0afa1afffb431 : CollectionBase
+        public class ControlLayoutCollection : CollectionBase
         {
-            private AutoHideBar xb6a159a84cb992d6;
+            private AutoHideBar parent;
 
-            public x01c0afa1afffb431(AutoHideBar parent)
+            public ControlLayoutCollection(AutoHideBar parent)
             {
-                this.xb6a159a84cb992d6 = parent;
+                this.parent = parent;
             }
 
-            public bool x263d579af1d0d43f(ControlLayoutSystem x6e150040c8d97700)
+            public bool Contains(ControlLayoutSystem layout)
             {
-                return this.List.Contains((object)x6e150040c8d97700);
+                return this.List.Contains(layout);
             }
 
             protected override void OnInsertComplete(int index, object value)
             {
-                ((ControlLayoutSystem)value).xa85d8c17921cc878(this.xb6a159a84cb992d6);
-                this.xb6a159a84cb992d6.x7e9646eed248ed11();
+                ((ControlLayoutSystem)value).xa85d8c17921cc878(this.parent);
+                this.parent.x7e9646eed248ed11();
             }
 
             protected override void OnRemoveComplete(int index, object value)
             {
-                ((ControlLayoutSystem)value).xa85d8c17921cc878((AutoHideBar)null);
-                this.xb6a159a84cb992d6.x7e9646eed248ed11();
+                ((ControlLayoutSystem)value).xa85d8c17921cc878(null);
+                this.parent.x7e9646eed248ed11();
             }
 
             protected override void OnClearComplete()
             {
-                this.xb6a159a84cb992d6.x7e9646eed248ed11();
+                this.parent.x7e9646eed248ed11();
             }
 
             protected override void OnClear()
             {
-                foreach (ControlLayoutSystem controlLayoutSystem in (CollectionBase) this)
-                    controlLayoutSystem.xa85d8c17921cc878((AutoHideBar)null);
+                foreach (ControlLayoutSystem Layout in this)
+                    Layout.xa85d8c17921cc878(null);
             }
 
-            public int xd6b6ed77479ef68c(ControlLayoutSystem x6e150040c8d97700)
+            public int Add(ControlLayoutSystem layout)
             {
-                return this.List.Add((object)x6e150040c8d97700);
+                return this.List.Add(layout);
             }
 
-            public void x52b190e626f65140(ControlLayoutSystem x6e150040c8d97700)
+            public void Remove(ControlLayoutSystem layout)
             {
-                this.List.Remove((object)x6e150040c8d97700);
+                this.List.Remove(layout);
             }
 
-            public ControlLayoutSystem get_xe6d4b1b411ed94b5(int xc0c4c459c6ccbd00)
+            public ControlLayoutSystem this[int index]
             {
-                return (ControlLayoutSystem)this.List[xc0c4c459c6ccbd00];
+                get
+                {
+                    return (ControlLayoutSystem)this.List[index];
+                }
             }
+//            public ControlLayoutSystem get_xe6d4b1b411ed94b5(int index)
+//            {
+//                return (ControlLayoutSystem)this.List[index];
+//            }
         }
 
         private delegate void x23dc61b48e59b2f1(bool quick);

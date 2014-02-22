@@ -118,7 +118,7 @@ namespace FQ.FreeDock
             label_7:
             ControlLayoutSystem controlLayoutSystem1;
             ControlLayoutSystem controlLayoutSystem2;
-            if (controlLayoutSystem1.Guid == xfffbdea061bfa120.x703937d70a13725c)
+            if (controlLayoutSystem1.Guid == xfffbdea061bfa120.Guid)
             {
                 controlLayoutSystem2 = controlLayoutSystem1;
                 goto label_38;
@@ -146,7 +146,7 @@ namespace FQ.FreeDock
             else
                 goto label_3;
             label_20:
-            if (!(controlLayoutSystem3.Guid == xfffbdea061bfa120.x703937d70a13725c))
+            if (!(controlLayoutSystem3.Guid == xfffbdea061bfa120.Guid))
             {
                 ++index2;
                 goto label_17;
@@ -176,7 +176,7 @@ namespace FQ.FreeDock
                     label_27:
                     ControlLayoutSystem controlLayoutSystem4;
                     int index5;
-                    if (!(controlLayoutSystem4.Guid == xfffbdea061bfa120.x703937d70a13725c))
+                    if (!(controlLayoutSystem4.Guid == xfffbdea061bfa120.Guid))
                     {
                         ++index5;
                     }

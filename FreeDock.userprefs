@@ -1,8 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\SandDockManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\TabPage.cs">
     <Files>
-      <File FileName="FQ\FreeDock\SandDockManager.cs" Line="52" Column="29" />
+      <File FileName="FQ\FreeDock\ResolveDockControlEventArgs.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\SandDockManager.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\TabLayout.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\TabPage.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

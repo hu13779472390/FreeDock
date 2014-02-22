@@ -11,16 +11,7 @@ namespace FQ.FreeDock
         private const int WS_EX_LAYERED = 0x00080000;
         private const int ULW_ALPHA = 0x00000002;
 
-//        protected override void OnPaint(PaintEventArgs e)
-//        {
-//            Bitmap bm = new Bitmap(@"C:\Alan\University\111.jpg");
-//
-//            // Draw using this   
-//            e.Graphics.DrawImage(bm,60,60);
-//
-//            base.OnPaint(e);
-//        }
-//
+
         protected override CreateParams CreateParams
         {
             get

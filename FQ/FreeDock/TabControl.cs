@@ -216,11 +216,11 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
-        protected override System.Drawing.Size DefaultSize
+        protected override Size DefaultSize
         {
             get
             {
-                return new System.Drawing.Size(300, 200);
+                return new Size(300, 200);
             }
         }
 
@@ -390,13 +390,12 @@ namespace FQ.FreeDock
             else
                 goto label_37;
             label_1:
-//			if (!this.x266365ea27fa7af8.Evaluation)
-//			{
+
             if (8 != 0)
                 return;
             else
                 goto label_14;
-//			}
+
             label_4:
             using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(30, Color.Black)))
             {
@@ -1554,7 +1553,7 @@ namespace FQ.FreeDock
                 this.SelectedPageChanged(this, e);
         }
 
-        private void xadaf245f129714e2(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        private void xadaf245f129714e2(object xe0292b9ed559da7d, EventArgs e)
         {
             this.x436f6f3ee14607e0();
             this.PerformLayout();

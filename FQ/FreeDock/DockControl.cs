@@ -1657,7 +1657,7 @@ namespace FQ.FreeDock
         {
             if (this.LayoutSystem == null)
                 return;
-            xfffbdea061bfa120.x703937d70a13725c = this.LayoutSystem.Guid;
+            xfffbdea061bfa120.Guid = this.LayoutSystem.Guid;
             xfffbdea061bfa120.x8c8f170696764fac = this.LayoutSystem.Controls.IndexOf(this);
             xfffbdea061bfa120.x3a4e0c379519d4a2 = this.LayoutSystem.WorkingSize;
             xfffbdea061bfa120.x61743036ad30763d = LayoutUtilities.x27f6597db2aeb7d7(this.LayoutSystem);
@@ -1708,7 +1708,7 @@ namespace FQ.FreeDock
             goto label_3;
             label_1:
             this.MetaData.x87f4a9b62a380563(Guid.Empty);
-            this.MetaData.xba74b873ae2f845a.x703937d70a13725c = Guid.Empty;
+            this.MetaData.xba74b873ae2f845a.Guid = Guid.Empty;
             this.FloatingLocation = bounds.Location;
             this.FloatingSize = bounds.Size;
             this.OpenFloating(openMethod);
@@ -1736,7 +1736,7 @@ namespace FQ.FreeDock
                 goto label_24;
                 label_8:
                 ControlLayoutSystem controlLayoutSystem;
-                controlLayoutSystem.Guid = this.MetaData.xba74b873ae2f845a.x703937d70a13725c;
+                controlLayoutSystem.Guid = this.MetaData.xba74b873ae2f845a.Guid;
                 FloatingDockContainer x410f3612b9a8f9de;
                 x410f3612b9a8f9de.LayoutSystem.LayoutSystems.Add((LayoutSystemBase)controlLayoutSystem);
                 x410f3612b9a8f9de.x159713d3b60fae0c(xda73fcb97c77d998, true, openMethod == WindowOpenMethod.OnScreenActivate);
@@ -1747,10 +1747,10 @@ namespace FQ.FreeDock
                 x410f3612b9a8f9de = new FloatingDockContainer(this.Manager, this.metaData.LastFloatingWindowGuid);
                 label_10:
                 controlLayoutSystem = x410f3612b9a8f9de.CreateNewLayoutSystem(this, this.metaData.xba74b873ae2f845a.x3a4e0c379519d4a2);
-                if (!(this.MetaData.xba74b873ae2f845a.x703937d70a13725c == Guid.Empty))
+                if (!(this.MetaData.xba74b873ae2f845a.Guid == Guid.Empty))
                     goto label_8;
                 label_11:
-                this.MetaData.xba74b873ae2f845a.x703937d70a13725c = Guid.NewGuid();
+                this.MetaData.xba74b873ae2f845a.Guid = Guid.NewGuid();
                 goto label_8;
                 label_13:
                 if (this.metaData.LastFloatingWindowGuid == Guid.Empty)
@@ -1775,9 +1775,9 @@ namespace FQ.FreeDock
                             {
                                 x5678bb8d80c0f12e x5678bb8d80c0f12e = LayoutUtilities.x2f8f74d308cc9f3f((DockContainer)x410f3612b9a8f9de, this.MetaData.xba74b873ae2f845a.x61743036ad30763d);
                                 controlLayoutSystem = x5678bb8d80c0f12e.SplitLayoutSystem.DockContainer.CreateNewLayoutSystem(this, this.MetaData.xba74b873ae2f845a.x3a4e0c379519d4a2);
-                                if (this.MetaData.xba74b873ae2f845a.x703937d70a13725c == Guid.Empty)
-                                    this.MetaData.xba74b873ae2f845a.x703937d70a13725c = Guid.NewGuid();
-                                controlLayoutSystem.Guid = this.MetaData.xba74b873ae2f845a.x703937d70a13725c;
+                                if (this.MetaData.xba74b873ae2f845a.Guid == Guid.Empty)
+                                    this.MetaData.xba74b873ae2f845a.Guid = Guid.NewGuid();
+                                controlLayoutSystem.Guid = this.MetaData.xba74b873ae2f845a.Guid;
 
                                 x5678bb8d80c0f12e.SplitLayoutSystem.LayoutSystems.Insert(x5678bb8d80c0f12e.Index, (LayoutSystemBase)controlLayoutSystem);
                                 break;
@@ -2033,7 +2033,7 @@ namespace FQ.FreeDock
                 return;
             this.Remove();
             this.metaData.xfca44c52f41f0e26(dockLocation);
-            this.metaData.xe62a3d24e0fde928.x703937d70a13725c = Guid.Empty;
+            this.metaData.xe62a3d24e0fde928.Guid = Guid.Empty;
             if (0 != 0)
                 return;
             this.metaData.xe62a3d24e0fde928.x61743036ad30763d = new int[0];
@@ -2196,14 +2196,14 @@ namespace FQ.FreeDock
             label_4:
             x5678bb8d80c0f12e x5678bb8d80c0f12e = LayoutUtilities.x4689c8634e31fc55(this.Manager, this.metaData);
             ControlLayoutSystem newLayoutSystem = x5678bb8d80c0f12e.SplitLayoutSystem.DockContainer.CreateNewLayoutSystem(this, this.metaData.xe62a3d24e0fde928.x3a4e0c379519d4a2);
-            if (this.MetaData.xe62a3d24e0fde928.x703937d70a13725c == Guid.Empty)
+            if (this.MetaData.xe62a3d24e0fde928.Guid == Guid.Empty)
                 goto label_5;
             label_3:
-            newLayoutSystem.Guid = this.MetaData.xe62a3d24e0fde928.x703937d70a13725c;
+            newLayoutSystem.Guid = this.MetaData.xe62a3d24e0fde928.Guid;
             x5678bb8d80c0f12e.SplitLayoutSystem.LayoutSystems.Insert(x5678bb8d80c0f12e.Index, (LayoutSystemBase)newLayoutSystem);
             goto label_2;
             label_5:
-            this.MetaData.xe62a3d24e0fde928.x703937d70a13725c = Guid.NewGuid();
+            this.MetaData.xe62a3d24e0fde928.Guid = Guid.NewGuid();
             goto label_3;
             label_9:
             this.x6d1b64d6c637a91d(openMethod == WindowOpenMethod.OnScreenActivate);

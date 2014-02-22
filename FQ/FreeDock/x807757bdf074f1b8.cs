@@ -11,15 +11,12 @@ namespace FQ.FreeDock
 {
     class x807757bdf074f1b8 : TypeConverter
     {
-        public override bool CanConvertTo(ITypeDescriptorContext context, System.Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(InstanceDescriptor))
-                return true;
-            else
-                return base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(InstanceDescriptor) ? true :  base.CanConvertTo(context, destinationType);
         }
 
-        private System.Type MakeArrayType(System.Type firstType)
+        private Type MakeArrayType(Type firstType)
         {
             return firstType.Assembly.GetType(firstType.FullName + "[]");
         }

@@ -12,7 +12,7 @@ namespace FQ.FreeDock
 
         public const int SM_REMOTESESSION = 0x1000;
 
-        public static Color x75cc9d2f9fd85f82
+        public static Color ActiveCaptionColor2
         {
             get
             {
@@ -28,7 +28,7 @@ namespace FQ.FreeDock
             get
             {
                 // true if App is not in Terminal Services console session
-                return x443cc432acaadb1d.GetSystemMetrics(SM_REMOTESESSION) != 0;
+//                return x443cc432acaadb1d.GetSystemMetrics(SM_REMOTESESSION) != 0;
                 return true;
             }
         }

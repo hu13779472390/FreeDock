@@ -32,7 +32,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public Guid x703937d70a13725c { get; set; }
+        public Guid Guid { get; set; }
 
         public int x8c8f170696764fac { get; set; }
 

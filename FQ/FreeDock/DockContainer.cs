@@ -443,10 +443,10 @@ namespace FQ.FreeDock
             this.Manager.DockSystemContainer = this.Parent;
         }
 
-        internal void x8ba6fce4f4601549(ShowControlContextMenuEventArgs xfbf34718e704c6bc)
+        internal void x8ba6fce4f4601549(ShowControlContextMenuEventArgs e)
         {
             if (this.Manager != null)
-                this.Manager.OnShowControlContextMenu(xfbf34718e704c6bc);
+                this.Manager.OnShowControlContextMenu(e);
         }
 
         /// <summary>

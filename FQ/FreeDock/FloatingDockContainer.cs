@@ -346,13 +346,13 @@ namespace FQ.FreeDock
         {
             if (this.layoutSystem != null)
             {
-                this.layoutSystem.SelectedControlChanged -= new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
+                this.layoutSystem.SelectedControlChanged -= new ControlLayoutSystem.SelectionChangedEventHandler(this.xe20c835979d60df8);
             }
 
             if (this.HasSingleControlLayoutSystem)
             {
                 this.layoutSystem = (ControlLayoutSystem)this.LayoutSystem.LayoutSystems[0];
-                this.layoutSystem.SelectedControlChanged += new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
+                this.layoutSystem.SelectedControlChanged += new ControlLayoutSystem.SelectionChangedEventHandler(this.xe20c835979d60df8);
                 this.xe20c835979d60df8(null, this.layoutSystem.SelectedControl);          
             }
             this.form.Text = "";
