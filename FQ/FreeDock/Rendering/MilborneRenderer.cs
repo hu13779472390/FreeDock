@@ -27,7 +27,7 @@ namespace FQ.FreeDock.Rendering
         private Color x1b76e612db274a07 = Color.FromArgb((int)byte.MaxValue, (int)byte.MaxValue, (int)byte.MaxValue);
         private double x567d5545e28c9c83 = 0.05;
         private TextFormatFlags xae3b2752a89e7464;
-        private double x6093764f4f59f8ca;
+        private double pageColorBlend;
 
         /// <summary>
         /// Indicates how much of the BackColor of each TabPage will show through on its background.
@@ -37,7 +37,7 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x6093764f4f59f8ca;
+                return this.pageColorBlend;
             }
             set
             {
@@ -45,7 +45,7 @@ namespace FQ.FreeDock.Rendering
                     throw new ArgumentException("Value must lie between 0 and 1.");
                 if ((int)byte.MaxValue == 0)
                     return;
-                this.x6093764f4f59f8ca = value;
+                this.pageColorBlend = value;
             }
         }
 

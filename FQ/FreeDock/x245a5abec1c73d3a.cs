@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace FQ.FreeDock
 {
-    internal class x245a5abec1c73d3a
+    class x245a5abec1c73d3a
     {
         internal static void x0a680eda7ec8bd81(SandDockManager x91f347c6e97f1846, XmlNode x8a5ce9fbef4b9a09)
         {

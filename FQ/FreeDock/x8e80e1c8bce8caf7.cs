@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
+    // F
     class x8e80e1c8bce8caf7 : x890231ddf317379e
     {
         private Point xcb09bd0cee4909a3 = Point.Empty;
@@ -26,7 +27,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public event x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler x67ecc0d0e7c9a202;
+        public event x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler Committed;
 
         public x8e80e1c8bce8caf7(DockContainer container, SplitLayoutSystem splitLayout, LayoutSystemBase aboveLayout, LayoutSystemBase belowLayout, Point startPoint, DockingHints dockingHints) : base(container, dockingHints, false)
         {
@@ -80,8 +81,8 @@ namespace FQ.FreeDock
         public override void Commit()
         {
             base.Commit();
-            if (this.x67ecc0d0e7c9a202 != null)
-                this.x67ecc0d0e7c9a202(this.xc13a8191724b6d55, this.x5aa50bbadb0a1e6c, this.x5c2440c931f8d932, this.x4afa341b2323a009);
+            if (this.Committed != null)
+                this.Committed(this.xc13a8191724b6d55, this.x5aa50bbadb0a1e6c, this.x5c2440c931f8d932, this.x4afa341b2323a009);
         }
 
         public override void OnMouseMove(System.Drawing.Point position)

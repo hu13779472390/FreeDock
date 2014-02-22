@@ -12,7 +12,7 @@ namespace FQ.FreeDock
         private int x0d4b3b88c5b24565;
         private int xf623ffb827affd4f;
 
-        public event x09c1c18390e52ebf.ResizingManagerFinishedEventHandler x67ecc0d0e7c9a202;
+        public event x09c1c18390e52ebf.ResizingManagerFinishedEventHandler Committed;
 
         public x09c1c18390e52ebf(SandDockManager manager, DockContainer container, System.Drawing.Point startPoint)
       : base((Control)container, manager.DockingHints, false)
@@ -82,7 +82,7 @@ namespace FQ.FreeDock
                 num1 = num3;
                 if ((uint)num1 - (uint)num1 >= 0U)
                 {
-                    x555227b0d2a372bd = container.x555227b0d2a372bd;
+                    x555227b0d2a372bd = container.CurrentSize;
                     goto label_11;
                 }
                 else
@@ -122,7 +122,7 @@ namespace FQ.FreeDock
         public override void OnMouseMove(System.Drawing.Point position)
         {
             Rectangle rectangle = Rectangle.Empty;
-            if (!this.xd3311d815ca25f02.x61c108cc44ef385a)
+            if (!this.xd3311d815ca25f02.Vertical)
                 goto label_21;
             else
                 goto label_26;
@@ -233,9 +233,9 @@ namespace FQ.FreeDock
         public override void Commit()
         {
             base.Commit();
-            if (this.x67ecc0d0e7c9a202 == null)
+            if (this.Committed == null)
                 return;
-            this.x67ecc0d0e7c9a202(this.x0d4b3b88c5b24565);
+            this.Committed(this.x0d4b3b88c5b24565);
         }
 
         public delegate void ResizingManagerFinishedEventHandler(int newSize);

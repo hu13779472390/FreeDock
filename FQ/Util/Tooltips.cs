@@ -9,7 +9,7 @@ namespace FQ.Util
 {
     class Tooltips : IDisposable
     {
-        private bool xeefb7b23d49f09bc = true;
+        private bool dropShadow = true;
 
         private const int xdbb7427772b219d6 = 128;
         private const int xb644deafcaa222c4 = 2;
@@ -25,15 +25,15 @@ namespace FQ.Util
         private const int SWP_SHOWWINDOW = 0x0040;
         private const int SWP_NOACTIVATE = 0x0010;
 
-        public bool xa6e4f463e64a5987
+        public bool DropShadow
         {
             get
             {
-                return this.xeefb7b23d49f09bc;
+                return this.dropShadow;
             }
             set
             {
-                this.xeefb7b23d49f09bc = value;
+                this.dropShadow = value;
             }
         }
 
@@ -49,7 +49,7 @@ namespace FQ.Util
             }
         }
 
-        public event Tooltips.x58986a4a0b75e5b5 x9b21ee8e7ceaada3;
+        public event Tooltips.x58986a4a0b75e5b5 GetTooltipText;
 
         public Tooltips(Control control)
         {
@@ -474,7 +474,7 @@ namespace FQ.Util
             goto label_6;
 
             label_20:
-            xb41faee6912a2313 = this.x9b21ee8e7ceaada3(new Point(e.X, e.Y));
+            xb41faee6912a2313 = this.GetTooltipText(new Point(e.X, e.Y));
 
             if (xb41faee6912a2313 != null)
                 goto label_13;
@@ -529,7 +529,7 @@ namespace FQ.Util
 
             if (clientRectangle.Contains(point))
             {
-                xb41faee6912a2313 = this.x9b21ee8e7ceaada3(point);
+                xb41faee6912a2313 = this.GetTooltipText(point);
                 if (xb41faee6912a2313 == null)
                     goto label_16;
             }
@@ -643,7 +643,7 @@ namespace FQ.Util
                     CreateParams createParams = base.CreateParams;
                     if (this.tooltips != null)
                     {
-                        if (this.tooltips.xa6e4f463e64a5987)
+                        if (this.tooltips.DropShadow)
                         {
                             if (Tooltips.xab7df35839b7399e.x3b1aa41797c18588)
                             {

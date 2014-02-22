@@ -17,7 +17,7 @@ namespace FQ.FreeDock
         private int maximumTabWidth;
         internal double x9b0739496f8b5475;
         internal int xa806b754814b9ae0;
-        internal Rectangle x123e054dab107457;
+        internal Rectangle tabBounds;
         internal bool xcfac6723d8a41375;
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FQ.FreeDock
             {
                 base.BackColor = value;
                 if (this.Parent is TabControl)
-                    this.Parent.Invalidate(this.x123e054dab107457);
+                    this.Parent.Invalidate(this.tabBounds);
             }
         }
 
@@ -219,7 +219,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x123e054dab107457;
+                return this.tabBounds;
             }
         }
 
@@ -350,7 +350,7 @@ namespace FQ.FreeDock
             if (this.ClientRectangle == Rectangle.Empty)
                 return;
 
-            if ((this.Parent is TabControl) && ((TabControl)this.Parent).Renderer.ShouldDrawTabControlBackground)
+            if (this.Parent is TabControl && ((TabControl)this.Parent).Renderer.ShouldDrawTabControlBackground)
                 ((TabControl)this.Parent).Renderer.DrawTabControlBackground(pevent.Graphics, this.ClientRectangle, this.BackColor, true);
             else
                 base.OnPaintBackground(pevent);

@@ -25,12 +25,12 @@ namespace FQ.FreeDock
             this.x71ba9145749e5eef = new ArrayList();
             do
             {
-                if (this.x460ab163f44a604d == null)
+                if (this.Manager == null)
                 {
                     if ((uint)dockedSize >= 0U)
                         goto label_6;
                 }
-                else if (this.x460ab163f44a604d.DockSystemContainer == null)
+                else if (this.Manager.DockSystemContainer == null)
                 {
                     if (1 != 0)
                         goto label_9;
@@ -50,10 +50,10 @@ namespace FQ.FreeDock
 
         private void xcaa196e697d8d7c5()
         {
-            this.x6f306c95372dd403 = xedb4922162c60d3d.xc68a4bb946c59a9e(this.x460ab163f44a604d.DockSystemContainer.ClientRectangle, this.x460ab163f44a604d.DockSystemContainer);
+            this.x6f306c95372dd403 = xedb4922162c60d3d.xc68a4bb946c59a9e(this.Manager.DockSystemContainer.ClientRectangle, this.Manager.DockSystemContainer);
             do
             {
-                this.x8caac3836061e4ad = xedb4922162c60d3d.xc68a4bb946c59a9e(xedb4922162c60d3d.x41c62f474d3fb367(this.x460ab163f44a604d.DockSystemContainer), this.x460ab163f44a604d.DockSystemContainer);
+                this.x8caac3836061e4ad = xedb4922162c60d3d.xc68a4bb946c59a9e(xedb4922162c60d3d.x41c62f474d3fb367(this.Manager.DockSystemContainer), this.Manager.DockSystemContainer);
                 while (this.xe302f2203dc14a18(ContainerDockLocation.Top))
                 {
                     this.x71ba9145749e5eef.Add((object)new x31248f32f85df1dd.x23d0185c2770c169(this, this.x6f306c95372dd403, DockStyle.Top));
@@ -90,12 +90,12 @@ namespace FQ.FreeDock
             bool flag1 = num1 != 0;
             if (flag1)
                 this.x71ba9145749e5eef.Add((object)new x31248f32f85df1dd.x23d0185c2770c169(this, this.x8caac3836061e4ad, DockStyle.Fill));
-            if (this.x460ab163f44a604d == null)
+            if (this.Manager == null)
                 return;
             bool flag2;
             if (true)
             {
-                if (this.x460ab163f44a604d.OwnerForm == null)
+                if (this.Manager.OwnerForm == null)
                 {
                     if (0 == 0)
                         return;
@@ -106,7 +106,7 @@ namespace FQ.FreeDock
                 try
                 {
                     while (enumerator.MoveNext())
-                        this.x460ab163f44a604d.OwnerForm.AddOwnedForm((Form)enumerator.Current);
+                        this.Manager.OwnerForm.AddOwnedForm((Form)enumerator.Current);
                     return;
                 }
                 finally
@@ -152,7 +152,7 @@ namespace FQ.FreeDock
             else
                 goto label_40;
             label_25:
-            flag3 = this.xc99dabdb533b119a.Dock == DockStyle.Fill && !this.xc99dabdb533b119a.IsFloating;
+            flag3 = this.DockContainer.Dock == DockStyle.Fill && !this.DockContainer.IsFloating;
             goto label_22;
             label_28:
             this.x71ba9145749e5eef.Add((object)new x31248f32f85df1dd.x23d0185c2770c169(this, this.x6f306c95372dd403, DockStyle.Right));
@@ -173,7 +173,7 @@ namespace FQ.FreeDock
 
         protected override xedb4922162c60d3d.DockTarget FindDockTarget(System.Drawing.Point position)
         {
-            xedb4922162c60d3d.DockTarget x11d58b056c032b03 = (xedb4922162c60d3d.DockTarget)null;
+            xedb4922162c60d3d.DockTarget x11d58b056c032b03 = null;
             label_68:
             bool flag1 = this.x6f306c95372dd403.Contains(position);
             bool flag2 = this.x8caac3836061e4ad.Contains(position);
@@ -217,11 +217,11 @@ namespace FQ.FreeDock
                 controlLayoutSystem = this.x674f2f3b17dc4197(position, out x11d58b056c032b03);
                 if (true)
                 {
-                    if (controlLayoutSystem == this.xf333586e50dccad2)
+                    if (controlLayoutSystem == this.SourceLayoutSystem)
                     {
                         if (true)
                         {
-                            if (this.x59ae058c4a0dec87 == null)
+                            if (this.SourceControl == null)
                             {
                                 controlLayoutSystem = (ControlLayoutSystem)null;
                                 if (((flag2 ? 1 : 0) & 0) == 0)
@@ -502,7 +502,7 @@ namespace FQ.FreeDock
                 ControlLayoutSystem x6e150040c8d97700;
                 do
                 {
-                    ControlLayoutSystem[] xcdb018cc067a38ae = this.xcdb018cc067a38ae;
+                    ControlLayoutSystem[] xcdb018cc067a38ae = this.CheckableControlLayoutSystems;
                     label_20:
                     index = 0;
                     while (true)
@@ -1059,7 +1059,7 @@ namespace FQ.FreeDock
                 {
                     dockTarget.type = xedb4922162c60d3d.DockTargetType.CreateNewContainer;
                     dockTarget.middle = this.xca9af438b5818619 == DockStyle.Fill;
-                    dockTarget.bounds = xedb4922162c60d3d.xc68a4bb946c59a9e(this.x91f347c6e97f1846.x257d5a0e25592705(dockTarget.dockLocation, this.x91f347c6e97f1846.xf8ec28822747d4db, dockTarget.middle), this.x91f347c6e97f1846.x460ab163f44a604d.DockSystemContainer);
+                    dockTarget.bounds = xedb4922162c60d3d.xc68a4bb946c59a9e(this.x91f347c6e97f1846.x257d5a0e25592705(dockTarget.dockLocation, this.x91f347c6e97f1846.DockedSize, dockTarget.middle), this.x91f347c6e97f1846.Manager.DockSystemContainer);
                 }
                 return dockTarget;
                 label_27:
@@ -1379,8 +1379,8 @@ namespace FQ.FreeDock
             [SecuritySafeCritical]
             public void x2c6f5ac62ee048e5()
             {
-//                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.xda73fcb97c77d998.X, this.xda73fcb97c77d998.Y, this.xda73fcb97c77d998.Width, this.xda73fcb97c77d998.Height, SWP_DRAWFRAME | SWP_SHOWWINDOW/*80*/);
-                this.Bounds = this.xda73fcb97c77d998;
+                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.xda73fcb97c77d998.X, this.xda73fcb97c77d998.Y, this.xda73fcb97c77d998.Width, this.xda73fcb97c77d998.Height, SWP_DRAWFRAME | SWP_SHOWWINDOW/*80*/);
+//                this.Bounds = this.xda73fcb97c77d998;
             }
 
             private void OnTimer(object sender, EventArgs e)

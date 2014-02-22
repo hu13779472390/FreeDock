@@ -8,17 +8,15 @@ namespace FQ.FreeDock.Design
     {
         private DockContainer dockControl;
 
-        protected override bool GetHitTest(System.Drawing.Point point)
+        // reviewed with 2.4
+        protected override bool GetHitTest(Point point)
         {
             point = this.dockControl.PointToClient(point);
-            LayoutSystemBase layoutSystemAt = this.dockControl.GetLayoutSystemAt(point);
-            if (layoutSystemAt is DocumentLayoutSystem)
+            LayoutSystemBase layout = this.dockControl.GetLayoutSystemAt(point);
+            if (layout is DocumentLayoutSystem)
             {
-                DocumentLayoutSystem  documentLayoutSystem = (DocumentLayoutSystem)layoutSystemAt;
-                Rectangle bounds1 = documentLayoutSystem.LeftScrollButtonBounds;
-                Rectangle bounds2 = documentLayoutSystem.RightScrollButtonBounds;
-
-                if (bounds1.Contains(point) || bounds2.Contains(point))
+                DocumentLayoutSystem  docLayout = (DocumentLayoutSystem)layout;
+                if (docLayout.LeftScrollButtonBounds.Contains(point) || docLayout.RightScrollButtonBounds.Contains(point))
                     return true; 
             }
             return base.GetHitTest(point);

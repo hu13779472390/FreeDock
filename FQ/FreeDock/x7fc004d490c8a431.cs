@@ -14,22 +14,22 @@ namespace FQ.FreeDock
         private int xb646339c3b9e735a;
         private int x0d4b3b88c5b24565;
 
-        public event x7fc004d490c8a431.ResizingManagerFinishedEventHandler x67ecc0d0e7c9a202;
+        public event x7fc004d490c8a431.ResizingManagerFinishedEventHandler Committed;
 
         public x7fc004d490c8a431(AutoHideBar bar, x87cf4de36131799d popupContainer, System.Drawing.Point startPoint)
-      : base((Control)bar, bar.x460ab163f44a604d != null ? bar.x460ab163f44a604d.DockingHints : DockingHints.TranslucentFill, false)
+      : base((Control)bar, bar.Manager != null ? bar.Manager.DockingHints : DockingHints.TranslucentFill, false)
         {
             int num1;
             int num3 = 0;
             goto label_40;
             label_37:
-            if (bar.x460ab163f44a604d == null)
+            if (bar.Manager == null)
                 goto label_39;
             label_31:
-            int num2 = bar.x460ab163f44a604d.MinimumDockContainerSize;
+            int num2 = bar.Manager.MinimumDockContainerSize;
             label_32:
             int val2 = num2;
-            if (bar.x460ab163f44a604d != null)
+            if (bar.Manager != null)
                 goto label_35;
             else
                 goto label_33;
@@ -51,14 +51,14 @@ namespace FQ.FreeDock
             this.xb646339c3b9e735a = startPoint.Y + (num3 - this.xe7e5c1179f5c7ae1);
             goto label_3;
             label_12:
-            while (bar.x460ab163f44a604d.DockSystemContainer == null)
+            while (bar.Manager.DockSystemContainer == null)
             {
                 if (0 == 0)
                     goto label_11;
             }
             goto label_15;
             label_13:
-            if (bar.x460ab163f44a604d != null)
+            if (bar.Manager != null)
             {
                 if ((uint)val2 + (uint)num3 >= 0U)
                     goto label_12;
@@ -66,7 +66,7 @@ namespace FQ.FreeDock
             else
                 goto label_11;
             label_15:
-            num3 = Math.Max(bar.x460ab163f44a604d.DockSystemContainer.Height - popupContainer.Bounds.Top - val2, val2);
+            num3 = Math.Max(bar.Manager.DockSystemContainer.Height - popupContainer.Bounds.Top - val2, val2);
             if ((uint)val2 >= 0U)
             {
                 if ((uint)val2 - (uint)num3 >= 0U)
@@ -97,7 +97,7 @@ namespace FQ.FreeDock
             else
                 goto label_5;
             label_27:
-            this.xe7e5c1179f5c7ae1 = popupContainer.xca843b3e9a1c605f;
+            this.xe7e5c1179f5c7ae1 = popupContainer.PopupSize;
             if ((uint)val2 + (uint)val2 <= uint.MaxValue)
             {
                 switch (bar.Dock)
@@ -105,9 +105,9 @@ namespace FQ.FreeDock
                     case DockStyle.Top:
                         goto label_13;
                     case DockStyle.Bottom:
-                        if (bar.x460ab163f44a604d != null)
+                        if (bar.Manager != null)
                         {
-                            if (bar.x460ab163f44a604d.DockSystemContainer == null)
+                            if (bar.Manager.DockSystemContainer == null)
                             {
                                 if ((uint)num3 + (uint)val2 < 0U)
                                     return;
@@ -122,7 +122,7 @@ namespace FQ.FreeDock
                         else
                             goto label_2;
                     case DockStyle.Left:
-                        if (bar.x460ab163f44a604d != null)
+                        if (bar.Manager != null)
                             goto label_23;
                         else
                             goto label_26;
@@ -134,9 +134,9 @@ namespace FQ.FreeDock
                         else
                             break;
                         label_23:
-                        if (bar.x460ab163f44a604d.DockSystemContainer != null)
+                        if (bar.Manager.DockSystemContainer != null)
                         {
-                            num3 = Math.Max(bar.x460ab163f44a604d.DockSystemContainer.Width - popupContainer.Bounds.Left - val2, val2);
+                            num3 = Math.Max(bar.Manager.DockSystemContainer.Width - popupContainer.Bounds.Left - val2, val2);
                             goto label_22;
                         }
                         else
@@ -147,7 +147,7 @@ namespace FQ.FreeDock
                         else
                             goto label_22;
                     case DockStyle.Right:
-                        if (bar.x460ab163f44a604d != null && bar.x460ab163f44a604d.DockSystemContainer != null)
+                        if (bar.Manager != null && bar.Manager.DockSystemContainer != null)
                         {
                             num3 = Math.Max(popupContainer.Bounds.Right - val2, val2);
                             break;
@@ -173,7 +173,7 @@ namespace FQ.FreeDock
             else
                 goto label_12;
             label_35:
-            num4 = bar.x460ab163f44a604d.MaximumDockContainerSize;
+            num4 = bar.Manager.MaximumDockContainerSize;
             label_36:
             num3 = num4;
             goto label_27;
@@ -235,7 +235,7 @@ namespace FQ.FreeDock
                     goto label_3;
             }
             label_17:
-            if (!this.x2ee8392f53a01b93.x61c108cc44ef385a)
+            if (!this.x2ee8392f53a01b93.Vertical)
             {
                 if (0 == 0)
                 {
@@ -303,9 +303,9 @@ namespace FQ.FreeDock
         public override void Commit()
         {
             base.Commit();
-            if (this.x67ecc0d0e7c9a202 == null)
+            if (this.Committed == null)
                 return;
-            this.x67ecc0d0e7c9a202(this.x0d4b3b88c5b24565);
+            this.Committed(this.x0d4b3b88c5b24565);
         }
 
         public delegate void ResizingManagerFinishedEventHandler(int newSize);

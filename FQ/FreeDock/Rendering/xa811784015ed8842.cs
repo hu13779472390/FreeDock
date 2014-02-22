@@ -275,7 +275,7 @@ namespace FQ.FreeDock.Rendering
                             if ((uint)num1 + (uint)num1 <= uint.MaxValue)
                             {
                                 xda73fcb97c77d998.Offset(0, num1);
-                                x41347a961b838962.DrawString(xb41faee6912a2313, x26094932cf7a9139, x4fe4e32776bbc2b0, (RectangleF)xda73fcb97c77d998, EverettRenderer.xc351c68a86733972);
+                                x41347a961b838962.DrawString(xb41faee6912a2313, x26094932cf7a9139, x4fe4e32776bbc2b0, (RectangleF)xda73fcb97c77d998, EverettRenderer.StandardVerticalStringFormat);
                             }
                             else
                                 goto label_42;
@@ -298,7 +298,7 @@ namespace FQ.FreeDock.Rendering
             goto label_48;
             label_1:
             xda73fcb97c77d998.Offset(num1, 0);
-            x41347a961b838962.DrawString(xb41faee6912a2313, x26094932cf7a9139, x4fe4e32776bbc2b0, (RectangleF)xda73fcb97c77d998, EverettRenderer.x27e1c82c97265861);
+            x41347a961b838962.DrawString(xb41faee6912a2313, x26094932cf7a9139, x4fe4e32776bbc2b0, (RectangleF)xda73fcb97c77d998, EverettRenderer.StandardStringFormat);
             return;
             label_47:
             return;

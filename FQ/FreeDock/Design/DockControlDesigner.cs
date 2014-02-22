@@ -214,7 +214,7 @@ namespace FQ.FreeDock.Design
                 goto label_6;
         }
 
-        private void x5ba88706ad55272f(object xe0292b9ed559da7d, ControlEventArgs xfbf34718e704c6bc)
+        private void x5ba88706ad55272f(object sender, ControlEventArgs e)
         {
             if (this.dockControl.Controls.Count > 1)
                 this.dockControl.Invalidate();

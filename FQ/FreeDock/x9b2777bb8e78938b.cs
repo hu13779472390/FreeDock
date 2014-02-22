@@ -110,26 +110,26 @@ namespace FQ.FreeDock
             }
         }
 
-        public static void xb176aa01ddab9f3e(Graphics graphics, Rectangle rect, Pen pen)
+        public static void xb176aa01ddab9f3e(Graphics g, Rectangle bounds, Pen pen)
         {
-            int num1 = rect.Left + rect.Width / 2 - 1;
-            int num2 = rect.Top + rect.Height / 2;
-            graphics.DrawLine(pen, num1 - 3, num2 - 4, num1 + 3, num2 + 2);
-            graphics.DrawLine(pen, num1 - 2, num2 - 4, num1 + 4, num2 + 2);
-            graphics.DrawLine(pen, num1 - 3, num2 + 2, num1 + 3, num2 - 4);
-            graphics.DrawLine(pen, num1 - 2, num2 + 2, num1 + 4, num2 - 4);
+            int num1 = bounds.Left + bounds.Width / 2 - 1;
+            int num2 = bounds.Top + bounds.Height / 2;
+            g.DrawLine(pen, num1 - 3, num2 - 4, num1 + 3, num2 + 2);
+            g.DrawLine(pen, num1 - 2, num2 - 4, num1 + 4, num2 + 2);
+            g.DrawLine(pen, num1 - 3, num2 + 2, num1 + 3, num2 - 4);
+            g.DrawLine(pen, num1 - 2, num2 + 2, num1 + 4, num2 - 4);
         }
 
-        public static void x26f0f0028ef01fa5(Graphics graphics, Rectangle rect, Pen pen)
+        public static void x26f0f0028ef01fa5(Graphics g, Rectangle bounds, Pen pen)
         {
-            int num1 = rect.Left + rect.Width / 2 - 1;
-            int num2 = rect.Top + rect.Height / 2;
-            graphics.DrawLine(pen, num1 - 3, num2 - 3, num1 + 4, num2 + 4);
-            graphics.DrawLine(pen, num1 - 2, num2 - 3, num1 + 4, num2 + 3);
-            graphics.DrawLine(pen, num1 - 3, num2 - 2, num1 + 3, num2 + 4);
-            graphics.DrawLine(pen, num1 + 4, num2 - 3, num1 - 3, num2 + 4);
-            graphics.DrawLine(pen, num1 + 3, num2 - 3, num1 - 3, num2 + 3);
-            graphics.DrawLine(pen, num1 + 4, num2 - 2, num1 - 2, num2 + 4);
+            int num1 = bounds.Left + bounds.Width / 2 - 1;
+            int num2 = bounds.Top + bounds.Height / 2;
+            g.DrawLine(pen, num1 - 3, num2 - 3, num1 + 4, num2 + 4);
+            g.DrawLine(pen, num1 - 2, num2 - 3, num1 + 4, num2 + 3);
+            g.DrawLine(pen, num1 - 3, num2 - 2, num1 + 3, num2 + 4);
+            g.DrawLine(pen, num1 + 4, num2 - 3, num1 - 3, num2 + 4);
+            g.DrawLine(pen, num1 + 3, num2 - 3, num1 - 3, num2 + 3);
+            g.DrawLine(pen, num1 + 4, num2 - 2, num1 - 2, num2 + 4);
         }
     }
 }

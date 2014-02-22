@@ -92,7 +92,6 @@
     <Compile Include="FQ\FreeDock\x60f3af502af1d663.cs" />
     <Compile Include="FQ\FreeDock\x9b2777bb8e78938b.cs" />
     <Compile Include="FQ\FreeDock\DocumentLayoutSystem.cs" />
-    <Compile Include="FQ\FreeDock\x0a9f5257a10031b2.cs" />
     <Compile Include="FQ\FreeDock\x87cf4de36131799d.cs" />
     <Compile Include="FQ\FreeDock\x7fc004d490c8a431.cs" />
     <Compile Include="FQ\FreeDock\WindowMetaData.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="FQ\FreeDock\xd0aa9d0e7d3446c0.cs" />
     <Compile Include="FQ\FreeDock\x443cc432acaadb1d.cs" />
     <Compile Include="FQ\FreeDock\LayoutUtilities.cs" />
-    <Compile Include="FQ\FreeDock\x410f3612b9a8f9de.cs" />
     <Compile Include="FQ\FreeDock\xd936980ea1aac341.cs" />
     <Compile Include="FQ\FreeDock\ContextMenuContext.cs" />
     <Compile Include="FQ\FreeDock\DockingManager.cs" />
@@ -156,7 +154,9 @@
     <Compile Include="FQ\FreeDock\Design\DockContainerDesigner.cs" />
     <Compile Include="FQ\FreeDock\Design\DocumentContainerDesigner.cs" />
     <Compile Include="FQ\Util\Tooltips.cs" />
-    <Compile Include="c:\Users\Alex\FreeDock\FQ\FreeDock\AutoHideBar.cs" />
+    <Compile Include="FQ\FreeDock\AutoHideBar.cs" />
+    <Compile Include="FQ\FreeDock\FloatingDockContainer.cs" />
+    <Compile Include="FQ\FreeDock\ControlButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintbottom.png" />

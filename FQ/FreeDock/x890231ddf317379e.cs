@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace FQ.FreeDock
 {
+    // C
     abstract class x890231ddf317379e : IDisposable, IMessageFilter
     {
         private DockingHints hints = DockingHints.TranslucentFill;
@@ -35,7 +36,7 @@ namespace FQ.FreeDock
         private bool x21480c2e0df4efcd;
         private x7a797590a9beb775 x74e209c76c4b5a3e;
 
-        public event EventHandler x868a32060451dd2e;
+        public event EventHandler Cancelled;
 
         public x890231ddf317379e(Control control, DockingHints dockingHints, bool hollow, int tabStripSize) : this(control, dockingHints, hollow)
         {
@@ -196,8 +197,8 @@ namespace FQ.FreeDock
         public virtual void Cancel()
         {
             this.Dispose();
-            if (this.x868a32060451dd2e != null)
-                this.x868a32060451dd2e(this, EventArgs.Empty);
+            if (this.Cancelled != null)
+                this.Cancelled(this, EventArgs.Empty);
         }
         // reviewed
         public virtual void Dispose()

@@ -17,10 +17,10 @@ namespace FQ.FreeDock
         private const int x07ac164555740e80 = 164;
         private const int x5898cfc7c31e0ba4 = 161;
         private const int xad2c4838c7f4b06e = 163;
-        private x410f3612b9a8f9de xd3311d815ca25f02;
+        private FloatingDockContainer xd3311d815ca25f02;
         private Point x6afebf16b45c02e0;
 
-        public xd936980ea1aac341(x410f3612b9a8f9de container)
+        public xd936980ea1aac341(FloatingDockContainer container)
         {
             this.xd3311d815ca25f02 = container;
             this.FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -47,7 +47,7 @@ namespace FQ.FreeDock
             base.OnResize(e);
             if (this.xd3311d815ca25f02 != null)
             {
-                DockControl[] dockControls = this.xd3311d815ca25f02.LayoutSystem.x9476096be9672d38;
+                DockControl[] dockControls = this.xd3311d815ca25f02.LayoutSystem.AllControls;
                 foreach (DockControl dockControl in dockControls)
                 {
                     dockControl.FloatingSize = this.Size;
@@ -60,7 +60,7 @@ namespace FQ.FreeDock
             base.OnMove(e);
             if (this.xd3311d815ca25f02 != null)
             {
-                DockControl[] dockControls = this.xd3311d815ca25f02.LayoutSystem.x9476096be9672d38;
+                DockControl[] dockControls = this.xd3311d815ca25f02.LayoutSystem.AllControls;
                 foreach (DockControl dockControl in dockControls)
                 {
                     dockControl.FloatingLocation = this.Location;
@@ -100,8 +100,8 @@ namespace FQ.FreeDock
                 if (!rectangle.Contains(e.X, e.Y))
                 {
                     this.x6afebf16b45c02e0.Y += SystemInformation.ToolWindowCaptionHeight + SystemInformation.FrameBorderSize.Height;
-                    this.xd3311d815ca25f02.LayoutSystem.xe9a159cd1e028df2(this.xd3311d815ca25f02.Manager, (DockContainer)this.xd3311d815ca25f02, (LayoutSystemBase)this.xd3311d815ca25f02.LayoutSystem, (DockControl)null, this.xd3311d815ca25f02.xbe0b15fe97a1ee89.MetaData.DockedContentSize, this.x6afebf16b45c02e0, this.xd3311d815ca25f02.Manager.DockingHints, this.xd3311d815ca25f02.Manager.DockingManager);
-                    this.xd3311d815ca25f02.x3df31cf55a47bc37 = (LayoutSystemBase)this.xd3311d815ca25f02.LayoutSystem;
+                    this.xd3311d815ca25f02.LayoutSystem.xe9a159cd1e028df2(this.xd3311d815ca25f02.Manager, (DockContainer)this.xd3311d815ca25f02, (LayoutSystemBase)this.xd3311d815ca25f02.LayoutSystem, (DockControl)null, this.xd3311d815ca25f02.SelectedControl.MetaData.DockedContentSize, this.x6afebf16b45c02e0, this.xd3311d815ca25f02.Manager.DockingHints, this.xd3311d815ca25f02.Manager.DockingManager);
+                    this.xd3311d815ca25f02.layout = (LayoutSystemBase)this.xd3311d815ca25f02.LayoutSystem;
                     this.Capture = false;
                     this.xd3311d815ca25f02.Capture = true;
                     this.x6afebf16b45c02e0 = Point.Empty;

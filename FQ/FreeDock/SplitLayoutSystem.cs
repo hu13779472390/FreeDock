@@ -29,20 +29,20 @@ namespace FQ.FreeDock
         private ArrayList x366d4cf7098f9c63;
         private x8e80e1c8bce8caf7 x372569d2ea29984e;
 
-        internal override bool x56005f23d6948487
+        internal override bool ContainsPersistableDockControls
         {
             get
             {
-                foreach (LayoutSystemBase layoutSystemBase in (CollectionBase) this.LayoutSystems)
+                foreach (LayoutSystemBase layout in this.LayoutSystems)
                 {
-                    if (layoutSystemBase.x56005f23d6948487)
+                    if (layout.ContainsPersistableDockControls)
                         return true;
                 }
                 return false;
             }
         }
 
-        internal override DockControl[] x9476096be9672d38
+        internal override DockControl[] AllControls
         {
             get
             {
@@ -81,93 +81,28 @@ namespace FQ.FreeDock
             }
         }
 
-        internal override bool x74e31f9641656e0b
+        internal override bool AllowFloat
         {
             get
             {
-                IEnumerator enumerator = this.LayoutSystems.GetEnumerator();
-                bool flag1;
-                try
+                foreach (LayoutSystemBase layout in this.LayoutSystems)
                 {
-                    while (enumerator.MoveNext())
-                    {
-                        LayoutSystemBase layoutSystemBase = (LayoutSystemBase)enumerator.Current;
-                        if (3 != 0)
-                        {
-                            if (layoutSystemBase.x74e31f9641656e0b)
-                                continue;
-                        }
-                        else
-                        {
-                            bool flag2;
-                            if (false)
-                                ;
-                        }
-                        flag1 = false;
-                        return flag1;
-                    }
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    do
-                    {
-                        if (disposable != null)
-                        {
-                            disposable.Dispose();
-                            if (int.MaxValue != 0)
-                                goto label_11;
-                        }
-                        if (true)
-                            break;
-                        label_11:
-                        ;
-                    }
-                    while (int.MinValue == 0 || (int)byte.MaxValue == 0);
+                    if (!layout.AllowFloat)
+                        return false;
                 }
                 return true;
             }
         }
 
-        internal override bool x2f61709eaa5ebf76
+        internal override bool AllowTab
         {
             get
             {
-                IEnumerator enumerator = this.LayoutSystems.GetEnumerator();
-                try
+                foreach (LayoutSystemBase layout in (CollectionBase) this.LayoutSystems)
                 {
-                    LayoutSystemBase layoutSystemBase;
-                    do
-                    {
-                        if (enumerator.MoveNext())
-                            goto label_5;
-                        else
-                            goto label_4;
-                        label_2:
-                        continue;
-                        label_4:
-                        if (0 != 0)
-                            goto label_2;
-                        else
-                            goto label_10;
-                        label_5:
-                        layoutSystemBase = (LayoutSystemBase)enumerator.Current;
-                        bool flag;
-                        if (true)
-                            goto label_2;
-                        else
-                            break;
-                    }
-                    while (layoutSystemBase.x2f61709eaa5ebf76);
-                    return false;
+                    if (!layout.AllowFloat)
+                        return false;
                 }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
-                }
-                label_10:
                 return true;
             }
         }
@@ -193,7 +128,7 @@ namespace FQ.FreeDock
             }
         }
 
-        internal event EventHandler x7e9646eed248ed11;
+        internal event EventHandler LayoutSystemsChanged;
 
         /// <summary>
         /// Initializes a new instance of the SplitLayoutSystem class.
@@ -210,8 +145,7 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         /// <param name="desiredWidth">The desired width of this layout system, in pixels.</param><param name="desiredHeight">The desired height of this layout system, in pixels.</param>
-        public SplitLayoutSystem(int desiredWidth, int desiredHeight)
-      : this()
+        public SplitLayoutSystem(int desiredWidth, int desiredHeight) : this()
         {
             this.WorkingSize = new SizeF((float)desiredWidth, (float)desiredHeight);
         }
@@ -223,8 +157,7 @@ namespace FQ.FreeDock
         /// </summary>
         /// <param name="desiredWidth">The desired width of this layout system, in pixels.</param><param name="desiredHeight">The desired height of this layout system, in pixels.</param><param name="splitMode">The orientation of splitters within this layout system.</param><param name="layoutSystems">An array of layout systems to populate this layout system with.</param>
         [Obsolete("Use the constructor taking a SizeF instead.")]
-        public SplitLayoutSystem(int desiredWidth, int desiredHeight, Orientation splitMode, LayoutSystemBase[] layoutSystems)
-      : this(desiredWidth, desiredHeight)
+        public SplitLayoutSystem(int desiredWidth, int desiredHeight, Orientation splitMode, LayoutSystemBase[] layoutSystems) : this(desiredWidth, desiredHeight)
         {
             this.splitMode = splitMode;
             this.layoutSystems.AddRange(layoutSystems);
@@ -236,8 +169,7 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         /// <param name="workingSize">The working size of the layout system.</param><param name="splitMode">The orientation of splitters within this layout system.</param><param name="layoutSystems">An array of layout systems to populate this layout system with.</param>
-        public SplitLayoutSystem(SizeF workingSize, Orientation splitMode, LayoutSystemBase[] layoutSystems)
-      : this()
+        public SplitLayoutSystem(SizeF workingSize, Orientation splitMode, LayoutSystemBase[] layoutSystems) : this()
         {
             this.WorkingSize = workingSize;
             this.splitMode = splitMode;
@@ -467,7 +399,7 @@ namespace FQ.FreeDock
                 label_31:
                 if (x11d58b056c032b03.type == xedb4922162c60d3d.DockTargetType.None || -1 == 0 || x11d58b056c032b03.type == xedb4922162c60d3d.DockTargetType.AlreadyActioned)
                     break;
-                x410f3612b9a8f9de x410f3612b9a8f9de = (x410f3612b9a8f9de)this.DockContainer;
+                FloatingDockContainer x410f3612b9a8f9de = (FloatingDockContainer)this.DockContainer;
                 goto label_33;
                 label_35:
                 if (0 == 0 || 0 != 0)
@@ -479,8 +411,8 @@ namespace FQ.FreeDock
                     break;
                 if (x11d58b056c032b03.type != xedb4922162c60d3d.DockTargetType.Float)
                 {
-                    DockControl[] x9476096be9672d38 = this.x9476096be9672d38;
-                    DockControl xbe0b15fe97a1ee89 = x410f3612b9a8f9de.xbe0b15fe97a1ee89;
+                    DockControl[] x9476096be9672d38 = this.AllControls;
+                    DockControl xbe0b15fe97a1ee89 = x410f3612b9a8f9de.SelectedControl;
                     x410f3612b9a8f9de.LayoutSystem = new SplitLayoutSystem();
                     x410f3612b9a8f9de.Dispose();
                     try
@@ -589,9 +521,9 @@ namespace FQ.FreeDock
         /// </para>
         /// 
         /// </remarks>
-        public void MoveToLayoutSystem(ControlLayoutSystem layoutSystem)
+        public void MoveToLayoutSystem(ControlLayoutSystem controlLayout)
         {
-            this.MoveToLayoutSystem(layoutSystem, 0);
+            this.MoveToLayoutSystem(controlLayout, 0);
         }
 
         /// <summary>
@@ -599,315 +531,55 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         /// <param name="layoutSystem">The control layout system to move in to.</param><param name="index">The offset of the new tabs in the existing layout system.</param>
-        public void MoveToLayoutSystem(ControlLayoutSystem layoutSystem, int index)
+        // reviewed with 2.4
+        public void MoveToLayoutSystem(ControlLayoutSystem controlLayout, int index)
         {
-            DockControl dockControl = (DockControl)null;
-            int num;
-            while (this.LayoutSystems.Count == 1)
-            {
-                if (this.LayoutSystems[0] is ControlLayoutSystem)
-                    goto label_15;
-                label_9:
-                if (0 == 0)
-                {
-                    if (15 == 0 || (uint)index - (uint)index <= uint.MaxValue)
-                    {
-                        if (0 == 0)
-                            goto label_5;
-                    }
-                    else if (false)
-                        goto label_1;
-                }
-                else
-                    goto label_13;
-                label_12:
-                if (false)
-                    goto label_9;
-                else
-                    goto label_5;
-                label_13:
-                if (false)
-                    continue;
-                else
-                    goto label_12;
-                label_15:
+            DockControl dockControl = null;
+            if (this.LayoutSystems.Count == 1 && this.LayoutSystems[0] is ControlLayoutSystem)
                 dockControl = ((ControlLayoutSystem)this.LayoutSystems[0]).SelectedControl;
-                goto label_13;
-            }
-            goto label_17;
-            label_1:
-            int index1 = 0;
-            DockControl[] x9476096be9672d38 = null;
-            while (true)
-            {
-                DockControl control = null;
-                if (index1 < 0)
-                {
-                    if ((uint)index - (uint)index1 >= 0U)
-                        break;
-                }
-                else
-                    control = x9476096be9672d38[index1];
-                layoutSystem.Controls.Insert(index, control);
-                --index1;
-            }
-            if (dockControl == null)
-                return;
-            label_4:
-            layoutSystem.SelectedControl = dockControl;
-            return;
-            label_5:
-            x9476096be9672d38 = this.x9476096be9672d38;
-            index1 = x9476096be9672d38.Length - 1;
-            goto label_1;
-            label_17:
-            if (false)
-                goto label_4;
-            else
-                goto label_5;
-        }
 
-        private void xd78391e378ab076b(SplitLayoutSystem xb25822984a90695b, ArrayList x8da10969b0e2a75e)
+            DockControl[] allControls = this.AllControls;
+            for (int i = allControls.Length - 1; i >= 0; --i)
+                controlLayout.Controls.Insert(i, allControls[i]);
+
+            if (dockControl != null)
+                controlLayout.SelectedControl = dockControl;
+        }
+        // reviewed with 2.4
+        private void xd78391e378ab076b(SplitLayoutSystem splitLayout, ArrayList x8da10969b0e2a75e)
         {
-            IEnumerator enumerator1 = xb25822984a90695b.layoutSystems.GetEnumerator();
-            try
+            foreach (LayoutSystemBase layout in splitLayout.layoutSystems)
             {
-                label_2:
-                LayoutSystemBase layoutSystemBase;
-                while (true)
+                if (layout is SplitLayoutSystem)
+                    this.xd78391e378ab076b((SplitLayoutSystem)layout, x8da10969b0e2a75e);
+                else if (layout is ControlLayoutSystem)
                 {
-                    if (!enumerator1.MoveNext())
-                    {
-                        if (0 == 0)
-                            goto label_19;
-                        else
-                            goto label_6;
-                    }
-                    else
-                        goto label_24;
-                    label_4:
-                    if (!(layoutSystemBase is ControlLayoutSystem))
-                    {
-                        if (0 != 0)
-                            goto label_17;
-                        else
-                            continue;
-                    }
-                    else
-                        break;
-                    label_6:
-                    if (3 == 0)
-                        goto label_20;
-                    else
-                        goto label_4;
-                    label_16:
-                    if (8 != 0)
-                    {
-                        if (0 == 0)
-                        {
-                            if (3 == 0)
-                                goto label_4;
-                            else
-                                goto label_4;
-                        }
-                    }
-                    else
-                        goto label_21;
-                    label_17:
-                    if (0 == 0)
-                    {
-                        if (0 == 0)
-                            goto label_6;
-                    }
-                    else
-                        goto label_16;
-                    label_19:
-                    if (0 == 0)
-                        goto label_23;
-                    else
-                        goto label_21;
-                    label_20:
-                    this.xd78391e378ab076b((SplitLayoutSystem)layoutSystemBase, x8da10969b0e2a75e);
-                    continue;
-                    label_21:
-                    if (!(layoutSystemBase is SplitLayoutSystem))
-                    {
-                        if (0 == 0)
-                            goto label_17;
-                        else
-                            goto label_16;
-                    }
-                    else
-                        goto label_20;
-                    label_24:
-                    layoutSystemBase = (LayoutSystemBase)enumerator1.Current;
-                    if (int.MinValue != 0)
-                        goto label_21;
-                    else
-                        goto label_25;
+                    foreach (DockControl dockControl in ((ControlLayoutSystem)layout).Controls)
+                        x8da10969b0e2a75e.Add(dockControl);
                 }
-                IEnumerator enumerator2 = ((ControlLayoutSystem)layoutSystemBase).Controls.GetEnumerator();
-                try
-                {
-                    while (enumerator2.MoveNext())
-                    {
-                        DockControl dockControl = (DockControl)enumerator2.Current;
-                        x8da10969b0e2a75e.Add((object)dockControl);
-                    }
-                    goto label_2;
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator2 as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
-                }
-                label_23:
-                return;
-                label_25:
-                ;
-            }
-            finally
-            {
-                IDisposable disposable = enumerator1 as IDisposable;
-                if (int.MaxValue == 0 || disposable != null)
-                    disposable.Dispose();
             }
         }
-
-        internal void x5a3264f7eba0fe4f(System.Drawing.Point x13d4cb8d1bd20347, out LayoutSystemBase xc13a8191724b6d55, out LayoutSystemBase x5aa50bbadb0a1e6c)
+        // stolen from 2.4
+        internal void x5a3264f7eba0fe4f(Point point, out LayoutSystemBase layout1, out LayoutSystemBase layout2)
         {
             int index1 = 0;
-            IEnumerator enumerator = this.LayoutSystems.GetEnumerator();
-            int num;
-            try
+            foreach (LayoutSystemBase layout in this.LayoutSystems)
             {
-                label_13:
-                while (enumerator.MoveNext())
+                if ((!(layout is ControlLayoutSystem) || !((ControlLayoutSystem)layout).Collapsed) && (this.SplitMode == Orientation.Horizontal && point.Y >= layout.Bounds.Bottom && point.Y <= layout.Bounds.Bottom + 4 || this.SplitMode == Orientation.Vertical && point.X >= layout.Bounds.Right && point.X <= layout.Bounds.Right + 4))
                 {
-                    LayoutSystemBase layoutSystem = (LayoutSystemBase)enumerator.Current;
-                    if (!(layoutSystem is ControlLayoutSystem))
-                        goto label_22;
-                    else
-                        goto label_27;
-                    label_14:
-                    if (x13d4cb8d1bd20347.X <= layoutSystem.Bounds.Right + 4)
-                    {
-                        if (0 != 0)
-                            goto label_20;
-                        else
-                            goto label_19;
-                    }
-                    else
-                        continue;
-                    label_15:
-                    do
-                    {
-                        if (x13d4cb8d1bd20347.X < layoutSystem.Bounds.Right)
-                            goto label_13;
-                    }
-                    while (false);
-                    goto label_14;
-                    label_17:
-                    if (this.SplitMode == Orientation.Vertical)
-                    {
-                        if (true)
-                            goto label_15;
-                    }
-                    else
-                        continue;
-                    label_19:
-                    index1 = this.LayoutSystems.IndexOf(layoutSystem);
+                    index1 = this.LayoutSystems.IndexOf(layout);
                     break;
-                    label_20:
-                    if (x13d4cb8d1bd20347.Y > layoutSystem.Bounds.Bottom + 4)
-                        goto label_17;
-                    else
-                        goto label_19;
-                    label_22:
-                    if (this.SplitMode != Orientation.Horizontal)
-                        goto label_17;
-                    label_23:
-                    if (x13d4cb8d1bd20347.Y < layoutSystem.Bounds.Bottom)
-                    {
-                        if (0 == 0)
-                            goto label_17;
-                        else
-                            goto label_15;
-                    }
-                    else
-                        goto label_20;
-                    label_27:
-                    if (!((ControlLayoutSystem)layoutSystem).Collapsed)
-                    {
-                        if (true)
-                        {
-                            if (0 == 0)
-                                goto label_22;
-                            else
-                                goto label_23;
-                        }
-                        else
-                            goto label_14;
-                    }
                 }
             }
-            finally
+            layout1 = this.LayoutSystems[index1];
+            layout2 = layout1;
+            for (int index2 = index1 + 1; index2 < this.layoutSystems.Count; ++index2)
             {
-                IDisposable disposable = enumerator as IDisposable;
-                while (disposable != null)
+                if (!(this.layoutSystems[index2] is ControlLayoutSystem) || !((ControlLayoutSystem)this.layoutSystems[index2]).Collapsed)
                 {
-                    disposable.Dispose();
-                    if (true)
-                        break;
+                    layout2 = this.LayoutSystems[index2];
+                    break;
                 }
-            }
-            xc13a8191724b6d55 = this.LayoutSystems[index1];
-            x5aa50bbadb0a1e6c = xc13a8191724b6d55;
-            int index2 = index1 + 1;
-            label_3:
-            while (index2 < this.layoutSystems.Count)
-            {
-                label_6:
-                if (!(this.layoutSystems[index2] is ControlLayoutSystem))
-                    goto label_11;
-                else
-                    goto label_7;
-                label_4:
-                if (2 == 0)
-                {
-                    if ((uint)index2 - (uint)index2 <= uint.MaxValue)
-                        goto label_6;
-                }
-                else
-                    goto label_10;
-                label_7:
-                while (((ControlLayoutSystem)this.layoutSystems[index2]).Collapsed)
-                {
-                    label_2:
-                    do
-                    {
-                        ++index2;
-                        if ((index1 | 4) == 0)
-                        {
-                            if ((uint)index1 > uint.MaxValue || 0 != 0)
-                                goto label_7;
-                        }
-                        else
-                            goto label_3;
-                    }
-                    while ((uint)index2 + (uint)index2 > uint.MaxValue);
-                    goto label_2;
-                }
-                goto label_4;
-                label_10:
-                x5aa50bbadb0a1e6c = this.LayoutSystems[index2];
-                break;
-                label_11:
-                if ((index2 | 4) != 0)
-                    goto label_10;
-                else
-                    goto label_4;
             }
         }
 
@@ -920,38 +592,19 @@ namespace FQ.FreeDock
             base.OnMouseDown(e);
             foreach (Rectangle rectangle in this.x366d4cf7098f9c63)
             {
-                if (0 != 0)
-                    goto label_10;
-                label_2:
-                if (!rectangle.Contains(e.X, e.Y))
-                    continue;
-                label_10:
-                LayoutSystemBase xc13a8191724b6d55;
-                LayoutSystemBase x5aa50bbadb0a1e6c;
-                this.x5a3264f7eba0fe4f(new System.Drawing.Point(e.X, e.Y), out xc13a8191724b6d55, out x5aa50bbadb0a1e6c);
-                if (2 == 0)
-                    break;
-                if (this.x372569d2ea29984e == null)
-                    goto label_8;
-                else
-                    goto label_7;
-                label_5:
-                this.x372569d2ea29984e.x67ecc0d0e7c9a202 += new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
-                break;
-                label_7:
-                this.x372569d2ea29984e.Dispose();
-                if (0 != 0)
-                    goto label_5;
-                label_8:
-                DockingHints dockingHints = this.DockContainer.Manager != null ? this.DockContainer.Manager.DockingHints : DockingHints.TranslucentFill;
-                this.x372569d2ea29984e = new x8e80e1c8bce8caf7(this.DockContainer, this, xc13a8191724b6d55, x5aa50bbadb0a1e6c, new System.Drawing.Point(e.X, e.Y), dockingHints);
-                if (0 == 0)
+                if (rectangle.Contains(e.X, e.Y))
                 {
-                    this.x372569d2ea29984e.x868a32060451dd2e += new EventHandler(this.xfae511fd7c4fb447);
-                    goto label_5;
+                    LayoutSystemBase aboveLayout;
+                    LayoutSystemBase belowLayout;
+                    this.x5a3264f7eba0fe4f(new Point(e.X, e.Y), out aboveLayout, out belowLayout);
+                    if (this.x372569d2ea29984e != null)
+                        this.x372569d2ea29984e.Dispose();
+                    DockingHints dockingHints = this.DockContainer.Manager != null ? this.DockContainer.Manager.DockingHints : DockingHints.TranslucentFill;
+                    this.x372569d2ea29984e = new x8e80e1c8bce8caf7(this.DockContainer, this, aboveLayout, belowLayout, new Point(e.X, e.Y), dockingHints);
+                    this.x372569d2ea29984e.Cancelled += new EventHandler(this.xfae511fd7c4fb447);
+                    this.x372569d2ea29984e.Committed += new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
+                    break;
                 }
-                else
-                    goto label_2;
             }
         }
 
@@ -959,60 +612,34 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
+        // reviewed with 2.4
         protected internal override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            while (this.x531514c39973cbc6 == null)
+            if (this.x531514c39973cbc6 != null)
+                this.x531514c39973cbc6.Commit();
+            else
             {
-                if (0 == 0 || 15 != 0)
-                {
-                    if (this.x372569d2ea29984e == null)
-                        return;
+                if (this.x372569d2ea29984e != null)
                     this.x372569d2ea29984e.Commit();
-                    return;
-                }
             }
-            this.x531514c39973cbc6.Commit();
         }
-
+        // reviewed with 2.4
         internal bool x090b65ef9b096e0b(int x08db3aeabb253cb1, int x1e218ceaee1bb583)
         {
-            IEnumerator enumerator = this.x366d4cf7098f9c63.GetEnumerator();
-            bool flag;
-            try
+            foreach (Rectangle rectangle in this.x366d4cf7098f9c63)
             {
-                label_3:
-                if (enumerator.MoveNext())
-                {
-                    Rectangle rectangle = (Rectangle)enumerator.Current;
-                    do
-                    {
-                        if (rectangle.Contains(x08db3aeabb253cb1, x1e218ceaee1bb583))
-                            flag = true;
-                        else
-                            goto label_3;
-                    }
-                    while (false);
-                    if ((x1e218ceaee1bb583 | 4) != 0)
-                        goto label_11;
-                }
-            }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
+                if (rectangle.Contains(x08db3aeabb253cb1, x1e218ceaee1bb583))
+                    return true;
             }
             return false;
-            label_11:
-            return flag;
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        // reviewe done
+        // reviewed with 2.4
         protected internal override void OnMouseMove(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -1030,35 +657,16 @@ namespace FQ.FreeDock
                 }
             }
 
-            bool flag = this.x090b65ef9b096e0b(e.X, e.Y);
-            if (!flag)
-            {
-                Cursor.Current = Cursors.Default;
-            }
-            else
-            {
-                Cursor.Current = this.splitMode != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
-            }
-
+            Cursor.Current = !this.x090b65ef9b096e0b(e.X, e.Y) ? Cursors.Default : this.splitMode != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
             base.OnMouseMove(e);
         }
 
-        internal override bool xe302f2203dc14a18(ContainerDockLocation xb9c2cfae130d9256)
+        internal override bool xe302f2203dc14a18(ContainerDockLocation location)
         {
-            IEnumerator enumerator = this.LayoutSystems.GetEnumerator();
-            try
+            foreach (LayoutSystemBase layout in this.LayoutSystems)
             {
-                while (enumerator.MoveNext())
-                {
-                    if (!((LayoutSystemBase)enumerator.Current).xe302f2203dc14a18(xb9c2cfae130d9256))
-                        return false;
-                }
-            }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
+                if (!layout.xe302f2203dc14a18(location))
+                    return false;
             }
             return true;
         }
@@ -1067,67 +675,40 @@ namespace FQ.FreeDock
         {
             if (this.DockContainer != null)
                 this.DockContainer.x7e9646eed248ed11();
-            if (this.x7e9646eed248ed11 != null)
-                this.x7e9646eed248ed11(this, EventArgs.Empty);
+            if (this.LayoutSystemsChanged != null)
+                this.LayoutSystemsChanged(this, EventArgs.Empty);
         }
 
         internal void x3e0280cae730d1f2()
         {
             if (this.DockContainer != null)
-            {
-                this.DockContainer.xec9697acef66c1bc((LayoutSystemBase)this, this.Bounds);
-            }
+                this.DockContainer.xec9697acef66c1bc(this, this.Bounds);
             if (this.DockContainer != null)
                 this.DockContainer.Invalidate(this.Bounds);
         }
 
-        internal override void x56e964269d48cfcc(DockContainer x0467b00af7810f0c)
+        internal override void x56e964269d48cfcc(DockContainer container)
         {
-            base.x56e964269d48cfcc(x0467b00af7810f0c);
-            foreach (LayoutSystemBase layoutSystemBase in (CollectionBase) this.LayoutSystems)
-                layoutSystemBase.x56e964269d48cfcc(x0467b00af7810f0c);
+            base.x56e964269d48cfcc(container);
+            foreach (LayoutSystemBase layout in this.LayoutSystems)
+                layout.x56e964269d48cfcc(container);
         }
-
+        // reviewed with 2.4
         private LayoutSystemBase[] x10878bfc002a3aaf(out int count)
         {
             count = 0;
             LayoutSystemBase[] layouts = new LayoutSystemBase[this.LayoutSystems.Count];
-            IEnumerator enumerator = this.LayoutSystems.GetEnumerator();
-            try
+            foreach (LayoutSystemBase layout in this.LayoutSystems)
             {
-                while (enumerator.MoveNext())
+                if (layout is ControlLayoutSystem)
                 {
-                    LayoutSystemBase layout = (LayoutSystemBase)enumerator.Current;
-                    if (layout is ControlLayoutSystem)
-                    {
-                        ControlLayoutSystem controlLayoutSystem = (ControlLayoutSystem)layout;
-                        if (!controlLayoutSystem.Collapsed)
-                        {
-                            layouts[count++] = layout;
-                        }
-                        else
-                        {
-                            if (this.IsInContainer && !this.DockContainer.x0c2484ccd29b8358)
-                            {
-                                layouts[count++] = layout;
-                            }
-                        }
-                    }
-                    else if (layout is SplitLayoutSystem)
-                    {
-                        SplitLayoutSystem splitLayoutSystem = (SplitLayoutSystem)layout;
-                        if (splitLayoutSystem.x7ca4fdcb31f9824a())
-                        {
-                            layouts[count++] = layout;
-                        }
-                    }
+                    if (!((ControlLayoutSystem)layout).Collapsed || this.IsInContainer && !this.DockContainer.CanShowCollapsed)
+                        layouts[count++] = layout;
                 }
-            }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
+                else if (layout is SplitLayoutSystem && ((SplitLayoutSystem)layout).x7ca4fdcb31f9824a())
+                {
+                    layouts[count++] = layout;
+                }
             }
             return layouts;
         }
@@ -1152,7 +733,7 @@ namespace FQ.FreeDock
             float num2 = 0.0f;
             int index1 = 0;
 //            float num3;
-            SizeF[] sizeFArray = {};
+            SizeF[] sizeFArray = { };
             int index2 = 0;
             if (!floating)
             {
@@ -1174,13 +755,13 @@ namespace FQ.FreeDock
             }
             label_49:
 
-             for (int i = 0; i < x10f4d88af727adbc; ++i)
+            for (int i = 0; i < x10f4d88af727adbc; ++i)
                 sizeFArray[i] = layoutSystemBaseArray[i].WorkingSize;
 
             float num9 = 0;
-            float num8=0;
+            float num8 = 0;
             int index6 = 0;
-            int index3=0;
+            int index3 = 0;
             int num5 = 0;
             int num7;
             int index4 = 0;
@@ -1405,7 +986,7 @@ namespace FQ.FreeDock
             num8 = (float)num4 - num2;
             index4 = 0;
             goto label_35;
-                    }
+        }
         //        protected internal void Layout_org(RendererBase renderer, Graphics graphics, Rectangle bounds, bool floating)
         //        {
         //            base.Layout(renderer, graphics, bounds, floating);
@@ -1656,106 +1237,31 @@ namespace FQ.FreeDock
         {
             if (this.DockContainer == null)
                 return;
-            Control control;
-            if (this.DockContainer.Manager == null)
+            Control container = this.DockContainer.Manager != null ? this.DockContainer.Manager.DockSystemContainer : null;
+
+            foreach (Rectangle bounds in this.x366d4cf7098f9c63)
+                render.DrawSplitter(container, this.DockContainer, graphics, bounds, this.splitMode);
+
+            foreach (LayoutSystemBase layout in this.LayoutSystems)
             {
-                if (-1 == 0)
-                    return;
-                control = (Control)null;
-            }
-            else
-                control = this.DockContainer.Manager.DockSystemContainer;
-            Control container = control;
-            IEnumerator enumerator1 = this.x366d4cf7098f9c63.GetEnumerator();
-            try
-            {
-                while (enumerator1.MoveNext())
+                if (!(layout is ControlLayoutSystem) || !((ControlLayoutSystem)layout).Collapsed || !this.DockContainer.CanShowCollapsed)
                 {
-                    Rectangle bounds = (Rectangle)enumerator1.Current;
-                    render.DrawSplitter(container, (Control)this.DockContainer, graphics, bounds, this.splitMode);
+                    Region clip = graphics.Clip;
+                    graphics.SetClip(layout.Bounds);
+                    layout.x84b6f3c22477dacb(render, graphics, font);
+                    graphics.Clip = clip;
                 }
-            }
-            finally
-            {
-                IDisposable disposable = enumerator1 as IDisposable;
-                if (15 == 0 || disposable != null)
-                    disposable.Dispose();
-            }
-            IEnumerator enumerator2 = this.LayoutSystems.GetEnumerator();
-            try
-            {
-                label_19:
-                if (enumerator2.MoveNext())
-                    goto label_26;
-                else
-                    goto label_20;
-                label_17:
-                LayoutSystemBase layoutSystemBase;
-                if (!((ControlLayoutSystem)layoutSystemBase).Collapsed)
-                    goto label_24;
-                label_18:
-                if (!this.DockContainer.x0c2484ccd29b8358)
-                    goto label_24;
-                else
-                    goto label_19;
-                label_20:
-                if (15 != 0)
-                {
-                    if (8 != 0 && 0 == 0)
-                    {
-                        if (0 != 0)
-                            goto label_17;
-                    }
-                    else
-                        goto label_18;
-                }
-                if (0 == 0)
-                {
-                    if (1 != 0)
-                        return;
-                    else
-                        goto label_24;
-                }
-                label_23:
-                graphics.SetClip(layoutSystemBase.Bounds);
-                layoutSystemBase.x84b6f3c22477dacb(render, graphics, font);
-                Region clip;
-                graphics.Clip = clip;
-                if (4 == 0 || 0 != 0)
-                {
-                    if (4 != 0)
-                        goto label_18;
-                    else
-                        goto label_17;
-                }
-                else
-                    goto label_19;
-                label_24:
-                clip = graphics.Clip;
-                goto label_23;
-                label_26:
-                layoutSystemBase = (LayoutSystemBase)enumerator2.Current;
-                if (-2 == 0 || layoutSystemBase is ControlLayoutSystem && (int)byte.MaxValue != 0)
-                    goto label_17;
-                else
-                    goto label_24;
-            }
-            finally
-            {
-                IDisposable disposable = enumerator2 as IDisposable;
-                if (0 != 0 || disposable != null)
-                    disposable.Dispose();
             }
         }
 
         private void x367ada130c39f434()
         {
-            this.x372569d2ea29984e.x868a32060451dd2e -= new EventHandler(this.xfae511fd7c4fb447);
-            this.x372569d2ea29984e.x67ecc0d0e7c9a202 -= new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
-            this.x372569d2ea29984e = (x8e80e1c8bce8caf7)null;
+            this.x372569d2ea29984e.Cancelled -= new EventHandler(this.xfae511fd7c4fb447);
+            this.x372569d2ea29984e.Committed -= new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
+            this.x372569d2ea29984e = null;
         }
 
-        private void xfae511fd7c4fb447(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        private void xfae511fd7c4fb447(object sender, EventArgs e)
         {
             this.x367ada130c39f434();
         }
@@ -1816,79 +1322,20 @@ namespace FQ.FreeDock
             else
                 goto label_13;
         }
-
+        // reviewed with 2.4
         internal bool x7ca4fdcb31f9824a()
         {
-            IEnumerator enumerator = this.layoutSystems.GetEnumerator();
-            bool flag;
-            try
+            foreach (LayoutSystemBase layout in this.layoutSystems)
             {
-                label_4:
-                do
+                if (layout is ControlLayoutSystem)
                 {
-                    if (enumerator.MoveNext())
-                    {
-                        label_12:
-                        LayoutSystemBase layoutSystemBase = (LayoutSystemBase)enumerator.Current;
-                        if (layoutSystemBase is ControlLayoutSystem)
-                            goto label_11;
-                        else
-                            goto label_6;
-                        label_5:
-                        if (true)
-                        {
-                            if (true)
-                                continue;
-                        }
-                        else
-                            goto label_12;
-                        label_6:
-                        if (((SplitLayoutSystem)layoutSystemBase).x7ca4fdcb31f9824a())
-                        {
-                            flag = true;
-                            if (-1 != 0)
-                                goto label_17;
-                            else
-                                goto label_5;
-                        }
-                        else
-                            continue;
-                        label_11:
-                        ControlLayoutSystem controlLayoutSystem = (ControlLayoutSystem)layoutSystemBase;
-                        if (controlLayoutSystem.Collapsed)
-                        {
-                            if (this.IsInContainer)
-                                goto label_10;
-                            else
-                                goto label_5;
-                        }
-                        else
-                            goto label_9;
-                    }
-                    else
-                        goto label_16;
+                    if (!((ControlLayoutSystem)layout).Collapsed || this.IsInContainer && !this.DockContainer.CanShowCollapsed)
+                        return true;
                 }
-                while (false);
-                goto label_4;
-                label_9:
-                flag = true;
-                goto label_17;
-                label_10:
-                if (this.DockContainer.x0c2484ccd29b8358)
-                    goto label_4;
-                else
-                    goto label_9;
+                else if (((SplitLayoutSystem)layout).x7ca4fdcb31f9824a())
+                    return true;
             }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
-            }
-            label_16:
             return false;
-            label_17:
-            return flag;
         }
 
         /// <summary>
@@ -1897,7 +1344,7 @@ namespace FQ.FreeDock
         /// </summary>
         public class LayoutSystemBaseCollection : CollectionBase
         {
-            private SplitLayoutSystem xb6a159a84cb992d6;
+            private SplitLayoutSystem parent;
             internal bool xd7a3953bce504b63;
 
             /// <summary>
@@ -1914,12 +1361,12 @@ namespace FQ.FreeDock
 
             internal LayoutSystemBaseCollection(SplitLayoutSystem parent)
             {
-                this.xb6a159a84cb992d6 = parent;
+                this.parent = parent;
             }
 
             private void x8e9e04a70e31e166()
             {
-                this.xb6a159a84cb992d6.x8e9e04a70e31e166();
+                this.parent.x8e9e04a70e31e166();
             }
 
             /// <summary>
@@ -1929,22 +1376,10 @@ namespace FQ.FreeDock
             protected override void OnClear()
             {
                 base.OnClear();
-
-                IEnumerator enumerator = this.GetEnumerator();
-                try
+                foreach (LayoutSystemBase layout in this)
                 {
-                    while (enumerator.MoveNext())
-                    {
-                        LayoutSystemBase layoutSystemBase = (LayoutSystemBase)enumerator.Current;
-                        layoutSystemBase.xb6a159a84cb992d6 = null;
-                        layoutSystemBase.x56e964269d48cfcc(null);
-                    }
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
+                    layout.parent = null;
+                    layout.x56e964269d48cfcc(null);
                 }
             }
 
@@ -1956,10 +1391,7 @@ namespace FQ.FreeDock
             {
                 base.OnClearComplete();
                 if (!this.xd7a3953bce504b63)
-                {
                     this.x8e9e04a70e31e166();
-                }
-
             }
 
             /// <summary>
@@ -1969,13 +1401,11 @@ namespace FQ.FreeDock
             protected override void OnInsertComplete(int index, object value)
             {
                 base.OnInsertComplete(index, value);
-                LayoutSystemBase layoutSystemBase = (LayoutSystemBase)value;
-                layoutSystemBase.xb6a159a84cb992d6 = this.xb6a159a84cb992d6;
-                layoutSystemBase.x56e964269d48cfcc(this.xb6a159a84cb992d6.DockContainer);
+                LayoutSystemBase layout = (LayoutSystemBase)value;
+                layout.parent = this.parent;
+                layout.x56e964269d48cfcc(this.parent.DockContainer);
                 if (!this.xd7a3953bce504b63)
-                {
                     this.x8e9e04a70e31e166();
-                }
             }
 
             /// <summary>
@@ -1985,69 +1415,35 @@ namespace FQ.FreeDock
             protected override void OnRemoveComplete(int index, object value)
             {
                 base.OnRemoveComplete(index, value);
-                ((LayoutSystemBase)value).xb6a159a84cb992d6 = (SplitLayoutSystem)null;
-                ((LayoutSystemBase)value).x56e964269d48cfcc((DockContainer)null);
-                int num = 0;
+                ((LayoutSystemBase)value).parent = null;
+                ((LayoutSystemBase)value).x56e964269d48cfcc(null);
                 if (this.xd7a3953bce504b63)
                     return;
-                if (this.Count <= 1)
+
+                if (this.Count <= 1 && this.parent.parent != null)
                 {
-                    while (this.xb6a159a84cb992d6.xb6a159a84cb992d6 != null)
+                    SplitLayoutSystem splitLayout = this.parent.parent;
+                    if (this.Count == 1)
                     {
-                        SplitLayoutSystem splitLayoutSystem = this.xb6a159a84cb992d6.xb6a159a84cb992d6;
-                        if (this.Count != 1)
-                        {
-                            if ((uint)num - (uint)index >= 0U)
-                            {
-                                if ((index & 0) == 0)
-                                {
-                                    if (this.Count != 0)
-                                        return;
-                                }
-                                else
-                                    goto label_9;
-                                label_4:
-                                splitLayoutSystem.LayoutSystems.Remove((LayoutSystemBase)this.xb6a159a84cb992d6);
-                                return;
-                                label_9:
-                                if ((uint)index + (uint)num < 0U)
-                                {
-                                    if (15 != 0)
-                                        continue;
-                                }
-                                else
-                                    goto label_4;
-                            }
-                            else
-                                continue;
-                        }
-                        else
-                            goto label_13;
-                        label_11:
-                        LayoutSystemBase layoutSystem;
-                        this.Remove(layoutSystem);
-                        this.xd7a3953bce504b63 = false;
-                        splitLayoutSystem.LayoutSystems.xd7a3953bce504b63 = true;
-                        int index1 = splitLayoutSystem.LayoutSystems.IndexOf((LayoutSystemBase)this.xb6a159a84cb992d6);
-                        splitLayoutSystem.LayoutSystems.Remove((LayoutSystemBase)this.xb6a159a84cb992d6);
-                        splitLayoutSystem.LayoutSystems.Insert(index1, layoutSystem);
-                        splitLayoutSystem.LayoutSystems.xd7a3953bce504b63 = false;
-                        splitLayoutSystem.x8e9e04a70e31e166();
-                        return;
-                        label_13:
-                        layoutSystem = this[0];
+                        LayoutSystemBase layout = this[0];
                         this.xd7a3953bce504b63 = true;
-                        goto label_11;
+                        this.Remove(layout);
+                        this.xd7a3953bce504b63 = false;
+                        splitLayout.LayoutSystems.xd7a3953bce504b63 = true;
+                        int index1 = splitLayout.LayoutSystems.IndexOf(this.parent);
+                        splitLayout.LayoutSystems.Remove(this.parent);
+                        splitLayout.LayoutSystems.Insert(index1, layout);
+                        splitLayout.LayoutSystems.xd7a3953bce504b63 = false;
+                        splitLayout.x8e9e04a70e31e166();
+                        return;
+                    }
+                    else if (this.Count == 0)
+                    {
+                        splitLayout.LayoutSystems.Remove((LayoutSystemBase)this.parent);
                     }
                 }
                 else
-                    goto label_6;
-                label_3:
-                this.x8e9e04a70e31e166();
-                return;
-                label_6:
-                if (0 == 0)
-                    goto label_3;
+                    this.x8e9e04a70e31e166();
             }
 
             /// <summary>
@@ -2066,8 +1462,8 @@ namespace FQ.FreeDock
             public void AddRange(LayoutSystemBase[] layoutSystems)
             {
                 this.xd7a3953bce504b63 = true;
-                foreach (LayoutSystemBase layoutSystem in layoutSystems)
-                    this.Add(layoutSystem);
+                foreach (LayoutSystemBase layout in layoutSystems)
+                    this.Add(layout);
                 this.xd7a3953bce504b63 = false;
                 this.x8e9e04a70e31e166();
             }
@@ -2080,10 +1476,10 @@ namespace FQ.FreeDock
             /// <returns>
             /// The new index of the layout system in the collection.
             /// </returns>
-            public int Add(LayoutSystemBase layoutSystem)
+            public int Add(LayoutSystemBase layout)
             {
                 int count = this.Count;
-                this.Insert(count, layoutSystem);
+                this.Insert(count, layout);
                 return count;
             }
 
@@ -2092,11 +1488,11 @@ namespace FQ.FreeDock
             /// 
             /// </summary>
             /// <param name="index">The position to insert the layout system at.</param><param name="layoutSystem">The layout system to insert.</param>
-            public void Insert(int index, LayoutSystemBase layoutSystem)
+            public void Insert(int index, LayoutSystemBase layout)
             {
-                if (layoutSystem.xb6a159a84cb992d6 != null)
+                if (layout.parent != null)
                     throw new ArgumentException("Layout system already has a parent. You must first remove it from its parent.");
-                this.List.Insert(index, layoutSystem);
+                this.List.Insert(index, layout);
             }
 
             /// <summary>
@@ -2104,9 +1500,9 @@ namespace FQ.FreeDock
             /// 
             /// </summary>
             /// <param name="layoutSystem">The layout system to remove.</param>
-            public void Remove(LayoutSystemBase layoutSystem)
+            public void Remove(LayoutSystemBase layout)
             {
-                this.List.Remove(layoutSystem);
+                this.List.Remove(layout);
             }
 
             /// <summary>
@@ -2117,9 +1513,9 @@ namespace FQ.FreeDock
             /// <returns>
             /// A value indicating whether the layout system was found.
             /// </returns>
-            public bool Contains(LayoutSystemBase layoutSystem)
+            public bool Contains(LayoutSystemBase layout)
             {
-                return this.List.Contains(layoutSystem);
+                return this.List.Contains(layout);
             }
 
             /// <summary>
@@ -2130,9 +1526,9 @@ namespace FQ.FreeDock
             /// <returns>
             /// The index of the layout system if found; otherwise -1.
             /// </returns>
-            public int IndexOf(LayoutSystemBase layoutSystem)
+            public int IndexOf(LayoutSystemBase layout)
             {
-                return this.List.IndexOf(layoutSystem);
+                return this.List.IndexOf(layout);
             }
 
             /// <summary>

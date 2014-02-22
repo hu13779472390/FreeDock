@@ -16,11 +16,11 @@ namespace FQ.FreeDock
         private SizeF workingSize = new SizeF(DEFAULT_WORKINGSIZE_WIDTH, DEFAULT_WORKINGSIZE_HEIGHT);
         internal const int DEFAULT_WORKINGSIZE_WIDTH = 250;
         internal const int DEFAULT_WORKINGSIZE_HEIGHT = 400;
-        internal SplitLayoutSystem xb6a159a84cb992d6;
+        internal SplitLayoutSystem parent;
         private DockContainer dockContainer;
         internal xedb4922162c60d3d x531514c39973cbc6;
 
-        internal abstract bool x56005f23d6948487 { get; }
+        internal abstract bool ContainsPersistableDockControls { get; }
 
         /// <summary>
         /// Gets or sets the working size of this layout system.
@@ -88,7 +88,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xb6a159a84cb992d6;
+                return this.parent;
             }
         }
 
@@ -112,11 +112,11 @@ namespace FQ.FreeDock
             }
         }
 
-        internal abstract DockControl[] x9476096be9672d38 { get; }
+        internal abstract DockControl[] AllControls { get; }
 
-        internal abstract bool x74e31f9641656e0b { get; }
+        internal abstract bool AllowFloat { get; }
 
-        internal abstract bool x2f61709eaa5ebf76 { get; }
+        internal abstract bool AllowTab { get; }
 
         internal LayoutSystemBase()
         {
@@ -126,23 +126,19 @@ namespace FQ.FreeDock
         {
 
             if (dockingManager == DockingManager.Whidbey && x890231ddf317379e.xca8cda6e489f8dd8())
-            {
                 this.x531514c39973cbc6 = (xedb4922162c60d3d)new x31248f32f85df1dd(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
-            }
             else
-            {
                 this.x531514c39973cbc6 = new xedb4922162c60d3d(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
-            }
 
-            this.x531514c39973cbc6.x67ecc0d0e7c9a202 += new xedb4922162c60d3d.DockingManagerFinishedEventHandler(this.x46ff430ed3944e0f);
-            this.x531514c39973cbc6.x868a32060451dd2e += new EventHandler(this.x0ae87c4881d90427);
+            this.x531514c39973cbc6.Committed += new xedb4922162c60d3d.DockingManagerFinishedEventHandler(this.x46ff430ed3944e0f);
+            this.x531514c39973cbc6.Cancelled += new EventHandler(this.x0ae87c4881d90427);
             this.x531514c39973cbc6.OnMouseMove(Cursor.Position);
         }
 
         private void xf6aefb7d0abb95ba()
         {
-            this.x531514c39973cbc6.x67ecc0d0e7c9a202 -= new xedb4922162c60d3d.DockingManagerFinishedEventHandler(this.x46ff430ed3944e0f);
-            this.x531514c39973cbc6.x868a32060451dd2e -= new EventHandler(this.x0ae87c4881d90427);
+            this.x531514c39973cbc6.Committed -= new xedb4922162c60d3d.DockingManagerFinishedEventHandler(this.x46ff430ed3944e0f);
+            this.x531514c39973cbc6.Cancelled -= new EventHandler(this.x0ae87c4881d90427);
             this.x531514c39973cbc6 = null;
         }
 
@@ -222,11 +218,10 @@ namespace FQ.FreeDock
         {
             this.bounds = bounds;
         }
-
         // reviewed
         internal void x810df8ef88cf4bf2(SandDockManager sandDockManager, ContainerDockLocation location, ContainerDockEdge edge)
         {
-            DockControl[] dockControls = this.x9476096be9672d38;
+            DockControl[] dockControls = this.AllControls;
             int num = dockControls.Length > 0 ? dockControls[0].MetaData.DockedContentSize : 0;
 
             Rectangle rectangle = xedb4922162c60d3d.x41c62f474d3fb367(sandDockManager.DockSystemContainer);
@@ -252,15 +247,15 @@ namespace FQ.FreeDock
             DockContainer newDockContainer = sandDockManager.CreateNewDockContainer(location, edge, num);
             if (newDockContainer is DocumentContainer)
             {
-                ControlLayoutSystem newLayoutSystem = newDockContainer.CreateNewLayoutSystem(this.WorkingSize);
-                newDockContainer.LayoutSystem.LayoutSystems.Add(newLayoutSystem);
+                ControlLayoutSystem newLayout = newDockContainer.CreateNewLayoutSystem(this.WorkingSize);
+                newDockContainer.LayoutSystem.LayoutSystems.Add(newLayout);
                 if (this is SplitLayoutSystem)
                 {
-                    ((SplitLayoutSystem)this).MoveToLayoutSystem(newLayoutSystem);
+                    ((SplitLayoutSystem)this).MoveToLayoutSystem(newLayout);
                 }
                 else
                 {
-                    newLayoutSystem.Controls.AddRange(this.x9476096be9672d38);
+                    newLayout.Controls.AddRange(this.AllControls);
                 }
             }
             else

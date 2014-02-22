@@ -12,56 +12,56 @@ namespace FQ.FreeDock.Rendering
     /// </summary>
     public class EverettRenderer : RendererBase
     {
-        private Color xef5f9f8a08f25e70 = SystemColors.InactiveCaption;
-        private Color x4978f8b41a50b017 = SystemColors.ActiveCaption;
-        private Color x228f9881a1be0e5d = SystemColors.ControlText;
-        private Color xfca0e3085d5a7f42 = SystemColors.ControlLightLight;
-        private Color x1da108dbfca32343 = SystemColors.ControlDarkDark;
-        private Color x9c1f2f40026567ee = SystemColors.ControlDark;
-        private Color x488edc060a6f4707 = SystemColors.ControlDarkDark;
-        private static StringFormat xdc3f45c33fe25d85;
-        private static StringFormat x7553dbb15fca5d00;
-        private Color x7f2683d69c01d139;
-        private SolidBrush x166a89f4cd379ec8;
-        private Pen x7a0be2490cda8794;
-        private Pen x050be261498a0c97;
-        private Pen xa33e6094d9ed12d6;
-        private SolidBrush x54c190ae969c389d;
-        private StringFormat x2771fbe8bb84042b;
-        private BoxModel _x066f993679e36022;
-        private BoxModel _x3a1fa93b40743331;
-        private BoxModel _x6defba3d5d846e0d;
+        private Color inactiveTitleBarColor = SystemColors.InactiveCaption;
+        private Color activeTitleBarColor = SystemColors.ActiveCaption;
+        private Color shadowColor = SystemColors.ControlText;
+        private Color highlightColor = SystemColors.ControlLightLight;
+        private Color backgroundTabForeColor = SystemColors.ControlDarkDark;
+        private Color collapsedTabOutlineColor = SystemColors.ControlDark;
+        private Color normalColor = SystemColors.ControlDarkDark;
+        private static StringFormat standardStringFormat;
+        private static StringFormat standardVerticalStringFormat;
+        private Color tabStripBackgroundColor;
+        private SolidBrush backBrush;
+        private SolidBrush foreBrush;
+        private Pen shadowPen;
+        private Pen highlightPen;
+        private Pen outlinePen;
+        private StringFormat stringFormat;
+        private BoxModel tabStripMetrics;
+        private BoxModel tabMetrics;
+        private BoxModel titleBarMetrics;
 
-        internal static StringFormat x27e1c82c97265861
+        internal static StringFormat StandardStringFormat
         {
             get
             {
-                if (EverettRenderer.xdc3f45c33fe25d85 == null)
+                if (EverettRenderer.standardStringFormat == null)
                 {
-                    EverettRenderer.xdc3f45c33fe25d85 = new StringFormat(StringFormat.GenericDefault);
-                    EverettRenderer.xdc3f45c33fe25d85.Alignment = StringAlignment.Near;
-                    EverettRenderer.xdc3f45c33fe25d85.LineAlignment = StringAlignment.Center;
-                    EverettRenderer.xdc3f45c33fe25d85.Trimming = StringTrimming.EllipsisCharacter;
-                    EverettRenderer.xdc3f45c33fe25d85.FormatFlags |= StringFormatFlags.NoWrap;
+                    EverettRenderer.standardStringFormat = new StringFormat(StringFormat.GenericDefault);
+                    EverettRenderer.standardStringFormat.Alignment = StringAlignment.Near;
+                    EverettRenderer.standardStringFormat.LineAlignment = StringAlignment.Center;
+                    EverettRenderer.standardStringFormat.Trimming = StringTrimming.EllipsisCharacter;
+                    EverettRenderer.standardStringFormat.FormatFlags |= StringFormatFlags.NoWrap;
                 }
-                return EverettRenderer.xdc3f45c33fe25d85;
+                return EverettRenderer.standardStringFormat;
             }
         }
 
-        internal static StringFormat xc351c68a86733972
+        internal static StringFormat StandardVerticalStringFormat
         {
             get
             {
-                if (EverettRenderer.x7553dbb15fca5d00 == null)
+                if (EverettRenderer.standardVerticalStringFormat == null)
                 {
-                    EverettRenderer.x7553dbb15fca5d00 = new StringFormat(StringFormat.GenericDefault);
-                    EverettRenderer.x7553dbb15fca5d00.Alignment = StringAlignment.Near;
-                    EverettRenderer.x7553dbb15fca5d00.LineAlignment = StringAlignment.Center;
-                    EverettRenderer.x7553dbb15fca5d00.Trimming = StringTrimming.EllipsisCharacter;
-                    EverettRenderer.x7553dbb15fca5d00.FormatFlags |= StringFormatFlags.NoWrap;
-                    EverettRenderer.x7553dbb15fca5d00.FormatFlags |= StringFormatFlags.DirectionVertical;
+                    EverettRenderer.standardVerticalStringFormat = new StringFormat(StringFormat.GenericDefault);
+                    EverettRenderer.standardVerticalStringFormat.Alignment = StringAlignment.Near;
+                    EverettRenderer.standardVerticalStringFormat.LineAlignment = StringAlignment.Center;
+                    EverettRenderer.standardVerticalStringFormat.Trimming = StringTrimming.EllipsisCharacter;
+                    EverettRenderer.standardVerticalStringFormat.FormatFlags |= StringFormatFlags.NoWrap;
+                    EverettRenderer.standardVerticalStringFormat.FormatFlags |= StringFormatFlags.DirectionVertical;
                 }
-                return EverettRenderer.x7553dbb15fca5d00;
+                return EverettRenderer.standardVerticalStringFormat;
             }
         }
 
@@ -73,11 +73,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x9c1f2f40026567ee;
+                return this.collapsedTabOutlineColor;
             }
             set
             {
-                this.x9c1f2f40026567ee = value;
+                this.collapsedTabOutlineColor = value;
                 this.CustomColors = true;
             }
         }
@@ -90,11 +90,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x1da108dbfca32343;
+                return this.backgroundTabForeColor;
             }
             set
             {
-                this.x1da108dbfca32343 = value;
+                this.backgroundTabForeColor = value;
             }
         }
 
@@ -106,11 +106,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xfca0e3085d5a7f42;
+                return this.highlightColor;
             }
             set
             {
-                this.xfca0e3085d5a7f42 = value;
+                this.highlightColor = value;
                 this.CustomColors = true;
             }
         }
@@ -123,11 +123,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x228f9881a1be0e5d;
+                return this.shadowColor;
             }
             set
             {
-                this.x228f9881a1be0e5d = value;
+                this.shadowColor = value;
                 this.CustomColors = true;
             }
         }
@@ -140,7 +140,7 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x7f2683d69c01d139;
+                return this.tabStripBackgroundColor;
             }
         }
 
@@ -152,11 +152,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xef5f9f8a08f25e70;
+                return this.inactiveTitleBarColor;
             }
             set
             {
-                this.xef5f9f8a08f25e70 = value;
+                this.inactiveTitleBarColor = value;
                 this.CustomColors = true;
             }
         }
@@ -169,11 +169,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x4978f8b41a50b017;
+                return this.activeTitleBarColor;
             }
             set
             {
-                this.x4978f8b41a50b017 = value;
+                this.activeTitleBarColor = value;
                 this.CustomColors = true;
             }
         }
@@ -198,9 +198,9 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                if (this._x6defba3d5d846e0d == null)
-                    this._x6defba3d5d846e0d = new BoxModel(0, SystemInformation.ToolWindowCaptionHeight + 2, 0, 0, 0, 0, 0, 0, 0, 2);
-                return this._x6defba3d5d846e0d;
+                if (this.titleBarMetrics == null)
+                    this.titleBarMetrics = new BoxModel(0, SystemInformation.ToolWindowCaptionHeight + 2, 0, 0, 0, 0, 0, 0, 0, 2);
+                return this.titleBarMetrics;
             }
         }
 
@@ -212,9 +212,9 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                if (this._x3a1fa93b40743331 == null)
-                    this._x3a1fa93b40743331 = new BoxModel(0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
-                return this._x3a1fa93b40743331;
+                if (this.tabMetrics == null)
+                    this.tabMetrics = new BoxModel(0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+                return this.tabMetrics;
             }
         }
 
@@ -226,9 +226,9 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                if (this._x066f993679e36022 == null)
-                    this._x066f993679e36022 = new BoxModel(0, Control.DefaultFont.Height + 9, 4, 0, 5, 1, 0, 2, 0, 0);
-                return this._x066f993679e36022;
+                if (this.tabStripMetrics == null)
+                    this.tabStripMetrics = new BoxModel(0, Control.DefaultFont.Height + 9, 4, 0, 5, 1, 0, 2, 0, 0);
+                return this.tabStripMetrics;
             }
         }
 
@@ -236,15 +236,15 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        public override System.Drawing.Size TabControlPadding
+        public override Size TabControlPadding
         {
             get
             {
-                return new System.Drawing.Size(3, 3);
+                return new Size(3, 3);
             }
         }
 
-        internal virtual int xe5ad29d0f658e81f
+        internal virtual int DocumentTabPadding
         {
             get
             {
@@ -298,56 +298,20 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected override void GetColorsFromSystem()
         {
-            this.x7f2683d69c01d139 = this.x2c04503a704e817c(SystemColors.Control);
+            this.tabStripBackgroundColor = this.x2c04503a704e817c(SystemColors.Control);
         }
-
-        private Color x2c04503a704e817c(Color xdd0e633cf3dbad19)
+        // borrowed from 2.4
+        private Color x2c04503a704e817c(Color color)
         {
-            byte r = xdd0e633cf3dbad19.R;
-            byte num1;
-            if (true)
-                goto label_10;
-            label_6:
-            byte g;
-            byte num2 = 0;
-            byte b;
-            int num3;
-            while ((int)num2 > 220)
-            {
-                if (((int)r | -1) != 0)
-                    goto label_2;
-                else
-                    goto label_8;
-                label_1:
-                if ((uint)b > uint.MaxValue)
-                    continue;
-                else
-                    goto label_3;
-                label_2:
-                if ((uint)g > uint.MaxValue)
-                    goto label_1;
-                label_3:
-                num3 = (int)(byte)((uint)byte.MaxValue - (uint)num2);
-                goto label_4;
-                label_8:
-                if ((uint)num2 <= uint.MaxValue)
-                    goto label_1;
-            }
-            goto label_5;
-            label_4:
-            byte num4 = (byte)num3;
-            return Color.FromArgb((int)(byte)((uint)r + (uint)(byte)((double)num4 * ((double)r / (double)num2) + 0.5)), (int)(byte)((uint)g + (uint)(byte)((double)num4 * ((double)g / (double)num2) + 0.5)), (int)(byte)((uint)b + (uint)(byte)((double)num4 * ((double)b / (double)num2) + 0.5)));
-            label_5:
-            num3 = 35;
-            goto label_4;
-            label_10:
-            g = xdd0e633cf3dbad19.G;
-            b = xdd0e633cf3dbad19.B;
-            num2 = Math.Max(Math.Max(r, g), b);
-            if ((int)num2 == 0)
+            byte r = color.R;
+            byte g = color.G;
+            byte b = color.B;
+            byte max = Math.Max(Math.Max(r, g), b);
+            if ((int)max == 0)
                 return Color.FromArgb(35, 35, 35);
-            else
-                goto label_6;
+            byte num2 = (int)max > 220 ? (byte)((uint)byte.MaxValue - (uint)max) : (byte)35;
+            return Color.FromArgb((int)(byte)((uint)r + (uint)(byte)((double)num2 * ((double)r / (double)max) + 0.5)), (int)(byte)((uint)g + (uint)(byte)((double)num2 * ((double)g / (double)max) + 0.5)), (int)(byte)((uint)b + (uint)(byte)((double)num2 * ((double)b / (double)max) + 0.5)));
+
         }
 
         /// <summary>
@@ -374,77 +338,63 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawDocumentClientBackground(Graphics graphics, Rectangle bounds, Color backColor)
+        protected internal override void DrawDocumentClientBackground(Graphics g, Rectangle bounds, Color backColor)
         {
-            using (SolidBrush solidBrush = new SolidBrush(backColor))
-                graphics.FillRectangle((Brush)solidBrush, bounds);
+            using (SolidBrush brush = new SolidBrush(backColor))
+                g.FillRectangle(brush, bounds);
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawDocumentStripBackground(Graphics graphics, Rectangle bounds)
+        protected internal override void DrawDocumentStripBackground(Graphics g, Rectangle bounds)
         {
-            graphics.FillRectangle((Brush)this.x166a89f4cd379ec8, bounds);
-            graphics.DrawLine(this.x050be261498a0c97, bounds.X, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
+            g.FillRectangle(this.backBrush, bounds);
+            g.DrawLine(this.highlightPen, bounds.X, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawDockContainerBackground(Graphics graphics, DockContainer container, Rectangle bounds)
+        protected internal override void DrawDockContainerBackground(Graphics g, DockContainer container, Rectangle bounds)
         {
-            xa811784015ed8842.x91433b5e99eb7cac(graphics, container.BackColor);
+            xa811784015ed8842.x91433b5e99eb7cac(g, container.BackColor);
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override System.Drawing.Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
+        protected internal override Size MeasureTabStripTab(Graphics g, Image image, string text, Font font, DrawItemState state)
         {
-            return new System.Drawing.Size((int)Math.Ceiling((double)graphics.MeasureString(text, font, int.MaxValue, this.x2771fbe8bb84042b).Width) + 30, 18);
+            return new Size((int)Math.Ceiling((double)g.MeasureString(text, font, int.MaxValue, this.stringFormat).Width) + 30, 18);
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override System.Drawing.Size MeasureDocumentStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
+        // reviewed with 2.4
+        protected internal override Size MeasureDocumentStripTab(Graphics g, Image image, string text, Font font, DrawItemState state)
         {
+            int width;
             if ((state & DrawItemState.Focus) != DrawItemState.Focus)
-                goto label_10;
-            else
-                goto label_5;
-            label_1:
-            int num;
-            return new System.Drawing.Size(num + this.DocumentTabExtra, 0);
-            label_2:
-            num += 2 + this.xe5ad29d0f658e81f * 2 + 2;
-            if ((num | 4) != 0 && image == null)
             {
-                if (4 != 0)
-                    goto label_1;
-                else
-                    goto label_5;
+                width = (int)Math.Ceiling((double)g.MeasureString(text, font, 999, this.stringFormat).Width);
             }
-            label_3:
-            num += 20;
-            goto label_1;
-            label_5:
-            using (Font font1 = new Font(font, FontStyle.Bold))
-            {
-                num = (int)Math.Ceiling((double)graphics.MeasureString(text, font1, 999, this.x2771fbe8bb84042b).Width);
-                goto label_2;
-            }
-            label_10:
-            num = (int)Math.Ceiling((double)graphics.MeasureString(text, font, 999, this.x2771fbe8bb84042b).Width);
-            if ((uint)num < 0U)
-                goto label_3;
             else
-                goto label_2;
+            {
+                using (Font font1 = new Font(font, FontStyle.Bold))
+                {
+                    width = (int)Math.Ceiling((double)g.MeasureString(text, font1, 999, this.stringFormat).Width);
+                }
+            }
+            width += 2 + this.DocumentTabPadding * 2 + 2;
+            if (image != null)
+                width += 20;
+            return new Size(width + this.DocumentTabExtra, 0);
         }
 
         /// <summary>
@@ -496,11 +446,11 @@ namespace FQ.FreeDock.Rendering
             label_3:
             using (SolidBrush solidBrush = new SolidBrush(foreColor))
             {
-                graphics.DrawString(text, font1, (Brush)solidBrush, (RectangleF)bounds, this.x2771fbe8bb84042b);
+                graphics.DrawString(text, font1, (Brush)solidBrush, (RectangleF)bounds, this.stringFormat);
                 goto label_2;
             }
             label_9:
-            graphics.DrawString(text, font1, (Brush)this.x54c190ae969c389d, (RectangleF)bounds, this.x2771fbe8bb84042b);
+            graphics.DrawString(text, font1, (Brush)this.foreBrush, (RectangleF)bounds, this.stringFormat);
             goto label_2;
             label_10:
             font1 = new Font(font, FontStyle.Bold);
@@ -514,9 +464,9 @@ namespace FQ.FreeDock.Rendering
             label_20:
             using (SolidBrush solidBrush = new SolidBrush(backColor))
                 graphics.FillRectangle((Brush)solidBrush, bounds);
-            graphics.DrawLine(this.x050be261498a0c97, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
-            graphics.DrawLine(this.x050be261498a0c97, bounds.Left, bounds.Top, bounds.Right - 1, bounds.Top);
-            graphics.DrawLine(this.x7a0be2490cda8794, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 1);
+            graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
+            graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Right - 1, bounds.Top);
+            graphics.DrawLine(this.shadowPen, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 1);
             goto label_19;
         }
 
@@ -524,33 +474,19 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
+        // reviewed with 2.4
         public override void StartRenderSession(HotkeyPrefix hotKeys)
         {
-            this.x166a89f4cd379ec8 = new SolidBrush(this.x7f2683d69c01d139);
-            do
-            {
-                this.x7a0be2490cda8794 = new Pen(this.x228f9881a1be0e5d);
-                if (8 != 0)
-                {
-                    this.x050be261498a0c97 = new Pen(this.xfca0e3085d5a7f42);
-                    this.x54c190ae969c389d = new SolidBrush(this.x1da108dbfca32343);
-                    this.xa33e6094d9ed12d6 = new Pen(this.x9c1f2f40026567ee);
-                    this.x2771fbe8bb84042b = new StringFormat(StringFormat.GenericDefault);
-                }
-                this.x2771fbe8bb84042b.FormatFlags = StringFormatFlags.NoWrap;
-                if (0 == 0)
-                {
-                    this.x2771fbe8bb84042b.Alignment = StringAlignment.Center;
-                    this.x2771fbe8bb84042b.LineAlignment = StringAlignment.Center;
-                    this.x2771fbe8bb84042b.HotkeyPrefix = hotKeys;
-                }
-                else
-                    goto label_2;
-            }
-            while (0 != 0);
-            return;
-            label_2:
-            ;
+            this.backBrush = new SolidBrush(this.tabStripBackgroundColor);
+            this.shadowPen = new Pen(this.shadowColor);
+            this.highlightPen = new Pen(this.highlightColor);
+            this.foreBrush = new SolidBrush(this.backgroundTabForeColor);
+            this.outlinePen = new Pen(this.collapsedTabOutlineColor);
+            this.stringFormat = new StringFormat(StringFormat.GenericDefault);
+            this.stringFormat.FormatFlags = StringFormatFlags.NoWrap;
+            this.stringFormat.Alignment = StringAlignment.Center;
+            this.stringFormat.LineAlignment = StringAlignment.Center;
+            this.stringFormat.HotkeyPrefix = hotKeys;
         }
 
         /// <summary>
@@ -565,157 +501,99 @@ namespace FQ.FreeDock.Rendering
         /// Overridden,
         /// 
         /// </summary>
-        protected internal override void DrawDocumentStripButton(Graphics graphics, Rectangle bounds, SandDockButtonType buttonType, DrawItemState state)
+        // reviewed with 2.4
+        protected internal override void DrawDocumentStripButton(Graphics g, Rectangle bounds, SandDockButtonType buttonType, DrawItemState state)
         {
-            this.x9271fbf5eef553db(graphics, bounds, state);
-            do
-            {
-                if ((state & DrawItemState.Selected) == DrawItemState.Selected)
-                    goto label_14;
-                label_12:
-                switch (buttonType)
-                {
-                    case SandDockButtonType.Close:
-                        goto label_2;
-                    case SandDockButtonType.Pin:
-                        goto label_8;
-                    case SandDockButtonType.ScrollLeft:
-                        x9b2777bb8e78938b.xd70a4c1a2378c84e(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
-                        if (4 == 0)
-                            goto case 5;
-                        else
-                            goto label_15;
-                    case SandDockButtonType.ScrollRight:
-                        goto label_1;
-                    case SandDockButtonType.WindowPosition:
-                        goto label_16;
-                    case SandDockButtonType.ActiveFiles:
-                        x9b2777bb8e78938b.xeac2e7eb44dff86e(graphics, bounds, SystemPens.ControlText);
-                        continue;
-                    default:
-                        goto label_10;
-                }
-                label_14:
+            this.x9271fbf5eef553db(g, bounds, state);
+
+            if ((state & DrawItemState.Selected) == DrawItemState.Selected)
                 bounds.Offset(1, 1);
-                if (0 == 0 && 0 == 0)
-                    goto label_12;
-            }
-            while (0 != 0);
-            goto label_13;
-            label_1:
-            x9b2777bb8e78938b.x793dc1a7cf4113f9(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
-            return;
-            label_2:
-            using (Pen x90279591611601bc = new Pen(this.x488edc060a6f4707))
-            {
-                x9b2777bb8e78938b.xb176aa01ddab9f3e(graphics, bounds, x90279591611601bc);
-                return;
-            }
-            label_13:
-            return;
-            label_15:
-            return;
-            label_16:
-            return;
-            label_8:
-            return;
-            label_10:
-            ;
-        }
 
-        internal virtual void x9271fbf5eef553db(Graphics x41347a961b838962, Rectangle xda73fcb97c77d998, DrawItemState x01b557925841ae51)
-        {
-            if ((x01b557925841ae51 & DrawItemState.HotLight) != DrawItemState.HotLight)
-                return;
-            if (0 == 0)
-                goto label_4;
-            label_2:
-            Pen pen1;
-            x41347a961b838962.DrawLine(pen1, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Bottom - 1, xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom - 1);
-            if (0 == 0)
-                return;
-            label_4:
-            Pen pen2;
-            while ((x01b557925841ae51 & DrawItemState.Selected) == DrawItemState.Selected)
-            {
-                pen2 = this.x7a0be2490cda8794;
-                if (0 == 0)
-                {
-                    if (0 == 0)
-                    {
-                        pen1 = this.x050be261498a0c97;
-                        goto label_6;
-                    }
-                }
-                else
-                    goto label_2;
-            }
-            pen1 = this.x7a0be2490cda8794;
-            pen2 = this.x050be261498a0c97;
-            label_6:
-            x41347a961b838962.DrawLine(pen2, xda73fcb97c77d998.Left, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top);
-            x41347a961b838962.DrawLine(pen2, xda73fcb97c77d998.Left, xda73fcb97c77d998.Top, xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom - 1);
-            x41347a961b838962.DrawLine(pen1, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Bottom - 1, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top);
-            if (0 == 0)
-                goto label_2;
-        }
-
-        /// <summary>
-        /// Overridden.
-        /// 
-        /// </summary>
-        protected internal override void DrawTitleBarButton(Graphics graphics, Rectangle bounds, SandDockButtonType buttonType, DrawItemState state, bool focused, bool toggled)
-        {
-            --bounds.Width;
-            if (true)
-                goto label_9;
-            label_4:
-            SandDockButtonType sandDockButtonType = buttonType;
-            if (false)
-                goto label_11;
-            label_5:
-            switch (sandDockButtonType)
+            switch (buttonType)
             {
                 case SandDockButtonType.Close:
-                    x9b2777bb8e78938b.x26f0f0028ef01fa5(graphics, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
-                    return;
+                    using (Pen pen = new Pen(this.normalColor))
+                    {
+                        x9b2777bb8e78938b.xb176aa01ddab9f3e(g, bounds, pen);
+                    }
+                    break;
                 case SandDockButtonType.Pin:
-                    x9b2777bb8e78938b.x1477b5a75c8a8132(graphics, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText, toggled);
-                    return;
+                    break;
                 case SandDockButtonType.ScrollLeft:
-                    return;
+                    x9b2777bb8e78938b.xd70a4c1a2378c84e(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    break;
                 case SandDockButtonType.ScrollRight:
-                    return;
+                    x9b2777bb8e78938b.x793dc1a7cf4113f9(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    break;
                 case SandDockButtonType.WindowPosition:
-                    x9b2777bb8e78938b.xeac2e7eb44dff86e(graphics, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
-                    return;
-                default:
-                    return;
+                    break;
+                case SandDockButtonType.ActiveFiles:
+                    x9b2777bb8e78938b.xeac2e7eb44dff86e(g, bounds, SystemPens.ControlText);
+                    break;
             }
-            label_9:
-            --bounds.Height;
-            if (true)
-                this.x9271fbf5eef553db(graphics, bounds, state);
-            else
-                goto label_5;
-            label_11:
+        }
+        // reviewed with 2.4
+        internal virtual void x9271fbf5eef553db(Graphics g, Rectangle bounds, DrawItemState state)
+        {
+            if ((state & DrawItemState.HotLight) != DrawItemState.HotLight)
+                return;
+  
+            Pen pen1, pen2;
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                bounds.Offset(1, 1);
-                goto label_4;
+                pen2 = this.shadowPen;
+                pen1 = this.highlightPen;
             }
             else
-                goto label_4;
+            {
+                pen1 = this.shadowPen;
+                pen2 = this.highlightPen;
+            }
+            g.DrawLine(pen2, bounds.Left, bounds.Top, bounds.Right - 1, bounds.Top);
+            g.DrawLine(pen2, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
+            g.DrawLine(pen1, bounds.Right - 1, bounds.Bottom - 1, bounds.Right - 1, bounds.Top);
+            g.DrawLine(pen1, bounds.Right - 1, bounds.Bottom - 1, bounds.Left, bounds.Bottom - 1);
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawTabStripBackground(Control container, Control control, Graphics graphics, Rectangle bounds, int selectedTabOffset)
+        // reviewed with 2.4
+        protected internal override void DrawTitleBarButton(Graphics g, Rectangle bounds, SandDockButtonType buttonType, DrawItemState state, bool focused, bool toggled)
         {
-            graphics.FillRectangle((Brush)this.x166a89f4cd379ec8, bounds);
-            graphics.DrawLine(this.x7a0be2490cda8794, bounds.X, bounds.Y, bounds.Right, bounds.Y);
+            --bounds.Width;
+            --bounds.Height;
+            this.x9271fbf5eef553db(g, bounds, state);
+            if ((state & DrawItemState.Selected) == DrawItemState.Selected)
+                bounds.Offset(1, 1);
+
+            switch (buttonType)
+            {
+                case SandDockButtonType.Close:
+                    x9b2777bb8e78938b.x26f0f0028ef01fa5(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
+                    break;
+                case SandDockButtonType.Pin:
+                    x9b2777bb8e78938b.x1477b5a75c8a8132(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText, toggled);
+                    break;
+                case SandDockButtonType.ScrollLeft:
+                    break;
+                case SandDockButtonType.ScrollRight:
+                    break;
+                case SandDockButtonType.WindowPosition:
+                    x9b2777bb8e78938b.xeac2e7eb44dff86e(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Overridden.
+        /// 
+        /// </summary>
+        protected internal override void DrawTabStripBackground(Control container, Control control, Graphics g, Rectangle bounds, int selectedTabOffset)
+        {
+            g.FillRectangle(this.backBrush, bounds);
+            g.DrawLine(this.shadowPen, bounds.X, bounds.Y, bounds.Right, bounds.Y);
         }
 
         /// <summary>
@@ -729,9 +607,9 @@ namespace FQ.FreeDock.Rendering
             else
                 goto label_23;
             label_2:
-            using (SolidBrush solidBrush = new SolidBrush(foreColor))
+            using (SolidBrush brush = new SolidBrush(foreColor))
             {
-                graphics.DrawString(text, font, (Brush)solidBrush, (RectangleF)bounds, EverettRenderer.x27e1c82c97265861);
+                graphics.DrawString(text, font, brush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
                 return;
             }
             label_12:
@@ -761,7 +639,7 @@ namespace FQ.FreeDock.Rendering
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
                 goto label_2;
             label_7:
-            graphics.DrawString(text, font, (Brush)this.x54c190ae969c389d, (RectangleF)bounds, EverettRenderer.x27e1c82c97265861);
+            graphics.DrawString(text, font, (Brush)this.foreBrush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
             return;
             label_14:
             if (true)
@@ -792,9 +670,9 @@ namespace FQ.FreeDock.Rendering
                 goto label_12;
             }
             label_21:
-            graphics.DrawLine(this.x050be261498a0c97, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
-            graphics.DrawLine(this.x7a0be2490cda8794, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
-            graphics.DrawLine(this.x7a0be2490cda8794, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom - 1);
+            graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
+            graphics.DrawLine(this.shadowPen, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
+            graphics.DrawLine(this.shadowPen, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom - 1);
             goto label_12;
             label_23:
             using (SolidBrush solidBrush = new SolidBrush(backColor))
@@ -808,10 +686,10 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawAutoHideBarBackground(Control container, Control autoHideBar, Graphics graphics, Rectangle bounds)
+        protected internal override void DrawAutoHideBarBackground(Control container, Control autoHideBar, Graphics g, Rectangle bounds)
         {
-            using (this.x166a89f4cd379ec8 = new SolidBrush(this.x7f2683d69c01d139))
-                graphics.FillRectangle((Brush)this.x166a89f4cd379ec8, bounds);
+            using (this.backBrush = new SolidBrush(this.tabStripBackgroundColor))
+                g.FillRectangle(this.backBrush, bounds);
         }
 
         /// <summary>
@@ -827,7 +705,7 @@ namespace FQ.FreeDock.Rendering
             else
                 goto label_22;
             label_6:
-            graphics.DrawString(text, font, (Brush)this.x54c190ae969c389d, (RectangleF)bounds, EverettRenderer.xc351c68a86733972);
+            graphics.DrawString(text, font, (Brush)this.foreBrush, (RectangleF)bounds, EverettRenderer.StandardVerticalStringFormat);
             if (0 != 0)
                 return;
             else
@@ -836,7 +714,7 @@ namespace FQ.FreeDock.Rendering
             if (!vertical)
             {
                 bounds.Offset(23, 0);
-                graphics.DrawString(text, font, (Brush)this.x54c190ae969c389d, (RectangleF)bounds, EverettRenderer.x27e1c82c97265861);
+                graphics.DrawString(text, font, (Brush)this.foreBrush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
                 return;
             }
             else
@@ -848,7 +726,7 @@ namespace FQ.FreeDock.Rendering
             label_11:
             if (dockSide != DockSide.Left)
             {
-                graphics.DrawLine(this.xa33e6094d9ed12d6, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
+                graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
                 goto label_16;
             }
             label_12:
@@ -886,7 +764,7 @@ namespace FQ.FreeDock.Rendering
             if (dockSide == DockSide.Bottom)
                 goto label_11;
             label_18:
-            graphics.DrawLine(this.xa33e6094d9ed12d6, bounds.Left, bounds.Bottom, bounds.Right, bounds.Bottom);
+            graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Bottom, bounds.Right, bounds.Bottom);
             goto label_11;
             label_20:
             if (0 == 0)
@@ -904,7 +782,7 @@ namespace FQ.FreeDock.Rendering
             else
                 goto label_16;
             label_25:
-            graphics.DrawLine(this.xa33e6094d9ed12d6, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom);
+            graphics.DrawLine(this.outlinePen, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom);
             goto label_14;
             label_22:
             if (0 == 0)
@@ -915,7 +793,7 @@ namespace FQ.FreeDock.Rendering
             else
                 goto label_8;
             label_24:
-            graphics.DrawLine(this.xa33e6094d9ed12d6, bounds.Left, bounds.Top, bounds.Right, bounds.Top);
+            graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Top, bounds.Right, bounds.Top);
             goto label_19;
         }
 
@@ -923,34 +801,30 @@ namespace FQ.FreeDock.Rendering
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawTitleBarBackground(Graphics graphics, Rectangle bounds, bool focused)
+        // reviewed with 2.4
+        protected internal override void DrawTitleBarBackground(Graphics g, Rectangle bounds, bool focused)
         {
-            if (!focused)
-                goto label_4;
-            label_2:
-            graphics.FillRectangle(SystemBrushes.ActiveCaption, bounds);
-            if (true)
-                return;
+            if (focused)
+                g.FillRectangle(SystemBrushes.ActiveCaption, bounds);
             else
-                goto label_5;
-            label_4:
-            graphics.FillRectangle(SystemBrushes.Control, bounds);
-            label_5:
-            graphics.DrawLine(SystemPens.ControlDark, bounds.X + 1, bounds.Y, bounds.Right - 2, bounds.Y);
-            graphics.DrawLine(SystemPens.ControlDark, bounds.X + 1, bounds.Bottom - 1, bounds.Right - 2, bounds.Bottom - 1);
-            graphics.DrawLine(SystemPens.ControlDark, bounds.X, bounds.Y + 1, bounds.X, bounds.Bottom - 2);
-            graphics.DrawLine(SystemPens.ControlDark, bounds.Right - 1, bounds.Y + 1, bounds.Right - 1, bounds.Bottom - 2);
+            {
+                g.FillRectangle(SystemBrushes.Control, bounds);
+                g.DrawLine(SystemPens.ControlDark, bounds.X + 1, bounds.Y, bounds.Right - 2, bounds.Y);
+                g.DrawLine(SystemPens.ControlDark, bounds.X + 1, bounds.Bottom - 1, bounds.Right - 2, bounds.Bottom - 1);
+                g.DrawLine(SystemPens.ControlDark, bounds.X, bounds.Y + 1, bounds.X, bounds.Bottom - 2);
+                g.DrawLine(SystemPens.ControlDark, bounds.Right - 1, bounds.Y + 1, bounds.Right - 1, bounds.Bottom - 2);
+            }
         }
 
         /// <summary>
         /// Overridden.
         /// 
         /// </summary>
-        protected internal override void DrawTitleBarText(Graphics graphics, Rectangle bounds, bool focused, string text, Font font)
+        protected internal override void DrawTitleBarText(Graphics g, Rectangle bounds, bool focused, string text, Font font)
         {
             Brush brush = focused ? SystemBrushes.ActiveCaptionText : SystemBrushes.ControlText;
             bounds.Inflate(-3, 0);
-            graphics.DrawString(text, font, brush, (RectangleF)bounds, EverettRenderer.x27e1c82c97265861);
+            g.DrawString(text, font, brush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
         }
 
         /// <summary>
@@ -959,12 +833,12 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         public override void FinishRenderSession()
         {
-            this.x166a89f4cd379ec8.Dispose();
-            this.x7a0be2490cda8794.Dispose();
-            this.x050be261498a0c97.Dispose();
-            this.x54c190ae969c389d.Dispose();
-            this.xa33e6094d9ed12d6.Dispose();
-            this.x2771fbe8bb84042b.Dispose();
+            this.backBrush.Dispose();
+            this.shadowPen.Dispose();
+            this.highlightPen.Dispose();
+            this.foreBrush.Dispose();
+            this.outlinePen.Dispose();
+            this.stringFormat.Dispose();
         }
 
         /// <summary>

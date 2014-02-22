@@ -8,7 +8,7 @@ using System.Security;
 
 namespace FQ.FreeDock
 {
-    class x410f3612b9a8f9de : DockContainer
+    class FloatingDockContainer : DockContainer
     {
         private bool x50765ed4559630d6 = true;
         private const int x339acab5bf3e83ae = 64;
@@ -23,7 +23,7 @@ namespace FQ.FreeDock
         private const int SWP_SHOWWINDOW = 0x0040;
         private const int SWP_NOACTIVATE = 0x0010;
 
-        public Guid x0217cda8370c1f17
+        public Guid Guid
         {
             get
             {
@@ -31,7 +31,7 @@ namespace FQ.FreeDock
             }
         }
 
-        internal override bool x0c2484ccd29b8358
+        internal override bool CanShowCollapsed
         {
             get
             {
@@ -47,9 +47,9 @@ namespace FQ.FreeDock
             }
             set
             {
-                this.LayoutSystem.x7e9646eed248ed11 -= new EventHandler(this.x8e9e04a70e31e166);
+                this.LayoutSystem.LayoutSystemsChanged -= new EventHandler(this.x8e9e04a70e31e166);
                 base.LayoutSystem = value;
-                this.LayoutSystem.x7e9646eed248ed11 += new EventHandler(this.x8e9e04a70e31e166);
+                this.LayoutSystem.LayoutSystemsChanged += new EventHandler(this.x8e9e04a70e31e166);
                 this.x8e9e04a70e31e166((object)this.LayoutSystem, EventArgs.Empty);
             }
         }
@@ -105,7 +105,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public Form xd936980ea1aac341
+        public Form FloatingForm
         {
             get
             {
@@ -113,7 +113,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public Rectangle x5de6fa99acd93adb
+        public Rectangle FloatingBounds
         {
             get
             {
@@ -121,7 +121,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public Size xb1090c5821a633b5
+        public Size FloatingSize
         {
             get
             {
@@ -133,7 +133,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public Point x12992900724b93dc
+        public Point FloatingLocation
         {
             get
             {
@@ -153,7 +153,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public DockControl xbe0b15fe97a1ee89
+        public DockControl SelectedControl
         {
             get
             {
@@ -165,7 +165,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public x410f3612b9a8f9de(SandDockManager manager, Guid guid)
+        public FloatingDockContainer(SandDockManager manager, Guid guid)
         {
             if (0 != 0)
             {
@@ -191,7 +191,7 @@ namespace FQ.FreeDock
             {
                 this.form.Closing += new CancelEventHandler(this.x9218bee68262250e);
                 this.form.DoubleClick += new EventHandler(this.xe1f5f125062dc4fb);
-                this.LayoutSystem.x7e9646eed248ed11 += new EventHandler(this.x8e9e04a70e31e166);
+                this.LayoutSystem.LayoutSystemsChanged += new EventHandler(this.x8e9e04a70e31e166);
                 this.x8e9e04a70e31e166((object)this.LayoutSystem, EventArgs.Empty);
                 this.Manager = manager;
                 this.guid = guid;
@@ -247,7 +247,7 @@ namespace FQ.FreeDock
                 this.form.Dispose();
                 goto label_3;
                 label_5:
-                this.LayoutSystem.x7e9646eed248ed11 -= new EventHandler(this.x8e9e04a70e31e166);
+                this.LayoutSystem.LayoutSystemsChanged -= new EventHandler(this.x8e9e04a70e31e166);
                 this.form.Activated -= new EventHandler(((DockContainer)this).xa2414c47d888068e);
                 goto label_4;
             }
@@ -346,13 +346,13 @@ namespace FQ.FreeDock
         {
             if (this.layoutSystem != null)
             {
-                this.layoutSystem.xcc55983eb55360ac -= new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
+                this.layoutSystem.SelectedControlChanged -= new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
             }
 
             if (this.HasSingleControlLayoutSystem)
             {
                 this.layoutSystem = (ControlLayoutSystem)this.LayoutSystem.LayoutSystems[0];
-                this.layoutSystem.xcc55983eb55360ac += new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
+                this.layoutSystem.SelectedControlChanged += new ControlLayoutSystem.xf09a9df3c262275d(this.xe20c835979d60df8);
                 this.xe20c835979d60df8(null, this.layoutSystem.SelectedControl);          
             }
             this.form.Text = "";
@@ -368,7 +368,7 @@ namespace FQ.FreeDock
             int index2;
             do
             {
-                DockControl[] x9476096be9672d38 = this.LayoutSystem.x9476096be9672d38;
+                DockControl[] x9476096be9672d38 = this.LayoutSystem.AllControls;
                 DockControl[] dockControlArray1 = x9476096be9672d38;
                 index2 = 0;
                 if ((index2 | 4) != 0)
@@ -432,9 +432,9 @@ namespace FQ.FreeDock
         {
             Form activeForm = Form.ActiveForm;
             label_15:
-            Form xd936980ea1aac341 = this.xd936980ea1aac341;
-            DockControl[] x9476096be9672d38 = this.LayoutSystem.x9476096be9672d38;
-            DockControl xbe0b15fe97a1ee89 = this.xbe0b15fe97a1ee89;
+            Form xd936980ea1aac341 = this.FloatingForm;
+            DockControl[] x9476096be9672d38 = this.LayoutSystem.AllControls;
+            DockControl xbe0b15fe97a1ee89 = this.SelectedControl;
             if (x9476096be9672d38[0].MetaData.LastFixedDockSituation == DockSituation.Docked && !this.LayoutSystem.xe302f2203dc14a18(xbe0b15fe97a1ee89.MetaData.LastFixedDockSide))
                 return;
             label_10:
