@@ -1551,7 +1551,7 @@ namespace FQ.FreeDock
             if (this.BackgroundImage != null)
                 goto label_1;
             label_3:
-            xa811784015ed8842.x91433b5e99eb7cac(e.Graphics, backColor);
+            xa811784015ed8842.ClearBackground(e.Graphics, backColor);
             label_4:
             if ((int)byte.MaxValue == 0)
                 goto label_2;

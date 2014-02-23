@@ -109,7 +109,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return (Form)this.form;
+                return this.form;
             }
         }
 

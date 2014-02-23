@@ -37,12 +37,12 @@ namespace FQ.FreeDock
         private int x200b7f5a9d983ba4;
         private int x4f8ccd50477a481e;
         private Timer timer;
-        private ControlButton x49dae83181e41d72;
-        private ControlButton xa8ae81960654bc0b;
-        private ControlButton highlightedButton;
+        private SandDockButton scrollLeftButton;
+        private SandDockButton scrollRightButton;
+        private SandDockButton highlightedButton;
         private bool xfa5e20eb950b9ee1;
 
-        internal ControlButton HighlightedButton
+        internal SandDockButton HighlightedButton
         {
             get
             {
@@ -105,21 +105,15 @@ namespace FQ.FreeDock
                     ((IDisposable)this.render).Dispose();
 
                 if (this.render is RendererBase)
-                {
                     ((RendererBase)this.render).MetricsChanged -= new EventHandler(this.xadaf245f129714e2);
-                }
 
                 this.render = value;
                 if (!value.ShouldDrawControlBorder)
-                {
                     this.BorderStyle = FQ.FreeDock.Rendering.BorderStyle.None;
-                }
                 else
                 {
                     if (this.BorderStyle == FQ.FreeDock.Rendering.BorderStyle.None)
-                    {
                         this.BorderStyle = FQ.FreeDock.Rendering.BorderStyle.Flat;
-                    }
                 }
 
                 if (this.render is RendererBase)
@@ -276,8 +270,7 @@ namespace FQ.FreeDock
             {
                 if (value == null)
                     throw new ArgumentNullException();
-
-                if (!this.Controls.Contains((Control)value))
+                if (!this.Controls.Contains(value))
                     throw new ArgumentException("Specified TabPage does not belong to this TabControl.");
 
                 this.selectedPage = value;
@@ -343,8 +336,8 @@ namespace FQ.FreeDock
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.render = (ITabControlRenderer)new MilborneRenderer();
             this.tabPages = new TabControl.TabPageCollection(this);
-            this.x49dae83181e41d72 = new ControlButton();
-            this.xa8ae81960654bc0b = new ControlButton();
+            this.scrollLeftButton = new SandDockButton();
+            this.scrollRightButton = new SandDockButton();
             this.timer = new Timer();
             this.timer.Interval = 20;
             this.timer.Tick += new EventHandler(this.xcaf19fd9570f4eb4);
@@ -356,7 +349,7 @@ namespace FQ.FreeDock
         /// </summary>
         protected override Control.ControlCollection CreateControlsInstance()
         {
-            return (Control.ControlCollection)new TabControl.x9e8d5fa1ed8fe66b(this);
+            return (Control.ControlCollection)new TabControl.TabPageControlCollection(this);
         }
 
         /// <summary>
@@ -381,9 +374,9 @@ namespace FQ.FreeDock
         protected override void OnPaint(PaintEventArgs e)
         {
             this.Renderer.StartRenderSession(this.ShowKeyboardCues ? HotkeyPrefix.Show : HotkeyPrefix.Hide);
-            DockControl.xe1da469e4d960f02((Control)this, e.Graphics, this.borderStyle);
+            DockControl.xe1da469e4d960f02(this, e.Graphics, this.borderStyle);
             this.render.DrawTabControlTabStripBackground(e.Graphics, this.tabStripBounds, this.BackColor);
-            Region region = (Region)null;
+            Region region = null;
             label_36:
             if (this.TabLayout != TabLayout.SingleLineScrollable)
                 goto label_32;
@@ -401,7 +394,7 @@ namespace FQ.FreeDock
             {
                 using (Font font = new Font(this.Font.FontFamily.Name, 14f, FontStyle.Bold))
                 {
-                    e.Graphics.DrawString("evaluation", font, (Brush)solidBrush, (float)(this.tabStripBounds.Left + 4), (float)(this.tabStripBounds.Top - 4), StringFormat.GenericTypographic);
+                    e.Graphics.DrawString("evaluationtab", font, (Brush)solidBrush, (float)(this.tabStripBounds.Left + 4), (float)(this.tabStripBounds.Top - 4), StringFormat.GenericTypographic);
                     return;
                 }
             }
@@ -424,8 +417,8 @@ namespace FQ.FreeDock
             if (2 != 0)
                 goto label_2;
             label_17:
-            this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.xa8ae81960654bc0b, SandDockButtonType.ScrollRight, this.xa8ae81960654bc0b.x2fef7d841879a711);
-            this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.x49dae83181e41d72, SandDockButtonType.ScrollLeft, this.x49dae83181e41d72.x2fef7d841879a711);
+            this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.scrollRightButton, SandDockButtonType.ScrollRight, this.scrollRightButton.x2fef7d841879a711);
+            this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.scrollLeftButton, SandDockButtonType.ScrollLeft, this.scrollLeftButton.x2fef7d841879a711);
             goto label_3;
             label_20:
             this.render.DrawTabControlBackground(e.Graphics, this.x21ed2ecc088ef4e4, this.SelectedPage.BackColor, false);
@@ -496,7 +489,7 @@ namespace FQ.FreeDock
             Rectangle rect = this.tabStripBounds;
             if (true)
             {
-                rect.Width -= this.tabStripBounds.Right - this.x49dae83181e41d72.Bounds.Left;
+                rect.Width -= this.tabStripBounds.Right - this.scrollLeftButton.Bounds.Left;
                 e.Graphics.SetClip(rect);
                 if (3 != 0)
                     goto label_32;
@@ -507,7 +500,7 @@ namespace FQ.FreeDock
                 goto label_4;
         }
 
-        private void xb30ec7cfdf3e5c19(Graphics x41347a961b838962, ITabControlRenderer x38870620fd380a6b, ControlButton x128517d7ded59312, SandDockButtonType x271bd5d42b3ea793, bool x2fef7d841879a711)
+        private void xb30ec7cfdf3e5c19(Graphics x41347a961b838962, ITabControlRenderer x38870620fd380a6b, SandDockButton x128517d7ded59312, SandDockButtonType x271bd5d42b3ea793, bool x2fef7d841879a711)
         {
             if (!x128517d7ded59312.Enabled)
                 return;
@@ -931,11 +924,11 @@ namespace FQ.FreeDock
             int num2;
 
             num1 = this.tabStripBounds.Right - 2;
-            this.xa8ae81960654bc0b.Enabled = true;
-            this.xa8ae81960654bc0b.Bounds = new Rectangle(num1 - 14, y, 14, 15);
+            this.scrollRightButton.Enabled = true;
+            this.scrollRightButton.Bounds = new Rectangle(num1 - 14, y, 14, 15);
             num2 = num1 - 15;
-            this.x49dae83181e41d72.Enabled = true;
-            this.x49dae83181e41d72.Bounds = new Rectangle(num2 - 14, y, 14, 15);
+            this.scrollLeftButton.Enabled = true;
+            this.scrollLeftButton.Bounds = new Rectangle(num2 - 14, y, 14, 15);
             num1 = num2 - 15;
             left = this.tabStripBounds.Left;
 
@@ -948,8 +941,8 @@ namespace FQ.FreeDock
             else
                 goto label_18;
             label_10:
-            this.x49dae83181e41d72.x2fef7d841879a711 = this.x200b7f5a9d983ba4 > 0;
-            this.xa8ae81960654bc0b.x2fef7d841879a711 = this.x200b7f5a9d983ba4 < this.x4f8ccd50477a481e;
+            this.scrollLeftButton.x2fef7d841879a711 = this.x200b7f5a9d983ba4 > 0;
+            this.scrollRightButton.x2fef7d841879a711 = this.x200b7f5a9d983ba4 < this.x4f8ccd50477a481e;
             int width;
 
             goto label_19;
@@ -992,7 +985,7 @@ namespace FQ.FreeDock
             else
                 goto label_12;
             label_17:
-            num4 = this.x49dae83181e41d72.Bounds.Left - this.tabStripBounds.Left;
+            num4 = this.scrollLeftButton.Bounds.Left - this.tabStripBounds.Left;
             goto label_15;
             label_22:
             IEnumerator enumerator2 = this.Controls.GetEnumerator();
@@ -1157,9 +1150,9 @@ namespace FQ.FreeDock
         // reviewd with 2.4
         private void xcaf19fd9570f4eb4(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
         {
-            if (this.HighlightedButton == this.x49dae83181e41d72)
+            if (this.HighlightedButton == this.scrollLeftButton)
                 this.x523c1f22a806032d(-15);
-            if (this.HighlightedButton == this.xa8ae81960654bc0b)
+            if (this.HighlightedButton == this.scrollRightButton)
                 this.x523c1f22a806032d(15);
             else
                 this.xd11b6d3bf98020cb();
@@ -1206,12 +1199,12 @@ namespace FQ.FreeDock
             base.OnMouseLeave(e);
         }
         // reviewd with 2.4
-        private ControlButton x07083a4bfd59263d(int x08db3aeabb253cb1, int x1e218ceaee1bb583)
+        private SandDockButton x07083a4bfd59263d(int x08db3aeabb253cb1, int x1e218ceaee1bb583)
         {
-            if (this.x49dae83181e41d72.Enabled && this.x49dae83181e41d72.x2fef7d841879a711 && this.x49dae83181e41d72.Bounds.Contains(x08db3aeabb253cb1, x1e218ceaee1bb583))
-                return this.x49dae83181e41d72;
-            if (this.xa8ae81960654bc0b.Enabled && this.xa8ae81960654bc0b.x2fef7d841879a711 && this.xa8ae81960654bc0b.Bounds.Contains(x08db3aeabb253cb1, x1e218ceaee1bb583))
-                return this.xa8ae81960654bc0b;
+            if (this.scrollLeftButton.Enabled && this.scrollLeftButton.x2fef7d841879a711 && this.scrollLeftButton.Bounds.Contains(x08db3aeabb253cb1, x1e218ceaee1bb583))
+                return this.scrollLeftButton;
+            if (this.scrollRightButton.Enabled && this.scrollRightButton.x2fef7d841879a711 && this.scrollRightButton.Bounds.Contains(x08db3aeabb253cb1, x1e218ceaee1bb583))
+                return this.scrollRightButton;
             return null;
         }
 
@@ -1227,16 +1220,16 @@ namespace FQ.FreeDock
                 this.HighlightedButton = this.x07083a4bfd59263d(e.X, e.Y);
         }
         // reviewd with 2.4
-        private void x11e90588eb0baaf1(ControlButton x128517d7ded59312)
+        private void x11e90588eb0baaf1(SandDockButton x128517d7ded59312)
         {
-            if (x128517d7ded59312 != this.x49dae83181e41d72 && x128517d7ded59312 != this.xa8ae81960654bc0b)
+            if (x128517d7ded59312 != this.scrollLeftButton && x128517d7ded59312 != this.scrollRightButton)
                 return;
             this.xcf8b319f2bffca87();
         }
         // reviewd with 2.4
-        private void xa82f7b310984e03e(ControlButton x128517d7ded59312)
+        private void xa82f7b310984e03e(SandDockButton x128517d7ded59312)
         {
-            if (x128517d7ded59312 != this.x49dae83181e41d72 && x128517d7ded59312 != this.xa8ae81960654bc0b)
+            if (x128517d7ded59312 != this.scrollLeftButton && x128517d7ded59312 != this.scrollRightButton)
                 return;
             this.xd11b6d3bf98020cb();
         }
@@ -1301,7 +1294,7 @@ namespace FQ.FreeDock
                 if (this.TabLayout == TabLayout.SingleLineScrollable)
                 {
                     rectangle = this.tabStripBounds;
-                    rectangle.Width -= this.tabStripBounds.Right - this.x49dae83181e41d72.Bounds.Left;
+                    rectangle.Width -= this.tabStripBounds.Right - this.scrollLeftButton.Bounds.Left;
                     continue;
                 }
                 else
@@ -1792,11 +1785,11 @@ namespace FQ.FreeDock
             }
         }
 
-        class x9e8d5fa1ed8fe66b : Control.ControlCollection
+        class TabPageControlCollection : Control.ControlCollection
         {
             private TabControl tabControl;
 
-            public x9e8d5fa1ed8fe66b(TabControl owner) : base(owner)
+            public TabPageControlCollection(TabControl owner) : base(owner)
             {
                 this.tabControl = owner;
             }

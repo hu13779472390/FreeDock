@@ -58,13 +58,13 @@ namespace FQ.FreeDock.Design
                                     break;
                                 DockControl dockControl = (DockControl)enumerator.Current;
 
-                                    if (dockControl == this.dockControl)
-                                    {
-                                        if (((value ? 1 : 0) & 0) == 0)
-                                            break;
-                                    }
-                                    else
-                                        TypeDescriptor.GetProperties(dockControl)["Collapsed"].SetValue(dockControl, value);
+                                if (dockControl == this.dockControl)
+                                {
+                                    if (((value ? 1 : 0) & 0) == 0)
+                                        break;
+                                }
+                                else
+                                    TypeDescriptor.GetProperties(dockControl)["Collapsed"].SetValue(dockControl, value);
 
                                 goto label_8;
                             }
@@ -137,26 +137,22 @@ namespace FQ.FreeDock.Design
         protected override void PreFilterProperties(IDictionary properties)
         {
             base.PreFilterProperties(properties);
-            string[] strArray = new string[1]
+            string[] strArray = new string[]
             {
                 "Collapsed"
             };
             for (int index = 0; index < strArray.Length; ++index)
             {
                 string str = strArray[index];
-                if (0 != 0)
-                    goto label_4;
+
                 label_3:
                 PropertyDescriptor oldPropertyDescriptor = (PropertyDescriptor)properties[(object)str];
                 label_4:
-                if ((index | 2) != 0)
-                {
-                    if (oldPropertyDescriptor == null)
-                        continue;
-                    properties[(object)str] = (object)TypeDescriptor.CreateProperty(typeof(DockControlDesigner), oldPropertyDescriptor, new Attribute[0]);
-                }
-                else
-                    goto label_3;
+   
+                if (oldPropertyDescriptor == null)
+                    continue;
+                properties[(object)str] = (object)TypeDescriptor.CreateProperty(typeof(DockControlDesigner), oldPropertyDescriptor, new Attribute[0]);
+
             }
         }
 
@@ -172,8 +168,8 @@ namespace FQ.FreeDock.Design
         protected override void OnPaintAdornments(PaintEventArgs pe)
         {
             base.OnPaintAdornments(pe);
-            if (0 == 0)
-                goto label_14;
+     
+            goto label_14;
             label_1:
             using (Pen pen = new Pen(SystemColors.ControlDark))
             {
@@ -185,10 +181,9 @@ namespace FQ.FreeDock.Design
                 return;
             }
             label_14:
-            if (int.MaxValue != 0)
-                goto label_12;
-            else
-                goto label_15;
+
+            goto label_12;
+
             label_6:
             Rectangle clientRectangle1 = this.dockControl.ClientRectangle;
             clientRectangle1.Inflate(-10, -10);
@@ -207,11 +202,6 @@ namespace FQ.FreeDock.Design
                 return;
             else
                 goto label_1;
-            label_15:
-            if (2 == 0)
-                goto label_7;
-            else
-                goto label_6;
         }
 
         private void x5ba88706ad55272f(object sender, ControlEventArgs e)

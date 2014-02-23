@@ -31,16 +31,16 @@ namespace FQ.FreeDock
         private ControlLayoutSystem.DockControlCollection controls;
         private bool collapsed;
         internal Rectangle xb48529af1739dd06;
-        internal Rectangle xa358da7dd5364cab;
-        internal Rectangle x21ed2ecc088ef4e4;
+        internal Rectangle tabstripBounds;
+        internal Rectangle clientBounds;
         internal Rectangle joinCatchmentBounds;
         private DockControl selectedControl;
         private bool xf111a0cc60fdac46;
         //        private AutoHideBar autoHideBar;
-        private ControlButton closeButton;
-        private ControlButton pinButton;
-        private ControlButton positionButton;
-        private ControlButton highlightedButton;
+        private SandDockButton closeButton;
+        private SandDockButton pinButton;
+        private SandDockButton positionButton;
+        private SandDockButton highlightedButton;
         internal bool xfa5e20eb950b9ee1;
         internal bool xd30df1068ed42e28;
         private bool x49cf4e0157d9436c;
@@ -229,7 +229,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
-        internal ControlButton HighlightedButton
+        internal SandDockButton HighlightedButton
         {
             get
             {
@@ -320,9 +320,9 @@ namespace FQ.FreeDock
         public ControlLayoutSystem()
         {
             this.controls = new ControlLayoutSystem.DockControlCollection(this);
-            this.closeButton = new ControlButton();
-            this.pinButton = new ControlButton();
-            this.positionButton = new ControlButton();
+            this.closeButton = new SandDockButton();
+            this.pinButton = new SandDockButton();
+            this.positionButton = new SandDockButton();
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace FQ.FreeDock
             DockControl control = this.GetControlAt(position);
             if (control == null)
             {
-                ControlButton controlButton = this.x07083a4bfd59263d(position.X, position.Y);
+                SandDockButton controlButton = this.x07083a4bfd59263d(position.X, position.Y);
                 if (controlButton == this.closeButton)
                     return SandDockLanguage.CloseText;
                 if (controlButton == this.pinButton)
@@ -541,7 +541,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
-        internal virtual ControlButton x07083a4bfd59263d(int x, int y)
+        internal virtual SandDockButton x07083a4bfd59263d(int x, int y)
         {
             if (this.closeButton.Enabled && this.closeButton.Bounds.Contains(x, y))
                 return this.closeButton;
@@ -653,11 +653,11 @@ namespace FQ.FreeDock
                 this.x531514c39973cbc6.Commit();
         }
 
-        internal virtual void x11e90588eb0baaf1(ControlButton controlButton)
+        internal virtual void x11e90588eb0baaf1(SandDockButton controlButton)
         {
         }
 
-        internal virtual void xa82f7b310984e03e(ControlButton controlButton)
+        internal virtual void xa82f7b310984e03e(SandDockButton controlButton)
         {
             if (this.HighlightedButton == this.closeButton)
                 this.OnCloseButtonClick(EventArgs.Empty);
@@ -705,15 +705,15 @@ namespace FQ.FreeDock
             Control container = this.DockContainer.IsFloating || this.DockContainer.Manager == null || this.DockContainer.Manager.DockSystemContainer == null ? this.DockContainer : this.DockContainer.Manager.DockSystemContainer;
             bool focused = !this.IsInContainer || !this.DockContainer.FriendDesignMode ? this.ContainsFocus : ((ISelectionService)this.DockContainer.x7159e85e85b84817(typeof(ISelectionService))).GetComponentSelected(this.SelectedControl);
             if (this.SelectedControl != null)
-                render.DrawControlClientBackground(g, this.x21ed2ecc088ef4e4, this.SelectedControl.BackColor);
+                render.DrawControlClientBackground(g, this.clientBounds, this.SelectedControl.BackColor);
             else
-                render.DrawControlClientBackground(g, this.x21ed2ecc088ef4e4, SystemColors.Control);
-            if ((this.Controls.Count > 1 || this.DockContainer.FriendDesignMode) && this.xa358da7dd5364cab != Rectangle.Empty)
+                render.DrawControlClientBackground(g, this.clientBounds, SystemColors.Control);
+            if ((this.Controls.Count > 1 || this.DockContainer.FriendDesignMode) && this.tabstripBounds != Rectangle.Empty)
             {
                 int selectedTabOffset = 0;
                 if (this.selectedControl != null)
                     selectedTabOffset = this.selectedControl.TabBounds.X - this.Bounds.Left;
-                render.DrawTabStripBackground(container, (Control)this.DockContainer, g, this.xa358da7dd5364cab, selectedTabOffset);
+                render.DrawTabStripBackground(container, (Control)this.DockContainer, g, this.tabstripBounds, selectedTabOffset);
                 foreach (DockControl control in this.Controls)
                 {
                     DrawItemState state = DrawItemState.Default;
@@ -776,7 +776,7 @@ namespace FQ.FreeDock
             render.DrawTitleBarButton(g, this.positionButton.Bounds, SandDockButtonType.WindowPosition, state1, focused, false);
         }
         // reviewed with 2.4
-        internal void xb30ec7cfdf3e5c19(Graphics g, RendererBase render, ControlButton controlButton, SandDockButtonType buttonType, bool x2fef7d841879a711)
+        internal void xb30ec7cfdf3e5c19(Graphics g, RendererBase render, SandDockButton controlButton, SandDockButtonType buttonType, bool x2fef7d841879a711)
         {
             if (!controlButton.Enabled)
                 return;
@@ -1254,7 +1254,7 @@ namespace FQ.FreeDock
         /// </returns>
         public virtual DockControl GetControlAt(Point position)
         {
-            if (this.xa358da7dd5364cab.Contains(position) && (!this.closeButton.Bounds.Contains(position)) && !this.pinButton.Bounds.Contains(position))
+            if (this.tabstripBounds.Contains(position) && (!this.closeButton.Bounds.Contains(position)) && !this.pinButton.Bounds.Contains(position))
             {  
                 foreach (DockControl dockControl in this.Controls)
                 {
@@ -1347,11 +1347,11 @@ namespace FQ.FreeDock
             this.x5425d90305f1baa5();
             bounds.Offset(0, renderer.TitleBarMetrics.Height);
             bounds.Height -= renderer.TitleBarMetrics.Height;
-            this.x21ed2ecc088ef4e4 = bounds;
-            this.xa358da7dd5364cab = Rectangle.Empty;
+            this.clientBounds = bounds;
+            this.tabstripBounds = Rectangle.Empty;
             foreach (DockControl control in this.Controls)
             {
-                Rectangle rectangle = renderer.AdjustDockControlClientBounds(this, control, this.x21ed2ecc088ef4e4);
+                Rectangle rectangle = renderer.AdjustDockControlClientBounds(this, control, this.clientBounds);
                 control.xbdd4aaac1291a8c7(control == this.selectedControl);
                 control.Bounds = rectangle;
             }
@@ -1410,13 +1410,13 @@ namespace FQ.FreeDock
             if (this.Collapsed && this.DockContainer.CanShowCollapsed)
                 return;
 
-            this.CalculateLayout(renderer, bounds, floating, out this.xb48529af1739dd06, out this.xa358da7dd5364cab, out this.x21ed2ecc088ef4e4, out this.joinCatchmentBounds);
+            this.CalculateLayout(renderer, bounds, floating, out this.xb48529af1739dd06, out this.tabstripBounds, out this.clientBounds, out this.joinCatchmentBounds);
             this.xd30df1068ed42e28 = true;
             try
             {
                 if (this.xb48529af1739dd06 != Rectangle.Empty)
                     this.x5425d90305f1baa5();
-                this.x5d6e30ce9634c49e(renderer, graphics, this.xa358da7dd5364cab);
+                this.x5d6e30ce9634c49e(renderer, graphics, this.tabstripBounds);
                 foreach (DockControl dockControl in this.controls)
                 {
                     if (dockControl != this.SelectedControl)
@@ -1427,7 +1427,7 @@ namespace FQ.FreeDock
                 {
                     if (control == this.SelectedControl)
                     {
-                        Rectangle rectangle = renderer.AdjustDockControlClientBounds(this, control, this.x21ed2ecc088ef4e4);
+                        Rectangle rectangle = renderer.AdjustDockControlClientBounds(this, control, this.clientBounds);
                         control.Bounds = rectangle;
                         control.xbdd4aaac1291a8c7(true);
                     }

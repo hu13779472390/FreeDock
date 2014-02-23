@@ -36,13 +36,13 @@ namespace FQ.FreeDock
         private const int x94f3e1f6055486d7 = 17;
         private const int x0e421de239ce3d08 = 16;
         private bool integralClose;
-        private DockControl[] xe1c7adce7be56121;
+        private DockControl[] documents;
 
         internal bool x1ec2ea49664e1074
         {
             get
             {
-                return this.xe1c7adce7be56121 != null;
+                return this.documents != null;
             }
         }
 
@@ -54,21 +54,18 @@ namespace FQ.FreeDock
             }
         }
 
-        private bool xe96ee18ce2c3b205
+        private bool AllowKeyboardNavigation
         {
             get
             {
-                if (this.Manager == null)
-                    return true;
-                else
-                    return this.Manager.AllowKeyboardNavigation;
+                return this.Manager != null ? this.Manager.AllowKeyboardNavigation : true;
             }
         }
 
         [Description("The type of border to be drawn around the control.")]
         [DefaultValue(typeof(FQ.FreeDock.Rendering.BorderStyle), "Flat")]
         [Category("Appearance")]
-        internal FQ.FreeDock.Rendering.BorderStyle x64b4c49ed703037e
+        internal FQ.FreeDock.Rendering.BorderStyle BorderStyle
         {
             get
             {
@@ -89,20 +86,20 @@ namespace FQ.FreeDock
         {
             get
             {
-                Rectangle displayRectangle = base.DisplayRectangle;
+                Rectangle rect = base.DisplayRectangle;
                 switch (this.borderStyle)
                 {
                     case FQ.FreeDock.Rendering.BorderStyle.Flat:
                     case FQ.FreeDock.Rendering.BorderStyle.RaisedThin:
                     case FQ.FreeDock.Rendering.BorderStyle.SunkenThin:
-                        displayRectangle.Inflate(-1, -1);
+                        rect.Inflate(-1, -1);
                         break;
                     case FQ.FreeDock.Rendering.BorderStyle.RaisedThick:
                     case FQ.FreeDock.Rendering.BorderStyle.SunkenThick:
-                        displayRectangle.Inflate(-2, -2);
+                        rect.Inflate(-2, -2);
                         break;
                 }
-                return displayRectangle;
+                return rect;
             }
         }
 
@@ -213,7 +210,7 @@ namespace FQ.FreeDock
             return true;
             label_3:
             int index;
-            if (!this.xe96ee18ce2c3b205)
+            if (!this.AllowKeyboardNavigation)
             {
                 if (true)
                     goto label_23;
@@ -242,7 +239,7 @@ namespace FQ.FreeDock
                         goto label_11;
                 }
                 label_9:
-                this.xabb78e5e36f68ff6 = this.xe1c7adce7be56121.Length - 1;
+                this.xabb78e5e36f68ff6 = this.documents.Length - 1;
                 goto label_6;
                 label_11:
                 if ((keyData & Keys.Shift) == Keys.Shift)
@@ -259,7 +256,7 @@ namespace FQ.FreeDock
                 if (index >= dockControls.Length)
                 {
                     Array.Sort<DateTime, DockControl>(keys, dockControls);
-                    this.xe1c7adce7be56121 = dockControls;
+                    this.documents = dockControls;
                     goto label_11;
                 }
                 label_17:
@@ -290,20 +287,20 @@ namespace FQ.FreeDock
 
         private DockControl xf166541af22172c9()
         {
-            if (this.xabb78e5e36f68ff6 > this.xe1c7adce7be56121.Length)
-                this.xabb78e5e36f68ff6 = this.xe1c7adce7be56121.Length;
-            int index = this.xe1c7adce7be56121.Length - 1 - this.xabb78e5e36f68ff6;
-            this.xe1c7adce7be56121[index].x6d1b64d6c637a91d(true);
-            return this.xe1c7adce7be56121[index];
+            if (this.xabb78e5e36f68ff6 > this.documents.Length)
+                this.xabb78e5e36f68ff6 = this.documents.Length;
+            int index = this.documents.Length - 1 - this.xabb78e5e36f68ff6;
+            this.documents[index].x6d1b64d6c637a91d(true);
+            return this.documents[index];
         }
 
-        bool IMessageFilter.PreFilterMessage(ref Message x6088325dec1baa2a)
+        bool IMessageFilter.PreFilterMessage(ref Message msg)
         {
             IntPtr num;
-            if (x6088325dec1baa2a.Msg == 256)
+            if (msg.Msg == 256)
                 goto label_20;
             label_8:
-            if (x6088325dec1baa2a.Msg == 256)
+            if (msg.Msg == 256)
                 goto label_9;
             label_4:
             IntPtr wparam1;
@@ -311,17 +308,17 @@ namespace FQ.FreeDock
             IntPtr wparam3;
             do
             {
-                if (x6088325dec1baa2a.Msg == 257)
+                if (msg.Msg == 257)
                     goto label_7;
                 else
                     goto label_5;
                 label_2:
-                if (x6088325dec1baa2a.Msg != 256)
+                if (msg.Msg != 256)
                     goto label_24;
                 label_3:
                 DockControl dockControl = this.xf166541af22172c9();
                 this.xabb78e5e36f68ff6 = -1;
-                this.xe1c7adce7be56121 = (DockControl[])null;
+                this.documents = (DockControl[])null;
                 dockControl.x6d1b64d6c637a91d(true);
                 Application.RemoveMessageFilter((IMessageFilter)this);
                 continue;
@@ -331,7 +328,7 @@ namespace FQ.FreeDock
                 else
                     goto label_2;
                 label_7:
-                wparam3 = x6088325dec1baa2a.WParam;
+                wparam3 = msg.WParam;
                 if (wparam3.ToInt32() == 17)
                     goto label_3;
                 else
@@ -343,7 +340,7 @@ namespace FQ.FreeDock
             label_24:
             return false;
             label_9:
-            wparam2 = x6088325dec1baa2a.WParam;
+            wparam2 = msg.WParam;
             if (wparam2.ToInt32() == 16)
                 return true;
             else
@@ -351,7 +348,7 @@ namespace FQ.FreeDock
             label_16:
             ++this.xabb78e5e36f68ff6;
             label_17:
-            while (this.xabb78e5e36f68ff6 > this.xe1c7adce7be56121.Length - 1)
+            while (this.xabb78e5e36f68ff6 > this.documents.Length - 1)
             {
                 if (0 == 0)
                 {
@@ -367,10 +364,10 @@ namespace FQ.FreeDock
             this.xf166541af22172c9();
             return true;
             label_14:
-            this.xabb78e5e36f68ff6 = this.xe1c7adce7be56121.Length - 1;
+            this.xabb78e5e36f68ff6 = this.documents.Length - 1;
             goto label_10;
             label_20:
-            wparam1 = x6088325dec1baa2a.WParam;
+            wparam1 = msg.WParam;
             if (wparam1.ToInt32() == 9)
             {
                 if (false)

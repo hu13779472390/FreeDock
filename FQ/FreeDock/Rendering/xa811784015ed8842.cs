@@ -7,7 +7,7 @@ namespace FQ.FreeDock.Rendering
 {
     class xa811784015ed8842
     {
-        internal static void x91433b5e99eb7cac(Graphics graphics, Color color)
+        internal static void ClearBackground(Graphics graphics, Color color)
         {
             graphics.Clear(color);
         }
@@ -141,11 +141,11 @@ namespace FQ.FreeDock.Rendering
             return new Size(TextRenderer.MeasureText(graphics, text, font, new Size(int.MaxValue, int.MaxValue), flags).Width + 3 + 6 + (size.Width + 4), size.Height);
         }
 
-        public static void x272eca3f5ebfa9fc(Graphics x41347a961b838962, Rectangle bounds, Image image, Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState x01b557925841ae51, TextFormatFlags xae3b2752a89e7464)
+        public static void x272eca3f5ebfa9fc(Graphics g, Rectangle bounds, Image image, Size size, string text, Font font, Color x477e9d1180ece053, Color x3421b2dea6733873, Color x93532ca0ace0c1ae, Color xa1359fb73f86c7a4, DrawItemState state, TextFormatFlags xae3b2752a89e7464)
         {
             using (LinearGradientBrush brush = new LinearGradientBrush(bounds, x477e9d1180ece053, x3421b2dea6733873, LinearGradientMode.Vertical))
             {
-                xa811784015ed8842.x272eca3f5ebfa9fc(x41347a961b838962, bounds, image, size, text, font, brush, x93532ca0ace0c1ae, xa1359fb73f86c7a4, x01b557925841ae51, xae3b2752a89e7464);
+                xa811784015ed8842.x272eca3f5ebfa9fc(g, bounds, image, size, text, font, brush, x93532ca0ace0c1ae, xa1359fb73f86c7a4, state, xae3b2752a89e7464);
             }
         }
 
@@ -306,13 +306,9 @@ namespace FQ.FreeDock.Rendering
             return;
             label_26:
             points[3] = new System.Drawing.Point(xda73fcb97c77d998.Right, xda73fcb97c77d998.Bottom);
-
-
             points[4] = new System.Drawing.Point(xda73fcb97c77d998.Left, xda73fcb97c77d998.Bottom);
             points[5] = new System.Drawing.Point(xda73fcb97c77d998.Left, xda73fcb97c77d998.Top + 2);
-            label_28:
-
-
+ 
             goto label_18;
 
 

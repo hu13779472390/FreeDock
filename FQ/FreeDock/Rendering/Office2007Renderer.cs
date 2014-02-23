@@ -13,42 +13,42 @@ namespace FQ.FreeDock.Rendering
     /// </summary>
     public class Office2007Renderer : RendererBase
     {
-        private Office2007ColorScheme x62a65b2c0f145432 = Office2007ColorScheme.Black;
+        private Office2007ColorScheme colorScheme = Office2007ColorScheme.Black;
         private Color background;
-        private Color xf78d540f2ad4eefe;
-        private Color x2a8ba610037adcf2;
-        private Color xf03842e8454f12ef;
-        private Color xd86b7ed9f7ac5bcf;
-        private Color x311be0ac2a7ad6f7;
-        private Color x4c4dd6a647f58188;
-        private Color x9185f4f5b194140e;
-        private Color x5581066ec159efc6;
-        private Color x4457bc20e07c5384;
-        private Color xe339b39f12fe3a06;
-        private Color x216af2b9aa27b602;
-        private Color xac76de21a6c85f45;
-        private Color xeedeb7a1ef6db2c5;
-        private ColorBlend x4603d08f845b431d;
-        private ColorBlend x6d145d34f6cf6305;
-        private ColorBlend x7d4e8244c07128f3;
-        private ColorBlend xe127097a0a7bcea3;
-        private ColorBlend x34b837871ba5992c;
-        private ColorBlend x267ad4ea8c519e4c;
-        private ColorBlend xea896c10e961df63;
-        private ColorBlend xaeb413d4d357001d;
-        private ColorBlend xf654cd91b245064f;
-        private ColorBlend x2f53a4063520f7b7;
-        private ColorBlend xf320905c8fa15baa;
-        private ColorBlend x928270a1d0f072fb;
+        private Color dockedWindowOuterBorder;
+        private Color dockedWindowInnerBorder;
+        private Color tabStripOuterBorder;
+        private Color tabStripInnerBorder;
+        private Color tabStripNormalTabForeground;
+        private Color collapsedTabBorder;
+        private Color documentStripBorder;
+        private Color documentNormalTabOuterBorder;
+        private Color documentNormalTabInnerBorder;
+        private Color documentHotTabOuterBorder;
+        private Color documentHotTabInnerBorder;
+        private Color documentSelectedTabOuterBorder;
+        private Color documentSelectedTabInnerBorder;
+        private ColorBlend activeTitleBarBackground;
+        private ColorBlend inactiveTitleBarBackground;
+        private ColorBlend tabStripSelectedTabBackground;
+        private ColorBlend tabStripSelectedTabBorder;
+        private ColorBlend buttonHotOuterBorder;
+        private ColorBlend buttonHotInnerBorder;
+        private ColorBlend buttonHotBackground;
+        private ColorBlend buttonPressedOuterBorder;
+        private ColorBlend buttonPressedInnerBorder;
+        private ColorBlend buttonPressedBackground;
+        private ColorBlend collapsedTabHorizontalBackground;
+        private ColorBlend collapsedTabVerticalBackground;
         private ColorBlend documentContainerBackground;
-        private ColorBlend x854213a69311962a;
-        private ColorBlend x642be9cb364d5c7e;
-        private ColorBlend x55f5ad59d4c9fe0a;
-        private BoxModel x3a1fa93b40743331;
-        private BoxModel xc742aa5a0f350e7f;
-        private BoxModel x6defba3d5d846e0d;
+        private ColorBlend documentNormalTabBackground;
+        private ColorBlend documentHotTabBackground;
+        private ColorBlend documentSelectedTabBackground;
+        private BoxModel tabMetrics;
+        private BoxModel tabStripMetrics;
+        private BoxModel titleBarMetrics;
         private int x03bb1ee2adad51ea;
-        private TextFormatFlags xae3b2752a89e7464;
+        private TextFormatFlags textFormat;
 
         /// <summary>
         /// The color blend with which to draw the background of a selected document tab.
@@ -58,13 +58,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x55f5ad59d4c9fe0a;
+                return this.documentSelectedTabBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x55f5ad59d4c9fe0a = value;
+                this.documentSelectedTabBackground = value;
             }
         }
 
@@ -76,13 +76,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x642be9cb364d5c7e;
+                return this.documentHotTabBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x642be9cb364d5c7e = value;
+                this.documentHotTabBackground = value;
             }
         }
 
@@ -94,13 +94,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x854213a69311962a;
+                return this.documentNormalTabBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x854213a69311962a = value;
+                this.documentNormalTabBackground = value;
             }
         }
 
@@ -112,11 +112,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x216af2b9aa27b602;
+                return this.documentHotTabInnerBorder;
             }
             set
             {
-                this.x216af2b9aa27b602 = value;
+                this.documentHotTabInnerBorder = value;
             }
         }
 
@@ -128,11 +128,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xac76de21a6c85f45;
+                return this.documentSelectedTabOuterBorder;
             }
             set
             {
-                this.xac76de21a6c85f45 = value;
+                this.documentSelectedTabOuterBorder = value;
             }
         }
 
@@ -144,11 +144,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xeedeb7a1ef6db2c5;
+                return this.documentSelectedTabInnerBorder;
             }
             set
             {
-                this.xeedeb7a1ef6db2c5 = value;
+                this.documentSelectedTabInnerBorder = value;
             }
         }
 
@@ -160,11 +160,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xe339b39f12fe3a06;
+                return this.documentHotTabOuterBorder;
             }
             set
             {
-                this.xe339b39f12fe3a06 = value;
+                this.documentHotTabOuterBorder = value;
             }
         }
 
@@ -176,11 +176,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x4457bc20e07c5384;
+                return this.documentNormalTabInnerBorder;
             }
             set
             {
-                this.x4457bc20e07c5384 = value;
+                this.documentNormalTabInnerBorder = value;
             }
         }
 
@@ -192,11 +192,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x5581066ec159efc6;
+                return this.documentNormalTabOuterBorder;
             }
             set
             {
-                this.x5581066ec159efc6 = value;
+                this.documentNormalTabOuterBorder = value;
             }
         }
 
@@ -208,11 +208,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x9185f4f5b194140e;
+                return this.documentStripBorder;
             }
             set
             {
-                this.x9185f4f5b194140e = value;
+                this.documentStripBorder = value;
             }
         }
 
@@ -242,13 +242,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x928270a1d0f072fb;
+                return this.collapsedTabVerticalBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x928270a1d0f072fb = value;
+                this.collapsedTabVerticalBackground = value;
             }
         }
 
@@ -260,13 +260,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xf320905c8fa15baa;
+                return this.collapsedTabHorizontalBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.xf320905c8fa15baa = value;
+                this.collapsedTabHorizontalBackground = value;
             }
         }
 
@@ -278,11 +278,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x4c4dd6a647f58188;
+                return this.collapsedTabBorder;
             }
             set
             {
-                this.x4c4dd6a647f58188 = value;
+                this.collapsedTabBorder = value;
             }
         }
 
@@ -294,13 +294,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xea896c10e961df63;
+                return this.buttonHotBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.xea896c10e961df63 = value;
+                this.buttonHotBackground = value;
             }
         }
 
@@ -312,13 +312,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x267ad4ea8c519e4c;
+                return this.buttonHotInnerBorder;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x267ad4ea8c519e4c = value;
+                this.buttonHotInnerBorder = value;
             }
         }
 
@@ -330,13 +330,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x34b837871ba5992c;
+                return this.buttonHotOuterBorder;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x34b837871ba5992c = value;
+                this.buttonHotOuterBorder = value;
             }
         }
 
@@ -348,13 +348,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x2f53a4063520f7b7;
+                return this.buttonPressedBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x2f53a4063520f7b7 = value;
+                this.buttonPressedBackground = value;
             }
         }
 
@@ -366,13 +366,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xf654cd91b245064f;
+                return this.buttonPressedInnerBorder;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.xf654cd91b245064f = value;
+                this.buttonPressedInnerBorder = value;
             }
         }
 
@@ -384,13 +384,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xaeb413d4d357001d;
+                return this.buttonPressedOuterBorder;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.xaeb413d4d357001d = value;
+                this.buttonPressedOuterBorder = value;
             }
         }
 
@@ -402,13 +402,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xe127097a0a7bcea3;
+                return this.tabStripSelectedTabBorder;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.xe127097a0a7bcea3 = value;
+                this.tabStripSelectedTabBorder = value;
             }
         }
 
@@ -420,13 +420,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x7d4e8244c07128f3;
+                return this.tabStripSelectedTabBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x7d4e8244c07128f3 = value;
+                this.tabStripSelectedTabBackground = value;
             }
         }
 
@@ -438,13 +438,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x6d145d34f6cf6305;
+                return this.inactiveTitleBarBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x6d145d34f6cf6305 = value;
+                this.inactiveTitleBarBackground = value;
             }
         }
 
@@ -456,13 +456,13 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x4603d08f845b431d;
+                return this.activeTitleBarBackground;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                this.x4603d08f845b431d = value;
+                this.activeTitleBarBackground = value;
             }
         }
 
@@ -474,11 +474,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x311be0ac2a7ad6f7;
+                return this.tabStripNormalTabForeground;
             }
             set
             {
-                this.x311be0ac2a7ad6f7 = value;
+                this.tabStripNormalTabForeground = value;
             }
         }
 
@@ -490,11 +490,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xd86b7ed9f7ac5bcf;
+                return this.tabStripInnerBorder;
             }
             set
             {
-                this.xd86b7ed9f7ac5bcf = value;
+                this.tabStripInnerBorder = value;
             }
         }
 
@@ -506,11 +506,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xf03842e8454f12ef;
+                return this.tabStripOuterBorder;
             }
             set
             {
-                this.xf03842e8454f12ef = value;
+                this.tabStripOuterBorder = value;
             }
         }
 
@@ -538,11 +538,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xf78d540f2ad4eefe;
+                return this.dockedWindowOuterBorder;
             }
             set
             {
-                this.xf78d540f2ad4eefe = value;
+                this.dockedWindowOuterBorder = value;
             }
         }
 
@@ -554,11 +554,11 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x2a8ba610037adcf2;
+                return this.dockedWindowInnerBorder;
             }
             set
             {
-                this.x2a8ba610037adcf2 = value;
+                this.dockedWindowInnerBorder = value;
             }
         }
 
@@ -566,7 +566,7 @@ namespace FQ.FreeDock.Rendering
         /// The size of image to draw in window tabs.
         /// 
         /// </summary>
-        public override System.Drawing.Size ImageSize
+        public override Size ImageSize
         {
             get
             {
@@ -574,7 +574,7 @@ namespace FQ.FreeDock.Rendering
             }
             set
             {
-                this.x50aa48875b838a15();
+                this.ClearBoxModels();
                 base.ImageSize = value;
             }
         }
@@ -587,14 +587,14 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.x62a65b2c0f145432;
+                return this.colorScheme;
             }
             set
             {
-                if (value == this.x62a65b2c0f145432 || 0 != 0)
+                if (value == this.colorScheme || 0 != 0)
                     return;
-                this.x62a65b2c0f145432 = value;
-                switch (this.x62a65b2c0f145432)
+                this.colorScheme = value;
+                switch (this.colorScheme)
                 {
                     case Office2007ColorScheme.Blue:
                         this.x02fed0907aa1493f();
@@ -622,7 +622,7 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                return this.xae3b2752a89e7464;
+                return this.textFormat;
             }
         }
 
@@ -634,9 +634,9 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                if (this.x3a1fa93b40743331 == null)
-                    this.x3a1fa93b40743331 = new BoxModel(0, 0, 0, 0, 0, 0, 0, 0, -1, 0);
-                return this.x3a1fa93b40743331;
+                if (this.tabMetrics == null)
+                    this.tabMetrics = new BoxModel(0, 0, 0, 0, 0, 0, 0, 0, -1, 0);
+                return this.tabMetrics;
             }
         }
 
@@ -648,9 +648,9 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                if (this.xc742aa5a0f350e7f == null)
-                    this.xc742aa5a0f350e7f = new BoxModel(0, Math.Max(Control.DefaultFont.Height, this.ImageSize.Height) + 8, 0, 0, 0, 1, 0, 0, 0, 0);
-                return this.xc742aa5a0f350e7f;
+                if (this.tabStripMetrics == null)
+                    this.tabStripMetrics = new BoxModel(0, Math.Max(Control.DefaultFont.Height, this.ImageSize.Height) + 8, 0, 0, 0, 1, 0, 0, 0, 0);
+                return this.tabStripMetrics;
             }
         }
 
@@ -674,9 +674,9 @@ namespace FQ.FreeDock.Rendering
         {
             get
             {
-                if (this.x6defba3d5d846e0d == null)
-                    this.x6defba3d5d846e0d = new BoxModel(0, Control.DefaultFont.Height + 8, 0, 0, 0, 0, 0, 0, 0, 0);
-                return this.x6defba3d5d846e0d;
+                if (this.titleBarMetrics == null)
+                    this.titleBarMetrics = new BoxModel(0, Control.DefaultFont.Height + 8, 0, 0, 0, 0, 0, 0, 0, 0);
+                return this.titleBarMetrics;
             }
         }
 
@@ -759,24 +759,20 @@ namespace FQ.FreeDock.Rendering
         {
         }
 
-        private void x50aa48875b838a15()
+        private void ClearBoxModels()
         {
-            this.x3a1fa93b40743331 = (BoxModel)null;
-            this.xc742aa5a0f350e7f = (BoxModel)null;
-            this.x6defba3d5d846e0d = (BoxModel)null;
+            this.tabMetrics = null;
+            this.tabStripMetrics = null;
+            this.titleBarMetrics = null;
         }
 
         private ColorBlend x427b83330cc91391(float[] x1692a49b2cba9274, Color[] xa70c7ccd3278240f)
         {
             ColorBlend colorBlend = new ColorBlend(x1692a49b2cba9274.Length);
-            for (int index = 0; index < x1692a49b2cba9274.Length; ++index)
+            for (int i = 0; i < x1692a49b2cba9274.Length; ++i)
             {
-                do
-                {
-                    colorBlend.Positions[index] = x1692a49b2cba9274[index];
-                    colorBlend.Colors[index] = xa70c7ccd3278240f[index];
-                }
-                while (4 == 0);
+                colorBlend.Positions[i] = x1692a49b2cba9274[i];
+                colorBlend.Colors[i] = xa70c7ccd3278240f[i];
             }
             return colorBlend;
         }
@@ -793,8 +789,7 @@ namespace FQ.FreeDock.Rendering
         {
             this.Background = ColorTranslator.FromHtml("#BFDBFF");
             this.DockedWindowOuterBorder = ColorTranslator.FromHtml("#7596BF");
-            if (2 != 0)
-                goto label_15;
+            goto label_15;
             label_9:
             this.CollapsedTabHorizontalBackground = this.x427b83330cc91391(new float[4]
             {
@@ -802,17 +797,15 @@ namespace FQ.FreeDock.Rendering
                 0.3f,
                 0.3f,
                 1f
-            }, new Color[4]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#F7FBFF"),
                 ColorTranslator.FromHtml("#EEF5FB"),
                 ColorTranslator.FromHtml("#E1EAF6"),
                 ColorTranslator.FromHtml("#F7FBFF")
             });
-            if (2 != 0)
-                goto label_6;
-            else
-                goto label_5;
+            goto label_6;
+
             label_4:
             this.DocumentHotTabOuterBorder = ColorTranslator.FromHtml("#6593CF");
             this.DocumentHotTabInnerBorder = ColorTranslator.FromHtml("#FFFFFF");
@@ -822,7 +815,7 @@ namespace FQ.FreeDock.Rendering
                 0.5f,
                 0.5f,
                 1f
-            }, new Color[4]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#E1EEFF"),
                 ColorTranslator.FromHtml("#D7E8FF"),
@@ -830,49 +823,40 @@ namespace FQ.FreeDock.Rendering
                 ColorTranslator.FromHtml("#BEDAFF")
             });
             this.DocumentSelectedTabOuterBorder = ColorTranslator.FromHtml("#95774A");
-            if (0 != 0)
-                return;
-            if (0 == 0)
+
+            this.DocumentSelectedTabInnerBorder = ColorTranslator.FromHtml("#CDB69C");
+            this.DocumentSelectedTabBackground = this.x427b83330cc91391(new float[3]
             {
-                this.DocumentSelectedTabInnerBorder = ColorTranslator.FromHtml("#CDB69C");
-                this.DocumentSelectedTabBackground = this.x427b83330cc91391(new float[3]
-                {
-                    0.0f,
-                    0.25f,
-                    1f
-                }, new Color[3]
-                {
-                    ColorTranslator.FromHtml("#FFD19C"),
-                    ColorTranslator.FromHtml("#FFDBB3"),
-                    ColorTranslator.FromHtml("#FFFFFE")
-                });
-                return;
-            }
-            else
-                goto label_12;
+                0.0f,
+                0.25f,
+                1f
+            }, new Color[]
+            {
+                ColorTranslator.FromHtml("#FFD19C"),
+                ColorTranslator.FromHtml("#FFDBB3"),
+                ColorTranslator.FromHtml("#FFFFFE")
+            });
+            return;
+
             label_5:
             this.DocumentNormalTabInnerBorder = ColorTranslator.FromHtml("#E3EFFF");
-            if (0 == 0)
+
+
+            this.DocumentNormalTabBackground = this.x427b83330cc91391(new float[4]
             {
-                if (0 != 0)
-                    return;
-                this.DocumentNormalTabBackground = this.x427b83330cc91391(new float[4]
-                {
-                    0.0f,
-                    0.5f,
-                    0.5f,
-                    1f
-                }, new Color[4]
-                {
-                    ColorTranslator.FromHtml("#BEDAFF"),
-                    ColorTranslator.FromHtml("#AED2FF"),
-                    ColorTranslator.FromHtml("#8FBCF6"),
-                    ColorTranslator.FromHtml("#98C4FD")
-                });
-                goto label_4;
-            }
-            else
-                goto label_11;
+                0.0f,
+                0.5f,
+                0.5f,
+                1f
+            }, new Color[4]
+            {
+                ColorTranslator.FromHtml("#BEDAFF"),
+                ColorTranslator.FromHtml("#AED2FF"),
+                ColorTranslator.FromHtml("#8FBCF6"),
+                ColorTranslator.FromHtml("#98C4FD")
+            });
+            goto label_4;
+
             label_6:
             this.CollapsedTabVerticalBackground = this.x427b83330cc91391(new float[4]
             {
@@ -901,13 +885,10 @@ namespace FQ.FreeDock.Rendering
                     ColorTranslator.FromHtml("#6591CD")
                 });
                 this.DocumentStripBorder = ColorTranslator.FromHtml("#678CBD");
-                if (0 == 0)
-                {
-                    this.DocumentNormalTabOuterBorder = ColorTranslator.FromHtml("#6593CF");
-                    goto label_5;
-                }
-                else
-                    goto label_14;
+  
+                this.DocumentNormalTabOuterBorder = ColorTranslator.FromHtml("#6593CF");
+                goto label_5;
+
             }
             else
                 goto label_4;
@@ -931,7 +912,7 @@ namespace FQ.FreeDock.Rendering
                 0.0f,
                 0.5f,
                 1f
-            }, new Color[3]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#DBCE99"),
                 ColorTranslator.FromHtml("#B9A074"),
@@ -943,7 +924,7 @@ namespace FQ.FreeDock.Rendering
                 0.5f,
                 0.5f,
                 1f
-            }, new Color[4]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#FFFFFB"),
                 ColorTranslator.FromHtml("#FFF9E3"),
@@ -956,19 +937,19 @@ namespace FQ.FreeDock.Rendering
                 0.5f,
                 0.5f,
                 1f
-            }, new Color[4]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#FFFCE6"),
                 ColorTranslator.FromHtml("#FFECA3"),
                 ColorTranslator.FromHtml("#FFD844"),
                 ColorTranslator.FromHtml("#FFE47F")
             });
-            label_12:
+
             this.ButtonPressedOuterBorder = this.x427b83330cc91391(new float[2]
             {
                 0.0f,
                 1f
-            }, new Color[2]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#7B6645"),
                 ColorTranslator.FromHtml("#7B6645")
@@ -980,7 +961,7 @@ namespace FQ.FreeDock.Rendering
                 0.6f,
                 0.6f,
                 1f
-            }, new Color[5]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#B2855C"),
                 ColorTranslator.FromHtml("#F1B072"),
@@ -994,7 +975,7 @@ namespace FQ.FreeDock.Rendering
                 0.5f,
                 0.5f,
                 1f
-            }, new Color[4]
+            }, new Color[]
             {
                 ColorTranslator.FromHtml("#F3A570"),
                 ColorTranslator.FromHtml("#E57840"),
@@ -1058,8 +1039,8 @@ namespace FQ.FreeDock.Rendering
         private void xfd737a986158d659()
         {
             this.Background = ColorTranslator.FromHtml("#535353");
-            if (1 != 0)
-                goto label_20;
+
+            goto label_20;
             label_9:
             do
             {
@@ -1109,20 +1090,19 @@ namespace FQ.FreeDock.Rendering
                         });
                     }
                     while (15 == 0);
-                    if (0 == 0)
-                        this.DocumentContainerBackground = this.x427b83330cc91391(new float[3]
-                        {
-                            0.0f,
-                            0.7f,
-                            1f
-                        }, new Color[3]
-                        {
-                            ColorTranslator.FromHtml("#4F4F4F"),
-                            ColorTranslator.FromHtml("#3B3B3B"),
-                            ColorTranslator.FromHtml("#0A0A0A")
-                        });
-                    else
-                        break;
+    
+                    this.DocumentContainerBackground = this.x427b83330cc91391(new float[3]
+                    {
+                        0.0f,
+                        0.7f,
+                        1f
+                    }, new Color[3]
+                    {
+                        ColorTranslator.FromHtml("#4F4F4F"),
+                        ColorTranslator.FromHtml("#3B3B3B"),
+                        ColorTranslator.FromHtml("#0A0A0A")
+                    });
+
                 }
                 else
                     goto label_21;
@@ -1145,61 +1125,47 @@ namespace FQ.FreeDock.Rendering
                 ColorTranslator.FromHtml("#FFDBB3"),
                 ColorTranslator.FromHtml("#FFFFFE")
             });
-            if (4 != 0)
-                return;
+            return;
             label_4:
             this.DocumentHotTabOuterBorder = ColorTranslator.FromHtml("#616A76");
-            if ((int)byte.MaxValue == 0)
-                return;
+
             this.DocumentHotTabInnerBorder = ColorTranslator.FromHtml("#FFFFFF");
-            if (15 != 0)
+
+            this.DocumentHotTabBackground = this.x427b83330cc91391(new float[4]
             {
-                this.DocumentHotTabBackground = this.x427b83330cc91391(new float[4]
-                {
-                    0.0f,
-                    0.5f,
-                    0.5f,
-                    1f
-                }, new Color[4]
-                {
-                    ColorTranslator.FromHtml("#F2F2F3"),
-                    ColorTranslator.FromHtml("#F8F8F9"),
-                    ColorTranslator.FromHtml("#D3D6DB"),
-                    ColorTranslator.FromHtml("#DBDEE1")
-                });
-                this.DocumentSelectedTabOuterBorder = ColorTranslator.FromHtml("#3D3D3D");
-                goto label_3;
-            }
-            else
-                goto label_15;
+                0.0f,
+                0.5f,
+                0.5f,
+                1f
+            }, new Color[4]
+            {
+                ColorTranslator.FromHtml("#F2F2F3"),
+                ColorTranslator.FromHtml("#F8F8F9"),
+                ColorTranslator.FromHtml("#D3D6DB"),
+                ColorTranslator.FromHtml("#DBDEE1")
+            });
+            this.DocumentSelectedTabOuterBorder = ColorTranslator.FromHtml("#3D3D3D");
+            goto label_3;
+
             label_6:
             this.DocumentNormalTabInnerBorder = ColorTranslator.FromHtml("#F0F1F2");
-            if (3 != 0)
+
+            this.DocumentNormalTabBackground = this.x427b83330cc91391(new float[4]
             {
-                this.DocumentNormalTabBackground = this.x427b83330cc91391(new float[4]
-                {
-                    0.0f,
-                    0.5f,
-                    0.5f,
-                    1f
-                }, new Color[4]
-                {
-                    ColorTranslator.FromHtml("#DBDEE1"),
-                    ColorTranslator.FromHtml("#D3D6DB"),
-                    ColorTranslator.FromHtml("#BCC1C8"),
-                    ColorTranslator.FromHtml("#C5C9CF")
-                });
-                goto label_4;
-            }
-            else if (int.MaxValue == 0)
+                0.0f,
+                0.5f,
+                0.5f,
+                1f
+            }, new Color[4]
             {
-                if (4 != 0)
-                    goto label_16;
-                else
-                    goto label_14;
-            }
-            else
-                goto label_17;
+                ColorTranslator.FromHtml("#DBDEE1"),
+                ColorTranslator.FromHtml("#D3D6DB"),
+                ColorTranslator.FromHtml("#BCC1C8"),
+                ColorTranslator.FromHtml("#C5C9CF")
+            });
+            goto label_4;
+
+        
             label_21:
             return;
             label_14:
@@ -1266,10 +1232,9 @@ namespace FQ.FreeDock.Rendering
                 ColorTranslator.FromHtml("#ED7804"),
                 ColorTranslator.FromHtml("#FDAD03")
             });
-            if (0 == 0)
-                goto label_9;
-            else
-                goto label_17;
+
+            goto label_9;
+
             label_16:
             this.TabStripInnerBorder = ColorTranslator.FromHtml("#D7DADF");
             this.TabStripSelectedTabBackground = this.x427b83330cc91391(new float[4]
@@ -1327,10 +1292,9 @@ namespace FQ.FreeDock.Rendering
                 ColorTranslator.FromHtml("#FFD346")
             });
             this.TabStripOuterBorder = ColorTranslator.FromHtml("#BEBEBE");
-            if (0 == 0)
-                goto label_16;
-            else
-                goto label_9;
+  
+            goto label_16;
+
             label_20:
             this.DockedWindowOuterBorder = ColorTranslator.FromHtml("#8C8E8F");
             this.DockedWindowInnerBorder = ColorTranslator.FromHtml("#FFFFFF");
@@ -1383,52 +1347,47 @@ namespace FQ.FreeDock.Rendering
                     ColorTranslator.FromHtml("#FEA14E")
                 });
                 this.CollapsedTabBorder = ColorTranslator.FromHtml("#838383");
-                label_12:
-                if (3 != 0)
+      
+
+                this.CollapsedTabHorizontalBackground = this.x427b83330cc91391(new float[4]
                 {
-                    if (int.MaxValue == 0)
-                        return;
-                    this.CollapsedTabHorizontalBackground = this.x427b83330cc91391(new float[4]
-                    {
-                        0.0f,
-                        0.3f,
-                        0.3f,
-                        1f
-                    }, new Color[4]
-                    {
-                        ColorTranslator.FromHtml("#FFFFFF"),
-                        ColorTranslator.FromHtml("#F7F6F8"),
-                        ColorTranslator.FromHtml("#EEF1F5"),
-                        ColorTranslator.FromHtml("#F2F7F9")
-                    });
-                    this.CollapsedTabVerticalBackground = this.x427b83330cc91391(new float[4]
-                    {
-                        0.0f,
-                        0.3f,
-                        0.3f,
-                        1f
-                    }, new Color[4]
-                    {
-                        ColorTranslator.FromHtml("#FFFFFF"),
-                        ColorTranslator.FromHtml("#F7F6F8"),
-                        ColorTranslator.FromHtml("#EEF1F5"),
-                        ColorTranslator.FromHtml("#F2F7F9")
-                    });
-                    this.DocumentContainerBackground = this.x427b83330cc91391(new float[3]
-                    {
-                        0.0f,
-                        0.7f,
-                        1f
-                    }, new Color[3]
-                    {
-                        ColorTranslator.FromHtml("#CCCFD8"),
-                        ColorTranslator.FromHtml("#BDC0C9"),
-                        ColorTranslator.FromHtml("#9B9FA6")
-                    });
-                    goto label_3;
-                }
-                else
-                    continue;
+                    0.0f,
+                    0.3f,
+                    0.3f,
+                    1f
+                }, new Color[4]
+                {
+                    ColorTranslator.FromHtml("#FFFFFF"),
+                    ColorTranslator.FromHtml("#F7F6F8"),
+                    ColorTranslator.FromHtml("#EEF1F5"),
+                    ColorTranslator.FromHtml("#F2F7F9")
+                });
+                this.CollapsedTabVerticalBackground = this.x427b83330cc91391(new float[4]
+                {
+                    0.0f,
+                    0.3f,
+                    0.3f,
+                    1f
+                }, new Color[4]
+                {
+                    ColorTranslator.FromHtml("#FFFFFF"),
+                    ColorTranslator.FromHtml("#F7F6F8"),
+                    ColorTranslator.FromHtml("#EEF1F5"),
+                    ColorTranslator.FromHtml("#F2F7F9")
+                });
+                this.DocumentContainerBackground = this.x427b83330cc91391(new float[3]
+                {
+                    0.0f,
+                    0.7f,
+                    1f
+                }, new Color[3]
+                {
+                    ColorTranslator.FromHtml("#CCCFD8"),
+                    ColorTranslator.FromHtml("#BDC0C9"),
+                    ColorTranslator.FromHtml("#9B9FA6")
+                });
+                goto label_3;
+
                 label_14:
                 this.DockedWindowOuterBorder = ColorTranslator.FromHtml("#BDBFC1");
                 this.DockedWindowInnerBorder = ColorTranslator.FromHtml("#FFFFFF");
@@ -1489,8 +1448,7 @@ namespace FQ.FreeDock.Rendering
                         ColorTranslator.FromHtml("#ECFAFB")
                     });
                     this.TabStripNormalTabForeground = ColorTranslator.FromHtml("#4C535C");
-                    if (0 != 0)
-                        ;
+
                     this.ButtonHotOuterBorder = this.x427b83330cc91391(new float[3]
                     {
                         0.0f,
@@ -1502,8 +1460,7 @@ namespace FQ.FreeDock.Rendering
                         ColorTranslator.FromHtml("#B9A074"),
                         ColorTranslator.FromHtml("#CBC3AA")
                     });
-                    if (-1 == 0)
-                        goto label_12;
+
                 }
                 while (-1 == 0);
                 this.ButtonHotInnerBorder = this.x427b83330cc91391(new float[4]
@@ -1534,13 +1491,12 @@ namespace FQ.FreeDock.Rendering
                 });
                 goto label_8;
             }
-            goto label_6;
+
             label_3:
-            if (0 == 0)
-            {
-                this.DocumentStripBorder = ColorTranslator.FromHtml("#858585");
-                this.DocumentNormalTabOuterBorder = ColorTranslator.FromHtml("#6F7074");
-            }
+
+            this.DocumentStripBorder = ColorTranslator.FromHtml("#858585");
+            this.DocumentNormalTabOuterBorder = ColorTranslator.FromHtml("#6F7074");
+ 
             this.DocumentNormalTabInnerBorder = ColorTranslator.FromHtml("#EDF3F4");
             label_6:
             this.DocumentNormalTabBackground = this.x427b83330cc91391(new float[4]
@@ -1558,39 +1514,35 @@ namespace FQ.FreeDock.Rendering
             });
             this.DocumentHotTabOuterBorder = ColorTranslator.FromHtml("#6F7074");
             this.DocumentHotTabInnerBorder = ColorTranslator.FromHtml("#EDF3F4");
-            if (15 != 0)
+
+            this.DocumentHotTabBackground = this.x427b83330cc91391(new float[4]
             {
-                this.DocumentHotTabBackground = this.x427b83330cc91391(new float[4]
-                {
-                    0.0f,
-                    0.5f,
-                    0.5f,
-                    1f
-                }, new Color[4]
-                {
-                    ColorTranslator.FromHtml("#FBFBFB"),
-                    ColorTranslator.FromHtml("#F1F1F2"),
-                    ColorTranslator.FromHtml("#CFD3D6"),
-                    ColorTranslator.FromHtml("#DEE0E3")
-                });
-                this.DocumentSelectedTabOuterBorder = ColorTranslator.FromHtml("#95774A");
-                if (4 == 0)
-                    return;
-                this.DocumentSelectedTabInnerBorder = ColorTranslator.FromHtml("#CDB69C");
-                this.DocumentSelectedTabBackground = this.x427b83330cc91391(new float[3]
-                {
-                    0.0f,
-                    0.25f,
-                    1f
-                }, new Color[3]
-                {
-                    ColorTranslator.FromHtml("#FFD19C"),
-                    ColorTranslator.FromHtml("#FFDBB3"),
-                    ColorTranslator.FromHtml("#FFFFFE")
-                });
-            }
-            else
-                goto label_3;
+                0.0f,
+                0.5f,
+                0.5f,
+                1f
+            }, new Color[4]
+            {
+                ColorTranslator.FromHtml("#FBFBFB"),
+                ColorTranslator.FromHtml("#F1F1F2"),
+                ColorTranslator.FromHtml("#CFD3D6"),
+                ColorTranslator.FromHtml("#DEE0E3")
+            });
+            this.DocumentSelectedTabOuterBorder = ColorTranslator.FromHtml("#95774A");
+
+            this.DocumentSelectedTabInnerBorder = ColorTranslator.FromHtml("#CDB69C");
+            this.DocumentSelectedTabBackground = this.x427b83330cc91391(new float[3]
+            {
+                0.0f,
+                0.25f,
+                1f
+            }, new Color[]
+            {
+                ColorTranslator.FromHtml("#FFD19C"),
+                ColorTranslator.FromHtml("#FFDBB3"),
+                ColorTranslator.FromHtml("#FFFFFE")
+            });
+
         }
 
         /// <summary>
@@ -1608,21 +1560,19 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         public override void StartRenderSession(HotkeyPrefix hotKeys)
         {
-            this.xae3b2752a89e7464 = TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.PreserveGraphicsClipping | TextFormatFlags.NoPadding;
-            if (-2 == 0 || hotKeys == HotkeyPrefix.None)
+            this.textFormat = TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.PreserveGraphicsClipping | TextFormatFlags.NoPadding;
+            if (hotKeys == HotkeyPrefix.None)
                 goto label_4;
             label_1:
             if (hotKeys == HotkeyPrefix.Hide)
-                this.xae3b2752a89e7464 |= TextFormatFlags.HidePrefix;
+                this.textFormat |= TextFormatFlags.HidePrefix;
             label_3:
             ++this.x03bb1ee2adad51ea;
             return;
             label_4:
-            this.xae3b2752a89e7464 |= TextFormatFlags.NoPrefix;
-            if (0 != 0)
-                goto label_1;
-            else
-                goto label_3;
+            this.textFormat |= TextFormatFlags.NoPrefix;
+
+            goto label_3;
         }
 
         /// <summary>
@@ -1675,25 +1625,7 @@ namespace FQ.FreeDock.Rendering
                 }
             }
             else
-                xa811784015ed8842.x91433b5e99eb7cac(graphics, this.Background);
-
-//            goto label_4;
-//
-//            return;
-//
-//            label_4:
-//            if (container is DocumentContainer)
-//                goto label_7;
-//            else
-//                goto label_2;
-//            label_5:
-//            if (bounds.Height <= 0)
-//                return;
-//            goto label_4;
-//            label_7:
-//            using (Brush brush = this.xb9d757f2231cc2a8(bounds, this.DocumentContainerBackground, LinearGradientMode.Vertical))
-//                graphics.FillRectangle(brush, bounds);
-//            return;
+                xa811784015ed8842.ClearBackground(graphics, this.Background);
         }
 
         /// <summary>
@@ -1715,7 +1647,7 @@ namespace FQ.FreeDock.Rendering
         protected internal override void DrawTitleBarBackground(Graphics graphics, Rectangle bounds, bool focused)
         {
             using (Pen pen = new Pen(this.DockedWindowOuterBorder))
-                graphics.DrawLines(pen, new System.Drawing.Point[6]
+                graphics.DrawLines(pen, new Point[]
                 {
                     new System.Drawing.Point(bounds.X, bounds.Bottom - 1),
                     new System.Drawing.Point(bounds.X, bounds.Y + 1),
@@ -1751,10 +1683,7 @@ namespace FQ.FreeDock.Rendering
                 return;
             }
             label_11:
-            if (int.MaxValue == 0)
-                goto label_6;
-            else
-                goto label_6;
+            goto label_6;
         }
 
         /// <summary>
@@ -1812,13 +1741,13 @@ namespace FQ.FreeDock.Rendering
                 switch (buttonType)
                 {
                     case SandDockButtonType.Close:
-                        x9b2777bb8e78938b.x26f0f0028ef01fa5(graphics, bounds, x90279591611601bc);
+                        x9b2777bb8e78938b.DrawCloseButton(graphics, bounds, x90279591611601bc);
                         break;
                     case SandDockButtonType.Pin:
-                        x9b2777bb8e78938b.x1477b5a75c8a8132(graphics, bounds, x90279591611601bc, toggled);
+                        x9b2777bb8e78938b.DrawPinButton(graphics, bounds, x90279591611601bc, toggled);
                         break;
                     case SandDockButtonType.WindowPosition:
-                        x9b2777bb8e78938b.xeac2e7eb44dff86e(graphics, bounds, x90279591611601bc);
+                        x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, x90279591611601bc);
                         break;
                 }
             }
@@ -1894,10 +1823,8 @@ namespace FQ.FreeDock.Rendering
         {
             if (bounds.Width <= 0 || bounds.Height <= 0)
                 return;
-            if (false)
-                goto label_19;
-            else
-                goto label_22;
+
+            goto label_22;
             label_1:
             ColorBlend xdf5de570fec6a668;
             Color color1;
@@ -1923,17 +1850,11 @@ namespace FQ.FreeDock.Rendering
             do
             {
                 xdf5de570fec6a668 = this.DocumentNormalTabBackground;
-                if (0 != 0)
-                    goto label_22;
+
             }
             while (false);
-            if (-1 == 0)
-            {
-                if (false)
-                    goto label_18;
-            }
-            else
-                goto label_1;
+
+            goto label_1;
             label_20:
             color1 = this.DocumentHotTabOuterBorder;
             color2 = this.DocumentHotTabInnerBorder;
@@ -1943,8 +1864,6 @@ namespace FQ.FreeDock.Rendering
             xb0f87b71823b1d4e = (state & DrawItemState.Checked) == DrawItemState.Checked;
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                if (false)
-                    return;
                 color1 = this.DocumentSelectedTabOuterBorder;
                 color2 = this.DocumentSelectedTabInnerBorder;
                 xdf5de570fec6a668 = this.DocumentSelectedTabBackground;
@@ -1967,7 +1886,7 @@ namespace FQ.FreeDock.Rendering
             }
             x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Left + 1, xda73fcb97c77d998.Bottom - 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 2);
             x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 2, xda73fcb97c77d998.Top + 2);
-            if ((uint)(xb0f87b71823b1d4e ? 1 : 0)- (uint)x6843d1739e949b3a < 0U)
+            if ((uint)(xb0f87b71823b1d4e ? 1 : 0) - (uint)x6843d1739e949b3a < 0U)
                 goto label_14;
             else
                 goto label_21;
@@ -2000,24 +1919,14 @@ namespace FQ.FreeDock.Rendering
                 goto label_28;
             label_9:
             xae3b2752a89e7464 |= TextFormatFlags.HorizontalCenter;
-            if (0 == 0)
-            {
-                if ((x6843d1739e949b3a | int.MinValue) != 0)
-                {
-                    xae3b2752a89e7464 &= ~TextFormatFlags.Default;
-                    if (0 == 0)
-                    {
-                        if (false)
-                            return;
-                        TextRenderer.DrawText((IDeviceContext)x41347a961b838962, xb41faee6912a2313, x26094932cf7a9139, xda73fcb97c77d998, SystemColors.ControlText, xae3b2752a89e7464);
-                        goto label_3;
-                    }
-                }
-                else
-                    goto label_11;
-            }
-            else
-                goto label_1;
+
+
+            xae3b2752a89e7464 &= ~TextFormatFlags.Default;
+
+
+            TextRenderer.DrawText((IDeviceContext)x41347a961b838962, xb41faee6912a2313, x26094932cf7a9139, xda73fcb97c77d998, SystemColors.ControlText, xae3b2752a89e7464);
+            goto label_3;
+
             label_27:
             if (true)
                 goto label_3;
@@ -2026,10 +1935,8 @@ namespace FQ.FreeDock.Rendering
                 return;
             rectangle = xda73fcb97c77d998;
             rectangle.Inflate(-2, -2);
-            if (false)
-                goto label_15;
-            else
-                goto label_1;
+
+            goto label_1;
             label_8:
             if (xe058541ca798c059 == null)
                 goto label_6;
@@ -2037,10 +1944,9 @@ namespace FQ.FreeDock.Rendering
             x41347a961b838962.DrawImage(xe058541ca798c059, xda73fcb97c77d998.X + 4, xda73fcb97c77d998.Y + 2, this.ImageSize.Width, this.ImageSize.Height);
             xda73fcb97c77d998.X += this.ImageSize.Width + 4;
             xda73fcb97c77d998.Width -= this.ImageSize.Width + 4;
-            if (8 != 0)
-                goto label_6;
-            else
-                goto label_8;
+ 
+            goto label_6;
+
             label_12:
             xda73fcb97c77d998.Width -= xbd5e294caed74c4d;
             goto label_8;
@@ -2051,37 +1957,29 @@ namespace FQ.FreeDock.Rendering
             points[4] = new System.Drawing.Point(xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Bottom - 1);
             goto label_13;
             label_21:
-            if (true)
-            {
-                x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Left + x6843d1739e949b3a - 1, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Left + x6843d1739e949b3a, xda73fcb97c77d998.Top + 1);
-                x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top);
-                x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top + 2);
-                do
-                {
-                    x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Bottom - 2);
-                    x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom - 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 3);
-                    x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 3, xda73fcb97c77d998.Left + x6843d1739e949b3a - 2, xda73fcb97c77d998.Top + 3);
-                    x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + x6843d1739e949b3a - 1, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Left + x6843d1739e949b3a, xda73fcb97c77d998.Top + 2);
-                    x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Right - 4, xda73fcb97c77d998.Top + 1);
-                    x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2);
-                    x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Bottom - 2);
-                    if (false)
-                        goto label_15;
-                }
-                while (0 != 0);
-                points = new System.Drawing.Point[5];
-                points[0] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom - 1);
-                goto label_15;
-            }
-            else
-                goto label_13;
+
+            x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Left + x6843d1739e949b3a - 1, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Left + x6843d1739e949b3a, xda73fcb97c77d998.Top + 1);
+            x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top);
+            x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top + 2);
+            x41347a961b838962.DrawLine(x19577c9fba5c0e47, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Right - 1, xda73fcb97c77d998.Bottom - 2);
+            x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom - 2, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 3);
+            x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + x6843d1739e949b3a - 3, xda73fcb97c77d998.Top + 3, xda73fcb97c77d998.Left + x6843d1739e949b3a - 2, xda73fcb97c77d998.Top + 3);
+            x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + x6843d1739e949b3a - 1, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Left + x6843d1739e949b3a, xda73fcb97c77d998.Top + 2);
+            x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Left + x6843d1739e949b3a + 1, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Right - 4, xda73fcb97c77d998.Top + 1);
+            x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Right - 3, xda73fcb97c77d998.Top + 1, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2);
+            x41347a961b838962.DrawLine(x7df20da36ed57a6a, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Top + 2, xda73fcb97c77d998.Right - 2, xda73fcb97c77d998.Bottom - 2);
+
+            points = new System.Drawing.Point[5];
+            points[0] = new System.Drawing.Point(xda73fcb97c77d998.Left + 2, xda73fcb97c77d998.Bottom - 1);
+            goto label_15;
+
         }
 
         /// <summary>
         /// Overridden. Consult the documentation on the base virtual member for more information.
         /// 
         /// </summary>
-        protected internal override System.Drawing.Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
+        protected internal override Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
         {
             return xa811784015ed8842.xcdfce0e0f2641503(graphics, image, this.ImageSize, text, font, this.TextFormat);
         }
@@ -2098,17 +1996,14 @@ namespace FQ.FreeDock.Rendering
                 width = TextRenderer.MeasureText((IDeviceContext)graphics, text, font1, new System.Drawing.Size(int.MaxValue, int.MaxValue), flags).Width;
             label_9:
             width += 14;
-            if (15 != 0)
-                goto label_3;
+
+            goto label_3;
             label_1:
             width += this.ImageSize.Width + 4;
-            if (0 == 0)
-            {
-                if ((uint)width - (uint)width >= 0U)
-                    goto label_4;
-            }
-            else
-                goto label_9;
+
+
+            goto label_4;
+
             label_3:
             if (image != null)
                 goto label_1;
@@ -2126,36 +2021,31 @@ namespace FQ.FreeDock.Rendering
             switch (buttonType)
             {
                 case SandDockButtonType.Close:
-                    x9b2777bb8e78938b.x26f0f0028ef01fa5(graphics, bounds, SystemPens.ControlText);
+                    x9b2777bb8e78938b.DrawCloseButton(graphics, bounds, SystemPens.ControlText);
                     break;
                 case SandDockButtonType.Pin:
                     break;
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.xd70a4c1a2378c84e(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
-                    if (4 != 0)
-                        break;
-                    else
-                        break;
+                    x9b2777bb8e78938b.DrawScrollLeft(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+    
+                    break;
+
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.x793dc1a7cf4113f9(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    x9b2777bb8e78938b.DrawScrollRight(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.WindowPosition:
                     break;
                 case SandDockButtonType.ActiveFiles:
                     bounds.Inflate(1, 1);
                     --bounds.X;
-                    if (0 == 0)
-                    {
-                        x9b2777bb8e78938b.xeac2e7eb44dff86e(graphics, bounds, SystemPens.ControlText);
-                        break;
-                    }
-                    else
-                        goto case 2;
+
+                    x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, SystemPens.ControlText);
+                    break;
+
                 default:
-                    if (8 != 0)
-                        break;
-                    else
-                        goto case 3;
+        
+                    break;
+ 
             }
         }
 

@@ -522,9 +522,9 @@ namespace FQ.FreeDock
             return new ControlLayoutSystem();
         }
 
-        internal object x7159e85e85b84817(Type x96168bd31f23b747)
+        internal object x7159e85e85b84817(Type type)
         {
-            return this.GetService(x96168bd31f23b747);
+            return this.GetService(type);
         }
         // reviewed with 2.4
         internal void x272ed7848e373c56()
@@ -909,15 +909,12 @@ namespace FQ.FreeDock
             base.OnMouseDown(e);
 
             if (this.layout != null)
-            {
                 this.layout.OnMouseDown(e);
-            }
 
             if (this.Manager != null && this.x59f159fe47159543.Contains(e.X, e.Y) && e.Button == MouseButtons.Left)
             {
                 if (this.x754f1c6f433be75d != null)
                     this.x754f1c6f433be75d.Dispose();
-
                 this.x754f1c6f433be75d = new x09c1c18390e52ebf(this.Manager, this, new System.Drawing.Point(e.X, e.Y));
                 this.x754f1c6f433be75d.Cancelled += new EventHandler(this.x30c28c62b1a6040e);
                 this.x754f1c6f433be75d.Committed += new x09c1c18390e52ebf.ResizingManagerFinishedEventHandler(this.xa7afb2334769edc5);
@@ -934,9 +931,7 @@ namespace FQ.FreeDock
             base.OnMouseUp(e);
 
             if (this.layout != null)
-            {
                 this.layout.OnMouseUp(e);
-            }
             else
             {
                 if (this.x754f1c6f433be75d != null)
@@ -1091,9 +1086,7 @@ namespace FQ.FreeDock
             using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, Color.White)))
             {
                 using (Font font = new Font(this.Font.FontFamily.Name, 14f, FontStyle.Bold))
-                {
-                    e.Graphics.DrawString("evaluation", font, brush, (float)(this.x21ed2ecc088ef4e4.Left + 4), (float)(this.x21ed2ecc088ef4e4.Top - 4), StringFormat.GenericTypographic);
-                }
+                    e.Graphics.DrawString("evaluationcontainer", font, brush, (float)(this.x21ed2ecc088ef4e4.Left + 4), (float)(this.x21ed2ecc088ef4e4.Top - 4), StringFormat.GenericTypographic);
             }
         }
 

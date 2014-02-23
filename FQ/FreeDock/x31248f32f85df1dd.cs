@@ -171,7 +171,7 @@ namespace FQ.FreeDock
                 goto label_14;
         }
 
-        protected override xedb4922162c60d3d.DockTarget FindDockTarget(System.Drawing.Point position)
+        protected override xedb4922162c60d3d.DockTarget FindDockTarget(Point position)
         {
             xedb4922162c60d3d.DockTarget x11d58b056c032b03 = null;
             label_68:
@@ -739,7 +739,7 @@ namespace FQ.FreeDock
             {
                 using (Graphics x41347a961b838962 = Graphics.FromImage(this.bitmap))
                 {
-                    xa811784015ed8842.x91433b5e99eb7cac(x41347a961b838962, Color.Transparent);
+                    xa811784015ed8842.ClearBackground(x41347a961b838962, Color.Transparent);
                     if (1 != 0)
                         goto label_66;
                     else

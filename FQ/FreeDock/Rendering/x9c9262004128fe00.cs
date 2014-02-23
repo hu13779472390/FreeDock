@@ -13,9 +13,7 @@ namespace FQ.FreeDock.Rendering
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             if (destinationType == typeof(string))
-            {
                 return true;
-            }
             else if (destinationType == typeof(InstanceDescriptor))
                 return true;
             else

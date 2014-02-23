@@ -1,12 +1,29 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\TabPage.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\SandDockManager.cs">
     <Files>
-      <File FileName="FQ\FreeDock\ResolveDockControlEventArgs.cs" Line="1" Column="1" />
-      <File FileName="FQ\FreeDock\SandDockManager.cs" Line="1" Column="1" />
-      <File FileName="FQ\FreeDock\TabLayout.cs" Line="1" Column="1" />
-      <File FileName="FQ\FreeDock\TabPage.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\TabControl.cs" Line="25" Column="1" />
+      <File FileName="c:\Users\Alex\FreeDock\DemoApplication\EntryPoint.cs" Line="12" Column="1" />
+      <File FileName="FQ\FreeDock\Rendering\ITabControlRenderer.cs" Line="107" Column="9" />
+      <File FileName="FQ\FreeDock\DocumentContainer.cs" Line="32" Column="22" />
+      <File FileName="FQ\FreeDock\SandDockManager.cs" Line="958" Column="18" />
+      <File FileName="FQ\FreeDock\DockControl.cs" Line="1289" Column="9" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="DemoApplication" expanded="True" />
+          <Node name="FreeDock" expanded="True">
+            <Node name="FQ" expanded="True">
+              <Node name="FreeDock" expanded="True">
+                <Node name="Rendering" expanded="True" />
+                <Node name="SandDockManager.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

@@ -10,7 +10,7 @@ namespace FQ.FreeDock
         private Point xcb09bd0cee4909a3 = Point.Empty;
         internal const int x7ae613ae2690dbe6 = 25;
         private DockContainer xd3311d815ca25f02;
-        private SplitLayoutSystem xd0bab8a0f8013a7b;
+        private SplitLayoutSystem splitLayoutSystem;
         private LayoutSystemBase xc13a8191724b6d55;
         private LayoutSystemBase x5aa50bbadb0a1e6c;
         private int xffa8345bf918658d;
@@ -23,7 +23,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xd0bab8a0f8013a7b;
+                return this.splitLayoutSystem;
             }
         }
 
@@ -33,7 +33,7 @@ namespace FQ.FreeDock
         {
             label_12:
             this.xd3311d815ca25f02 = container;
-            this.xd0bab8a0f8013a7b = splitLayout;
+            this.splitLayoutSystem = splitLayout;
             while (0 == 0)
             {
                 this.xc13a8191724b6d55 = aboveLayout;
@@ -89,51 +89,28 @@ namespace FQ.FreeDock
         {
             Rectangle rectangle = Rectangle.Empty;
             float num1;
-            float num2;
-            while (this.xd0bab8a0f8013a7b.SplitMode == Orientation.Horizontal)
+            if (this.splitLayoutSystem.SplitMode == Orientation.Horizontal)
             {
-                rectangle = new Rectangle(this.xd0bab8a0f8013a7b.Bounds.X, position.Y - 2, this.xd0bab8a0f8013a7b.Bounds.Width, 4);
-                float num3;
-
-
+                rectangle = new Rectangle(this.splitLayoutSystem.Bounds.X, position.Y - 2, this.splitLayoutSystem.Bounds.Width, 4);
                 rectangle.Y = Math.Max(rectangle.Y, this.xffa8345bf918658d);
                 rectangle.Y = Math.Min(rectangle.Y, this.xb646339c3b9e735a - 4);
                 num1 = (float)(this.x5aa50bbadb0a1e6c.Bounds.Bottom - this.xc13a8191724b6d55.Bounds.Top - 4);
                 this.x5c2440c931f8d932 = (float)(rectangle.Y - this.xc13a8191724b6d55.Bounds.Top) / num1 * this.x3fb8b43b602e016f;
                 this.x4afa341b2323a009 = this.x3fb8b43b602e016f - this.x5c2440c931f8d932;
-
-
-
-                goto label_2;
-
             }
-            goto label_5;
-            label_2:
-            this.xe5e4149f382149cc(new Rectangle(this.xd3311d815ca25f02.PointToScreen(rectangle.Location), rectangle.Size), false);
-            Cursor.Current = this.xd0bab8a0f8013a7b.SplitMode != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
-            return;
-            label_3:
-            Rectangle bounds;
-            float num4 = (float)(bounds.Right - this.xc13a8191724b6d55.Bounds.Left - 4);
-            this.x5c2440c931f8d932 = (float)(rectangle.X - this.xc13a8191724b6d55.Bounds.Left) / num4 * this.x3fb8b43b602e016f;
-
-
-            this.x4afa341b2323a009 = this.x3fb8b43b602e016f - this.x5c2440c931f8d932;
-            if (2 == 0)
-                return;
             else
-                goto label_2;
+            {
+                rectangle = new Rectangle(position.X - 2, this.splitLayoutSystem.Bounds.Y, 4, this.splitLayoutSystem.Bounds.Height);
+                rectangle.X = Math.Max(rectangle.X, this.xffa8345bf918658d);
+                rectangle.X = Math.Min(rectangle.X, this.xb646339c3b9e735a - 4);
+                float num4 = (float)(this.x5aa50bbadb0a1e6c.Bounds.Right - this.xc13a8191724b6d55.Bounds.Left - 4);
+                this.x5c2440c931f8d932 = (float)(rectangle.X - this.xc13a8191724b6d55.Bounds.Left) / num4 * this.x3fb8b43b602e016f;
+                this.x4afa341b2323a009 = this.x3fb8b43b602e016f - this.x5c2440c931f8d932;
+            }
 
+            this.xe5e4149f382149cc(new Rectangle(this.xd3311d815ca25f02.PointToScreen(rectangle.Location), rectangle.Size), false);
+            Cursor.Current = this.splitLayoutSystem.SplitMode != Orientation.Horizontal ? Cursors.VSplit : Cursors.HSplit;
 
-            label_5:
-
-
-            label_6:
-            rectangle = new Rectangle(position.X - 2, this.xd0bab8a0f8013a7b.Bounds.Y, 4, this.xd0bab8a0f8013a7b.Bounds.Height);
-            rectangle.X = Math.Max(rectangle.X, this.xffa8345bf918658d);
-            rectangle.X = Math.Min(rectangle.X, this.xb646339c3b9e735a - 4);
-            bounds = this.x5aa50bbadb0a1e6c.Bounds;
-            goto label_3;
         }
 
         public delegate void SplittingManagerFinishedEventHandler(LayoutSystemBase aboveLayout,LayoutSystemBase belowLayout,float aboveSize,float belowSize);

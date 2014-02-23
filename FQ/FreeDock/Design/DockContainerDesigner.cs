@@ -93,10 +93,9 @@ namespace FQ.FreeDock.Design
                 {
                     (object)this.dockContainer
                 }, SelectionTypes.MouseDown | SelectionTypes.Click);
-                if (3 != 0)
-                    goto label_19;
-                else
-                    goto label_16;
+         
+                goto label_19;
+
                 label_4:
                 controlAt = null;
                 if (controlAt != null)
@@ -114,37 +113,18 @@ namespace FQ.FreeDock.Design
                     {
                         (object)controlLayoutSystem.SelectedControl
                     }, SelectionTypes.Click);
-                    if (0 == 0)
-                    {
-                        if ((uint)x + (uint)x <= uint.MaxValue)
-                        {
-                            if ((uint)y > uint.MaxValue)
-                                goto label_28;
-                            else
-                                break;
-                        }
-                        else
-                            goto label_11;
-                    }
+
+                    break;
+ 
                 }
                 this.x6afebf16b45c02e0 = new System.Drawing.Point(x, y);
-                if ((uint)x >= 0U)
-                {
-                    if ((uint)y >= 0U)
-                        goto label_1;
-                    else
-                        goto label_19;
-                }
-                else
-                    goto label_14;
+      
+
+                goto label_1;
+
+
                 label_11:
-                if (0 != 0)
-                {
-                    if (3 == 0)
-                        goto label_2;
-                    else
-                        goto label_4;
-                }
+
                 label_14:
                 if (!controlLayoutSystem.xb48529af1739dd06.Contains(point))
                     goto label_4;
@@ -157,35 +137,25 @@ namespace FQ.FreeDock.Design
                 else
                     goto label_14;
                 label_16:
-                if (int.MinValue != 0)
-                {
-                    componentChangeService.OnComponentChanging((object)this.dockContainer, (MemberDescriptor)TypeDescriptor.GetProperties((object)this.dockContainer)["LayoutSystem"]);
-                    controlAt.LayoutSystem.SelectedControl = controlAt;
-                    componentChangeService.OnComponentChanged((object)this.dockContainer, (MemberDescriptor)TypeDescriptor.GetProperties((object)this.dockContainer)["LayoutSystem"], (object)null, (object)null);
-                    if ((uint)y + (uint)x < 0U)
-                        goto label_15;
-                    else
-                        goto label_11;
-                }
-                else
-                    goto label_30;
+ 
+                componentChangeService.OnComponentChanging((object)this.dockContainer, (MemberDescriptor)TypeDescriptor.GetProperties((object)this.dockContainer)["LayoutSystem"]);
+                controlAt.LayoutSystem.SelectedControl = controlAt;
+                componentChangeService.OnComponentChanged((object)this.dockContainer, (MemberDescriptor)TypeDescriptor.GetProperties((object)this.dockContainer)["LayoutSystem"], (object)null, (object)null);
+                goto label_11;
+
                 label_19:
                 continue;
                 label_22:
                 if (this.dockContainer.x0c42f19be578ccee != Rectangle.Empty && this.dockContainer.x0c42f19be578ccee.Contains(point))
                 {
-                    if ((y | 1) != 0)
-                    {
-                        this.x754f1c6f433be75d = new x09c1c18390e52ebf(this.dockContainer.Manager, this.dockContainer, point);
-                        this.x754f1c6f433be75d.Cancelled += new EventHandler(this.x30c28c62b1a6040e);
-                        this.x754f1c6f433be75d.Committed += new x09c1c18390e52ebf.ResizingManagerFinishedEventHandler(this.xa7afb2334769edc5);
-                        if ((uint)y + (uint)x <= uint.MaxValue)
-                            goto label_25;
-                        else
-                            goto label_16;
-                    }
-                    else
-                        goto label_28;
+   
+                    this.x754f1c6f433be75d = new x09c1c18390e52ebf(this.dockContainer.Manager, this.dockContainer, point);
+                    this.x754f1c6f433be75d.Cancelled += new EventHandler(this.x30c28c62b1a6040e);
+                    this.x754f1c6f433be75d.Committed += new x09c1c18390e52ebf.ResizingManagerFinishedEventHandler(this.xa7afb2334769edc5);
+ 
+                    goto label_25;
+
+  
                 }
                 label_23:
                 if (layout is ControlLayoutSystem)
@@ -197,8 +167,8 @@ namespace FQ.FreeDock.Design
                 else
                     goto label_3;
                 label_28:
-                if ((y & 0) == 0)
-                    goto label_22;
+         
+                goto label_22;
                 label_30:
                 if (!(layout is SplitLayoutSystem))
                     goto label_22;
@@ -223,15 +193,12 @@ namespace FQ.FreeDock.Design
             this.dockContainer.Capture = true;
             return;
             label_32:
-            do
-            {
-                this.x372569d2ea29984e.Committed += new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
-                this.dockContainer.Capture = true;
-                if (3 != 0)
-                    goto label_37;
-            }
-            while ((uint)y > uint.MaxValue);
-            goto label_34;
+
+            this.x372569d2ea29984e.Committed += new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
+            this.dockContainer.Capture = true;
+            goto label_37;
+
+
             label_37:
             return;
             label_21:
@@ -249,13 +216,9 @@ namespace FQ.FreeDock.Design
         {
             this.x1b91eb6f6bb77abc();
             DesignerTransaction transaction = this.xff9c60b45aa37b1e.CreateTransaction("Resize Docked Windows");
-            do
-            {
-                this.RaiseComponentChanging((MemberDescriptor)TypeDescriptor.GetProperties((object)this.Component)["ContentSize"]);
-                this.dockContainer.ContentSize = x0d4b3b88c5b24565;
-                this.RaiseComponentChanged((MemberDescriptor)TypeDescriptor.GetProperties((object)this.Component)["ContentSize"], (object)null, (object)null);
-            }
-            while (0 != 0);
+            this.RaiseComponentChanging((MemberDescriptor)TypeDescriptor.GetProperties((object)this.Component)["ContentSize"]);
+            this.dockContainer.ContentSize = x0d4b3b88c5b24565;
+            this.RaiseComponentChanged((MemberDescriptor)TypeDescriptor.GetProperties((object)this.Component)["ContentSize"], (object)null, (object)null);
             transaction.Commit();
         }
 
@@ -277,7 +240,6 @@ namespace FQ.FreeDock.Design
                 }
                 else
                     goto label_12;
-                label_11:
                 this.dockContainer.Capture = false;
                 return;
                 label_12:
@@ -286,13 +248,9 @@ namespace FQ.FreeDock.Design
                     while (this.x531514c39973cbc6 == null)
                     {
                         DockControl dockControl = this.x37c93a224e23ba95(this.dockContainer.PointToClient(Cursor.Position));
-                        if (0 == 0)
-                        {
-                            if (((cancel ? 1 : 0) | 15) != 0 && (0 == 0 && (dockControl == null && this.dockContainer.GetLayoutSystemAt(this.dockContainer.PointToClient(Cursor.Position)) is ControlLayoutSystem)))
-                                return;
-                            else
-                                return;
-                        }
+     
+                        return;
+                  
                     }
                     this.x531514c39973cbc6.Commit();
 
@@ -317,10 +275,9 @@ namespace FQ.FreeDock.Design
         {
             Rectangle rectangle = Rectangle.Empty;
             System.Drawing.Point position = this.dockContainer.PointToClient(new System.Drawing.Point(x, y));
-            if (0 == 0)
-                goto label_24;
-            else
-                goto label_17;
+      
+            goto label_24;
+
             label_1:
             if (!(this.x6afebf16b45c02e0 != System.Drawing.Point.Empty))
                 return;

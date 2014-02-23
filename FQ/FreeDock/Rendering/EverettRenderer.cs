@@ -360,7 +360,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawDockContainerBackground(Graphics g, DockContainer container, Rectangle bounds)
         {
-            xa811784015ed8842.x91433b5e99eb7cac(g, container.BackColor);
+            xa811784015ed8842.ClearBackground(g, container.BackColor);
         }
 
         /// <summary>
@@ -381,9 +381,7 @@ namespace FQ.FreeDock.Rendering
         {
             int width;
             if ((state & DrawItemState.Focus) != DrawItemState.Focus)
-            {
                 width = (int)Math.Ceiling((double)g.MeasureString(text, font, 999, this.stringFormat).Width);
-            }
             else
             {
                 using (Font font1 = new Font(font, FontStyle.Bold))
@@ -401,73 +399,45 @@ namespace FQ.FreeDock.Rendering
         /// Overridden,
         /// 
         /// </summary>
+        // reviewed with 2.4
         protected internal override void DrawDocumentStripTab(Graphics graphics, Rectangle bounds, Rectangle contentBounds, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool drawSeparator)
         {
-            if ((state & DrawItemState.Selected) != DrawItemState.Selected)
-                goto label_17;
-            else
-                goto label_20;
-            label_1:
-            Font font1;
-            font1.Dispose();
-            return;
-            label_17:
-            if (drawSeparator)
+            if ((state & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                using (SolidBrush solidBrush = new SolidBrush(backColor))
+                    graphics.FillRectangle(solidBrush, bounds);
+                graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
+                graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Right - 1, bounds.Top);
+                graphics.DrawLine(this.shadowPen, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 1);
+            }
+            else if (drawSeparator)
             {
                 graphics.DrawLine(SystemPens.ControlDark, bounds.Right, bounds.Top + 3, bounds.Right, bounds.Bottom - 3);
-                if (false)
-                    goto label_1;
+
             }
-            label_19:
             bounds = contentBounds;
-            if (image == null)
+            if (image != null)
             {
-                if (0 != 0)
-                    goto label_16;
+                graphics.DrawImage(image, bounds.X + 4, bounds.Y + 2, 16, 16);
+                bounds.X += 20;
+                bounds.Width -= 20;
             }
-            else
-                goto label_15;
-            label_13:
             if (bounds.Width <= 8)
                 return;
-            font1 = font;
+            Font font1 = font;
             if ((state & DrawItemState.Focus) == DrawItemState.Focus)
-                goto label_10;
-            label_8:
+                font1 = new Font(font, FontStyle.Bold);
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
-                goto label_3;
+            {
+                using (SolidBrush solidBrush = new SolidBrush(foreColor))
+                    graphics.DrawString(text, font1, (Brush)solidBrush, (RectangleF)bounds, this.stringFormat);
+            }
             else
-                goto label_9;
-            label_2:
+                graphics.DrawString(text, font1, (Brush)this.foreBrush, (RectangleF)bounds, this.stringFormat);
             if ((state & DrawItemState.Focus) != DrawItemState.Focus)
                 return;
             else
-                goto label_1;
-            label_3:
-            using (SolidBrush solidBrush = new SolidBrush(foreColor))
-            {
-                graphics.DrawString(text, font1, (Brush)solidBrush, (RectangleF)bounds, this.stringFormat);
-                goto label_2;
-            }
-            label_9:
-            graphics.DrawString(text, font1, (Brush)this.foreBrush, (RectangleF)bounds, this.stringFormat);
-            goto label_2;
-            label_10:
-            font1 = new Font(font, FontStyle.Bold);
-            goto label_8;
-            label_15:
-            graphics.DrawImage(image, bounds.X + 4, bounds.Y + 2, 16, 16);
-            label_16:
-            bounds.X += 20;
-            bounds.Width -= 20;
-            goto label_13;
-            label_20:
-            using (SolidBrush solidBrush = new SolidBrush(backColor))
-                graphics.FillRectangle((Brush)solidBrush, bounds);
-            graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
-            graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Right - 1, bounds.Top);
-            graphics.DrawLine(this.shadowPen, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 1);
-            goto label_19;
+                font1.Dispose();
         }
 
         /// <summary>
@@ -520,15 +490,15 @@ namespace FQ.FreeDock.Rendering
                 case SandDockButtonType.Pin:
                     break;
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.xd70a4c1a2378c84e(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    x9b2777bb8e78938b.DrawScrollLeft(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.x793dc1a7cf4113f9(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    x9b2777bb8e78938b.DrawScrollRight(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.WindowPosition:
                     break;
                 case SandDockButtonType.ActiveFiles:
-                    x9b2777bb8e78938b.xeac2e7eb44dff86e(g, bounds, SystemPens.ControlText);
+                    x9b2777bb8e78938b.DrawActiveFiles(g, bounds, SystemPens.ControlText);
                     break;
             }
         }
@@ -571,17 +541,17 @@ namespace FQ.FreeDock.Rendering
             switch (buttonType)
             {
                 case SandDockButtonType.Close:
-                    x9b2777bb8e78938b.x26f0f0028ef01fa5(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
+                    x9b2777bb8e78938b.DrawCloseButton(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
                     break;
                 case SandDockButtonType.Pin:
-                    x9b2777bb8e78938b.x1477b5a75c8a8132(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText, toggled);
+                    x9b2777bb8e78938b.DrawPinButton(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText, toggled);
                     break;
                 case SandDockButtonType.ScrollLeft:
                     break;
                 case SandDockButtonType.ScrollRight:
                     break;
                 case SandDockButtonType.WindowPosition:
-                    x9b2777bb8e78938b.xeac2e7eb44dff86e(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
+                    x9b2777bb8e78938b.DrawActiveFiles(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
                     break;
             }
         }
@@ -602,84 +572,29 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawTabStripTab(Graphics graphics, Rectangle bounds, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool drawSeparator)
         {
-            if ((state & DrawItemState.Selected) != DrawItemState.Selected)
-                goto label_15;
-            else
-                goto label_23;
-            label_2:
-            using (SolidBrush brush = new SolidBrush(foreColor))
-            {
-                graphics.DrawString(text, font, brush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
-                return;
-            }
-            label_12:
-            do
-            {
-                if (bounds.Width >= 24)
-                    goto label_13;
-                label_8:
-                bounds.X += 23;
-                if (true)
-                {
-                    bounds.Width -= 25;
-                    if (((drawSeparator ? 1 : 0) & 0) == 0 && bounds.Width <= 8)
-                        continue;
-                    else
-                        goto label_1;
-                }
-                else
-                    goto label_7;
-                label_13:
-                graphics.DrawImage(image, new Rectangle(bounds.X + 4, bounds.Y + 2, image.Width, image.Height));
-                goto label_8;
-            }
-            while (false);
-            goto label_14;
-            label_1:
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
-                goto label_2;
-            label_7:
-            graphics.DrawString(text, font, (Brush)this.foreBrush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
-            return;
-            label_14:
-            if (true)
-                return;
-            else
-                goto label_23;
-            label_15:
-            if (!drawSeparator)
             {
-                if (true)
-                {
-                    if (false)
-                        return;
-                    if (true)
-                    {
-                        if (((drawSeparator ? 1 : 0) & 0) == 0)
-                            goto label_12;
-                        else
-                            goto label_23;
-                    }
-                }
-                else
-                    goto label_2;
+                using (SolidBrush brush = new SolidBrush(backColor))
+                    graphics.FillRectangle(brush, bounds);
+                graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
+                graphics.DrawLine(this.shadowPen, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
+                graphics.DrawLine(this.shadowPen, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom - 1);
             }
-            else
-            {
+            else if (drawSeparator)
                 graphics.DrawLine(SystemPens.ControlDark, bounds.Right, bounds.Top + 3, bounds.Right, bounds.Bottom - 3);
-                goto label_12;
-            }
-            label_21:
-            graphics.DrawLine(this.highlightPen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom - 1);
-            graphics.DrawLine(this.shadowPen, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
-            graphics.DrawLine(this.shadowPen, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom - 1);
-            goto label_12;
-            label_23:
-            using (SolidBrush solidBrush = new SolidBrush(backColor))
+            if (bounds.Width >= 24)
+                graphics.DrawImage(image, new Rectangle(bounds.X + 4, bounds.Y + 2, image.Width, image.Height));
+            bounds.X += 23;
+            bounds.Width -= 25;
+            if (bounds.Width <= 8)
+                return;
+            if ((state & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                graphics.FillRectangle((Brush)solidBrush, bounds);
-                goto label_21;
+                using (SolidBrush brush = new SolidBrush(foreColor))
+                    graphics.DrawString(text, font, brush, bounds, EverettRenderer.StandardStringFormat);
             }
+            else
+                graphics.DrawString(text, font, this.foreBrush, bounds, EverettRenderer.StandardStringFormat);
         }
 
         /// <summary>
@@ -698,103 +613,35 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawCollapsedTab(Graphics graphics, Rectangle bounds, DockSide dockSide, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool vertical)
         {
-            using (SolidBrush solidBrush = new SolidBrush(backColor))
-                graphics.FillRectangle((Brush)solidBrush, bounds);
-            if (dockSide == DockSide.Top)
-                goto label_19;
+            using (SolidBrush brush = new SolidBrush(backColor))
+                graphics.FillRectangle(brush, bounds);
+            if (dockSide != DockSide.Top)
+                graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Top, bounds.Right, bounds.Top);
+            if (dockSide != DockSide.Right)
+                graphics.DrawLine(this.outlinePen, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom);
+            if (dockSide != DockSide.Bottom)
+                graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Bottom, bounds.Right, bounds.Bottom);
+            if (dockSide != DockSide.Left)
+                graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
+            bounds.Inflate(-2, -2);
+            if (!vertical)
+                bounds.Offset(1, 0);
             else
-                goto label_22;
-            label_6:
-            graphics.DrawString(text, font, (Brush)this.foreBrush, (RectangleF)bounds, EverettRenderer.StandardVerticalStringFormat);
-            if (0 != 0)
+                bounds.Offset(0, 1);
+
+            graphics.DrawImage(image, new Rectangle(bounds.Left, bounds.Top, image.Width, image.Height));
+            if (text.Length == 0)
                 return;
-            else
-                return;
-            label_8:
             if (!vertical)
             {
                 bounds.Offset(23, 0);
-                graphics.DrawString(text, font, (Brush)this.foreBrush, (RectangleF)bounds, EverettRenderer.StandardStringFormat);
-                return;
+                graphics.DrawString(text, font, this.foreBrush, bounds, EverettRenderer.StandardStringFormat);
             }
             else
             {
                 bounds.Offset(0, 23);
-                if (15 != 0)
-                    goto label_6;
+                graphics.DrawString(text, font, this.foreBrush, bounds, EverettRenderer.StandardVerticalStringFormat);
             }
-            label_11:
-            if (dockSide != DockSide.Left)
-            {
-                graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
-                goto label_16;
-            }
-            label_12:
-            bounds.Inflate(-2, -2);
-            if (!vertical)
-                goto label_10;
-            else
-                goto label_13;
-            label_7:
-            graphics.DrawImage(image, new Rectangle(bounds.Left, bounds.Top, image.Width, image.Height));
-            if (text.Length == 0)
-                return;
-            else
-                goto label_8;
-            label_10:
-            bounds.Offset(1, 0);
-            goto label_7;
-            label_13:
-            bounds.Offset(0, 1);
-            if (((vertical ? 1 : 0) & 0) == 0)
-                goto label_7;
-            else
-                goto label_6;
-            label_16:
-            if (0 == 0)
-                goto label_12;
-            else
-                goto label_11;
-            label_19:
-            if (dockSide != DockSide.Right)
-                goto label_25;
-            else
-                goto label_20;
-            label_14:
-            if (dockSide == DockSide.Bottom)
-                goto label_11;
-            label_18:
-            graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Bottom, bounds.Right, bounds.Bottom);
-            goto label_11;
-            label_20:
-            if (0 == 0)
-            {
-                if (0 != 0)
-                {
-                    if (false)
-                        goto label_24;
-                    else
-                        goto label_18;
-                }
-                else
-                    goto label_14;
-            }
-            else
-                goto label_16;
-            label_25:
-            graphics.DrawLine(this.outlinePen, bounds.Right, bounds.Top, bounds.Right, bounds.Bottom);
-            goto label_14;
-            label_22:
-            if (0 == 0)
-            {
-                if (0 != 0)
-                    return;
-            }
-            else
-                goto label_8;
-            label_24:
-            graphics.DrawLine(this.outlinePen, bounds.Left, bounds.Top, bounds.Right, bounds.Top);
-            goto label_19;
         }
 
         /// <summary>

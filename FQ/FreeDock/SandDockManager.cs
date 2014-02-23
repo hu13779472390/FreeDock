@@ -36,7 +36,7 @@ namespace FQ.FreeDock
     {
         private DockingHints dockingHints = DockingHints.TranslucentFill;
         private DockingManager dockingManager = DockingManager.Whidbey;
-        private int xdca928fc295dbb2a = 30;
+        private int minimumDockContainerSize = 30;
         private int maximumDockContainerSize = 500;
         private bool allowDockContainerResize = true;
         private bool allowKeyboardNavigation = true;
@@ -118,7 +118,7 @@ namespace FQ.FreeDock
             {
                 this.borderStyle = value;
                 if (this.DocumentContainer != null)
-                    this.DocumentContainer.x64b4c49ed703037e = this.borderStyle;
+                    this.DocumentContainer.BorderStyle = this.borderStyle;
             }
         }
 
@@ -161,9 +161,8 @@ namespace FQ.FreeDock
                 if (value == this.documentOverflow)
                     return;
                 this.documentOverflow = value;
-                if (this.DocumentContainer == null && 0 == 0)
-                    return;
-                this.DocumentContainer.DocumentOverflow = this.DocumentOverflow;
+                if (this.DocumentContainer != null)
+                    this.DocumentContainer.DocumentOverflow = this.DocumentOverflow;
             }
         }
 
@@ -205,9 +204,7 @@ namespace FQ.FreeDock
                     return;
                 this.integralClose = value;
                 if (this.DocumentContainer != null)
-                {
                     this.DocumentContainer.IntegralClose = this.IntegralClose;
-                }
             }
         }
 
@@ -417,11 +414,8 @@ namespace FQ.FreeDock
             set
             {
                 this.allowDockContainerResize = value;
-                DockContainer[] dockContainerList = this.GetOrderedDockedDockContainerList();
-                foreach (DockContainer container in dockContainerList)
-                {
+                foreach (DockContainer container in this.GetOrderedDockedDockContainerList())
                     container.CalculateAllMetricsAndLayout();
-                }
             }
         }
 
@@ -454,18 +448,15 @@ namespace FQ.FreeDock
                     throw new ArgumentException("A DockContainer cannot act as a host for a SandDock layout.");
                 if (value == this.dockSystemContainer)
                     return;
+
                 ArrayList arrayList = new ArrayList();
                 foreach (DockContainer dockContainer in this.dockContainers)
                 {
                     if (dockContainer.Parent != null && dockContainer.Parent != value)
                         arrayList.Add(dockContainer);
                 }
-                while (this.dockSystemContainer != null)
-                {
+                if (this.dockSystemContainer != null)
                     this.dockSystemContainer.Resize -= new EventHandler(this.OnDockSystemContainerResize);
-                    if (int.MinValue != 0)
-                        break;
-                }
                 this.dockSystemContainer = value;
                 if (this.dockSystemContainer != null)
                     this.dockSystemContainer.Resize += new EventHandler(this.OnDockSystemContainerResize);
@@ -517,11 +508,11 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.xdca928fc295dbb2a;
+                return this.minimumDockContainerSize;
             }
             set
             {
-                this.xdca928fc295dbb2a = value;
+                this.minimumDockContainerSize = value;
             }
         }
 
@@ -585,63 +576,26 @@ namespace FQ.FreeDock
             }
             set
             {
+                if (this.ownerForm != null && this.ownerForm == value)
+                    return;
 
                 if (this.ownerForm != null)
                 {
-                    if (this.ownerForm == value)
-                        return;
-                
                     this.ownerForm.Activated -= new EventHandler(this.OnOwnerFormActivated);
                     this.ownerForm.Deactivate -= new EventHandler(this.OnOwnerFormDeactivated);
                     this.ownerForm.Load -= new EventHandler(this.OnOwnerFormLoad);
                     this.ownerForm.Closing -= new CancelEventHandler(this.OnOwnerFormClosing);
-                    this.ownerForm = value;
-                    this.ownerForm.Activated += new EventHandler(this.OnOwnerFormActivated);
-                    this.ownerForm.Deactivate += new EventHandler(this.OnOwnerFormDeactivated);
-                    this.ownerForm.Load += new EventHandler(this.OnOwnerFormLoad);
-                    this.ownerForm.Closing += new CancelEventHandler(this.OnOwnerFormClosing);
-                    return;
                 }
-                else
+
+                this.ownerForm = value;
+                if (this.ownerForm != null)
                 {
-                    this.ownerForm = value;
 
-                    if (this.ownerForm == null)
-                    {
-                        return;
-                    }
                     this.ownerForm.Activated += new EventHandler(this.OnOwnerFormActivated);
                     this.ownerForm.Deactivate += new EventHandler(this.OnOwnerFormDeactivated);
                     this.ownerForm.Load += new EventHandler(this.OnOwnerFormLoad);
                     this.ownerForm.Closing += new CancelEventHandler(this.OnOwnerFormClosing);
-                    return;
-
                 }
-
-//                label_4:
-//    
-//                this.ownerForm = value;
-//  
-//                if (this.ownerForm == null)
-//                {
-//                    return;
-//                }
-//                this.ownerForm.Activated += new EventHandler(this.OnOwnerFormActivated);
-//                this.ownerForm.Deactivate += new EventHandler(this.OnOwnerFormDeactivated);
-//                this.ownerForm.Load += new EventHandler(this.OnOwnerFormLoad);
-//                this.ownerForm.Closing += new CancelEventHandler(this.OnOwnerFormClosing);
-//                return;
-//                label_6:
-//                this.ownerForm.Activated -= new EventHandler(this.OnOwnerFormActivated);
-//                this.ownerForm.Deactivate -= new EventHandler(this.OnOwnerFormDeactivated);
-//                this.ownerForm.Load -= new EventHandler(this.OnOwnerFormLoad);
-//                this.ownerForm.Closing -= new CancelEventHandler(this.OnOwnerFormClosing);
-//                goto label_4;
-//                label_10:
-//                if (this.ownerForm == null)
-//                    goto label_4;
-//                else
-//                    goto label_6;
             }
         }
 
@@ -678,6 +632,7 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
+        // FIXME: this is differnent from origin.
         public override ISite Site
         {
             get
@@ -687,45 +642,12 @@ namespace FQ.FreeDock
             set
             {
                 base.Site = value;
-
-                label_8:
                 if (value == null)
                     return;
-                label_17:
                 IDesignerHost designerHost = (IDesignerHost)this.GetService(typeof(IDesignerHost));
-                if (designerHost != null)
-                    goto label_12;
-                label_5:
-                if (designerHost == null)
+                if (designerHost == null || !(designerHost.RootComponent is Control) || this.DockSystemContainer != null)
                     return;
-                if (1 != 0)
-                {
-                    if (!(designerHost.RootComponent is Control) && 3 != 0)
-                        return;
-                    if (this.DockSystemContainer != null)
-                    {
-                        if (2 == 0)
-                            return;
-                        else
-                            return;
-                    }
-                }
                 this.DockSystemContainer = this.FindDockSystemContainer(designerHost, (Control)designerHost.RootComponent);
-                if (0 == 0)
-                    return;
-                else
-                    goto label_8;
-                label_12:
-                if (!(designerHost.RootComponent is Form))
-                {
-                    if (0 == 0)
-                        goto label_5;
-                }
-                else
-                {
-                    this.ownerForm = (Form)designerHost.RootComponent;
-                    goto label_5;
-                }
             }
         }
 
@@ -800,7 +722,7 @@ namespace FQ.FreeDock
         /// </summary>
         public SandDockManager()
         {
-            this.renderer = (RendererBase)new WhidbeyRenderer();
+            this.renderer = new WhidbeyRenderer();
             this.dockContainers = new ArrayList();
             this.x8fb2a5bf0df0416f = new Hashtable();
             this.autoHideBars = new ArrayList();
@@ -1021,7 +943,7 @@ namespace FQ.FreeDock
         internal AutoHideBar GetAutoHideBar(DockStyle dock)
         {
             if (dock == DockStyle.Fill || dock == DockStyle.None)
-                return (AutoHideBar)null;
+                return null;
             AutoHideBar x10ac79a4257c7f52_1;
             foreach (AutoHideBar x10ac79a4257c7f52_2 in this.autoHideBars)
             {
@@ -2748,36 +2670,16 @@ namespace FQ.FreeDock
         /// <returns>
         /// An array of windows.
         /// </returns>
+        // reviewed
         public DockControl[] GetDockControls(DockSituation dockSituation)
         {
-            ArrayList arrayList = new ArrayList();
-            IEnumerator enumerator = this.x8fb2a5bf0df0416f.Values.GetEnumerator();
-            try
+            ArrayList array = new ArrayList();
+            foreach (DockControl dockControl in this.x8fb2a5bf0df0416f.Values)
             {
-                while (true)
-                {
-                    DockControl dockControl;
-                    do
-                    {
-                        if (!enumerator.MoveNext())
-                        {
-                            if (1 != 0)
-                                goto label_9;
-                        }
-                        dockControl = (DockControl)enumerator.Current;
-                    }
-                    while (dockControl.DockSituation != dockSituation);
-                    arrayList.Add((object)dockControl);
-                }
+                if (dockControl.DockSituation == dockSituation)
+                    array.Add(dockControl);
             }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
-            }
-            label_9:
-            return (DockControl[])arrayList.ToArray(typeof(DockControl));
+            return (DockControl[])array.ToArray(typeof(DockControl));
         }
 
         /// <summary>
@@ -2832,7 +2734,7 @@ namespace FQ.FreeDock
             else
                 goto label_14;
             label_4:
-            this.documentContainer.x64b4c49ed703037e = this.BorderStyle;
+            this.documentContainer.BorderStyle = this.BorderStyle;
             this.documentContainer.DocumentOverflow = this.DocumentOverflow;
             this.documentContainer.IntegralClose = this.IntegralClose;
             if (0 != 0)
@@ -3207,11 +3109,11 @@ namespace FQ.FreeDock
                         num5 = Convert.ToInt32((double)dockContainer.Width / (double)num4 * (double)num1);
          
          
-                            num4 -= dockContainer.Width;
-                            num1 -= num5;
-                            dockContainer.ContentSize -= num5;
-                            if (num4 == 0)
-                                break;
+                        num4 -= dockContainer.Width;
+                        num1 -= num5;
+                        dockContainer.ContentSize -= num5;
+                        if (num4 == 0)
+                            break;
 
                     }
                     goto label_1;

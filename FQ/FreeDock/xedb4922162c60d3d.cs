@@ -17,8 +17,8 @@ namespace FQ.FreeDock
         private DockControl sourceControl;
         private int dockedSize;
         private xedb4922162c60d3d.DockTarget target;
-        private Cursor x90ce1c0ec8c6028d;
-        private Cursor x52988e63e407fffa;
+        private Cursor splittingCursor;
+        private Cursor nosplittingCursor;
         private ControlLayoutSystem[] controlLayoutSystems;
 
         protected ControlLayoutSystem[] CheckableControlLayoutSystems
@@ -167,8 +167,8 @@ namespace FQ.FreeDock
                 while (sourceControlSystem is ControlLayoutSystem && ((ControlLayoutSystem)sourceControlSystem).SelectedControl != null)
                 {
                     this.xca874006c41dfe29 = ((ControlLayoutSystem)sourceControlSystem).SelectedControl.FloatingSize;
-                    if (-1 != 0)
-                        goto label_9;
+
+                    goto label_9;
                 }
                 this.xca874006c41dfe29 = sourceControlSystem.Bounds.Size;
                 goto label_9;
@@ -193,14 +193,13 @@ namespace FQ.FreeDock
             else
                 goto label_15;
             label_17:
-            this.x90ce1c0ec8c6028d = new Cursor(this.GetType().Assembly.GetManifestResourceStream("TD.SandDock.Resources.splitting.cur"));
-            this.x52988e63e407fffa = new Cursor(this.GetType().Assembly.GetManifestResourceStream("TD.SandDock.Resources.splittingno.cur"));
+            this.splittingCursor = new Cursor(this.GetType().Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.splitting.cur"));
+            this.nosplittingCursor = new Cursor(this.GetType().Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.splittingno.cur"));
             goto label_16;
             label_20:
-            if (8 != 0)
-                goto label_16;
-            else
-                goto label_15;
+
+            goto label_16;
+
         }
 
         public bool xe302f2203dc14a18(ContainerDockLocation xb9c2cfae130d9256)
@@ -234,7 +233,7 @@ namespace FQ.FreeDock
                 if (dockTarget.type != xedb4922162c60d3d.DockTargetType.AlreadyActioned)
                 {
                     if (dockTarget.type != xedb4922162c60d3d.DockTargetType.None)
-                        Cursor.Current = this.x90ce1c0ec8c6028d;
+                        Cursor.Current = this.splittingCursor;
                     else
                         goto label_5;
                 }
@@ -248,19 +247,16 @@ namespace FQ.FreeDock
             this.target = dockTarget;
             return;
             label_5:
-            Cursor.Current = this.x52988e63e407fffa;
-            if ((int)byte.MaxValue == 0)
-                goto label_25;
-            else
-                goto label_4;
+            Cursor.Current = this.nosplittingCursor;
+
+            goto label_4;
             label_8:
             if (dockTarget.type != xedb4922162c60d3d.DockTargetType.None)
             {
                 this.xe5e4149f382149cc(dockTarget.bounds, dockTarget.type == xedb4922162c60d3d.DockTargetType.JoinExistingSystem);
-                if (2 != 0)
-                    goto label_3;
-                else
-                    goto label_20;
+     
+                goto label_3;
+
             }
             else
             {
@@ -268,18 +264,7 @@ namespace FQ.FreeDock
                 goto label_3;
             }
             label_13:
-            if (2 != 0)
-            {
-                if (0 == 0)
-                {
-                    if (0 == 0)
-                        goto label_8;
-                    else
-                        goto label_8;
-                }
-                else
-                    goto label_3;
-            }
+            goto label_8;
             label_17:
             ControlLayoutSystem controlLayoutSystem;
             if (dockTarget.dockSide == DockSide.None)
@@ -292,30 +277,12 @@ namespace FQ.FreeDock
                     goto label_23;
             }
             label_18:
-            if (0 == 0)
-            {
-                if (0 != 0)
-                    goto label_13;
-                else
-                    goto label_8;
-            }
-            else if (0 == 0)
-            {
-                if (2 == 0)
-                    goto label_22;
-                else
-                    goto label_13;
-            }
-            else
-                goto label_8;
+
+            goto label_8;
+     
+        
             label_20:
-            if (15 == 0)
-            {
-                if (2 != 0)
-                    goto label_36;
-            }
-            else
-                goto label_4;
+            goto label_4;
             label_22:
             dockTarget.type = xedb4922162c60d3d.DockTargetType.AlreadyActioned;
             goto label_3;
@@ -328,48 +295,32 @@ namespace FQ.FreeDock
             else
                 goto label_22;
             label_24:
-            if (2 == 0)
-                goto label_23;
+ 
             label_25:
-            if (0 == 0)
-            {
-                if (0 == 0)
-                    goto label_22;
-                else
-                    goto label_3;
-            }
-            else
-                goto label_18;
+
+  
+            goto label_22;
+
+
             label_28:
             if (dockTarget.layoutSystem == this.sourceLayoutSystem)
             {
-                if (0 == 0)
-                {
-                    if (0 == 0)
-                    {
-                        if (0 == 0)
-                        {
-                            if (this.sourceControl != null || 0 != 0)
-                                goto label_17;
-                            else
-                                goto label_13;
-                        }
-                        else
-                            goto label_41;
-                    }
-                    else
-                        goto label_5;
-                }
+
+                if (this.sourceControl != null)
+                    goto label_17;
+                else
+                    goto label_13;
+
+   
             }
             else
                 goto label_8;
             label_32:
             dockTarget.bounds = new Rectangle(this.DragPoint, this.xca874006c41dfe29);
             dockTarget.bounds = this.x90c590fcd758eaee(dockTarget.bounds);
-            if (0 == 0)
-                goto label_28;
-            else
-                goto label_24;
+   
+            goto label_28;
+
             label_36:
             dockTarget = this.manager == null || !this.AllowFloat ? new xedb4922162c60d3d.DockTarget(xedb4922162c60d3d.DockTargetType.None) : new xedb4922162c60d3d.DockTarget(xedb4922162c60d3d.DockTargetType.Float);
             goto label_34;
@@ -1183,7 +1134,7 @@ namespace FQ.FreeDock
                 else
                     goto label_19;
                 label_9:
-                while (x6e150040c8d97700.JoinCatchmentBounds.Contains(point) || x6e150040c8d97700.xa358da7dd5364cab.Contains(point))
+                while (x6e150040c8d97700.JoinCatchmentBounds.Contains(point) || x6e150040c8d97700.tabstripBounds.Contains(point))
                 {
                     dockTarget = new xedb4922162c60d3d.DockTarget(xedb4922162c60d3d.DockTargetType.JoinExistingSystem);
                     if (true)
@@ -1200,7 +1151,7 @@ namespace FQ.FreeDock
                         dockTarget.bounds = new Rectangle(xd3311d815ca25f02.PointToScreen(x6e150040c8d97700.Bounds.Location), x6e150040c8d97700.Bounds.Size);
                         if (true)
                         {
-                            if (x6e150040c8d97700.xa358da7dd5364cab.Contains(point))
+                            if (x6e150040c8d97700.tabstripBounds.Contains(point))
                             {
                                 dockTarget.index = x6e150040c8d97700.x17fd454c85fad336(point);
                                 break;
@@ -1264,7 +1215,7 @@ namespace FQ.FreeDock
                     point = xd3311d815ca25f02.PointToClient(x13d4cb8d1bd20347);
                     if (int.MinValue != 0)
                     {
-                        x21ed2ecc088ef4e4 = x6e150040c8d97700.x21ed2ecc088ef4e4;
+                        x21ed2ecc088ef4e4 = x6e150040c8d97700.clientBounds;
                         if (!new Rectangle(x21ed2ecc088ef4e4.Left, x21ed2ecc088ef4e4.Top, x21ed2ecc088ef4e4.Width, 30).Contains(point))
                         {
                             rectangle = new Rectangle(x21ed2ecc088ef4e4.Left, x21ed2ecc088ef4e4.Top, 30, x21ed2ecc088ef4e4.Height);
@@ -1443,11 +1394,10 @@ namespace FQ.FreeDock
             x6b2bb9f943411698.X -= x21ed2ecc088ef4e4.Left;
             x6b2bb9f943411698.Y -= x21ed2ecc088ef4e4.Top;
             x21ed2ecc088ef4e4 = new Rectangle(0, 0, 30, 30);
-            while (x6b2bb9f943411698.Y > x21ed2ecc088ef4e4.Top + (int)((double)x21ed2ecc088ef4e4.Height * ((double)x6b2bb9f943411698.X / (double)x21ed2ecc088ef4e4.Width)))
+            if (x6b2bb9f943411698.Y > x21ed2ecc088ef4e4.Top + (int)((double)x21ed2ecc088ef4e4.Height * ((double)x6b2bb9f943411698.X / (double)x21ed2ecc088ef4e4.Width)))
             {
                 this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Bottom);
-                if (int.MaxValue != 0)
-                    return;
+                return;
             }
             this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Right);
         }
@@ -1458,24 +1408,15 @@ namespace FQ.FreeDock
             x6b2bb9f943411698.X -= x21ed2ecc088ef4e4.Left;
             x6b2bb9f943411698.Y -= x21ed2ecc088ef4e4.Top;
             x21ed2ecc088ef4e4 = new Rectangle(0, 0, 30, 30);
-            if (int.MinValue != 0)
-                goto label_2;
-            else
-                goto label_4;
-            label_1:
-            this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Bottom);
-            return;
-            label_2:
+
             if (x6b2bb9f943411698.Y <= x21ed2ecc088ef4e4.Bottom - (int)((double)x21ed2ecc088ef4e4.Height * ((double)x6b2bb9f943411698.X / (double)x21ed2ecc088ef4e4.Width)))
             {
                 this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Left);
                 return;
             }
-            else
-                goto label_1;
-            label_4:
-            if (0 == 0)
-                goto label_1;
+
+            this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Bottom);
+
         }
 
         private void x142a59be2748bb95(DockContainer xd3311d815ca25f02, ControlLayoutSystem x6e150040c8d97700, xedb4922162c60d3d.DockTarget x11d58b056c032b03, Rectangle x21ed2ecc088ef4e4, System.Drawing.Point x6b2bb9f943411698)
@@ -1489,37 +1430,31 @@ namespace FQ.FreeDock
             else
                 goto label_5;
             label_1:
-            if (1 != 0)
-                return;
-            else
-                return;
+
+            return;
+
             label_4:
             this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Top);
             goto label_1;
             label_5:
             this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Right);
-            if (int.MinValue == 0)
-                goto label_1;
+
         }
 
         private void x2a1e65376d30fca5(DockContainer xd3311d815ca25f02, ControlLayoutSystem x6e150040c8d97700, xedb4922162c60d3d.DockTarget x11d58b056c032b03, Rectangle x21ed2ecc088ef4e4, System.Drawing.Point x6b2bb9f943411698)
         {
             x6b2bb9f943411698.X -= x21ed2ecc088ef4e4.Left;
-            do
-            {
-                x6b2bb9f943411698.Y -= x21ed2ecc088ef4e4.Top;
-                x21ed2ecc088ef4e4 = new Rectangle(0, 0, 30, 30);
-                do
-                {
-                    if (x6b2bb9f943411698.Y <= x21ed2ecc088ef4e4.Top + (int)((double)x21ed2ecc088ef4e4.Height * ((double)x6b2bb9f943411698.X / (double)x21ed2ecc088ef4e4.Width)))
-                        goto label_4;
-                }
-                while (15 == 0);
-                goto label_3;
-                label_4:
-                this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Top);
-            }
-            while (0 != 0);
+  
+            x6b2bb9f943411698.Y -= x21ed2ecc088ef4e4.Top;
+            x21ed2ecc088ef4e4 = new Rectangle(0, 0, 30, 30);
+
+            if (x6b2bb9f943411698.Y <= x21ed2ecc088ef4e4.Top + (int)((double)x21ed2ecc088ef4e4.Height * ((double)x6b2bb9f943411698.X / (double)x21ed2ecc088ef4e4.Width)))
+                goto label_4;
+
+            goto label_3;
+            label_4:
+            this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Top);
+
             goto label_6;
             label_3:
             this.xa86a93682c30b8c6(xd3311d815ca25f02, x6e150040c8d97700, x11d58b056c032b03, DockSide.Left);
@@ -1537,8 +1472,7 @@ namespace FQ.FreeDock
         internal Rectangle x3102817291e84207(DockContainer xd3311d815ca25f02, ControlLayoutSystem x6e150040c8d97700, DockSide x4f217665270fa928)
         {
             Rectangle rectangle = new Rectangle(xd3311d815ca25f02.PointToScreen(x6e150040c8d97700.Bounds.Location), x6e150040c8d97700.Bounds.Size);
-            if (int.MaxValue != 0)
-                goto label_6;
+            goto label_6;
             label_1:
             rectangle.Offset(0, rectangle.Height / 2);
             label_2:
@@ -1549,10 +1483,7 @@ namespace FQ.FreeDock
             {
                 case DockSide.Top:
                     rectangle.Height /= 2;
-                    if (3 == 0)
-                        goto case 2;
-                    else
-                        break;
+                    break;
                 case DockSide.Bottom:
                     goto label_1;
                 case DockSide.Left:
@@ -1563,21 +1494,18 @@ namespace FQ.FreeDock
                     rectangle.Width /= 2;
                     break;
                 default:
-                    if (0 != 0)
-                        goto label_2;
-                    else
-                        break;
+                    break;
             }
             label_8:
             return rectangle;
         }
 
-        private xedb4922162c60d3d.DockTarget x7aa9d6b148df47c3(DockContainer xd3311d815ca25f02, ControlLayoutSystem x6e150040c8d97700)
+        private DockTarget x7aa9d6b148df47c3(DockContainer dockContainer, ControlLayoutSystem layout)
         {
-            return new xedb4922162c60d3d.DockTarget(xedb4922162c60d3d.DockTargetType.SplitExistingSystem)
+            return new DockTarget(DockTargetType.SplitExistingSystem)
             {
-                dockContainer = xd3311d815ca25f02,
-                layoutSystem = x6e150040c8d97700
+                dockContainer = dockContainer,
+                layoutSystem = layout
             };
         }
 
@@ -1600,19 +1528,14 @@ namespace FQ.FreeDock
         public override void Dispose()
         {
             this.dockContainer.OnDockingFinished(EventArgs.Empty);
-            if (!(this.x90ce1c0ec8c6028d != (Cursor)null))
-                goto label_2;
-            label_1:
-            this.x90ce1c0ec8c6028d.Dispose();
-            label_2:
-            if (this.x52988e63e407fffa != (Cursor)null)
-                this.x52988e63e407fffa.Dispose();
+            if (this.splittingCursor != null)
+                this.splittingCursor.Dispose();
+            if (this.nosplittingCursor != null)
+                this.nosplittingCursor.Dispose();
             base.Dispose();
-            if (0 != 0)
-                goto label_1;
         }
 
-        public delegate void DockingManagerFinishedEventHandler(xedb4922162c60d3d.DockTarget target);
+        public delegate void DockingManagerFinishedEventHandler(DockTarget target);
 
         public class DockTarget
         {
@@ -1625,7 +1548,7 @@ namespace FQ.FreeDock
             public int index;
             public bool middle;
 
-            public DockTarget(xedb4922162c60d3d.DockTargetType type)
+            public DockTarget(DockTargetType type)
             {
                 this.type = type;
             }

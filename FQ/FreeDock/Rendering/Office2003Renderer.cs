@@ -734,7 +734,7 @@ namespace FQ.FreeDock.Rendering
             else
                 goto label_14;
             label_2:
-            x9b2777bb8e78938b.x1477b5a75c8a8132(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText, toggled);
+            x9b2777bb8e78938b.DrawPinButton(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText, toggled);
             return;
             label_6:
             SandDockButtonType sandDockButtonType;
@@ -745,7 +745,7 @@ namespace FQ.FreeDock.Rendering
                     switch (sandDockButtonType)
                     {
                         case SandDockButtonType.Close:
-                            x9b2777bb8e78938b.x26f0f0028ef01fa5(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
+                            x9b2777bb8e78938b.DrawCloseButton(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
                             continue;
                         case SandDockButtonType.Pin:
                             goto label_2;
@@ -762,7 +762,7 @@ namespace FQ.FreeDock.Rendering
                 while (false);
                 goto label_15;
                 label_5:
-                x9b2777bb8e78938b.xeac2e7eb44dff86e(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
+                x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
             }
             while (((focused ? 1 : 0) & 0) != 0);
             goto label_9;
@@ -971,7 +971,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawDockContainerBackground(Graphics graphics, DockContainer container, Rectangle bounds)
         {
-            xa811784015ed8842.x91433b5e99eb7cac(graphics, container.BackColor);
+            xa811784015ed8842.ClearBackground(graphics, container.BackColor);
         }
 
         /// <summary>
@@ -1007,17 +1007,17 @@ namespace FQ.FreeDock.Rendering
                 case SandDockButtonType.Pin:
                     return;
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.xd70a4c1a2378c84e(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    x9b2777bb8e78938b.DrawScrollLeft(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     return;
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.x793dc1a7cf4113f9(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    x9b2777bb8e78938b.DrawScrollRight(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     return;
                 case SandDockButtonType.WindowPosition:
                     return;
                 case SandDockButtonType.ActiveFiles:
                     using (Pen x90279591611601bc = new Pen(this.x488edc060a6f4707))
                     {
-                        x9b2777bb8e78938b.xeac2e7eb44dff86e(graphics, bounds, x90279591611601bc);
+                        x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, x90279591611601bc);
                         return;
                     }
                 default:

@@ -156,7 +156,7 @@
     <Compile Include="FQ\Util\Tooltips.cs" />
     <Compile Include="FQ\FreeDock\AutoHideBar.cs" />
     <Compile Include="FQ\FreeDock\FloatingDockContainer.cs" />
-    <Compile Include="FQ\FreeDock\ControlButton.cs" />
+    <Compile Include="FQ\FreeDock\SandDockButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintbottom.png" />

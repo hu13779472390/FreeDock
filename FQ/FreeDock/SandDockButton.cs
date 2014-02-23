@@ -2,7 +2,7 @@
 
 namespace FQ.FreeDock
 {
-    class ControlButton
+    class SandDockButton
     {
         public Rectangle Bounds = Rectangle.Empty;
         public bool x2fef7d841879a711 = true;

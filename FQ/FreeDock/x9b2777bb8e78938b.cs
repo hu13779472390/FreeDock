@@ -9,7 +9,7 @@ namespace FQ.FreeDock
         {
         }
         // reviewed with 2.4
-        public static void xeac2e7eb44dff86e(Graphics graphics, Rectangle rect, Pen pen)
+        public static void DrawActiveFiles(Graphics graphics, Rectangle rect, Pen pen)
         {
             int num1 = rect.Width / 4;
             for (int i = 1; i <= num1; ++i)
@@ -21,7 +21,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
-        public static void xd70a4c1a2378c84e(Graphics graphics, Rectangle rect, Color color, bool fill)
+        public static void DrawScrollLeft(Graphics graphics, Rectangle rect, Color color, bool fill)
         {
             int num1 = rect.Left + rect.Width / 2;
             int num2 = rect.Top + rect.Height / 2;
@@ -35,7 +35,7 @@ namespace FQ.FreeDock
 
         }
         // reviewed with 2.4
-        public static void x793dc1a7cf4113f9(Graphics graphics, Rectangle rect, Color color, bool fill)
+        public static void DrawScrollRight(Graphics graphics, Rectangle rect, Color color, bool fill)
         {
             int num1 = rect.Left + rect.Width / 2;
             int num2 = rect.Top + rect.Height / 2;
@@ -62,7 +62,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
-        public static void x1477b5a75c8a8132(Graphics graphics, Rectangle rect, Pen pen, bool x533813ae5953a526)
+        public static void DrawPinButton(Graphics graphics, Rectangle rect, Pen pen, bool x533813ae5953a526)
         {
             int num1 = rect.Left + rect.Width / 2;
             int num2 = rect.Top + rect.Height / 2;
@@ -98,7 +98,7 @@ namespace FQ.FreeDock
         }
 
         // reviewed with 2.4
-        public static void x26f0f0028ef01fa5(Graphics g, Rectangle bounds, Pen pen)
+        public static void DrawCloseButton(Graphics g, Rectangle bounds, Pen pen)
         {
             int num1 = bounds.Left + bounds.Width / 2 - 1;
             int num2 = bounds.Top + bounds.Height / 2;

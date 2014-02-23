@@ -188,7 +188,7 @@ namespace FQ.FreeDock
             goto label_37;
         }
 
-        public override void OnMouseMove(System.Drawing.Point position)
+        public override void OnMouseMove(Point position)
         {
             Rectangle rectangle = Rectangle.Empty;
             label_26:
