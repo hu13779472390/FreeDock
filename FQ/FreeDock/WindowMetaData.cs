@@ -133,7 +133,7 @@ namespace FQ.FreeDock
             this.lastFocused = datetime;
         }
 
-        internal void xfca44c52f41f0e26(ContainerDockLocation location)
+        internal void SetLastFixedDockSide(ContainerDockLocation location)
         {
             this.lastFixedDockSide = location;
         }

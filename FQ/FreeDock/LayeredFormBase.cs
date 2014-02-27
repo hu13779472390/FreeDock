@@ -6,11 +6,10 @@ using System.Security;
 
 namespace FQ.FreeDock
 {
-    class xd0a1f65420a07725 : Form
+    class LayeredFormBase : Form
     {
         private const int WS_EX_LAYERED = 0x00080000;
         private const int ULW_ALPHA = 0x00000002;
-
 
         protected override CreateParams CreateParams
         {
@@ -22,7 +21,7 @@ namespace FQ.FreeDock
             }
         }
 
-        public xd0a1f65420a07725()
+        public LayeredFormBase()
         {
             this.FormBorderStyle = FormBorderStyle.None;
         }
@@ -30,37 +29,37 @@ namespace FQ.FreeDock
         [SecuritySafeCritical]
         public void x0ecee64b07d2d5b1(Bitmap bitmap, byte alpha)
         {
-            IntPtr dc = xd0a1f65420a07725.x443cc432acaadb1d.GetDC(IntPtr.Zero);
-            IntPtr compatibleDc = xd0a1f65420a07725.x443cc432acaadb1d.CreateCompatibleDC(dc);
+            IntPtr dc = x443cc432acaadb1d.GetDC(IntPtr.Zero);
+            IntPtr compatibleDc = x443cc432acaadb1d.CreateCompatibleDC(dc);
             IntPtr hObject1 = IntPtr.Zero;
             IntPtr hObject2 = IntPtr.Zero;
             try
             {
                 hObject1 = bitmap.GetHbitmap(Color.FromArgb(0));
-                hObject2 = xd0a1f65420a07725.x443cc432acaadb1d.SelectObject(compatibleDc, hObject1);
-                xd0a1f65420a07725.x443cc432acaadb1d.BLENDFUNCTION pblend;
-                xd0a1f65420a07725.x443cc432acaadb1d.Point pptDst;
-                xd0a1f65420a07725.x443cc432acaadb1d.Size psize;
-                xd0a1f65420a07725.x443cc432acaadb1d.Point pprSrc;
-                psize = new xd0a1f65420a07725.x443cc432acaadb1d.Size(bitmap.Width, bitmap.Height);
-                pprSrc = new xd0a1f65420a07725.x443cc432acaadb1d.Point(0, 0);
-                pptDst = new xd0a1f65420a07725.x443cc432acaadb1d.Point(this.Left, this.Top);
-                pblend = new xd0a1f65420a07725.x443cc432acaadb1d.BLENDFUNCTION();
+                hObject2 = x443cc432acaadb1d.SelectObject(compatibleDc, hObject1);
+                x443cc432acaadb1d.BLENDFUNCTION pblend;
+                x443cc432acaadb1d.Point pptDst;
+                x443cc432acaadb1d.Size psize;
+                x443cc432acaadb1d.Point pprSrc;
+                psize = new x443cc432acaadb1d.Size(bitmap.Width, bitmap.Height);
+                pprSrc = new x443cc432acaadb1d.Point(0, 0);
+                pptDst = new x443cc432acaadb1d.Point(this.Left, this.Top);
+                pblend = new x443cc432acaadb1d.BLENDFUNCTION();
                 pblend.BlendOp = 0;
                 pblend.BlendFlags = 0;
                 pblend.SourceConstantAlpha = alpha;
                 pblend.AlphaFormat = 1;
-                xd0a1f65420a07725.x443cc432acaadb1d.UpdateLayeredWindow(this.Handle, dc, ref pptDst, ref psize, compatibleDc, ref pprSrc, 0, ref pblend, ULW_ALPHA);
+                x443cc432acaadb1d.UpdateLayeredWindow(this.Handle, dc, ref pptDst, ref psize, compatibleDc, ref pprSrc, 0, ref pblend, ULW_ALPHA);
             }
             finally
             {
                 if (hObject1 != IntPtr.Zero)
                 {
-                    xd0a1f65420a07725.x443cc432acaadb1d.SelectObject(compatibleDc, hObject2);
-                    xd0a1f65420a07725.x443cc432acaadb1d.DeleteObject(hObject1);
+                    x443cc432acaadb1d.SelectObject(compatibleDc, hObject2);
+                    x443cc432acaadb1d.DeleteObject(hObject1);
                 }
-                xd0a1f65420a07725.x443cc432acaadb1d.ReleaseDC(IntPtr.Zero, dc);
-                xd0a1f65420a07725.x443cc432acaadb1d.DeleteDC(compatibleDc);
+                x443cc432acaadb1d.ReleaseDC(IntPtr.Zero, dc);
+                x443cc432acaadb1d.DeleteDC(compatibleDc);
             }
         }
 
@@ -72,12 +71,8 @@ namespace FQ.FreeDock
             public const byte xdd6043f42253ee15 = 0;
             public const byte xa34cc3e091661d7f = 1;
 
-            private x443cc432acaadb1d()
-            {
-            }
-
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref xd0a1f65420a07725.x443cc432acaadb1d.Point pptDst, ref xd0a1f65420a07725.x443cc432acaadb1d.Size psize, IntPtr hdcSrc, ref xd0a1f65420a07725.x443cc432acaadb1d.Point pprSrc, int crKey, ref xd0a1f65420a07725.x443cc432acaadb1d.BLENDFUNCTION pblend, int dwFlags);
+            public static extern bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref x443cc432acaadb1d.Point pptDst, ref x443cc432acaadb1d.Size psize, IntPtr hdcSrc, ref x443cc432acaadb1d.Point pprSrc, int crKey, ref x443cc432acaadb1d.BLENDFUNCTION pblend, int dwFlags);
 
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr GetDC(IntPtr hWnd);

@@ -3,11 +3,8 @@
 namespace FQ.FreeDock
 {
     // J
-    class x9b2777bb8e78938b
+    class ButtonDrawingHelper
     {
-        private x9b2777bb8e78938b()
-        {
-        }
         // reviewed with 2.4
         public static void DrawActiveFiles(Graphics graphics, Rectangle rect, Pen pen)
         {
@@ -31,7 +28,7 @@ namespace FQ.FreeDock
                 new Point(num1 - 2, num2 - 1),
                 new Point(num1 + 2, num2 + 3)
             };
-            x9b2777bb8e78938b.x31bdb6d312240ef9(graphics, points, color, fill);
+            ButtonDrawingHelper.DrawPolyline(graphics, points, color, fill);
 
         }
         // reviewed with 2.4
@@ -45,10 +42,10 @@ namespace FQ.FreeDock
                 new Point(num1 + 2, num2 - 1),
                 new Point(num1 - 2, num2 + 3)
             };
-            x9b2777bb8e78938b.x31bdb6d312240ef9(graphics, points, color, fill);
+            ButtonDrawingHelper.DrawPolyline(graphics, points, color, fill);
         }
         // reviewed with 2.4
-        private static void x31bdb6d312240ef9(Graphics graphics, Point[] points, Color color, bool fill)
+        private static void DrawPolyline(Graphics graphics, Point[] points, Color color, bool fill)
         {
             if (fill)
             {
@@ -87,7 +84,7 @@ namespace FQ.FreeDock
         }
 
         // reviewed with 2.4
-        public static void xb176aa01ddab9f3e(Graphics g, Rectangle bounds, Pen pen)
+        public static void DrawPositionButton(Graphics g, Rectangle bounds, Pen pen)
         {
             int num1 = bounds.Left + bounds.Width / 2 - 1;
             int num2 = bounds.Top + bounds.Height / 2;

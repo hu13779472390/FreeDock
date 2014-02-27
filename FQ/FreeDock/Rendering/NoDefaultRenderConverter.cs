@@ -3,7 +3,8 @@ using System.ComponentModel;
 
 namespace FQ.FreeDock.Rendering
 {
-    class xdc4dfd9427bbb983 : x9c9262004128fe00
+    // ::A.a
+    class NoDefaultRenderConverter : RenderConverter
     {
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {

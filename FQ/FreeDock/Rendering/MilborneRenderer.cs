@@ -12,7 +12,7 @@ namespace FQ.FreeDock.Rendering
     /// A renderer that gives a sleek silvery look to tab controls.
     /// 
     /// </summary>
-    [TypeConverter(typeof(xdc4dfd9427bbb983))]
+    [TypeConverter(typeof(NoDefaultRenderConverter))]
     public class MilborneRenderer : ITabControlRenderer
     {
         private Color xd9caa88fffee2844 = Color.FromArgb(124, 124, 148);
@@ -170,10 +170,10 @@ namespace FQ.FreeDock.Rendering
             switch (sandDockButtonType)
             {
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.DrawScrollLeft(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollLeft(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.DrawScrollRight(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollRight(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
             }
         }
@@ -228,7 +228,7 @@ namespace FQ.FreeDock.Rendering
         public void DrawTabControlTabStripBackground(Graphics graphics, Rectangle bounds, Color backColor)
         {
             if (backColor != Color.Transparent)
-                xa811784015ed8842.ClearBackground(graphics, backColor);
+                RenderHelper.ClearBackground(graphics, backColor);
             using (Pen pen = new Pen(this.x68e7227781326461))
                 graphics.DrawLine(pen, bounds.X, bounds.Bottom - 1, bounds.Right - 2, bounds.Bottom - 1);
         }
@@ -335,19 +335,6 @@ namespace FQ.FreeDock.Rendering
             else
                 TextRenderer.DrawText((IDeviceContext)graphics, text, font, bounds, foreColor, this.textFormatFlags);
             return;
-
-//            label_13:
-//
-//     
-//            goto label_10;
-   
-
-//            label_19:
-//            Color color1 = this.x62b1822fa10e8658;
-  
-     
-
-
         }
 
         /// <summary>

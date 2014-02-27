@@ -255,7 +255,7 @@ namespace FQ.FreeDock
 
         internal override string xe0e7b93bedab6c05(Point position)
         {
-            SandDockButton x0a9f5257a10031b2 = this.x07083a4bfd59263d(position.X, position.Y);
+            SandDockButton x0a9f5257a10031b2 = this.GetTitleBarButtonAt(position.X, position.Y);
             if (x0a9f5257a10031b2 == this.leftScrollButton)
                 return SandDockLanguage.ScrollLeftText;
             if (x0a9f5257a10031b2 == this.rightScrollButton)
@@ -304,7 +304,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
-        internal override SandDockButton x07083a4bfd59263d(int x, int y)
+        internal override SandDockButton GetTitleBarButtonAt(int x, int y)
         {
             if (this.leftScrollButton.Enabled && this.leftScrollButton.x2fef7d841879a711 && this.leftScrollButton.Bounds.Contains(x, y))
                 return this.leftScrollButton;

@@ -8,31 +8,27 @@ using FQ.FreeDock;
 
 namespace FQ.FreeDock.Rendering
 {
-    class x9c9262004128fe00 : TypeConverter
+    class RenderConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(string))
-                return true;
-            else if (destinationType == typeof(InstanceDescriptor))
+            if (destinationType == typeof(string) || destinationType == typeof(InstanceDescriptor))
                 return true;
             else
                 return base.CanConvertTo(context, destinationType);
         }
-
+        // reviewed with 2.4
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != typeof(string))
+            if (destinationType == typeof(string))
+                return value is string ? value : value.ToString();
+            else
             {
                 if (destinationType == typeof(InstanceDescriptor))
-                    return new InstanceDescriptor((MemberInfo)value.GetType().GetConstructor(Type.EmptyTypes), (ICollection)new object[0], true);
+                    return new InstanceDescriptor((MemberInfo)value.GetType().GetConstructor(Type.EmptyTypes), new object[0], true);
                 else
                     return base.ConvertTo(context, culture, value, destinationType);
             }
-            else if (value is string)
-                return value;
-            else
-                return value.ToString();
         }
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
@@ -40,11 +36,7 @@ namespace FQ.FreeDock.Rendering
             if (!(value is string))
                 return base.ConvertFrom(context, culture, value);
 
-            string render = value as string;
-            if (render == null)
-                return null;
-
-            switch (render)
+            switch ((string)value)
             {
                 case "Everett": 
                     return new EverettRenderer();
@@ -63,10 +55,7 @@ namespace FQ.FreeDock.Rendering
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string))
-                return true;
-            else
-                return base.CanConvertFrom(context, sourceType);
+            return sourceType == typeof(string) ? true : base.CanConvertFrom(context, sourceType);
         }
 
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
@@ -83,15 +72,12 @@ namespace FQ.FreeDock.Rendering
         {
             ArrayList list = new ArrayList();
             if (context.Instance is DockContainer)
-            {
                 list.Add("(default)");
-            }
             list.Add("Everett");
             list.Add("Office 2003");
             list.Add("Whidbey");
             list.Add("Office 2007");
             return new TypeConverter.StandardValuesCollection(list);
-
         }
     }
 }

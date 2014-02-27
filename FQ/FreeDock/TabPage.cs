@@ -15,7 +15,7 @@ namespace FQ.FreeDock
     {
         private Image image;
         private int maximumTabWidth;
-        internal double x9b0739496f8b5475;
+        internal double workingTabWidth;
         internal int xa806b754814b9ae0;
         internal Rectangle tabBounds;
         internal bool xcfac6723d8a41375;
@@ -165,7 +165,7 @@ namespace FQ.FreeDock
                     throw new ArgumentException("Value must be greater than or equal to zero.");
                 this.maximumTabWidth = value;
                 if (this.Parent is TabControl)
-                    ((TabControl)this.Parent).x436f6f3ee14607e0();
+                    ((TabControl)this.Parent).CalculateAllMetricsAndLayout();
             }
         }
 
@@ -184,7 +184,7 @@ namespace FQ.FreeDock
             {
                 base.Text = value;
                 if (this.Parent is TabControl)
-                    ((TabControl)this.Parent).x436f6f3ee14607e0();
+                    ((TabControl)this.Parent).CalculateAllMetricsAndLayout();
             }
         }
 
@@ -206,7 +206,7 @@ namespace FQ.FreeDock
             {
                 this.image = value;
                 if (this.Parent is TabControl)
-                    ((TabControl)this.Parent).x436f6f3ee14607e0();
+                    ((TabControl)this.Parent).CalculateAllMetricsAndLayout();
             }
         }
 

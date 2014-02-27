@@ -12,7 +12,7 @@ namespace FQ.FreeDock.Rendering
     /// Provides a base class for renders to drive from.
     /// 
     /// </summary>
-    [TypeConverter(typeof(x9c9262004128fe00))]
+    [TypeConverter(typeof(RenderConverter))]
     public abstract class RendererBase : ITabControlRenderer, IDisposable
     {
         private Size imageSize = new Size(16, 16);

@@ -40,7 +40,7 @@ namespace FQ.FreeDock
         private SandDockButton scrollLeftButton;
         private SandDockButton scrollRightButton;
         private SandDockButton highlightedButton;
-        private bool xfa5e20eb950b9ee1;
+        private bool selected;
 
         internal SandDockButton HighlightedButton
         {
@@ -77,7 +77,7 @@ namespace FQ.FreeDock
             set
             {
                 this.tabLayout = value;
-                this.x436f6f3ee14607e0();
+                this.CalculateAllMetricsAndLayout();
                 this.PerformLayout();
             }
         }
@@ -87,7 +87,7 @@ namespace FQ.FreeDock
         /// 
         /// </summary>
         // reviewed
-        [TypeConverter(typeof(xdc4dfd9427bbb983))]
+        [TypeConverter(typeof(NoDefaultRenderConverter))]
         [RefreshProperties(RefreshProperties.All)]
         [Category("Appearance")]
         [Description("The renderer used to calculate object metrics and draw contents.")]
@@ -103,25 +103,16 @@ namespace FQ.FreeDock
                     throw new ArgumentNullException();
                 if (this.render is IDisposable)
                     ((IDisposable)this.render).Dispose();
-
                 if (this.render is RendererBase)
-                    ((RendererBase)this.render).MetricsChanged -= new EventHandler(this.xadaf245f129714e2);
-
+                    ((RendererBase)this.render).MetricsChanged -= new EventHandler(this.OnMetricsChanged);
                 this.render = value;
-                if (!value.ShouldDrawControlBorder)
+                if (value.ShouldDrawControlBorder && this.BorderStyle == FQ.FreeDock.Rendering.BorderStyle.None)
+                    this.BorderStyle = FQ.FreeDock.Rendering.BorderStyle.Flat;
+                else if (!value.ShouldDrawControlBorder && this.BorderStyle != FQ.FreeDock.Rendering.BorderStyle.None)
                     this.BorderStyle = FQ.FreeDock.Rendering.BorderStyle.None;
-                else
-                {
-                    if (this.BorderStyle == FQ.FreeDock.Rendering.BorderStyle.None)
-                        this.BorderStyle = FQ.FreeDock.Rendering.BorderStyle.Flat;
-                }
-
                 if (this.render is RendererBase)
-                {
-                    ((RendererBase)this.render).MetricsChanged += new EventHandler(this.xadaf245f129714e2);
-                }
-
-                this.x436f6f3ee14607e0();
+                    ((RendererBase)this.render).MetricsChanged += new EventHandler(this.OnMetricsChanged);
+                this.CalculateAllMetricsAndLayout();
                 this.PerformLayout();
             }
         }
@@ -186,7 +177,7 @@ namespace FQ.FreeDock
             set
             {
                 this.borderStyle = value;
-                this.x436f6f3ee14607e0();
+                this.CalculateAllMetricsAndLayout();
                 this.PerformLayout();
             }
         }
@@ -274,7 +265,7 @@ namespace FQ.FreeDock
                     throw new ArgumentException("Specified TabPage does not belong to this TabControl.");
 
                 this.selectedPage = value;
-                this.x436f6f3ee14607e0();
+                this.CalculateAllMetricsAndLayout();
                 this.SuspendLayout();
                 foreach (TabPage tabPage in this.TabPages)
                     tabPage.Visible = tabPage == this.selectedPage;
@@ -334,13 +325,13 @@ namespace FQ.FreeDock
             this.SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
             this.SetStyle(ControlStyles.Selectable, true);
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.render = (ITabControlRenderer)new MilborneRenderer();
+            this.render = new MilborneRenderer();
             this.tabPages = new TabControl.TabPageCollection(this);
             this.scrollLeftButton = new SandDockButton();
             this.scrollRightButton = new SandDockButton();
             this.timer = new Timer();
             this.timer.Interval = 20;
-            this.timer.Tick += new EventHandler(this.xcaf19fd9570f4eb4);
+            this.timer.Tick += new EventHandler(this.OnTimerTick);
         }
 
         /// <summary>
@@ -349,7 +340,7 @@ namespace FQ.FreeDock
         /// </summary>
         protected override Control.ControlCollection CreateControlsInstance()
         {
-            return (Control.ControlCollection)new TabControl.TabPageControlCollection(this);
+            return new TabPageControlCollection(this);
         }
 
         /// <summary>
@@ -374,183 +365,57 @@ namespace FQ.FreeDock
         protected override void OnPaint(PaintEventArgs e)
         {
             this.Renderer.StartRenderSession(this.ShowKeyboardCues ? HotkeyPrefix.Show : HotkeyPrefix.Hide);
-            DockControl.xe1da469e4d960f02(this, e.Graphics, this.borderStyle);
+            DockControl.DoPaint(this, e.Graphics, this.borderStyle);
             this.render.DrawTabControlTabStripBackground(e.Graphics, this.tabStripBounds, this.BackColor);
             Region region = null;
-            label_36:
-            if (this.TabLayout != TabLayout.SingleLineScrollable)
-                goto label_32;
-            else
-                goto label_37;
-            label_1:
-
-            if (8 != 0)
-                return;
-            else
-                goto label_14;
-
-            label_4:
-            using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(30, Color.Black)))
-            {
-                using (Font font = new Font(this.Font.FontFamily.Name, 14f, FontStyle.Bold))
-                {
-                    e.Graphics.DrawString("evaluationtab", font, (Brush)solidBrush, (float)(this.tabStripBounds.Left + 4), (float)(this.tabStripBounds.Top - 4), StringFormat.GenericTypographic);
-                    return;
-                }
-            }
-            label_14:
-            int index;
-            if ((uint)index < 0U)
-                goto label_27;
-            label_15:
-            if (this.SelectedPage != null)
-                goto label_20;
-            else
-                goto label_16;
-            label_2:
             if (this.TabLayout == TabLayout.SingleLineScrollable)
-                goto label_17;
-            label_3:
-            this.Renderer.FinishRenderSession();
-            goto label_1;
-            label_16:
-            if (2 != 0)
-                goto label_2;
-            label_17:
-            this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.scrollRightButton, SandDockButtonType.ScrollRight, this.scrollRightButton.x2fef7d841879a711);
-            this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.scrollLeftButton, SandDockButtonType.ScrollLeft, this.scrollLeftButton.x2fef7d841879a711);
-            goto label_3;
-            label_20:
-            this.render.DrawTabControlBackground(e.Graphics, this.x21ed2ecc088ef4e4, this.SelectedPage.BackColor, false);
-            goto label_2;
-            label_27:
-            if (this.SelectedPage == null)
-                goto label_23;
-            else
-                goto label_28;
-            label_18:
-            if (true)
             {
-                if (false)
-                {
-                    if ((index & 0) == 0)
-                        goto label_33;
-                    else
-                        goto label_32;
-                }
-                else
-                    goto label_15;
-            }
-            label_23:
-            if (this.TabLayout != TabLayout.SingleLineScrollable)
-            {
-                if (0 == 0)
-                {
-                    if (0 == 0)
-                    {
-                        if (0 == 0)
-                            goto label_15;
-                        else
-                            goto label_14;
-                    }
-                    else
-                        goto label_18;
-                }
-                else
-                    goto label_36;
-            }
-            else
-            {
-                e.Graphics.Clip = region;
-                goto label_18;
-            }
-            label_28:
-            this.xc33f5f7a18a754cb(e.Graphics, this.SelectedPage);
-            if (true)
-                goto label_23;
-            else
-                goto label_18;
-            label_32:
-            if (this.TabLayout == TabLayout.MultipleLine)
-                goto label_35;
-            label_33:
-            for (index = this.Controls.Count - 1; index >= 0; --index)
-            {
-                this.xc33f5f7a18a754cb(e.Graphics, (TabPage)this.Controls[index]);
-                if ((uint)index > uint.MaxValue)
-                    goto label_1;
-            }
-            goto label_27;
-            label_35:
-            this.xe03691727ff38b10(e.Graphics);
-            goto label_27;
-            label_37:
-            region = e.Graphics.Clip;
-            Rectangle rect = this.tabStripBounds;
-            if (true)
-            {
+                region = e.Graphics.Clip;
+                Rectangle rect = this.tabStripBounds;
                 rect.Width -= this.tabStripBounds.Right - this.scrollLeftButton.Bounds.Left;
                 e.Graphics.SetClip(rect);
-                if (3 != 0)
-                    goto label_32;
-                else
-                    goto label_35;
             }
+            if (this.TabLayout == TabLayout.MultipleLine)
+                this.xe03691727ff38b10(e.Graphics);
             else
-                goto label_4;
+            {
+                for (int i = this.Controls.Count - 1; i >= 0; --i)
+                    this.xc33f5f7a18a754cb(e.Graphics, (TabPage)this.Controls[i]);
+            }
+            if (this.SelectedPage != null)
+                this.xc33f5f7a18a754cb(e.Graphics, this.SelectedPage);
+            if (this.TabLayout == TabLayout.SingleLineScrollable)
+                e.Graphics.Clip = region;
+            if (this.SelectedPage != null)
+                this.render.DrawTabControlBackground(e.Graphics, this.x21ed2ecc088ef4e4, this.SelectedPage.BackColor, false);
+            if (this.TabLayout == TabLayout.SingleLineScrollable)
+            {
+                this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.scrollRightButton, SandDockButtonType.ScrollRight, this.scrollRightButton.x2fef7d841879a711);
+                this.xb30ec7cfdf3e5c19(e.Graphics, this.render, this.scrollLeftButton, SandDockButtonType.ScrollLeft, this.scrollLeftButton.x2fef7d841879a711);
+            }
+            this.Renderer.FinishRenderSession();
+
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(30, Color.Black)))
+            {
+                using (Font font = new Font(this.Font.FontFamily.Name, 14f, FontStyle.Bold))
+                    e.Graphics.DrawString("evaluationtab", font, brush, (this.tabStripBounds.Left + 4), (this.tabStripBounds.Top - 4), StringFormat.GenericTypographic);
+            }
         }
 
-        private void xb30ec7cfdf3e5c19(Graphics x41347a961b838962, ITabControlRenderer x38870620fd380a6b, SandDockButton x128517d7ded59312, SandDockButtonType x271bd5d42b3ea793, bool x2fef7d841879a711)
+        private void xb30ec7cfdf3e5c19(Graphics g, ITabControlRenderer render, SandDockButton button, SandDockButtonType buttonType, bool enabled)
         {
-            if (!x128517d7ded59312.Enabled)
+            if (!button.Enabled)
                 return;
             DrawItemState state = DrawItemState.Default;
-            if (this.HighlightedButton != x128517d7ded59312)
-                goto label_2;
-            else
-                goto label_11;
-            label_1:
-            x38870620fd380a6b.DrawTabControlButton(x41347a961b838962, x128517d7ded59312.Bounds, x271bd5d42b3ea793, state);
-            return;
-            label_2:
-            if (x2fef7d841879a711)
+            if (this.HighlightedButton == button)
             {
-                if (true)
-                    goto label_1;
-                else
-                    goto label_5;
+                state |= DrawItemState.HotLight;
+                if (this.selected)
+                    state |= DrawItemState.Selected;
             }
-            label_4:
-            state |= DrawItemState.Disabled;
-            if (true)
-                goto label_1;
-            else
-                goto label_2;
-            label_5:
-            if (true)
-            {
-                if (false)
-                    goto label_4;
-                else
-                    goto label_2;
-            }
-            label_7:
-            if (!this.xfa5e20eb950b9ee1)
-            {
-                if (0 == 0)
-                    goto label_2;
-                else
-                    goto label_4;
-            }
-            else
-                goto label_12;
-            label_11:
-            state |= DrawItemState.HotLight;
-            if (true)
-                goto label_7;
-            label_12:
-            state |= DrawItemState.Selected;
-            goto label_5;
+            if (!enabled)
+                state |= DrawItemState.Disabled;
+            render.DrawTabControlButton(g, button.Bounds, buttonType, state);
         }
         // reviewd with 2.4
         private void xe03691727ff38b10(Graphics graphics)
@@ -572,7 +437,6 @@ namespace FQ.FreeDock
                     if (tabPage.xa806b754814b9ae0 == array[i])
                     {
                         this.xc33f5f7a18a754cb(graphics, tabPage);
-
                         if (i < array.Length - 1)
                         {
                             Rectangle bounds = tabPage.tabBounds;
@@ -587,7 +451,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
-        private void xc33f5f7a18a754cb(Graphics graphics, TabPage tabPage)
+        private void xc33f5f7a18a754cb(Graphics g, TabPage tabPage)
         {
             DrawItemState state = DrawItemState.Default;
             if (tabPage == this.SelectedPage)
@@ -596,7 +460,7 @@ namespace FQ.FreeDock
                 if (this.Focused && this.ShowFocusCues)
                     state |= DrawItemState.Checked;
             }
-            this.Renderer.DrawTabControlTab(graphics, tabPage.tabBounds, tabPage.TabImage, tabPage.Text, this.Font, tabPage.BackColor, tabPage.ForeColor, state, true);
+            this.Renderer.DrawTabControlTab(g, tabPage.tabBounds, tabPage.TabImage, tabPage.Text, this.Font, tabPage.BackColor, tabPage.ForeColor, state, true);
         }
 
         /// <summary>
@@ -619,7 +483,7 @@ namespace FQ.FreeDock
         /// </summary>
         protected override void OnResize(EventArgs e)
         {
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
             base.OnResize(e);
         }
 
@@ -630,7 +494,7 @@ namespace FQ.FreeDock
         protected override void OnControlAdded(ControlEventArgs e)
         {
             base.OnControlAdded(e);
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
             this.PerformLayout();
         }
 
@@ -646,9 +510,7 @@ namespace FQ.FreeDock
             if (this.SelectedPage == e.Control)
             {
                 if (this.TabPages.Count != 0)
-                {
                     this.SelectedPage = this.TabPages[0];
-                }
                 else
                 {
                     this.selectedPage = null;
@@ -656,11 +518,11 @@ namespace FQ.FreeDock
                 }
             }
 
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
             this.PerformLayout();
         }
         // reviewed with 2.4
-        internal void x436f6f3ee14607e0()
+        internal void CalculateAllMetricsAndLayout()
         {
             if (!this.IsHandleCreated)
                 return;
@@ -672,10 +534,10 @@ namespace FQ.FreeDock
                 {
                     tabPage.xcfac6723d8a41375 = false;
                     DrawItemState state = tabPage != this.SelectedPage ? DrawItemState.Default : DrawItemState.Selected;
-                    tabPage.x9b0739496f8b5475 = (double)renderer.MeasureTabControlTab(graphics, tabPage.TabImage, tabPage.Text, this.Font, state).Width;
-                    if (tabPage.MaximumTabWidth > 0 && tabPage.x9b0739496f8b5475 > tabPage.MaximumTabWidth)
+                    tabPage.workingTabWidth = (double)renderer.MeasureTabControlTab(graphics, tabPage.TabImage, tabPage.Text, this.Font, state).Width;
+                    if (tabPage.MaximumTabWidth > 0 && tabPage.workingTabWidth > tabPage.MaximumTabWidth)
                     {
-                        tabPage.x9b0739496f8b5475 = tabPage.MaximumTabWidth;
+                        tabPage.workingTabWidth = tabPage.MaximumTabWidth;
                         tabPage.xcfac6723d8a41375 = true;
                     }
                 }
@@ -696,11 +558,11 @@ namespace FQ.FreeDock
 
                 foreach (TabPage tabPage in this.Controls)
                 {
-                    num2 += (int)tabPage.x9b0739496f8b5475;
-                    if (num2 > width && num2 != (int)tabPage.x9b0739496f8b5475)
+                    num2 += (int)tabPage.workingTabWidth;
+                    if (num2 > width && num2 != (int)tabPage.workingTabWidth)
                     {
                         ++num1;
-                        num2 = (int)tabPage.x9b0739496f8b5475;
+                        num2 = (int)tabPage.workingTabWidth;
                     }
                     num2 -= renderer.TabControlTabExtra;
                 }
@@ -739,181 +601,55 @@ namespace FQ.FreeDock
         private void xad3ea5eacdd3e808()
         {
             ArrayList arrayList1 = new ArrayList();
-            int num1 = 0;
-            if (false)
-                goto label_24;
-            else
-                goto label_51;
-            label_22:
-            ArrayList arrayList2;
-            if (arrayList2 != null)
-                goto label_23;
-            label_2:
-            int y = this.tabStripBounds.Top + (this.render.TabControlTabStripHeight - this.render.TabControlTabHeight);
-            IEnumerator enumerator1 = arrayList1.GetEnumerator();
-            int width1 = 0;
-            int num2;
-            bool flag1;
-            try
-            {
-                while (enumerator1.MoveNext())
-                {
-                    ArrayList arrayList3 = (ArrayList)enumerator1.Current;
-                    num2 = arrayList1.IndexOf((object)arrayList3);
-                    if (arrayList1.Count > 1)
-                        goto label_17;
-                    label_4:
-                    int left = this.tabStripBounds.Left;
-                    IEnumerator enumerator2 = arrayList3.GetEnumerator();
-                    try
-                    {
-                        while (enumerator2.MoveNext())
-                        {
-                            TabPage tabPage = (TabPage)enumerator2.Current;
-                            tabPage.xa806b754814b9ae0 = num2;
-                            if ((uint)num2 + (uint)y <= uint.MaxValue)
-                                width1 = (int)Math.Round(tabPage.x9b0739496f8b5475, 0);
-                            tabPage.tabBounds = new Rectangle(left, y, width1, this.render.TabControlTabHeight);
-                            left += width1 - this.render.TabControlTabExtra;
-                        }
-                    }
-                    finally
-                    {
-                        IDisposable disposable = enumerator2 as IDisposable;
-                        while (disposable != null)
-                        {
-                            disposable.Dispose();
-                            if (true)
-                                break;
-                        }
-                    }
-                    y += this.render.TabControlTabHeight - 2;
-                    continue;
-                    label_17:
-                    this.xd022f7303b745a62((IList)arrayList3, true);
-                    goto label_4;
-                }
-                return;
-            }
-            finally
-            {
-                IDisposable disposable = enumerator1 as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
-            }
-            label_23:
-            arrayList1.Remove((object)arrayList2);
-            int left1;
-            if (false)
-                return;
-            arrayList1.Add((object)arrayList2);
-            goto label_2;
-            label_24:
-            ArrayList arrayList4;
-            arrayList1.Add((object)arrayList4);
-            goto label_22;
-            label_51:
             Rectangle displayRectangle = this.DisplayRectangle;
-            bool flag2;
-            bool flag3;
-            if (true)
+
+            int width2 = displayRectangle.Width;
+            ArrayList arrayList2 = null;
+            ArrayList arrayList4 = new ArrayList();
+            int left1 = this.tabStripBounds.Left;
+            bool flag1 = false;
+            foreach (TabPage tabPage in this.Controls)
             {
-                int width2 = displayRectangle.Width;
-                arrayList2 = (ArrayList)null;
-                arrayList4 = new ArrayList();
-                left1 = this.tabStripBounds.Left;
-                flag1 = false;
-                foreach (TabPage tabPage in (ArrangedElementCollection) this.Controls)
+                if (arrayList4.Count == 0 && !flag1 || (double)left1 + tabPage.workingTabWidth <= (double)this.tabStripBounds.Right)
                 {
-                    int num3;
-                    bool flag4;
-                    do
-                    {
-                        if (arrayList4.Count == 0)
-                            goto label_45;
-                        label_40:
-                        int num4 = (double)left1 + tabPage.x9b0739496f8b5475 <= (double)this.tabStripBounds.Right ? 1 : 0;
-                        label_42:
-                        flag4 = num4 != 0;
-                        int num5;
-                        if (flag4)
-                        {
-                            arrayList4.Add((object)tabPage);
-                            continue;
-                        }
-                        else
-                            goto label_35;
-                        label_45:
-                        if ((uint)num1 - (uint)left1 >= 0U)
-                        {
-                            if (!flag1)
-                            {
-                                num4 = 1;
-                                goto label_42;
-                            }
-                            else
-                                goto label_40;
-                        }
-                        else
-                            break;
-                    }
-                    while (false);
-                    label_26:
+                    arrayList4.Add(tabPage);
                     if (this.SelectedPage == tabPage)
-                    {
                         arrayList2 = arrayList4;
-                        goto label_29;
-                    }
-                    label_27:
-                    if (false)
-                        goto label_35;
-                    label_29:
-                    left1 += (int)tabPage.x9b0739496f8b5475 - this.render.TabControlTabExtra;
-                    continue;
-                    label_35:
-                    arrayList1.Add((object)arrayList4);
-                    do
-                    {
-                        arrayList4 = new ArrayList();
-                    }
-                    while (false);
-                    left1 = this.tabStripBounds.Left;
-                    arrayList4.Add((object)tabPage);
-                    if (true)
-                    {
-                        if (this.SelectedPage == tabPage)
-                        {
-                            arrayList2 = arrayList4;
-                            if (true)
-                            {
-                                if (2 == 0)
-                                    goto label_26;
-                                else
-                                    goto label_29;
-                            }
-                            else if (true)
-                            {
-                                if ((uint)left1 + (uint)left1 <= uint.MaxValue)
-                                    goto label_26;
-                                else
-                                    break;
-                            }
-                            else
-                                goto label_27;
-                        }
-                        else
-                            goto label_29;
-                    }
-                    else
-                        goto label_26;
                 }
-                if (arrayList4.Count != 0)
-                    goto label_24;
                 else
-                    goto label_22;
+                {
+                    arrayList1.Add(arrayList4);
+                    arrayList4 = new ArrayList();
+                    left1 = this.tabStripBounds.Left;
+                    arrayList4.Add(tabPage);
+                    if (this.SelectedPage == tabPage)
+                        arrayList2 = arrayList4;
+                }
+                left1 += (int)tabPage.workingTabWidth - this.render.TabControlTabExtra;
             }
-            else
-                goto label_22;
+            if (arrayList4.Count != 0)
+                arrayList1.Add(arrayList4);
+            if (arrayList2 != null)
+            {
+                arrayList1.Remove((object)arrayList2);
+                arrayList1.Add(arrayList2);
+            }
+            int y = this.tabStripBounds.Top + (this.render.TabControlTabStripHeight - this.render.TabControlTabHeight);
+            foreach (ArrayList arrayList3 in arrayList1)
+            {
+                int num2 = arrayList1.IndexOf((object)arrayList3);
+                if (arrayList1.Count > 1)
+                    this.xd022f7303b745a62((IList)arrayList3, true);
+                int left = this.tabStripBounds.Left;
+                foreach (TabPage tabPage in arrayList3)
+                {
+                    tabPage.xa806b754814b9ae0 = num2;
+                    int width1 = (int)Math.Round(tabPage.workingTabWidth, 0);
+                    tabPage.tabBounds = new Rectangle(left, y, width1, this.render.TabControlTabHeight);
+                    left += width1 - this.render.TabControlTabExtra;
+                }
+                y += this.render.TabControlTabHeight - 2;
+            }
         }
 
         private void xac46da8e3ebf1367()
@@ -922,7 +658,6 @@ namespace FQ.FreeDock
             int num1;
             int left;
             int num2;
-
             num1 = this.tabStripBounds.Right - 2;
             this.scrollRightButton.Enabled = true;
             this.scrollRightButton.Bounds = new Rectangle(num1 - 14, y, 14, 15);
@@ -931,203 +666,91 @@ namespace FQ.FreeDock
             this.scrollLeftButton.Bounds = new Rectangle(num2 - 14, y, 14, 15);
             num1 = num2 - 15;
             left = this.tabStripBounds.Left;
-
-            goto label_22;
-            label_12:
-            this.x4f8ccd50477a481e = 0;
-            label_14:
-            if (this.x200b7f5a9d983ba4 > this.x4f8ccd50477a481e)
-                goto label_13;
-            else
-                goto label_18;
-            label_10:
-            this.scrollLeftButton.x2fef7d841879a711 = this.x200b7f5a9d983ba4 > 0;
-            this.scrollRightButton.x2fef7d841879a711 = this.x200b7f5a9d983ba4 < this.x4f8ccd50477a481e;
-            int width;
-
-            goto label_19;
-            label_13:
-            this.x200b7f5a9d983ba4 = this.x4f8ccd50477a481e;
-            goto label_10;
-            label_18:
-            int num4;
-            if (true)
-                goto label_10;
-            label_19:
-            if (false)
-                return;
-            IEnumerator enumerator1 = this.Controls.GetEnumerator();
-            try
+            foreach (TabPage tabPage in this.Controls)
             {
-                while (enumerator1.MoveNext())
-                {
-                    TabPage tabPage = (TabPage)enumerator1.Current;
-                    Rectangle rectangle = tabPage.tabBounds;
-                    do
-                    {
-                        rectangle.Offset(-this.x200b7f5a9d983ba4, 0);
-                    }
-                    while ((uint)num1 < 0U);
-                    tabPage.tabBounds = rectangle;
-                }
-                return;
-            }
-            finally
-            {
-                IDisposable disposable = enumerator1 as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
-            }
-            label_15:
-            this.x4f8ccd50477a481e = left - num4;
-            if (this.x4f8ccd50477a481e >= 0)
-                goto label_14;
-            else
-                goto label_12;
-            label_17:
-            num4 = this.scrollLeftButton.Bounds.Left - this.tabStripBounds.Left;
-            goto label_15;
-            label_22:
-            IEnumerator enumerator2 = this.Controls.GetEnumerator();
-            try
-            {
-                while (enumerator2.MoveNext())
-                {
-                    TabPage tabPage = (TabPage)enumerator2.Current;
-                    width = (int)Math.Round(tabPage.x9b0739496f8b5475, 0);
-                    tabPage.tabBounds = new Rectangle(left, this.tabStripBounds.Bottom - this.render.TabControlTabHeight, width, this.render.TabControlTabHeight);
-                    if ((uint)num1 - (uint)width > uint.MaxValue)
-                        ;
-                    left += width - this.render.TabControlTabExtra;
-                }
-            }
-            finally
-            {
-                IDisposable disposable = enumerator2 as IDisposable;
-                if ((uint)left > uint.MaxValue || disposable != null)
-                    disposable.Dispose();
+                int width = (int)Math.Round(tabPage.workingTabWidth, 0);
+                tabPage.tabBounds = new Rectangle(left, this.tabStripBounds.Bottom - this.render.TabControlTabHeight, width, this.render.TabControlTabHeight);
+                left += width - this.render.TabControlTabExtra;
             }
             if (this.Controls.Count != 0)
-            {
                 left += this.render.TabControlTabExtra;
-//                int num2;
-                if (false)
-                    return;
-                else
-                    goto label_17;
+            int num4 = this.scrollLeftButton.Bounds.Left - this.tabStripBounds.Left;
+            this.x4f8ccd50477a481e = left - num4;
+            if (this.x4f8ccd50477a481e < 0)
+                this.x4f8ccd50477a481e = 0;
+            if (this.x200b7f5a9d983ba4 > this.x4f8ccd50477a481e)
+                this.x200b7f5a9d983ba4 = this.x4f8ccd50477a481e;
+            this.scrollLeftButton.x2fef7d841879a711 = this.x200b7f5a9d983ba4 > 0;
+            this.scrollRightButton.x2fef7d841879a711 = this.x200b7f5a9d983ba4 < this.x4f8ccd50477a481e;
+            foreach (TabPage tabPage in this.Controls)
+            {
+                Rectangle rectangle = tabPage.tabBounds;
+                rectangle.Offset(-this.x200b7f5a9d983ba4, 0);
+                tabPage.tabBounds = rectangle;
             }
-            else
-                goto label_17;
-            label_36:
-            ;
         }
         // reviewed with 2.4
         private void x9ad45a8b0cdc25f7()
         {
             this.xd022f7303b745a62(this.Controls, false);
             int left = this.tabStripBounds.Left;
-
             foreach (TabPage tabPage in this.Controls)
             {
-                int width = (int)Math.Round(tabPage.x9b0739496f8b5475, 0);
+                int width = (int)Math.Round(tabPage.workingTabWidth, 0);
                 tabPage.tabBounds = new Rectangle(left, this.tabStripBounds.Bottom - this.render.TabControlTabHeight, width, this.render.TabControlTabHeight);
                 left += width - this.render.TabControlTabExtra;
             }
         }
 
-        private void xd022f7303b745a62(IList xc06f388a56e1a8e4, bool x12583168cc11d7a7)
+        private void xd022f7303b745a62(IList tabPages, bool x12583168cc11d7a7)
         {
             int width = this.tabStripBounds.Width;
             double num1 = 0.0;
-            foreach (TabPage tabPage in (IEnumerable) xc06f388a56e1a8e4)
-                num1 += tabPage.x9b0739496f8b5475;
-            if (xc06f388a56e1a8e4.Count >= 1)
-                goto label_26;
-            label_17:
+            foreach (TabPage tabPage in tabPages)
+                num1 += tabPage.workingTabWidth;
+            if (tabPages.Count >= 1)
+                num1 -= (double)((tabPages.Count - 1) * this.render.TabControlTabExtra);
             if (num1 > (double)width)
-                goto label_18;
-            label_1:
-            if (!x12583168cc11d7a7)
-                return;
-            double num2 = 0;
-            if (num1 >= (double)width)
             {
-                if ((uint)num2 - (uint)width <= uint.MaxValue)
-                    return;
-                else
-                    goto label_14;
-            }
-            else
-                goto label_9;
-            label_5:
-            int index1;
-            double num3;
-            double num4;
-            for (; index1 < xc06f388a56e1a8e4.Count; ++index1)
-            {
-                TabPage tabPage = (TabPage)xc06f388a56e1a8e4[index1];
-                double num5 = index1 != 0 ? tabPage.x9b0739496f8b5475 - (double)this.render.TabControlTabExtra : tabPage.x9b0739496f8b5475;
-                if ((uint)num1 >= 0U)
+                double num7 = num1 - (double)width;
+                for (int i = 0; i < tabPages.Count; ++i)
                 {
-                    num3 = num5 / num1;
-                    double num6 = num5 + num2 * num3;
-                    tabPage.x9b0739496f8b5475 = index1 == 0 ? num6 : num6 + (double)this.render.TabControlTabExtra;
-                    if (true)
-                    {
-                        if (0 != 0)
-                            return;
-                    }
-                    else
-                        goto label_17;
-                }
-                else
-                    goto label_9;
-            }
-            if (true)
-                return;
-            else
-                goto label_1;
-            label_9:
-            num2 = (double)width - num1;
-            index1 = 0;
-            goto label_5;
-            label_14:
-            double num7 = 0;
-            for (int index2 = 0; index2 < xc06f388a56e1a8e4.Count; ++index2)
-            {
-                TabPage tabPage = (TabPage)xc06f388a56e1a8e4[index2];
-                num4 = 0 != 0 || index2 != 0 ? tabPage.x9b0739496f8b5475 - (double)this.render.TabControlTabExtra : tabPage.x9b0739496f8b5475;
-                if (true)
-                {
+                    TabPage tabPage = (TabPage)tabPages[i];
+                    double num4 = i != 0 ? tabPage.workingTabWidth - (double)this.render.TabControlTabExtra : tabPage.workingTabWidth;
                     double num5 = num4 / num1;
                     double num6 = num4 - num7 * num5;
                     tabPage.xcfac6723d8a41375 = true;
-                    tabPage.x9b0739496f8b5475 = index2 == 0 ? num6 : num6 + (double)this.render.TabControlTabExtra;
+                    tabPage.workingTabWidth = i == 0 ? num6 : num6 + (double)this.render.TabControlTabExtra;
                 }
-                else
-                    goto label_5;
             }
-            return;
-            label_18:
-            num7 = num1 - (double)width;
-            goto label_14;
-            label_26:
-            num1 -= (double)((xc06f388a56e1a8e4.Count - 1) * this.render.TabControlTabExtra);
-            goto label_17;
+            else
+            {
+                if (!x12583168cc11d7a7 || num1 >= (double)width)
+                    return;
+                double num2 = (double)width - num1;
+                for (int i = 0; i < tabPages.Count; ++i)
+                {
+                    TabPage tabPage = (TabPage)tabPages[i];
+                    double num5 = i != 0 ? tabPage.workingTabWidth - (double)this.render.TabControlTabExtra : tabPage.workingTabWidth;
+                    double num3 = num5 / num1;
+                    double num6 = num5 + num2 * num3;
+                    tabPage.workingTabWidth = i == 0 ? num6 : num6 + (double)this.render.TabControlTabExtra;
+                }
+            }
         }
         // reviewd with 2.4
         private void xd11b6d3bf98020cb()
         {
             this.timer.Enabled = false;
             this.HighlightedButton = null;
-            this.xfa5e20eb950b9ee1 = false;
+            this.selected = false;
             this.Invalidate(this.tabStripBounds);
         }
         // reviewd with 2.4
         private void xcf8b319f2bffca87()
         {
             this.timer.Enabled = true;
-            this.xcaf19fd9570f4eb4(this.timer, EventArgs.Empty);
+            this.OnTimerTick(this.timer, EventArgs.Empty);
         }
         // reviewd with 2.4
         private void x523c1f22a806032d(int xa00f04d8b3a6664c)
@@ -1144,11 +767,11 @@ namespace FQ.FreeDock
                 this.x200b7f5a9d983ba4 = 0;
                 this.xd11b6d3bf98020cb();
             }
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
   
         }
         // reviewd with 2.4
-        private void xcaf19fd9570f4eb4(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        private void OnTimerTick(object sender, EventArgs e)
         {
             if (this.HighlightedButton == this.scrollLeftButton)
                 this.x523c1f22a806032d(-15);
@@ -1165,7 +788,7 @@ namespace FQ.FreeDock
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
             this.PerformLayout();
         }
 
@@ -1182,7 +805,7 @@ namespace FQ.FreeDock
         {
             foreach (TabPage tabPage in this.Controls)
             {
-                if (tabPage.tabBounds.Contains(position))
+                if (tabPage.TabBounds.Contains(position))
                     return tabPage;
             }
             return null;
@@ -1195,7 +818,7 @@ namespace FQ.FreeDock
         protected override void OnMouseLeave(EventArgs e)
         {
             this.HighlightedButton = null;
-            this.xfa5e20eb950b9ee1 = false;
+            this.selected = false;
             base.OnMouseLeave(e);
         }
         // reviewd with 2.4
@@ -1244,7 +867,7 @@ namespace FQ.FreeDock
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left && this.HighlightedButton != null)
             {
                 this.xa82f7b310984e03e(this.HighlightedButton);
-                this.xfa5e20eb950b9ee1 = false;
+                this.selected = false;
                 this.Invalidate(this.tabStripBounds);
             }
             base.OnMouseUp(e);
@@ -1261,7 +884,7 @@ namespace FQ.FreeDock
             {
                 if (this.HighlightedButton != null)
                 {
-                    this.xfa5e20eb950b9ee1 = true;
+                    this.selected = true;
                     this.Invalidate(this.tabStripBounds);
                     this.x11e90588eb0baaf1(this.HighlightedButton);
                     return;
@@ -1280,76 +903,26 @@ namespace FQ.FreeDock
             }
             base.OnMouseDown(e);
         }
-
-        private void xf8af240c2d768134(TabPage xbbe2f7d7c86e0379, bool x17cc8f73454a0462)
+        // reviewed with 2.4
+        private void xf8af240c2d768134(TabPage tabPage, bool x17cc8f73454a0462)
         {
-            this.SelectedPage = xbbe2f7d7c86e0379;
-            int num;
-            Rectangle rectangle;
-            do
-            {
-                if (x17cc8f73454a0462)
-                    goto label_19;
-                label_16:
-                if (this.TabLayout == TabLayout.SingleLineScrollable)
-                {
-                    rectangle = this.tabStripBounds;
-                    rectangle.Width -= this.tabStripBounds.Right - this.scrollLeftButton.Bounds.Left;
-                    continue;
-                }
-                else
-                    goto label_20;
-                label_19:
+            this.SelectedPage = tabPage;
+            if (x17cc8f73454a0462)
                 this.SelectedPage.SelectNextControl((Control)null, true, true, true, true);
-                if (true)
-                    goto label_16;
-                else
-                    break;
-            }
-            while (false);
-            Rectangle rect = xbbe2f7d7c86e0379.tabBounds;
-            int xa00f04d8b3a6664c;
-            if (true)
-            {
-                while (rectangle.Contains(rect))
-                {
-                    if (8 != 0 || (int)byte.MaxValue == 0)
-                    {
-                        if (0 == 0)
-                        {
-                            if (true)
-                                return;
-                        }
-                        else
-                            goto label_6;
-                    }
-                    else if (2 == 0)
-                        goto label_11;
-                    else
-                        goto label_6;
-                }
-                xa00f04d8b3a6664c = 0;
-                label_11:
-                if (rect.Right <= rectangle.Right)
-                {
-                    if (rect.Left < rectangle.Left)
-                    {
-                        xa00f04d8b3a6664c = rect.Left - rectangle.Left - 20;
-                        if ((xa00f04d8b3a6664c & 0) != 0)
-                            goto label_7;
-                    }
-                }
-                else
-                    xa00f04d8b3a6664c = rect.Right - rectangle.Right + 20;
-            }
-            label_6:
-            if (xa00f04d8b3a6664c == 0)
+            if (this.TabLayout != TabLayout.SingleLineScrollable)
                 return;
-            label_7:
-            this.x523c1f22a806032d(xa00f04d8b3a6664c);
-            return;
-            label_20:
-            ;
+            Rectangle rectangle = this.tabStripBounds;
+            rectangle.Width -= this.tabStripBounds.Right - this.scrollLeftButton.Bounds.Left;
+            Rectangle rect = tabPage.tabBounds;
+            if (rectangle.Contains(rect))
+                return;
+            int xa00f04d8b3a6664c = 0;
+            if (rect.Right > rectangle.Right)
+                xa00f04d8b3a6664c = rect.Right - rectangle.Right + 20;
+            else if (rect.Left < rectangle.Left)
+                xa00f04d8b3a6664c = rect.Left - rectangle.Left - 20;
+            if (xa00f04d8b3a6664c != 0)
+                this.x523c1f22a806032d(xa00f04d8b3a6664c);
         }
 
         /// <summary>
@@ -1433,7 +1006,6 @@ namespace FQ.FreeDock
                     break;
             }
         }
-
         // reviewed with 2.4
         private void x35cf6ce73d51ebeb(int x23e85093ba3a7d1d, bool x17cc8f73454a0462)
         {
@@ -1459,43 +1031,12 @@ namespace FQ.FreeDock
         {
             if (this.SelectedPage == null)
                 return;
-            int index = this.Controls.IndexOf((Control)this.SelectedPage) + x23e85093ba3a7d1d;
+            int index = this.Controls.IndexOf(this.SelectedPage) + x23e85093ba3a7d1d;
             if (index > this.Controls.Count - 1)
-                goto label_11;
-            label_1:
+                index = x878956783d1decb2 ? 0 : this.Controls.Count - 1;
             if (index < 0)
-                goto label_8;
-            label_2:
+                index = x878956783d1decb2 ? this.Controls.Count - 1 : 0;
             this.xf8af240c2d768134((TabPage)this.Controls[index], x17cc8f73454a0462);
-            if (true)
-            {
-                if ((uint)x23e85093ba3a7d1d >= 0U)
-                    return;
-            }
-            else
-                goto label_5;
-            label_4:
-            if (((x878956783d1decb2 ? 1 : 0) | int.MaxValue) != 0 && 0 == 0)
-                goto label_6;
-            label_5:
-            if ((uint)x23e85093ba3a7d1d > uint.MaxValue)
-                goto label_8;
-            label_6:
-            int num = this.Controls.Count - 1;
-            label_7:
-            index = num;
-            goto label_2;
-            label_8:
-            if (!x878956783d1decb2)
-            {
-                num = 0;
-                goto label_7;
-            }
-            else
-                goto label_4;
-            label_11:
-            index = x878956783d1decb2 ? 0 : this.Controls.Count - 1;
-            goto label_1;
         }
 
         /// <summary>
@@ -1529,7 +1070,7 @@ namespace FQ.FreeDock
         // reviewed with 2.4
         protected override void OnFontChanged(EventArgs e)
         {
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
             this.PerformLayout();
             base.OnFontChanged(e);
         }
@@ -1546,9 +1087,9 @@ namespace FQ.FreeDock
                 this.SelectedPageChanged(this, e);
         }
 
-        private void xadaf245f129714e2(object xe0292b9ed559da7d, EventArgs e)
+        private void OnMetricsChanged(object sender, EventArgs e)
         {
-            this.x436f6f3ee14607e0();
+            this.CalculateAllMetricsAndLayout();
             this.PerformLayout();
         }
 
@@ -1608,7 +1149,7 @@ namespace FQ.FreeDock
             /// Gets a TabPage in the collection.
             /// 
             /// </summary>
-            public TabPage this[int index]
+            public TabPage this [int index]
             {
                 get
                 {
@@ -1621,7 +1162,7 @@ namespace FQ.FreeDock
                 this.tabControl = parent;
             }
 
-            object IList.this[int index]
+            object IList.this [int index]
             {
                 get
                 {
@@ -1796,18 +1337,12 @@ namespace FQ.FreeDock
 
             public override void Add(Control value)
             {
-                if (value is TabPage)
-                {
-                    value.Visible = false;
-                    base.Add(value);
-                    if (this.Count == 1)
-                    {
-                        this.tabControl.SelectedPage = (TabPage)value;
-                    }
-                    return;
-                }
-
-                throw new ArgumentException("Only TabPage controls can be added to a TabControl control.");
+                if (!(value is TabPage))
+                    throw new ArgumentException("Only TabPage controls can be added to a TabControl control.");
+                value.Visible = false;
+                base.Add(value);
+                if (this.Count == 1)
+                    this.tabControl.SelectedPage = (TabPage)value;
             }
         }
     }

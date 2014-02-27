@@ -1,13 +1,12 @@
 ﻿namespace FQ.FreeDock
 {
-    struct x5678bb8d80c0f12e
+    struct SplitLayoutEntry
     {
         public SplitLayoutSystem SplitLayoutSystem;
         public int Index;
-
-        public x5678bb8d80c0f12e(SplitLayoutSystem splitLayoutSystem, int index)
+        public SplitLayoutEntry(SplitLayoutSystem splitLayout, int index)
         {
-            this.SplitLayoutSystem = splitLayoutSystem;
+            this.SplitLayoutSystem = splitLayout;
             this.Index = index;
         }
     }

@@ -47,7 +47,7 @@ namespace FQ.FreeDock
         private DocumentContainerWindowOpenPosition documentOpenPosition = DocumentContainerWindowOpenPosition.Last;
         internal ArrayList dockContainers;
         internal ArrayList autoHideBars;
-        private Hashtable x8fb2a5bf0df0416f;
+        private Hashtable dockControls;
         private DockControl activeTabbedDocument;
         private RendererBase renderer;
         private bool raiseValidationEvents;
@@ -724,7 +724,7 @@ namespace FQ.FreeDock
         {
             this.renderer = new WhidbeyRenderer();
             this.dockContainers = new ArrayList();
-            this.x8fb2a5bf0df0416f = new Hashtable();
+            this.dockControls = new Hashtable();
             this.autoHideBars = new ArrayList();
         }
 
@@ -751,13 +751,13 @@ namespace FQ.FreeDock
         /// </returns>
         public DockControl FindMostRecentlyUsedWindow(DockSituation dockSituation)
         {
-            return this.FindMostRecentlyUsedWindow(dockSituation, (DockControl)null);
+            return this.FindMostRecentlyUsedWindow(dockSituation, null);
         }
 
         internal DockControl FindMostRecentlyUsedWindow(DockSituation dockSituation, DockControl notThisOne)
         {
             DateTime dateTime = DateTime.MinValue;
-            DockControl dockControl1 = (DockControl)null;
+            DockControl dockControl1 = null;
             DockControl[] dockControls = this.GetDockControls();
             int index = 0;
             if (0 == 0)
@@ -841,96 +841,28 @@ namespace FQ.FreeDock
         /// <param name="e">The arguments associated with the event.</param>
         protected internal virtual void OnShowActiveFilesList(ActiveFilesListEventArgs e)
         {
-            if (this.ShowActiveFilesList == null)
-                return;
-            this.ShowActiveFilesList((object)this, e);
+            if (this.ShowActiveFilesList != null)
+                this.ShowActiveFilesList(this, e);
         }
 
         private void SetActiveTabbedDocument(DockControl value)
         {
-            if (value == null)
-                goto label_6;
-            else
-                goto label_16;
-            label_3:
-            if (0 == 0)
-                return;
-            else
-                goto label_6;
-            label_5:
-            this.OnActiveTabbedDocumentChanged(EventArgs.Empty);
-            if (0 == 0)
-                goto label_3;
-            label_6:
+            if (value != null && value.DockSituation != DockSituation.Document)
+                throw new ArgumentException("The specified window is not currently being displayed as a document, therefore it cannot be set as the active document.", "value");
             if (value == this.activeTabbedDocument)
-            {
-                if (-2 != 0)
-                {
-                    if (0 == 0)
-                    {
-                        if (0 == 0)
-                        {
-                            if (-1 != 0)
-                            {
-                                if (int.MaxValue != 0)
-                                {
-                                    if (3 != 0)
-                                        return;
-                                    else
-                                        goto label_16;
-                                }
-                                else
-                                    goto label_12;
-                            }
-                            else
-                                goto label_16;
-                        }
-                    }
-                    else
-                        goto label_8;
-                }
-                else
-                    goto label_3;
-            }
-            else
-                goto label_19;
-            label_10:
-            this.activeTabbedDocument.DockSituationChanged -= new EventHandler(this.OnActiveTabbedDocumentDockSituationChanged);
-            this.activeTabbedDocument.UpdateLayoutSystem();
-            goto label_11;
-            label_19:
-            if (this.activeTabbedDocument == null)
-                goto label_11;
-            else
-                goto label_10;
-            label_8:
-            this.activeTabbedDocument.UpdateLayoutSystem();
-            goto label_5;
-            label_11:
-            this.activeTabbedDocument = value;
-            label_12:
+                return;
             if (this.activeTabbedDocument != null)
             {
-                if (0 == 0)
-                {
-                    this.activeTabbedDocument.DockSituationChanged += new EventHandler(this.OnActiveTabbedDocumentDockSituationChanged);
-                    goto label_8;
-                }
-                else
-                    goto label_3;
+                this.activeTabbedDocument.DockSituationChanged -= new EventHandler(this.OnActiveTabbedDocumentDockSituationChanged);
+                this.activeTabbedDocument.UpdateLayoutSystem();
             }
-            else
-                goto label_5;
-            label_16:
-            if (value.DockSituation != DockSituation.Document)
+            this.activeTabbedDocument = value;
+            if (this.activeTabbedDocument != null)
             {
-                if (4 != 0)
-                    throw new ArgumentException("The specified window is not currently being displayed as a document, therefore it cannot be set as the active document.", "value");
-                else
-                    goto label_11;
+                this.activeTabbedDocument.DockSituationChanged += new EventHandler(this.OnActiveTabbedDocumentDockSituationChanged);
+                this.activeTabbedDocument.UpdateLayoutSystem();
             }
-            else
-                goto label_6;
+            this.OnActiveTabbedDocumentChanged(EventArgs.Empty);
         }
 
         private void OnActiveTabbedDocumentDockSituationChanged(object sender, EventArgs e)
@@ -940,43 +872,33 @@ namespace FQ.FreeDock
             this.SetActiveTabbedDocument(this.FindMostRecentlyUsedWindow(DockSituation.Document));
         }
 
-        internal AutoHideBar GetAutoHideBar(DockStyle dock)
+        internal AutoHideBar GetAutoHideBar(DockStyle dockStyle)
         {
-            if (dock == DockStyle.Fill || dock == DockStyle.None)
+            if (dockStyle == DockStyle.Fill || dockStyle == DockStyle.None)
                 return null;
+
+
+
             AutoHideBar x10ac79a4257c7f52_1;
-            foreach (AutoHideBar x10ac79a4257c7f52_2 in this.autoHideBars)
+            foreach (AutoHideBar bar in this.autoHideBars)
             {
-                if (x10ac79a4257c7f52_2.Dock == dock)
-                {
-                    do
-                    {
-                        x10ac79a4257c7f52_1 = x10ac79a4257c7f52_2;
-                    }
-                    while (0 != 0);
-                    goto label_15;
-                }
+                if (bar.Dock == dockStyle)
+                    return bar;
             }
             this.DockSystemContainer.SuspendLayout();
             try
             {
-                AutoHideBar x10ac79a4257c7f52_2 = new AutoHideBar();
-                x10ac79a4257c7f52_2.Manager = this;
-                do
-                {
-                    x10ac79a4257c7f52_2.Dock = dock;
-                    x10ac79a4257c7f52_2.Parent = this.DockSystemContainer;
-                }
-                while (0 != 0);
-                this.DockSystemContainer.Controls.SetChildIndex((Control)x10ac79a4257c7f52_2, this.GetOutsideControlIndex(this.DockSystemContainer, dock));
-                x10ac79a4257c7f52_1 = x10ac79a4257c7f52_2;
+                AutoHideBar bar = new AutoHideBar();
+                bar.Manager = this;
+                bar.Dock = dockStyle;
+                bar.Parent = this.DockSystemContainer;
+                this.DockSystemContainer.Controls.SetChildIndex(bar, this.GetOutsideControlIndex(this.DockSystemContainer, dockStyle));
+                return bar;
             }
             finally
             {
                 this.DockSystemContainer.ResumeLayout();
             }
-            label_15:
-            return x10ac79a4257c7f52_1;
         }
 
         /// <summary>
@@ -999,7 +921,7 @@ namespace FQ.FreeDock
         protected virtual DockContainer CreateNewDockContainerCore(ContainerDockLocation dockLocation)
         {
             if (dockLocation == ContainerDockLocation.Center && this.EnableTabbedDocuments)
-                return (DockContainer)new DocumentContainer();
+                return new DocumentContainer();
             else
                 return new DockContainer();
         }
@@ -1016,135 +938,43 @@ namespace FQ.FreeDock
         {
             this.EnsureDockSystemContainer();
             this.DockSystemContainer.SuspendLayout();
-            DockContainer dockContainer = null;
             try
             {
-                DockContainer dockContainerCore = this.CreateNewDockContainerCore(dockLocation);
-                label_23:
-                int newIndex;
-                DockStyle dockStyle;
-                do
+                DockContainer dockContainer = this.CreateNewDockContainerCore(dockLocation);
+                dockContainer.Manager = this;
+                DockStyle dockStyle = LayoutUtilities.Convert(dockLocation);
+                dockContainer.Dock = dockStyle;
+                dockContainer.ContentSize = contentSize;
+                IntPtr handle = dockContainer.Handle;
+                int newIndex = 0;
+                if (dockLocation != ContainerDockLocation.Center)
+                    newIndex = edge != ContainerDockEdge.Inside ? this.GetOutsideControlIndex(this.DockSystemContainer, dockStyle) : this.GetInsideControlIndex(this.DockSystemContainer);
+                this.DockSystemContainer.Controls.Add(dockContainer);
+                this.DockSystemContainer.Controls.SetChildIndex(dockContainer, newIndex);
+                foreach (Control control in this.DockSystemContainer.Controls)
                 {
-                    dockContainerCore.Manager = this;
-                    dockStyle = LayoutUtilities.xf8330a3964a419ba(dockLocation);
-                    dockContainerCore.Dock = dockStyle;
-                    dockContainerCore.ContentSize = contentSize;
-                    IntPtr handle = dockContainerCore.Handle;
-                    if (dockLocation == ContainerDockLocation.Center)
-                        goto label_22;
+                    PopupContainer popup = control as PopupContainer;
+                    if (popup != null)
+                        popup.BringToFront();
                 }
-                while (false);
-                goto label_20;
-                label_18:
-                this.DockSystemContainer.Controls.Add((Control)dockContainerCore);
-                do
-                {
-                    this.DockSystemContainer.Controls.SetChildIndex((Control)dockContainerCore, newIndex);
-                    if (0 == 0)
-                    {
-                        if ((uint)newIndex - (uint)contentSize > uint.MaxValue)
-                            goto label_23;
-                    }
-                    else
-                        goto label_18;
-                }
-                while ((contentSize | -2) == 0);
-                IEnumerator enumerator = this.DockSystemContainer.Controls.GetEnumerator();
-                try
-                {
-                    label_8:
-                    while (enumerator.MoveNext())
-                    {
-                        x87cf4de36131799d x87cf4de36131799d = (Control)enumerator.Current as x87cf4de36131799d;
-                        while (x87cf4de36131799d == null)
-                        {
-                            if ((uint)newIndex <= uint.MaxValue)
-                            {
-                                if ((newIndex | 15) != 0)
-                                    goto label_8;
-                            }
-                            else
-                                goto label_16;
-                        }
-                        x87cf4de36131799d.BringToFront();
-                    }
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
-                }
-                label_16:
-                dockContainer = dockContainerCore;
-                goto label_25;
-                label_20:
-                if (edge != ContainerDockEdge.Inside)
-                {
-                    newIndex = this.GetOutsideControlIndex(this.DockSystemContainer, dockStyle);
-                    goto label_18;
-                }
-                else
-                {
-                    newIndex = this.GetInsideControlIndex(this.DockSystemContainer);
-                    if ((uint)contentSize + (uint)newIndex >= 0U)
-                        goto label_18;
-                    else
-                        goto label_25;
-                }
-                label_22:
-                newIndex = 0;
-                goto label_18;
+                return dockContainer;
             }
             finally
             {
                 this.DockSystemContainer.ResumeLayout();
             }
-            label_25:
-            return dockContainer;
         }
 
         private int GetInsideControlIndex(Control container)
         {
-            int num1 = int.MaxValue;
-            int num2;
-            if (false)
-                goto label_3;
-            else
-                goto label_8;
-            label_1:
-            int index = 0;
-            --index;
-            label_2:
-            if (index < 0)
+            int num = int.MaxValue;
+            for (int index = container.Controls.Count - 1; index >= 0; --index)
             {
-                if ((uint)num1 + (uint)num1 >= 0U)
-                    return num1;
+                Control control = container.Controls[index];
+                if (control.Dock != DockStyle.Fill && control.Dock != DockStyle.None && index < num)
+                    num = index;
             }
-            else
-                goto label_9;
-            label_6:
-            Control control;
-            while (false)
-            {
-                if (0 != 0 || 8 != 0)
-                    goto label_3;
-            }
-            goto label_1;
-            label_9:
-            control = container.Controls[index];
-            goto label_6;
-            label_3:
-            if ((control.Dock != DockStyle.None) && index < num1)
-            {
-                num1 = index;
-                goto label_1;
-            }
-            else
-                goto label_1;
-            label_8:
-            index = container.Controls.Count - 1;
-            goto label_2;
+            return num;
         }
 
         internal DockContainer[] GetDockContainers(DockStyle dockStyle)
@@ -1214,93 +1044,21 @@ namespace FQ.FreeDock
 
         private int GetOutsideControlIndex(Control container, DockStyle dockStyle)
         {
-            int num1 = container.Controls.Count;
-//            if ((num1 & 0) != 0)
-//            {
-//                int num2;
-//                if (true)
-//                    goto label_12;
-//                else
-//                    goto label_10;
-//            }
-//            else
-                
-            goto label_18;
-            label_3:
-            int index = 0;
-            if ((uint)index >= 0U)
-                goto label_7;
-            label_4:
-            Control control;
-            if (true)
+            int num = container.Controls.Count;
+            for (int index = container.Controls.Count - 1; index >= 0; --index)
             {
-                if ((uint)num1 - (uint)index <= uint.MaxValue)
-                    goto label_7;
+                Control control = container.Controls[index];
+                if (control.Dock != DockStyle.Fill || control is MdiClient)
+                {
+                    if (!(control is DockContainer))
+                        num = index;
+                    if (control is DockContainer && control.Dock == dockStyle)
+                        break;
+                }
                 else
-                    goto label_3;
+                    break;
             }
-            label_5:
-            if (control.Dock == dockStyle)
-            {
-                if (4 != 0)
-                    goto label_19;
-                else
-                    goto label_10;
-            }
-            else
-                goto label_3;
-            label_7:
-            --index;
-            label_8:
-            if (index < 0)
-            {
-                if ((index | 1) == 0)
-                    goto label_7;
-                else
-                    goto label_19;
-            }
-            else
-            {
-                control = container.Controls[index];
-                goto label_14;
-            }
-            label_10:
-            if ((uint)index > uint.MaxValue)
-                goto label_3;
-            else
-                goto label_7;
-            label_12:
-            num1 = index;
-            if (0 == 0)
-            {
-                if (3 == 0)
-                    goto label_5;
-                else
-                    goto label_4;
-            }
-            label_14:
-            if (control.Dock == DockStyle.Fill)
-                goto label_16;
-            label_11:
-            if (!(control is DockContainer))
-                goto label_12;
-            else
-                goto label_4;
-            label_16:
-            if (control is MdiClient)
-            {
-                if (0 == 0)
-                    goto label_11;
-                else
-                    goto label_12;
-            }
-            else
-                goto label_19;
-            label_18:
-            index = container.Controls.Count - 1;
-            goto label_8;
-            label_19:
-            return num1;
+            return num;
         }
 
         private void EnsureDockSystemContainer()
@@ -1318,25 +1076,25 @@ namespace FQ.FreeDock
         {
             if (this.ShowControlContextMenu == null)
                 return;
-            this.ShowControlContextMenu((object)this, e);
+            this.ShowControlContextMenu(this, e);
         }
 
         internal void RegisterWindow(DockControl control)
         {
-            this.x8fb2a5bf0df0416f[(object)control.Guid] = (object)control;
+            this.dockControls[control.Guid] = control;
             this.OnDockControlAdded(new DockControlEventArgs(control));
         }
 
         internal void ReRegisterWindow(DockControl control, Guid oldGuid)
         {
-            if (this.x8fb2a5bf0df0416f.Contains((object)oldGuid))
-                this.x8fb2a5bf0df0416f.Remove((object)oldGuid);
-            this.x8fb2a5bf0df0416f[(object)control.Guid] = (object)control;
+            if (this.dockControls.Contains(oldGuid))
+                this.dockControls.Remove(oldGuid);
+            this.dockControls[control.Guid] = control;
         }
 
         internal void UnregisterWindow(DockControl control)
         {
-            this.x8fb2a5bf0df0416f.Remove((object)control.Guid);
+            this.dockControls.Remove(control.Guid);
             this.OnDockControlRemoved(new DockControlEventArgs(control));
         }
 
@@ -1349,7 +1107,7 @@ namespace FQ.FreeDock
         {
             if (this.DockControlAdded == null)
                 return;
-            this.DockControlAdded((object)this, e);
+            this.DockControlAdded(this, e);
         }
 
         /// <summary>
@@ -1361,7 +1119,7 @@ namespace FQ.FreeDock
         {
             if (this.DockControlRemoved == null)
                 return;
-            this.DockControlRemoved((object)this, e);
+            this.DockControlRemoved(this, e);
         }
 
         /// <summary>
@@ -1372,12 +1130,10 @@ namespace FQ.FreeDock
         protected internal virtual void OnDockControlActivated(DockControlEventArgs e)
         {
             if (this.DockControlActivated != null)
-                this.DockControlActivated((object)this, e);
+                this.DockControlActivated(this, e);
             if (e.DockControl.DockSituation != DockSituation.Document)
                 return;
             this.SetActiveTabbedDocument(e.DockControl);
-            if (4 != 0)
-                ;
         }
 
         private void EnsureHandles()
@@ -1391,7 +1147,6 @@ namespace FQ.FreeDock
         public void SetLayout(string layout)
         {
             this.EnsureDockSystemContainer();
-            int num1;
             ArrayList arrayList;
             int num2;
             FloatingDockContainer[] dockContainerList1;
@@ -1680,24 +1435,24 @@ namespace FQ.FreeDock
             return !(str == "0");
         }
 
-        private System.Drawing.Point ConvertStringToPoint(string str)
+        private Point ConvertStringToPoint(string str)
         {
-            return (System.Drawing.Point)TypeDescriptor.GetConverter(typeof(System.Drawing.Point)).ConvertFrom((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)str);
+            return (Point)TypeDescriptor.GetConverter(typeof(Point)).ConvertFrom(null, CultureInfo.InvariantCulture, str);
         }
 
-        private System.Drawing.Size ConvertStringToSize(string str)
+        private Size ConvertStringToSize(string str)
         {
-            return (System.Drawing.Size)TypeDescriptor.GetConverter(typeof(System.Drawing.Size)).ConvertFrom((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)str);
+            return (Size)TypeDescriptor.GetConverter(typeof(Size)).ConvertFrom(null, CultureInfo.InvariantCulture, str);
         }
 
         internal static SizeF ConvertStringToSizeF(string str)
         {
-            return (SizeF)TypeDescriptor.GetConverter(typeof(SizeF)).ConvertFrom((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)str);
+            return (SizeF)TypeDescriptor.GetConverter(typeof(SizeF)).ConvertFrom(null, CultureInfo.InvariantCulture, str);
         }
 
         private Rectangle ConvertStringToRectangle(string str)
         {
-            return (Rectangle)TypeDescriptor.GetConverter(typeof(Rectangle)).ConvertFrom((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)str);
+            return (Rectangle)TypeDescriptor.GetConverter(typeof(Rectangle)).ConvertFrom(null, CultureInfo.InvariantCulture, str);
         }
 
         private void ReadWindowProperties(XmlNode node)
@@ -1861,7 +1616,7 @@ namespace FQ.FreeDock
             label_24:
             if (container == null)
             {
-                container = this.CreateNewDockContainer(LayoutUtilities.x3650f3b579b2b4d2(xca9af438b5818619), ContainerDockEdge.Outside, contentSize);
+                container = this.CreateNewDockContainer(LayoutUtilities.Convert(xca9af438b5818619), ContainerDockEdge.Outside, contentSize);
                 goto label_1;
             }
             else
@@ -1960,7 +1715,7 @@ namespace FQ.FreeDock
             if (arrayList.Count != 0)
                 return new SplitLayoutSystem(workingSize, splitMode, (LayoutSystemBase[])arrayList.ToArray(typeof(LayoutSystemBase)));
             else
-                return (SplitLayoutSystem)null;
+                return null;
         }
 
         private ControlLayoutSystem ReadControlLayoutSystem(XmlNode controlNode, DockContainer container)
@@ -2128,13 +1883,13 @@ namespace FQ.FreeDock
             if (true)
             {
                 flag2 = this.ConvertStringToBool(controlNode.Attributes["Collapsed"].Value);
-                dockControl = (DockControl)null;
+                dockControl = null;
                 goto label_38;
             }
             else
                 goto label_4;
             label_47:
-            return (ControlLayoutSystem)null;
+            return null;
         }
 
         /// <summary>
@@ -2155,87 +1910,40 @@ namespace FQ.FreeDock
         /// </remarks>
         public DockControl FindControl(Guid guid)
         {
-            DockControl dockControl = (DockControl)this.x8fb2a5bf0df0416f[(object)guid];
-            while ((int)byte.MaxValue != 0 && dockControl == null)
-            {
-                ResolveDockControlEventArgs e = new ResolveDockControlEventArgs(guid);
-                this.OnResolveDockControl(e);
-                if (0 != 0 || e.DockControl != null)
-                {
-                    e.DockControl.Manager = this;
-                    if (0 == 0)
-                    {
-                        if (0 == 0)
-                            return e.DockControl;
-                    }
-                    else
-                        continue;
-                }
-                return (DockControl)null;
-            }
-            return dockControl;
+            DockControl dockControl = (DockControl)this.dockControls[guid];
+            if (dockControl != null)
+                return dockControl;
+            ResolveDockControlEventArgs e = new ResolveDockControlEventArgs(guid);
+            this.OnResolveDockControl(e);
+            if (e.DockControl == null)
+                return null;
+            e.DockControl.Manager = this;
+            return e.DockControl;
         }
 
         private DockContainer[] GetOrderedDockedDockContainerList()
         {
             if (this.DockSystemContainer == null)
                 return new DockContainer[0];
-            ArrayList arrayList = new ArrayList();
-            int num;
-            if (false)
-                goto label_6;
-            else
-                goto label_9;
-            label_3:
-            Control control;
-            int index;
-            if (index < this.DockSystemContainer.Controls.Count)
-                control = this.DockSystemContainer.Controls[index];
-            else
-                goto label_10;
-            label_6:
-            if (this.dockContainers.Contains((object)control) && !(control is DocumentContainer))
-                arrayList.Add((object)control);
-            ++index;
-            goto label_3;
-            label_9:
-            if (0 == 0)
+            ArrayList array = new ArrayList();
+            for (int i = 0; i < this.DockSystemContainer.Controls.Count; ++i)
             {
-                index = 0;
-                goto label_3;
+                Control control = this.DockSystemContainer.Controls[i];
+                if (this.dockContainers.Contains(control) && !(control is DocumentContainer))
+                    array.Add(control);
             }
-            label_10:
-            return (DockContainer[])arrayList.ToArray(typeof(DockContainer));
+            return (DockContainer[])array.ToArray(typeof(DockContainer));
         }
 
         private FloatingDockContainer[] GetFloatingDockContainerList()
         {
-            ArrayList arrayList = new ArrayList();
-            IEnumerator enumerator = this.dockContainers.GetEnumerator();
-            try
+            ArrayList array = new ArrayList();
+            foreach (DockContainer container in this.dockContainers)
             {
-                while (enumerator.MoveNext())
-                {
-                    DockContainer dockContainer = (DockContainer)enumerator.Current;
-                    if (dockContainer.IsFloating)
-                        arrayList.Add((object)dockContainer);
-                }
+                if (container.IsFloating)
+                    array.Add(container);
             }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                while (disposable != null)
-                {
-                    do
-                    {
-                        disposable.Dispose();
-                    }
-                    while (1 == 0);
-                    if (0 == 0)
-                        break;
-                }
-            }
-            return (FloatingDockContainer[])arrayList.ToArray(typeof(FloatingDockContainer));
+            return (FloatingDockContainer[])array.ToArray(typeof(FloatingDockContainer));
         }
 
         private string ConvertBoolToString(bool b)
@@ -2243,24 +1951,24 @@ namespace FQ.FreeDock
             return !b ? "0" : "1";
         }
 
-        private string ConvertSizeToString(System.Drawing.Size size)
+        private string ConvertSizeToString(Size size)
         {
-            return (string)TypeDescriptor.GetConverter(typeof(System.Drawing.Size)).ConvertTo((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)size, typeof(string));
+            return (string)TypeDescriptor.GetConverter(typeof(Size)).ConvertTo(null, CultureInfo.InvariantCulture, size, typeof(string));
         }
 
         internal static string ConvertSizeFToString(SizeF size)
         {
-            return (string)TypeDescriptor.GetConverter(typeof(SizeF)).ConvertTo((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)size, typeof(string));
+            return (string)TypeDescriptor.GetConverter(typeof(SizeF)).ConvertTo(null, CultureInfo.InvariantCulture, size, typeof(string));
         }
 
         private string ConvertPointToString(System.Drawing.Point point)
         {
-            return (string)TypeDescriptor.GetConverter(typeof(System.Drawing.Point)).ConvertTo((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)point, typeof(string));
+            return (string)TypeDescriptor.GetConverter(typeof(Point)).ConvertTo(null, CultureInfo.InvariantCulture, point, typeof(string));
         }
 
         private string ConvertRectangleToString(Rectangle rectangle)
         {
-            return (string)TypeDescriptor.GetConverter(typeof(Rectangle)).ConvertTo((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)rectangle, typeof(string));
+            return (string)TypeDescriptor.GetConverter(typeof(Rectangle)).ConvertTo(null, CultureInfo.InvariantCulture, rectangle, typeof(string));
         }
 
         private string GetSettingsKey()
@@ -2289,10 +1997,10 @@ namespace FQ.FreeDock
         /// </summary>
         public void LoadLayout()
         {
-            LayoutSettings layoutSettings = new LayoutSettings(this.GetSettingsKey());
-            if (layoutSettings.IsDefault || layoutSettings.LayoutXml == null || (layoutSettings.LayoutXml.Length == 0 || 0 != 0))
+            LayoutSettings settings = new LayoutSettings(this.GetSettingsKey());
+            if (settings.IsDefault || settings.LayoutXml == null || (settings.LayoutXml.Length == 0 || 0 != 0))
                 return;
-            this.SetLayout(layoutSettings.LayoutXml);
+            this.SetLayout(settings.LayoutXml);
         }
 
         /// <summary>
@@ -2421,7 +2129,7 @@ namespace FQ.FreeDock
                 label_25:
                 writer.WriteStartDocument();
                 ((XmlWriter)writer).WriteStartElement("Layout");
-                foreach (DockControl control in (IEnumerable) this.x8fb2a5bf0df0416f.Values)
+                foreach (DockControl control in (IEnumerable) this.dockControls.Values)
                 {
                     if (control.PersistState)
                         this.SaveWindowLayout(control, writer);
@@ -2657,9 +2365,9 @@ namespace FQ.FreeDock
         /// </returns>
         public DockControl[] GetDockControls()
         {
-            DockControl[] dockControlArray = new DockControl[this.x8fb2a5bf0df0416f.Count];
-            this.x8fb2a5bf0df0416f.Values.CopyTo((Array)dockControlArray, 0);
-            return dockControlArray;
+            DockControl[] array = new DockControl[this.dockControls.Count];
+            this.dockControls.Values.CopyTo(array, 0);
+            return array;
         }
 
         /// <summary>
@@ -2674,7 +2382,7 @@ namespace FQ.FreeDock
         public DockControl[] GetDockControls(DockSituation dockSituation)
         {
             ArrayList array = new ArrayList();
-            foreach (DockControl dockControl in this.x8fb2a5bf0df0416f.Values)
+            foreach (DockControl dockControl in this.dockControls.Values)
             {
                 if (dockControl.DockSituation == dockSituation)
                     array.Add(dockControl);
@@ -2708,22 +2416,10 @@ namespace FQ.FreeDock
         private void PropagateNewRenderer()
         {
             foreach (DockContainer dockContainer in this.dockContainers)
-                dockContainer.x4481febbc2e58301();
-            IEnumerator enumerator = this.autoHideBars.GetEnumerator();
-            try
+                dockContainer.PropagateNewRenderer();
+            foreach (AutoHideBar bar in this.autoHideBars)
             {
-                while (enumerator.MoveNext())
-                    ((AutoHideBar)enumerator.Current).x4481febbc2e58301();
-            }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                while (disposable != null)
-                {
-                    disposable.Dispose();
-                    if (int.MaxValue != 0 && 4 != 0)
-                        break;
-                }
+                bar.PropagateNewRenderer();
             }
         }
 
@@ -2756,9 +2452,9 @@ namespace FQ.FreeDock
             this.documentContainer = (DocumentContainer)container;
             goto label_4;
             label_9:
-            while (!this.dockContainers.Contains((object)container))
+            while (!this.dockContainers.Contains(container))
             {
-                this.dockContainers.Add((object)container);
+                this.dockContainers.Add(container);
                 if (int.MaxValue != 0)
                     goto label_6;
             }
@@ -2791,11 +2487,11 @@ namespace FQ.FreeDock
 
         internal void UnregisterDockContainer(DockContainer container)
         {
-            if (this.dockContainers.Contains((object)container))
-                this.dockContainers.Remove((object)container);
+            if (this.dockContainers.Contains(container))
+                this.dockContainers.Remove(container);
             if (this.documentContainer != container)
                 return;
-            this.documentContainer = (DocumentContainer)null;
+            this.documentContainer = null;
         }
 
         internal void RegisterAutoHideBar(AutoHideBar bar)
@@ -2831,7 +2527,7 @@ namespace FQ.FreeDock
         /// </returns>
         public DockContainer FindDockContainer(ContainerDockLocation location)
         {
-            return this.FindDockedContainer(LayoutUtilities.xf8330a3964a419ba(location));
+            return this.FindDockedContainer(LayoutUtilities.Convert(location));
         }
 
         internal FloatingDockContainer FindFloatingDockContainer(Guid guid)

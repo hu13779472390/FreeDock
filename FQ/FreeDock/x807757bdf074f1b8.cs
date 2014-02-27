@@ -13,7 +13,7 @@ namespace FQ.FreeDock
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            return destinationType == typeof(InstanceDescriptor) ? true :  base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(InstanceDescriptor) ? true : base.CanConvertTo(context, destinationType);
         }
 
         private Type MakeArrayType(Type firstType)
@@ -21,67 +21,37 @@ namespace FQ.FreeDock
             return firstType.Assembly.GetType(firstType.FullName + "[]");
         }
 
+        // reviewed with 2.4
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, System.Type destinationType)
         {
-            if (destinationType != null)
-            {
-                if (destinationType == typeof(InstanceDescriptor))
-                {
-                    if (0 != 0)
-                        goto label_8;
-                    label_3:
-                    System.Type type;
-                    if (value.GetType().Name == "SplitLayoutSystem")
-                    {
-                        type = value.GetType();
-                        goto label_8;
-                    }
-                    label_7:
-                    if (0 == 0)
-                        goto label_11;
-                    else
-                        goto label_9;
-                    label_8:
-                    System.Type baseType = type.BaseType;
-                    MemberInfo member = (MemberInfo)type.GetConstructor(new System.Type[3]
-                    {
-                        typeof(SizeF),
-                        typeof(Orientation),
-                        this.MakeArrayType(baseType)
-                    });
-                    ICollection collection = (ICollection)type.GetProperty("LayoutSystems", BindingFlags.Instance | BindingFlags.Public).GetValue(value, (object[])null);
-                    object[] objArray = (object[])Activator.CreateInstance(this.MakeArrayType(baseType), new object[1]
-                    {
-                        (object)collection.Count
-                    });
-                    collection.CopyTo((Array)objArray, 0);
-                    if (0 == 0)
-                    {
-                        if (15 != 0)
-                        {
-                            SizeF sizeF = (SizeF)type.GetProperty("WorkingSize", BindingFlags.Instance | BindingFlags.Public).GetValue(value, (object[])null);
-                            Orientation orientation = (Orientation)type.GetProperty("SplitMode", BindingFlags.Instance | BindingFlags.Public).GetValue(value, (object[])null);
-                            if (0 == 0)
-                                return (object)new InstanceDescriptor(member, (ICollection)new object[3]
-                                {
-                                    (object)sizeF,
-                                    (object)orientation,
-                                    (object)objArray
-                                });
-                            else
-                                goto label_7;
-                        }
-                        else
-                            goto label_3;
-                    }
-                    else
-                        goto label_9;
-                }
-                label_11:
+            if (destinationType == null)
+                throw new ArgumentNullException();
+ 
+            if (destinationType != typeof(InstanceDescriptor) || !(value.GetType().Name == "SplitLayoutSystem"))
                 return base.ConvertTo(context, culture, value, destinationType);
-            }
-            label_9:
-            throw new ArgumentNullException();
+
+            Type type = value.GetType();
+            Type baseType = type.BaseType;
+            MemberInfo member = (MemberInfo)type.GetConstructor(new Type[]
+            {
+                typeof(SizeF),
+                typeof(Orientation),
+                this.MakeArrayType(baseType)
+            });
+            ICollection collection = (ICollection)type.GetProperty("LayoutSystems", BindingFlags.Instance | BindingFlags.Public).GetValue(value, null);
+            object[] objArray = (object[])Activator.CreateInstance(this.MakeArrayType(baseType), new object[]
+            {
+                collection.Count
+            });
+            collection.CopyTo((Array)objArray, 0);
+            SizeF sizeF = (SizeF)type.GetProperty("WorkingSize", BindingFlags.Instance | BindingFlags.Public).GetValue(value, null);
+            Orientation orientation = (Orientation)type.GetProperty("SplitMode", BindingFlags.Instance | BindingFlags.Public).GetValue(value, null);
+            return new InstanceDescriptor(member, new object[]
+            {
+                sizeF,
+                orientation,
+                objArray
+            });
         }
     }
 }

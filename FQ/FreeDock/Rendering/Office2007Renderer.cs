@@ -1625,7 +1625,7 @@ namespace FQ.FreeDock.Rendering
                 }
             }
             else
-                xa811784015ed8842.ClearBackground(graphics, this.Background);
+                RenderHelper.ClearBackground(graphics, this.Background);
         }
 
         /// <summary>
@@ -1723,10 +1723,10 @@ namespace FQ.FreeDock.Rendering
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
             {
                 using (LinearGradientBrush linearGradientBrush = this.xb9d757f2231cc2a8(bounds, this.TabStripSelectedTabBackground, LinearGradientMode.Vertical))
-                    xa811784015ed8842.x272eca3f5ebfa9fc(graphics, bounds, image, this.ImageSize, text, font, (Brush)linearGradientBrush, SystemColors.ControlText, this.TabStripOuterBorder, state, this.TextFormat);
+                    RenderHelper.x272eca3f5ebfa9fc(graphics, bounds, image, this.ImageSize, text, font, (Brush)linearGradientBrush, SystemColors.ControlText, this.TabStripOuterBorder, state, this.TextFormat);
             }
             else
-                xa811784015ed8842.x272eca3f5ebfa9fc(graphics, bounds, image, this.ImageSize, text, font, SystemInformation.HighContrast ? SystemColors.Control : backColor, SystemInformation.HighContrast ? SystemColors.Control : SystemColors.ControlLightLight, this.TabStripNormalTabForeground, this.TabStripOuterBorder, state, this.TextFormat);
+                RenderHelper.x272eca3f5ebfa9fc(graphics, bounds, image, this.ImageSize, text, font, SystemInformation.HighContrast ? SystemColors.Control : backColor, SystemInformation.HighContrast ? SystemColors.Control : SystemColors.ControlLightLight, this.TabStripNormalTabForeground, this.TabStripOuterBorder, state, this.TextFormat);
         }
 
         /// <summary>
@@ -1741,13 +1741,13 @@ namespace FQ.FreeDock.Rendering
                 switch (buttonType)
                 {
                     case SandDockButtonType.Close:
-                        x9b2777bb8e78938b.DrawCloseButton(graphics, bounds, x90279591611601bc);
+                        ButtonDrawingHelper.DrawCloseButton(graphics, bounds, x90279591611601bc);
                         break;
                     case SandDockButtonType.Pin:
-                        x9b2777bb8e78938b.DrawPinButton(graphics, bounds, x90279591611601bc, toggled);
+                        ButtonDrawingHelper.DrawPinButton(graphics, bounds, x90279591611601bc, toggled);
                         break;
                     case SandDockButtonType.WindowPosition:
-                        x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, x90279591611601bc);
+                        ButtonDrawingHelper.DrawActiveFiles(graphics, bounds, x90279591611601bc);
                         break;
                 }
             }
@@ -1795,11 +1795,11 @@ namespace FQ.FreeDock.Rendering
                     using (Image xe058541ca798c059 = (Image)new Bitmap(image))
                     {
                         xe058541ca798c059.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                        xa811784015ed8842.x36c79cea8e98cf3c(graphics, bounds, dockSide, xe058541ca798c059, text, font, x6f967439eb9e4ffb, Brushes.Black, this.CollapsedTabBorder, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
+                        RenderHelper.x36c79cea8e98cf3c(graphics, bounds, dockSide, xe058541ca798c059, text, font, x6f967439eb9e4ffb, Brushes.Black, this.CollapsedTabBorder, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
                     }
                 }
                 else
-                    xa811784015ed8842.x36c79cea8e98cf3c(graphics, bounds, dockSide, image, text, font, x6f967439eb9e4ffb, Brushes.Black, this.CollapsedTabBorder, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
+                    RenderHelper.x36c79cea8e98cf3c(graphics, bounds, dockSide, image, text, font, x6f967439eb9e4ffb, Brushes.Black, this.CollapsedTabBorder, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
             }
         }
 
@@ -1981,7 +1981,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
         {
-            return xa811784015ed8842.xcdfce0e0f2641503(graphics, image, this.ImageSize, text, font, this.TextFormat);
+            return RenderHelper.xcdfce0e0f2641503(graphics, image, this.ImageSize, text, font, this.TextFormat);
         }
 
         /// <summary>
@@ -2021,17 +2021,17 @@ namespace FQ.FreeDock.Rendering
             switch (buttonType)
             {
                 case SandDockButtonType.Close:
-                    x9b2777bb8e78938b.DrawCloseButton(graphics, bounds, SystemPens.ControlText);
+                    ButtonDrawingHelper.DrawCloseButton(graphics, bounds, SystemPens.ControlText);
                     break;
                 case SandDockButtonType.Pin:
                     break;
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.DrawScrollLeft(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollLeft(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
     
                     break;
 
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.DrawScrollRight(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollRight(graphics, bounds, SystemColors.ControlText, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.WindowPosition:
                     break;
@@ -2039,7 +2039,7 @@ namespace FQ.FreeDock.Rendering
                     bounds.Inflate(1, 1);
                     --bounds.X;
 
-                    x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, SystemPens.ControlText);
+                    ButtonDrawingHelper.DrawActiveFiles(graphics, bounds, SystemPens.ControlText);
                     break;
 
                 default:

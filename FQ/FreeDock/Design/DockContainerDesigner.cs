@@ -16,7 +16,7 @@ namespace FQ.FreeDock.Design
         private DockContainer dockContainer;
         private DockControl dockControl;
         private xedb4922162c60d3d x531514c39973cbc6;
-        private x8e80e1c8bce8caf7 x372569d2ea29984e;
+        private SplittingManager x372569d2ea29984e;
         private x09c1c18390e52ebf x754f1c6f433be75d;
         private IComponentChangeService x4cd3df9bd5e139a3;
         private IDesignerHost xff9c60b45aa37b1e;
@@ -76,7 +76,7 @@ namespace FQ.FreeDock.Design
                     LayoutSystemBase xc13a8191724b6d55;
                     LayoutSystemBase x5aa50bbadb0a1e6c;
                     splitLayout.x5a3264f7eba0fe4f(point, out xc13a8191724b6d55, out x5aa50bbadb0a1e6c);
-                    this.x372569d2ea29984e = new x8e80e1c8bce8caf7(this.dockContainer, splitLayout, xc13a8191724b6d55, x5aa50bbadb0a1e6c, point, DockingHints.TranslucentFill);
+                    this.x372569d2ea29984e = new SplittingManager(this.dockContainer, splitLayout, xc13a8191724b6d55, x5aa50bbadb0a1e6c, point, DockingHints.TranslucentFill);
                     this.x372569d2ea29984e.Cancelled += new EventHandler(this.xfae511fd7c4fb447);
                     if ((uint)x + (uint)y <= uint.MaxValue)
                     {
@@ -194,7 +194,7 @@ namespace FQ.FreeDock.Design
             return;
             label_32:
 
-            this.x372569d2ea29984e.Committed += new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
+            this.x372569d2ea29984e.Committed += new SplittingManager.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
             this.dockContainer.Capture = true;
             goto label_37;
 
@@ -391,7 +391,7 @@ namespace FQ.FreeDock.Design
         {
             this.x531514c39973cbc6.Committed -= new xedb4922162c60d3d.DockingManagerFinishedEventHandler(this.x46ff430ed3944e0f);
             this.x531514c39973cbc6.Cancelled -= new EventHandler(this.x0ae87c4881d90427);
-            this.x531514c39973cbc6 = (xedb4922162c60d3d)null;
+            this.x531514c39973cbc6 = null;
         }
 
         internal virtual void x46ff430ed3944e0f(xedb4922162c60d3d.DockTarget x11d58b056c032b03)
@@ -521,7 +521,7 @@ namespace FQ.FreeDock.Design
                 else
                     goto label_35;
                 label_26:
-                LayoutUtilities.xf1cbd48a28ce6e74(selectedControl);
+                LayoutUtilities.RemoveDockControl(selectedControl);
                 goto label_18;
                 label_29:
                 if (0 != 0 || x49cf4e0157d9436c)
@@ -592,8 +592,8 @@ namespace FQ.FreeDock.Design
         private void x367ada130c39f434()
         {
             this.x372569d2ea29984e.Cancelled -= new EventHandler(this.xfae511fd7c4fb447);
-            this.x372569d2ea29984e.Committed -= new x8e80e1c8bce8caf7.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
-            this.x372569d2ea29984e = (x8e80e1c8bce8caf7)null;
+            this.x372569d2ea29984e.Committed -= new SplittingManager.SplittingManagerFinishedEventHandler(this.xc555e814c1720baf);
+            this.x372569d2ea29984e = (SplittingManager)null;
         }
 
         private void xfae511fd7c4fb447(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
@@ -603,7 +603,7 @@ namespace FQ.FreeDock.Design
 
         private void xc555e814c1720baf(LayoutSystemBase xc13a8191724b6d55, LayoutSystemBase x5aa50bbadb0a1e6c, float x5c2440c931f8d932, float x4afa341b2323a009)
         {
-            SplitLayoutSystem x07bf3386da210f81 = this.x372569d2ea29984e.x07bf3386da210f81;
+            SplitLayoutSystem x07bf3386da210f81 = this.x372569d2ea29984e.SplitLayoutSystem;
             label_12:
             this.x367ada130c39f434();
             DesignerTransaction transaction = this.xff9c60b45aa37b1e.CreateTransaction("Resize Docked Windows");

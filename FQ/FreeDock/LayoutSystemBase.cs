@@ -125,8 +125,8 @@ namespace FQ.FreeDock
         internal void xe9a159cd1e028df2(SandDockManager sandDockManager, DockContainer dockContainer, LayoutSystemBase layout, DockControl dockControl, int x9562cf1322eeedf1, Point x6afebf16b45c02e0, DockingHints hints, DockingManager dockingManager)
         {
 
-            if (dockingManager == DockingManager.Whidbey && x890231ddf317379e.xca8cda6e489f8dd8())
-                this.x531514c39973cbc6 = (xedb4922162c60d3d)new x31248f32f85df1dd(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
+            if (dockingManager == DockingManager.Whidbey && x890231ddf317379e.IsNT5())
+                this.x531514c39973cbc6 = new x31248f32f85df1dd(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
             else
                 this.x531514c39973cbc6 = new xedb4922162c60d3d(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
 
@@ -142,12 +142,12 @@ namespace FQ.FreeDock
             this.x531514c39973cbc6 = null;
         }
 
-        internal virtual void x46ff430ed3944e0f(xedb4922162c60d3d.DockTarget x11d58b056c032b03)
+        internal virtual void x46ff430ed3944e0f(xedb4922162c60d3d.DockTarget dockTarget)
         {
             this.xf6aefb7d0abb95ba();
         }
 
-        internal virtual void x0ae87c4881d90427(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        internal virtual void x0ae87c4881d90427(object sender, EventArgs e)
         {
             this.xf6aefb7d0abb95ba();
         }
@@ -270,7 +270,7 @@ namespace FQ.FreeDock
                 throw new InvalidOperationException("No SandDockManager is associated with this ControlLayoutSystem.");
         }
 
-        internal abstract bool xe302f2203dc14a18(ContainerDockLocation location);
+        internal abstract bool AllowDock(ContainerDockLocation location);
 
         internal abstract void x84b6f3c22477dacb(RendererBase render, Graphics graphics, Font font);
     }

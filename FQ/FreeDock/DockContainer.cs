@@ -550,7 +550,7 @@ namespace FQ.FreeDock
             this.x7e9646eed248ed11();
         }
 
-        internal void x4481febbc2e58301()
+        internal void PropagateNewRenderer()
         {
             this.CalculateAllMetricsAndLayout();
         }
@@ -654,121 +654,33 @@ namespace FQ.FreeDock
             return true;
         }
 
+        // reviewed with 2.4
         internal void x333d8ec4f70a6d86()
         {
-            if (!this.CanShowCollapsed)
-                goto label_4;
-            else
-                goto label_19;
-            label_1:
-            if (0 != 0)
-                goto label_8;
-            label_2:
-            this.CalculateAllMetricsAndLayout();
-            return;
-            label_4:
-            this.CalculateAllMetricsAndLayout();
-            bool flag1;
-            int num1;
-            return;
-
-            label_8:
-            int num2;
-            bool flag2;
-            if (!this.Vertical)
+            if (this.CanShowCollapsed)
             {
-                if (this.Height == num2)
+                bool flag2 = true;
+                foreach (LayoutSystemBase layoutSystemBase in this.layouts)
                 {
-                    if (int.MinValue == 0)
+                    if (layoutSystemBase is ControlLayoutSystem && !((ControlLayoutSystem)layoutSystemBase).Collapsed)
                     {
- 
-                    }
-                    else
-                        goto label_2;
-                }
-                this.Height = num2;
-                return;
-            }
-            else
-                goto label_2;
-            label_19:
-            flag2 = true;
-            IEnumerator enumerator = this.layouts.GetEnumerator();
-            try
-            {
-                label_23:
-                ControlLayoutSystem controlLayoutSystem;
-                do
-                {
-                    if (!enumerator.MoveNext())
-                    {
-                        goto label_36;
-                    }
-                    LayoutSystemBase layoutSystemBase = (LayoutSystemBase)enumerator.Current;
-                    do
-                    {
-
-                        if (!(layoutSystemBase is ControlLayoutSystem))
-                            goto label_23;
-
-                        label_24:
-                        controlLayoutSystem = (ControlLayoutSystem)layoutSystemBase;
-                        continue;
-                        label_30:
-                        if (0 == 0)
-                        {
-                            if (int.MaxValue != 0)
-                                goto label_24;
-                            else
-                                goto label_36;
-                        }
-                        else
-                            break;
-                    }
-                    while (((flag2 ? 1 : 0) & 0) != 0);
-                }
-                while (controlLayoutSystem.Collapsed);
-                flag2 = false;
-            }
-            finally
-            {
-                IDisposable disposable = enumerator as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
-            }
-            label_36:
-            num2 = 0;
-            if (15 == 0)
-                ;
-            if (!flag2)
-                goto label_18;
-            label_14:
-            while (!this.Vertical)
-            {
-                if (0 != 0)
-                {
-                    if (0 == 0)
+                        flag2 = false;
                         break;
+                    }
                 }
+                int num2 = 0;
+
+                if (!flag2)
+                    num2 += this.ContentSize + (this.AllowResize ? 4 : 0);
+                if (this.Vertical && this.Width != num2)
+                    this.Width = num2;
+                else if (!this.Vertical && this.Height != num2)
+                    this.Height = num2;
                 else
-                    goto label_8;
-            }
-            if (this.Width == num2)
-            {
-                if ((num2 | (int)byte.MaxValue) == 0)
-                    return;
-                else
-                    goto label_8;
+                    this.CalculateAllMetricsAndLayout();
             }
             else
-            {
-                this.Width = num2;
-
-                return;
-            }
-            label_18:
-            num2 += this.ContentSize + (this.AllowResize ? 4 : 0);
-            goto label_14;
+                this.CalculateAllMetricsAndLayout();
         }
 
         /// <summary>
@@ -955,106 +867,49 @@ namespace FQ.FreeDock
         /// Overridden.
         /// 
         /// </summary>
+        // reviewed with 2.4
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            while (0 == 0)
-            {
-                if (!this.Capture)
-                {
-                    if (0 == 0)
-                        goto label_13;
-                    else
-                        goto label_9;
-                }
-                else if (this.layout == null)
-                {
-                    if (0 == 0)
-                        goto label_19;
-                }
-                else
-                {
-                    this.layout.OnMouseMove(e);
-                    return;
-                }
-            }
-            goto label_17;
-            label_9:
-            LayoutSystemBase layoutSystemAt;
-            layoutSystemAt.OnMouseMove(e);
-            if (0 == 0)
-            {
-                this.layout = layoutSystemAt;
-                return;
-            }
-            else
-                goto label_13;
-            label_12:
-            while (this.layout != layoutSystemAt)
-            {
-                this.layout.OnMouseLeave();
-                if (0 == 0)
-                    goto label_9;
-            }
-            if (0 == 0)
-                goto label_9;
-            else
-                goto label_19;
-            label_13:
-            layoutSystemAt = this.GetLayoutSystemAt(new System.Drawing.Point(e.X, e.Y));
-            if (layoutSystemAt == null)
+            if (this.Capture)
             {
                 if (this.layout != null)
-                    goto label_8;
-                label_4:
-                if (!this.x59f159fe47159543.Contains(e.X, e.Y))
+                    this.layout.OnMouseMove(e);
+                else
                 {
-                    Cursor.Current = Cursors.Default;
-                    return;
+                    if (this.x754f1c6f433be75d == null)
+                        return;
+                    this.x754f1c6f433be75d.OnMouseMove(new Point(e.X, e.Y));
                 }
-                else if (!this.Vertical)
+            }
+            else
+            {
+                LayoutSystemBase layoutSystemAt = this.GetLayoutSystemAt(new Point(e.X, e.Y));
+                if (layoutSystemAt != null)
                 {
-                    Cursor.Current = Cursors.HSplit;
-                    return;
+                    if (this.layout != null && this.layout != layoutSystemAt)
+                        this.layout.OnMouseLeave();
+                    layoutSystemAt.OnMouseMove(e);
+                    this.layout = layoutSystemAt;
                 }
                 else
                 {
-                    Cursor.Current = Cursors.VSplit;
-                    return;
+                    if (this.layout != null)
+                    {
+                        this.layout.OnMouseLeave();
+                        this.layout = null;
+                    }
+                    if (this.x59f159fe47159543.Contains(e.X, e.Y))
+                    {
+                        if (this.Vertical)
+                            Cursor.Current = Cursors.VSplit;
+                        else
+                            Cursor.Current = Cursors.HSplit;
+                    }
+                    else
+                        Cursor.Current = Cursors.Default;
                 }
-                label_8:
-                this.layout.OnMouseLeave();
-                this.layout = (LayoutSystemBase)null;
-                goto label_4;
             }
-            else if (this.layout == null)
-                goto label_9;
-            else
-                goto label_12;
-            label_16:
-            if (this.x754f1c6f433be75d == null)
-                return;
-            else
-                goto label_21;
-            label_17:
-            if (1 == 0)
-                goto label_19;
-            label_18:
-            if (2 != 0)
-                return;
-            else
-                goto label_16;
-            label_19:
-            if (0 != 0)
-            {
-                if (int.MinValue == 0)
-                    goto label_12;
-            }
-            else
-                goto label_16;
-            label_21:
-            this.x754f1c6f433be75d.OnMouseMove(new System.Drawing.Point(e.X, e.Y));
-            goto label_18;
         }
 
         /// <summary>
@@ -1076,7 +931,7 @@ namespace FQ.FreeDock
             if (DockContainer.x1f080f764b4036b1)
                 return;
 
-            Control container = this.Manager != null ?  this.Manager.DockSystemContainer : null;
+            Control container = this.Manager != null ? this.Manager.DockSystemContainer : null;
             this.WorkingRender.StartRenderSession(HotkeyPrefix.None);
             this.LayoutSystem.x84b6f3c22477dacb(this.WorkingRender, e.Graphics, this.Font);
             if (this.AllowResize)
@@ -1089,7 +944,6 @@ namespace FQ.FreeDock
                     e.Graphics.DrawString("evaluationcontainer", font, brush, (float)(this.x21ed2ecc088ef4e4.Left + 4), (float)(this.x21ed2ecc088ef4e4.Top - 4), StringFormat.GenericTypographic);
             }
         }
-
         // reviewed with 2.4
         internal void xa2414c47d888068e(object sender, EventArgs e)
         {

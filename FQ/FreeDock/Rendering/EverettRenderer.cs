@@ -360,7 +360,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawDockContainerBackground(Graphics g, DockContainer container, Rectangle bounds)
         {
-            xa811784015ed8842.ClearBackground(g, container.BackColor);
+            RenderHelper.ClearBackground(g, container.BackColor);
         }
 
         /// <summary>
@@ -484,21 +484,21 @@ namespace FQ.FreeDock.Rendering
                 case SandDockButtonType.Close:
                     using (Pen pen = new Pen(this.normalColor))
                     {
-                        x9b2777bb8e78938b.xb176aa01ddab9f3e(g, bounds, pen);
+                        ButtonDrawingHelper.DrawPositionButton(g, bounds, pen);
                     }
                     break;
                 case SandDockButtonType.Pin:
                     break;
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.DrawScrollLeft(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollLeft(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.DrawScrollRight(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollRight(g, bounds, this.normalColor, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     break;
                 case SandDockButtonType.WindowPosition:
                     break;
                 case SandDockButtonType.ActiveFiles:
-                    x9b2777bb8e78938b.DrawActiveFiles(g, bounds, SystemPens.ControlText);
+                    ButtonDrawingHelper.DrawActiveFiles(g, bounds, SystemPens.ControlText);
                     break;
             }
         }
@@ -541,17 +541,17 @@ namespace FQ.FreeDock.Rendering
             switch (buttonType)
             {
                 case SandDockButtonType.Close:
-                    x9b2777bb8e78938b.DrawCloseButton(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
+                    ButtonDrawingHelper.DrawCloseButton(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
                     break;
                 case SandDockButtonType.Pin:
-                    x9b2777bb8e78938b.DrawPinButton(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText, toggled);
+                    ButtonDrawingHelper.DrawPinButton(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText, toggled);
                     break;
                 case SandDockButtonType.ScrollLeft:
                     break;
                 case SandDockButtonType.ScrollRight:
                     break;
                 case SandDockButtonType.WindowPosition:
-                    x9b2777bb8e78938b.DrawActiveFiles(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
+                    ButtonDrawingHelper.DrawActiveFiles(g, bounds, focused ? SystemPens.ActiveCaptionText : SystemPens.ControlText);
                     break;
             }
         }

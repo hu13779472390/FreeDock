@@ -734,7 +734,7 @@ namespace FQ.FreeDock.Rendering
             else
                 goto label_14;
             label_2:
-            x9b2777bb8e78938b.DrawPinButton(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText, toggled);
+            ButtonDrawingHelper.DrawPinButton(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText, toggled);
             return;
             label_6:
             SandDockButtonType sandDockButtonType;
@@ -745,7 +745,7 @@ namespace FQ.FreeDock.Rendering
                     switch (sandDockButtonType)
                     {
                         case SandDockButtonType.Close:
-                            x9b2777bb8e78938b.DrawCloseButton(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
+                            ButtonDrawingHelper.DrawCloseButton(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
                             continue;
                         case SandDockButtonType.Pin:
                             goto label_2;
@@ -762,7 +762,7 @@ namespace FQ.FreeDock.Rendering
                 while (false);
                 goto label_15;
                 label_5:
-                x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
+                ButtonDrawingHelper.DrawActiveFiles(graphics, bounds, focused ? SystemPens.ControlText : SystemPens.ControlText);
             }
             while (((focused ? 1 : 0) & 0) != 0);
             goto label_9;
@@ -885,9 +885,9 @@ namespace FQ.FreeDock.Rendering
         protected internal override void DrawCollapsedTab(Graphics graphics, Rectangle bounds, DockSide dockSide, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool vertical)
         {
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
-                xa811784015ed8842.x36c79cea8e98cf3c(graphics, bounds, dockSide, image, text, font, SystemBrushes.ControlText, SystemColors.ControlDarkDark, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
+                RenderHelper.x36c79cea8e98cf3c(graphics, bounds, dockSide, image, text, font, SystemBrushes.ControlText, SystemColors.ControlDarkDark, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
             else
-                xa811784015ed8842.x36c79cea8e98cf3c(graphics, bounds, dockSide, image, text, font, SystemBrushes.ControlText, SystemColors.ControlDarkDark, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
+                RenderHelper.x36c79cea8e98cf3c(graphics, bounds, dockSide, image, text, font, SystemBrushes.ControlText, SystemColors.ControlDarkDark, this.TabTextDisplay == TabTextDisplayMode.AllTabs);
         }
 
         /// <summary>
@@ -897,9 +897,9 @@ namespace FQ.FreeDock.Rendering
         protected internal override void DrawTabStripTab(Graphics graphics, Rectangle bounds, Image image, string text, Font font, Color backColor, Color foreColor, DrawItemState state, bool drawSeparator)
         {
             if ((state & DrawItemState.Selected) == DrawItemState.Selected)
-                xa811784015ed8842.x272eca3f5ebfa9fc(graphics, bounds, image, this.x95dac044246123ac, text, font, this.xf6500c4730a3d95a, this.xfc7b03fc2744e317, SystemColors.ControlText, SystemColors.ControlDark, state, this.TextFormat);
+                RenderHelper.x272eca3f5ebfa9fc(graphics, bounds, image, this.x95dac044246123ac, text, font, this.xf6500c4730a3d95a, this.xfc7b03fc2744e317, SystemColors.ControlText, SystemColors.ControlDark, state, this.TextFormat);
             else
-                xa811784015ed8842.x272eca3f5ebfa9fc(graphics, bounds, image, this.x95dac044246123ac, text, font, backColor, SystemColors.ControlLightLight, SystemColors.ControlText, SystemColors.ControlDark, state, this.TextFormat);
+                RenderHelper.x272eca3f5ebfa9fc(graphics, bounds, image, this.x95dac044246123ac, text, font, backColor, SystemColors.ControlLightLight, SystemColors.ControlText, SystemColors.ControlDark, state, this.TextFormat);
         }
 
         /// <summary>
@@ -926,7 +926,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override System.Drawing.Size MeasureTabStripTab(Graphics graphics, Image image, string text, Font font, DrawItemState state)
         {
-            return xa811784015ed8842.xcdfce0e0f2641503(graphics, image, this.ImageSize, text, font, this.TextFormat);
+            return RenderHelper.xcdfce0e0f2641503(graphics, image, this.ImageSize, text, font, this.TextFormat);
         }
 
         /// <summary>
@@ -971,7 +971,7 @@ namespace FQ.FreeDock.Rendering
         /// </summary>
         protected internal override void DrawDockContainerBackground(Graphics graphics, DockContainer container, Rectangle bounds)
         {
-            xa811784015ed8842.ClearBackground(graphics, container.BackColor);
+            RenderHelper.ClearBackground(graphics, container.BackColor);
         }
 
         /// <summary>
@@ -1001,23 +1001,23 @@ namespace FQ.FreeDock.Rendering
                 case SandDockButtonType.Close:
                     using (Pen x90279591611601bc = new Pen(this.x488edc060a6f4707))
                     {
-                        x9b2777bb8e78938b.xb176aa01ddab9f3e(graphics, bounds, x90279591611601bc);
+                        ButtonDrawingHelper.DrawPositionButton(graphics, bounds, x90279591611601bc);
                         return;
                     }
                 case SandDockButtonType.Pin:
                     return;
                 case SandDockButtonType.ScrollLeft:
-                    x9b2777bb8e78938b.DrawScrollLeft(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollLeft(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     return;
                 case SandDockButtonType.ScrollRight:
-                    x9b2777bb8e78938b.DrawScrollRight(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
+                    ButtonDrawingHelper.DrawScrollRight(graphics, bounds, this.x488edc060a6f4707, (state & DrawItemState.Disabled) != DrawItemState.Disabled);
                     return;
                 case SandDockButtonType.WindowPosition:
                     return;
                 case SandDockButtonType.ActiveFiles:
                     using (Pen x90279591611601bc = new Pen(this.x488edc060a6f4707))
                     {
-                        x9b2777bb8e78938b.DrawActiveFiles(graphics, bounds, x90279591611601bc);
+                        ButtonDrawingHelper.DrawActiveFiles(graphics, bounds, x90279591611601bc);
                         return;
                     }
                 default:
@@ -1050,11 +1050,11 @@ namespace FQ.FreeDock.Rendering
             bool xb0f87b71823b1d4e = (state & DrawItemState.Checked) == DrawItemState.Checked;
             if ((state & DrawItemState.Selected) != DrawItemState.Selected)
             {
-                xa811784015ed8842.xf8aac789a7846004(graphics, bounds, contentBounds, image, this.ImageSize, text, font, x477e9d1180ece053, backColor, SystemBrushes.ControlText, this.xcee7f670c3cc8729, this.x0b2889b8ff5ec580, this.x0e8b6412ec502dbf, false, this.DocumentTabSize, this.DocumentTabExtra, this.TextFormat, xb0f87b71823b1d4e);
+                RenderHelper.xf8aac789a7846004(graphics, bounds, contentBounds, image, this.ImageSize, text, font, x477e9d1180ece053, backColor, SystemBrushes.ControlText, this.xcee7f670c3cc8729, this.x0b2889b8ff5ec580, this.x0e8b6412ec502dbf, false, this.DocumentTabSize, this.DocumentTabExtra, this.TextFormat, xb0f87b71823b1d4e);
             }
             else
             {
-                xa811784015ed8842.xf8aac789a7846004(graphics, bounds, contentBounds, image, this.ImageSize, text, font, x477e9d1180ece053, backColor, SystemBrushes.ControlText, this.x994b52371e1ca7a9, this.x80caa5727f6ffe52, this.x9196c174a89a4ce4, true, this.DocumentTabSize, this.DocumentTabExtra, this.TextFormat, xb0f87b71823b1d4e);
+                RenderHelper.xf8aac789a7846004(graphics, bounds, contentBounds, image, this.ImageSize, text, font, x477e9d1180ece053, backColor, SystemBrushes.ControlText, this.x994b52371e1ca7a9, this.x80caa5727f6ffe52, this.x9196c174a89a4ce4, true, this.DocumentTabSize, this.DocumentTabExtra, this.TextFormat, xb0f87b71823b1d4e);
                 if (0 == 0)
                     ;
             }

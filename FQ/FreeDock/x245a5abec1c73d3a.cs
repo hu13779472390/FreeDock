@@ -2,12 +2,13 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Xml;
+using System.Drawing;
 
 namespace FQ.FreeDock
 {
     class x245a5abec1c73d3a
     {
-        internal static void x0a680eda7ec8bd81(SandDockManager x91f347c6e97f1846, XmlNode x8a5ce9fbef4b9a09)
+        internal static void x0a680eda7ec8bd81(SandDockManager manager, XmlNode x8a5ce9fbef4b9a09)
         {
             TypeConverter converter1 = TypeDescriptor.GetConverter(typeof(long));
             label_31:
@@ -41,7 +42,7 @@ namespace FQ.FreeDock
             goto label_6;
             label_10:
             ContainerDockLocation xbcea506a33cf9111;
-            control.MetaData.xfca44c52f41f0e26(xbcea506a33cf9111);
+            control.MetaData.SetLastFixedDockSide(xbcea506a33cf9111);
             goto label_5;
             label_20:
             TypeConverter converter3;
@@ -116,8 +117,8 @@ namespace FQ.FreeDock
             goto label_24;
             label_32:
             converter2 = TypeDescriptor.GetConverter(typeof(int));
-            converter4 = TypeDescriptor.GetConverter(typeof(System.Drawing.Size));
-            converter3 = TypeDescriptor.GetConverter(typeof(System.Drawing.Point));
+            converter4 = TypeDescriptor.GetConverter(typeof(Size));
+            converter3 = TypeDescriptor.GetConverter(typeof(Point));
             if (-1 != 0)
                 goto label_30;
             label_25:
@@ -137,7 +138,7 @@ namespace FQ.FreeDock
             else
                 goto label_22;
             label_30:
-            control = x91f347c6e97f1846.FindControl(new Guid(x8a5ce9fbef4b9a09.Attributes["Guid"].Value));
+            control = manager.FindControl(new Guid(x8a5ce9fbef4b9a09.Attributes["Guid"].Value));
             if (control != null)
                 goto label_25;
         }
@@ -160,7 +161,7 @@ namespace FQ.FreeDock
                 else
                     break;
                 label_17:
-                x592a8acce305e2d8.x3a4e0c379519d4a2 = SandDockManager.ConvertStringToSizeF(xeaa9dbf1fba9aca8.Attributes[x05bcae9c376a7a50 + "WorkingSize"].Value);
+                x592a8acce305e2d8.Sizes = SandDockManager.ConvertStringToSizeF(xeaa9dbf1fba9aca8.Attributes[x05bcae9c376a7a50 + "WorkingSize"].Value);
                 if ((int)byte.MaxValue != 0)
                     goto label_12;
             }
@@ -182,7 +183,7 @@ namespace FQ.FreeDock
                     {
                         if (2 != 0)
                         {
-                            x592a8acce305e2d8.x61743036ad30763d = x245a5abec1c73d3a.xad77aeacfb4bb694(xeaa9dbf1fba9aca8.Attributes[x05bcae9c376a7a50 + "SplitPath"].Value);
+                            x592a8acce305e2d8.Indices = x245a5abec1c73d3a.xad77aeacfb4bb694(xeaa9dbf1fba9aca8.Attributes[x05bcae9c376a7a50 + "SplitPath"].Value);
                             if (0 != 0)
                                 goto label_8;
                         }
@@ -284,10 +285,10 @@ namespace FQ.FreeDock
         private static void x47161f81513f1258(DockControl x76b3d9d2638e5ecd, XmlTextWriter xbdfb620b7167944b, x129cb2a2bdfd0ab2 x592a8acce305e2d8, string x05bcae9c376a7a50)
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
-            xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "WorkingSize", SandDockManager.ConvertSizeFToString(x592a8acce305e2d8.x3a4e0c379519d4a2));
+            xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "WorkingSize", SandDockManager.ConvertSizeFToString(x592a8acce305e2d8.Sizes));
             xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "WindowGroupGuid", x592a8acce305e2d8.Guid.ToString());
             xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "IndexInWindowGroup", converter.ConvertToString((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, (object)x592a8acce305e2d8.x8c8f170696764fac));
-            xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "SplitPath", x245a5abec1c73d3a.x8c8bb4495a487cc5(x592a8acce305e2d8.x61743036ad30763d));
+            xbdfb620b7167944b.WriteAttributeString(x05bcae9c376a7a50 + "SplitPath", x245a5abec1c73d3a.x8c8bb4495a487cc5(x592a8acce305e2d8.Indices));
         }
 
         private static string x8c8bb4495a487cc5(int[] x6a80d3cc98596663)
