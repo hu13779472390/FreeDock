@@ -819,7 +819,7 @@ namespace FQ.FreeDock
                 LayoutUtilities.RemoveDockControl(selectedControl);
             if (dockTarget.type == xedb4922162c60d3d.DockTargetType.Float)
             {
-                selectedControl.MetaData.x87f4a9b62a380563(Guid.NewGuid());
+                selectedControl.MetaData.SetLastFloatingWindowGuid(Guid.NewGuid());
                 if (this.x49cf4e0157d9436c)
                     this.Float(manager, dockTarget.bounds, WindowOpenMethod.OnScreenActivate);
                 else
@@ -991,7 +991,7 @@ namespace FQ.FreeDock
             if (this.Parent != null)
                 LayoutUtilities.x4487f2f8917e3fd0(this);
             if (this.SelectedControl.MetaData.LastFloatingWindowGuid == Guid.Empty)
-                this.SelectedControl.MetaData.x87f4a9b62a380563(Guid.NewGuid());
+                this.SelectedControl.MetaData.SetLastFloatingWindowGuid(Guid.NewGuid());
             FloatingDockContainer x410f3612b9a8f9de = new FloatingDockContainer(manager, this.SelectedControl.MetaData.LastFloatingWindowGuid);
             x410f3612b9a8f9de.LayoutSystem.LayoutSystems.Add(this);
             x410f3612b9a8f9de.x159713d3b60fae0c(bounds, true, openMethod == WindowOpenMethod.OnScreenActivate);

@@ -47,10 +47,10 @@ namespace FQ.FreeDock
             }
             set
             {
-                this.LayoutSystem.LayoutSystemsChanged -= new EventHandler(this.x8e9e04a70e31e166);
+                this.LayoutSystem.LayoutSystemsChanged -= new EventHandler(this.OnLayoutSystemsChanged);
                 base.LayoutSystem = value;
-                this.LayoutSystem.LayoutSystemsChanged += new EventHandler(this.x8e9e04a70e31e166);
-                this.x8e9e04a70e31e166(this.LayoutSystem, EventArgs.Empty);
+                this.LayoutSystem.LayoutSystemsChanged += new EventHandler(this.OnLayoutSystemsChanged);
+                this.OnLayoutSystemsChanged(this.LayoutSystem, EventArgs.Empty);
             }
         }
 
@@ -137,33 +137,33 @@ namespace FQ.FreeDock
             if (manager == null)
                 throw new ArgumentNullException("manager");
             this.form = new xd936980ea1aac341(this);
-            this.form.Activated += new EventHandler(((DockContainer)this).xa2414c47d888068e);
-            this.form.Deactivate += new EventHandler(((DockContainer)this).x19e788b09b195d4f);
-            this.form.Closing += new CancelEventHandler(this.x9218bee68262250e);
-            this.form.DoubleClick += new EventHandler(this.xe1f5f125062dc4fb);
-            this.LayoutSystem.LayoutSystemsChanged += new EventHandler(this.x8e9e04a70e31e166);
-            this.x8e9e04a70e31e166(this.LayoutSystem, EventArgs.Empty);
+            this.form.Activated += new EventHandler(this.xa2414c47d888068e);
+            this.form.Deactivate += new EventHandler(this.x19e788b09b195d4f);
+            this.form.Closing += new CancelEventHandler(this.OnFormClosing);
+            this.form.DoubleClick += new EventHandler(this.OnFormDoubleClick);
+            this.LayoutSystem.LayoutSystemsChanged += new EventHandler(this.OnLayoutSystemsChanged);
+            this.OnLayoutSystemsChanged(this.LayoutSystem, EventArgs.Empty);
             this.Manager = manager;
             this.guid = guid;
             this.form.Controls.Add(this);
             this.Dock = DockStyle.Fill;
         }
 
-        [DllImport("user32.dll")]
-        private static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
-
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+//        [DllImport("user32.dll")]
+//        private static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
+//
+//        [DllImport("user32.dll")]
+//        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.IsDisposed)
             {
-                this.LayoutSystem.LayoutSystemsChanged -= new EventHandler(this.x8e9e04a70e31e166);
-                this.form.Activated -= new EventHandler(((DockContainer)this).xa2414c47d888068e);
-                this.form.Deactivate -= new EventHandler(((DockContainer)this).x19e788b09b195d4f);
-                this.form.Closing -= new CancelEventHandler(this.x9218bee68262250e);
-                this.form.DoubleClick -= new EventHandler(this.xe1f5f125062dc4fb);
+                this.LayoutSystem.LayoutSystemsChanged -= new EventHandler(this.OnLayoutSystemsChanged);
+                this.form.Activated -= new EventHandler(this.xa2414c47d888068e);
+                this.form.Deactivate -= new EventHandler(this.x19e788b09b195d4f);
+                this.form.Closing -= new CancelEventHandler(this.OnFormClosing);
+                this.form.DoubleClick -= new EventHandler(this.OnFormDoubleClick);
                 LayoutUtilities.xa7513d57b4844d46((Control)this);
                 this.form.Dispose();
             }
@@ -180,14 +180,14 @@ namespace FQ.FreeDock
             this.form.Hide();
         }
 
-        [SecuritySafeCritical]
+//        [SecuritySafeCritical]
         public void x159713d3b60fae0c(Rectangle bounds, bool visible, bool active)
         {
-            int flags = 0;
-            flags |= visible ? SWP_SHOWWINDOW : SWP_HIDEWINDOW;
-            if (!active)
-                flags |= SWP_NOACTIVATE;
-            IntPtr handle = IntPtr.Zero;
+//            int flags = 0;
+//            flags |= visible ? SWP_SHOWWINDOW : SWP_HIDEWINDOW;
+//            if (!active)
+//                flags |= SWP_NOACTIVATE;
+//            IntPtr handle = IntPtr.Zero;
             // FIXME:edit here
 //            x410f3612b9a8f9de.SetWindowPos(new HandleRef(this, this.form.Handle), new HandleRef(this, handle), xda73fcb97c77d998.X, xda73fcb97c77d998.Y, xda73fcb97c77d998.Width, xda73fcb97c77d998.Height, flags);
             this.form.Bounds = bounds; 
@@ -198,7 +198,7 @@ namespace FQ.FreeDock
                 control.Visible = true;
         }
 
-        private void xe20c835979d60df8(DockControl x321bff1c322e5433, DockControl x31b34ee91c89cf69)
+        private void OnLayoutSystemSelectionControlChanged(DockControl dockControl, DockControl x31b34ee91c89cf69)
         {
             if (x31b34ee91c89cf69 != null)
                 this.form.Text = x31b34ee91c89cf69.Text;
@@ -208,18 +208,19 @@ namespace FQ.FreeDock
 
         public void xd1bdd0ee5924b59e()
         {
-            this.x8e9e04a70e31e166(null, null);
+            this.OnLayoutSystemsChanged(null, null);
         }
+
         // reviewd
-        private void x8e9e04a70e31e166(object sender, EventArgs e)
+        private void OnLayoutSystemsChanged(object sender, EventArgs e)
         {
             if (this.layoutSystem != null)
-                this.layoutSystem.SelectedControlChanged -= new ControlLayoutSystem.SelectionChangedEventHandler(this.xe20c835979d60df8);
+                this.layoutSystem.SelectedControlChanged -= new ControlLayoutSystem.SelectionChangedEventHandler(this.OnLayoutSystemSelectionControlChanged);
             if (this.HasSingleControlLayoutSystem)
             {
                 this.layoutSystem = (ControlLayoutSystem)this.LayoutSystem.LayoutSystems[0];
-                this.layoutSystem.SelectedControlChanged += new ControlLayoutSystem.SelectionChangedEventHandler(this.xe20c835979d60df8);
-                this.xe20c835979d60df8(null, this.layoutSystem.SelectedControl);          
+                this.layoutSystem.SelectedControlChanged += new ControlLayoutSystem.SelectionChangedEventHandler(this.OnLayoutSystemSelectionControlChanged);
+                this.OnLayoutSystemSelectionControlChanged(null, this.layoutSystem.SelectedControl);          
             }
             else
             {
@@ -228,7 +229,7 @@ namespace FQ.FreeDock
             }
         }
 
-        private void x9218bee68262250e(object sender, CancelEventArgs e)
+        private void OnFormClosing(object sender, CancelEventArgs e)
         {
             if (!this.x50765ed4559630d6)
                 return;
@@ -252,7 +253,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed
-        private void xe1f5f125062dc4fb(object sender, EventArgs e)
+        private void OnFormDoubleClick(object sender, EventArgs e)
         {
             Form activeForm = Form.ActiveForm;
             Form xd936980ea1aac341 = this.FloatingForm;

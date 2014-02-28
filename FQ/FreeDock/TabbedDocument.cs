@@ -62,7 +62,7 @@ namespace FQ.FreeDock
         /// </summary>
         public TabbedDocument() : base()
         {
-            this.x84eb05aa1ce8e247();
+            this.Init();
         }
 
         /// <summary>
@@ -72,10 +72,10 @@ namespace FQ.FreeDock
         /// <param name="manager">The SandDockManager responsible for layout of the control.</param><param name="control">The control to host within the DockControl.</param><param name="text">The text of the DockControl.</param>
         public TabbedDocument(SandDockManager manager, Control control, string text) : base(manager, control, text)
         {
-            this.x84eb05aa1ce8e247();
+            this.Init();
         }
 
-        private void x84eb05aa1ce8e247()
+        private void Init()
         {
             if (this.Text.Length == 0)
                 this.Text = "Tabbed Document";

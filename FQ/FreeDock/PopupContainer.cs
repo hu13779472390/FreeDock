@@ -11,10 +11,12 @@ namespace FQ.FreeDock
     {
         private AutoHideBar autoHideBar;
         private ControlLayoutSystem layoutSystem;
-        private ResizingManager x372569d2ea29984e;
+        private ResizingManager resizingManager;
         private Rectangle x21ed2ecc088ef4e4;
         private Rectangle x59f159fe47159543;
         private Tooltips tooltips;
+        private ToolTip tooltip;
+
         // reviewed with 2.4
         public int PopupSize
         {
@@ -57,7 +59,7 @@ namespace FQ.FreeDock
         {
             get
             {
-                return this.x372569d2ea29984e != null;
+                return this.resizingManager != null;
             }
         }
 
@@ -90,31 +92,32 @@ namespace FQ.FreeDock
             this.tooltips = new Tooltips(this);
             this.tooltips.DropShadow = false;
             this.tooltips.GetTooltipText += new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
+            this.tooltip = new ToolTip();
             this.BackColor = SystemColors.Control;
         }
 
         private void x81dc33c66d5e1e33(Point position)
         {
-            this.x372569d2ea29984e = new ResizingManager(this.autoHideBar, this, position);
-            this.x372569d2ea29984e.Cancelled += new EventHandler(this.xfae511fd7c4fb447);
-            this.x372569d2ea29984e.Committed += new ResizingManager.ResizingManagerFinishedEventHandler(this.xc555e814c1720baf);
+            this.resizingManager = new ResizingManager(this.autoHideBar, this, position);
+            this.resizingManager.Cancelled += new EventHandler(this.OnResizingManagerCancelled);
+            this.resizingManager.Committed += new ResizingManager.ResizingManagerFinishedEventHandler(this.OnResizingManagerCommitted);
         }
 
-        private void xd5979b8834306b81()
+        private void ClearResizingManager()
         {
-            this.x372569d2ea29984e.Cancelled -= new EventHandler(this.xfae511fd7c4fb447);
-            this.x372569d2ea29984e.Committed -= new ResizingManager.ResizingManagerFinishedEventHandler(this.xc555e814c1720baf);
-            this.x372569d2ea29984e = null;
+            this.resizingManager.Cancelled -= new EventHandler(this.OnResizingManagerCancelled);
+            this.resizingManager.Committed -= new ResizingManager.ResizingManagerFinishedEventHandler(this.OnResizingManagerCommitted);
+            this.resizingManager = null;
         }
 
-        private void xfae511fd7c4fb447(object sender, EventArgs e)
+        private void OnResizingManagerCancelled(object sender, EventArgs e)
         {
-            this.xd5979b8834306b81();
+            this.ClearResizingManager();
         }
 
-        private void xc555e814c1720baf(int x0d4b3b88c5b24565)
+        private void OnResizingManagerCommitted(int x0d4b3b88c5b24565)
         {
-            this.xd5979b8834306b81();
+            this.ClearResizingManager();
             this.PopupSize = x0d4b3b88c5b24565;
         }
 
@@ -172,8 +175,13 @@ namespace FQ.FreeDock
                     this.tooltips.Dispose();
                     this.tooltips = null;
                 }
-                if (this.x372569d2ea29984e != null)
-                    this.xd5979b8834306b81();
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Dispose();
+                    this.tooltip = null;
+                }
+                if (this.resizingManager != null)
+                    this.ClearResizingManager();
             }
             base.Dispose(disposing);
         }
@@ -205,9 +213,9 @@ namespace FQ.FreeDock
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            Cursor.Current = this.x59f159fe47159543.Contains(e.X, e.Y) || this.x372569d2ea29984e == null ? (this.autoHideBar.Dock == DockStyle.Left || this.autoHideBar.Dock == DockStyle.Right ? Cursors.VSplit : Cursors.HSplit) : Cursors.Default;
-            if (this.Capture && this.x372569d2ea29984e != null)
-                this.x372569d2ea29984e.OnMouseMove(new Point(e.X, e.Y));
+            Cursor.Current = this.x59f159fe47159543.Contains(e.X, e.Y) || this.resizingManager == null ? (this.autoHideBar.Dock == DockStyle.Left || this.autoHideBar.Dock == DockStyle.Right ? Cursors.VSplit : Cursors.HSplit) : Cursors.Default;
+            if (this.Capture && this.resizingManager != null)
+                this.resizingManager.OnMouseMove(new Point(e.X, e.Y));
             else
             {
                 if (!this.x21ed2ecc088ef4e4.Contains(e.X, e.Y) || this.layoutSystem == null)
@@ -239,8 +247,8 @@ namespace FQ.FreeDock
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            if (this.x372569d2ea29984e != null && e.Button == MouseButtons.Left)
-                this.x372569d2ea29984e.Commit();
+            if (this.resizingManager != null && e.Button == MouseButtons.Left)
+                this.resizingManager.Commit();
             else
             {
                 if (!this.x21ed2ecc088ef4e4.Contains(e.X, e.Y) || this.layoutSystem == null)

@@ -128,7 +128,7 @@ namespace FQ.FreeDock
             this.xd322344ef33dfd34 = new x129cb2a2bdfd0ab2();
         }
 
-        internal void x15481da58c59597a(DateTime datetime)
+        internal void SetLastFocused(DateTime datetime)
         {
             this.lastFocused = datetime;
         }
@@ -138,22 +138,22 @@ namespace FQ.FreeDock
             this.lastFixedDockSide = location;
         }
 
-        internal void x3ef4455ea4965093(int size)
+        internal void SetDockedContentSize(int size)
         {
             this.dockedContentSize = size;
         }
 
-        internal void xb0e0bc77d88737a8(DockSituation situation)
+        internal void SetLastOpenDockSituation(DockSituation situation)
         {
             this.lastOpenDockSituation = situation;
         }
 
-        internal void x0ba17c4cff658fcf(DockSituation situation)
+        internal void SetLastFixedDockSituation(DockSituation situation)
         {
             this.lastFixedDockSituation = situation;
         }
 
-        internal void x87f4a9b62a380563(Guid guid)
+        internal void SetLastFloatingWindowGuid(Guid guid)
         {
             this.lastFloatingWindowGuid = guid;
         }

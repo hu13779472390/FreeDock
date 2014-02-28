@@ -2,11 +2,13 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Security;
 
 namespace FQ.FreeDock
 {
     class WinBrush
     {
+        private const int PATINVERT = 0x5A0049;
         [DllImport("gdi32.dll")]
         private static extern IntPtr CreateBitmap(int nWidth, int nHeight, int nPlanes, int nBitsPerPixel, short[] lpvBits);
 
@@ -27,6 +29,7 @@ namespace FQ.FreeDock
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr GetDC(HandleRef hWnd);
+
         // reviewd!
         public static void xda2defffc25953e0(Control control, Rectangle bounds, bool xc346f54d9968657b, int x189455fe88a3b711)
         {
@@ -49,6 +52,7 @@ namespace FQ.FreeDock
             }
         }
         // reviewed with 2.4
+        [SecuritySafeCritical]
         public static void xe5e0d1644c72aafd(Control control, Rectangle bounds)
         {
             if (bounds == Rectangle.Empty)
@@ -58,12 +62,19 @@ namespace FQ.FreeDock
             IntPtr dc = GetDC(new HandleRef(control, handle1));
             IntPtr handle2 = xf7ba50da2798338e();
             IntPtr handle3 = SelectObject(new HandleRef(control, dc), new HandleRef(null, handle2));
-            PatBlt(new HandleRef(control, dc), bounds.X, bounds.Y, bounds.Width, bounds.Height, 0x5A0049);
+            PatBlt(new HandleRef(control, dc), bounds.X, bounds.Y, bounds.Width, bounds.Height, PATINVERT);
             SelectObject(new HandleRef(control, dc), new HandleRef(null, handle3));
             DeleteObject(new HandleRef(null, handle2));
             ReleaseDC(new HandleRef(control, handle1), new HandleRef(null, dc));
+//
+//            using (Graphics g = control.CreateGraphics())
+//            {
+//                SolidBrush brush = new SolidBrush(Color.AliceBlue);
+//                g.FillRectangle(brush, bounds);
+//            }
         }
 
+        [SecuritySafeCritical]
         private static IntPtr xf7ba50da2798338e()
         {
             short[] lpvBits = new short[8];

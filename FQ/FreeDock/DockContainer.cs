@@ -51,6 +51,8 @@ namespace FQ.FreeDock
         private bool x841598f8fd19209c;
         internal LayoutSystemBase layout;
 
+        private ToolTip tooltip;
+
         internal Rectangle x0c42f19be578ccee
         {
             get
@@ -423,6 +425,7 @@ namespace FQ.FreeDock
             this.tooltips = new Tooltips(this);
             this.tooltips.DropShadow = false;
             this.tooltips.GetTooltipText += new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
+            this.tooltip = new ToolTip();
             this.BackColor = SystemColors.Control;
         }
 
@@ -465,6 +468,8 @@ namespace FQ.FreeDock
                 this.Manager = null;
                 this.tooltips.GetTooltipText -= new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
                 this.tooltips.Dispose();
+
+                this.tooltip.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -954,7 +959,7 @@ namespace FQ.FreeDock
             }
         }
 
-        internal void x19e788b09b195d4f(object xe0292b9ed559da7d, EventArgs xfbf34718e704c6bc)
+        internal void x19e788b09b195d4f(object sender, EventArgs e)
         {
             foreach (LayoutSystemBase layout in this.layouts)
             {

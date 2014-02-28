@@ -1,15 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\LayeredFormBase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\DocumentLayoutSystem.cs">
     <Files>
-      <File FileName="FQ\FreeDock\ControlLayoutSystem.cs" Line="962" Column="1" />
-      <File FileName="FQ\FreeDock\DockableWindow.cs" Line="1" Column="1" />
-      <File FileName="FQ\FreeDock\DockControlClosingEventHandler.cs" Line="1" Column="1" />
-      <File FileName="FQ\FreeDock\DockingManager.cs" Line="13" Column="1" />
-      <File FileName="FQ\FreeDock\DockContainer.cs" Line="23" Column="146" />
-      <File FileName="FQ\FreeDock\DockControl.cs" Line="29" Column="57" />
-      <File FileName="FQ\FreeDock\FloatingDockContainer.cs" Line="272" Column="1" />
-      <File FileName="FQ\FreeDock\LayeredFormBase.cs" Line="37" Column="14" />
+      <File FileName="DemoApplication\frmMain.cs" Line="438" Column="13" />
+      <File FileName="FQ\FreeDock\DockControl.cs" Line="1273" Column="1" />
+      <File FileName="FQ\FreeDock\TabbedDocument.cs" Line="84" Column="37" />
+      <File FileName="FQ\FreeDock\WindowOpenMethod.cs" Line="9" Column="17" />
+      <File FileName="FQ\FreeDock\AutoHideBar.cs" Line="346" Column="28" />
+      <File FileName="FQ\FreeDock\WindowMetaData.cs" Line="151" Column="9" />
+      <File FileName="FQ\FreeDock\x129cb2a2bdfd0ab2.cs" Line="6" Column="5" />
+      <File FileName="FQ\FreeDock\xd0aa9d0e7d3446c0.cs" Line="3" Column="5" />
+      <File FileName="FQ\FreeDock\DocumentLayoutSystem.cs" Line="1" Column="1" />
+      <File FileName="FQ\FreeDock\DocumentContainerWindowOpenPosition.cs" Line="7" Column="52" />
+      <File FileName="FQ\FreeDock\DocumentContainer.cs" Line="47" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

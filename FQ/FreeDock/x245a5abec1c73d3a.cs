@@ -38,7 +38,7 @@ namespace FQ.FreeDock
             control.MetaData.xe62a3d24e0fde928.x71a5d248534c8557 = (int)converter2.ConvertFromString(x8a5ce9fbef4b9a09.Attributes["LastDockContainerIndex"].Value);
             goto label_1;
             label_9:
-            control.MetaData.x87f4a9b62a380563(new Guid(x8a5ce9fbef4b9a09.Attributes["LastFloatingWindowGuid"].Value));
+            control.MetaData.SetLastFloatingWindowGuid(new Guid(x8a5ce9fbef4b9a09.Attributes["LastFloatingWindowGuid"].Value));
             goto label_6;
             label_10:
             ContainerDockLocation xbcea506a33cf9111;
@@ -91,7 +91,7 @@ namespace FQ.FreeDock
             else
                 goto label_10;
             label_14:
-            control.MetaData.x0ba17c4cff658fcf((DockSituation)Enum.Parse(typeof(DockSituation), x8a5ce9fbef4b9a09.Attributes["LastFixedDockSituation"].Value));
+            control.MetaData.SetLastFixedDockSituation((DockSituation)Enum.Parse(typeof(DockSituation), x8a5ce9fbef4b9a09.Attributes["LastFixedDockSituation"].Value));
             goto label_7;
             label_19:
             if (-2 == 0)
@@ -99,7 +99,7 @@ namespace FQ.FreeDock
             else
                 goto label_15;
             label_21:
-            control.MetaData.xb0e0bc77d88737a8((DockSituation)Enum.Parse(typeof(DockSituation), x8a5ce9fbef4b9a09.Attributes["LastOpenDockSituation"].Value));
+            control.MetaData.SetLastOpenDockSituation((DockSituation)Enum.Parse(typeof(DockSituation), x8a5ce9fbef4b9a09.Attributes["LastOpenDockSituation"].Value));
             goto label_19;
             label_22:
             if (x8a5ce9fbef4b9a09.Attributes["DockedSize"] != null)
@@ -113,7 +113,7 @@ namespace FQ.FreeDock
             }
             goto label_20;
             label_26:
-            control.MetaData.x3ef4455ea4965093((int)converter2.ConvertFromString(x8a5ce9fbef4b9a09.Attributes["DockedSize"].Value));
+            control.MetaData.SetDockedContentSize((int)converter2.ConvertFromString(x8a5ce9fbef4b9a09.Attributes["DockedSize"].Value));
             goto label_24;
             label_32:
             converter2 = TypeDescriptor.GetConverter(typeof(int));
@@ -124,7 +124,7 @@ namespace FQ.FreeDock
             label_25:
             if (x8a5ce9fbef4b9a09.Attributes["LastFocused"] != null)
             {
-                control.MetaData.x15481da58c59597a(DateTime.FromFileTime((long)converter1.ConvertFromString((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, x8a5ce9fbef4b9a09.Attributes["LastFocused"].Value)));
+                control.MetaData.SetLastFocused(DateTime.FromFileTime((long)converter1.ConvertFromString((ITypeDescriptorContext)null, CultureInfo.InvariantCulture, x8a5ce9fbef4b9a09.Attributes["LastFocused"].Value)));
                 if (-2 != 0)
                 {
                     if (0 == 0)

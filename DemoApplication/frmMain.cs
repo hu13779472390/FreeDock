@@ -5,10 +5,6 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.IO;
 using System.Data;
-
-//using FQ.FreeDock;
-//using FQ.FreeDock.Rendering;
-
 using FQ.FreeDock;
 using FQ.FreeDock.Rendering;
 

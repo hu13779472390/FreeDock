@@ -34,7 +34,9 @@ namespace FQ.FreeDock
     [Designer("FQ.FreeDock.Design.SandDockManagerDesigner, SandDock.Design, Version=1.0.0.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3")]
     public class SandDockManager : Component
     {
-        private DockingHints dockingHints = DockingHints.TranslucentFill;
+//        private DockingHints dockingHints = DockingHints.TranslucentFill;
+        private DockingHints dockingHints = DockingHints.RubberBand;
+
         private DockingManager dockingManager = DockingManager.Whidbey;
         private int minimumDockContainerSize = 30;
         private int maximumDockContainerSize = 500;
@@ -753,87 +755,59 @@ namespace FQ.FreeDock
         {
             return this.FindMostRecentlyUsedWindow(dockSituation, null);
         }
-
+        // reviewed
         internal DockControl FindMostRecentlyUsedWindow(DockSituation dockSituation, DockControl notThisOne)
         {
             DateTime dateTime = DateTime.MinValue;
-            DockControl dockControl1 = null;
-            DockControl[] dockControls = this.GetDockControls();
-            int index = 0;
-            if (0 == 0)
-                goto label_5;
-            label_3:
-            if ((uint)index < 0U)
+            DockControl found = null;
+            foreach (DockControl dockControl in this.GetDockControls())
             {
-                if (2 == 0)
-                    goto label_10;
-                else
-                    goto label_6;
-            }
-            label_4:
-            ++index;
-            label_5:
-            if (index >= dockControls.Length)
-                return dockControl1;
-            DockControl dockControl2 = dockControls[index];
-            goto label_10;
-            label_6:
-            do
-            {
-                if (!(dockControl2.MetaData.LastFocused >= dateTime))
-                    goto label_12;
-                else
-                    goto label_7;
-                label_1:
-                if (dockControl2.DockSituation != dockSituation)
-                    continue;
-                else
-                    goto label_15;
-                label_7:
-                if (dockSituation != DockSituation.None)
+                if (dockControl != notThisOne && dockControl.MetaData.LastFocused >= dateTime && (dockSituation == DockSituation.None || dockControl.DockSituation == dockSituation))
                 {
-                    if (15 != 0 && 4 != 0)
-                        goto label_1;
+                    dateTime = dockControl.MetaData.LastFocused;
+                    found = dockControl;
                 }
-                else
-                    goto label_15;
-                label_9:
-                if (0 != 0)
-                    goto label_7;
-                else
-                    goto label_1;
-                label_12:
-                if ((uint)index - (uint)index < 0U)
-                {
-                    if ((index & 0) == 0)
-                        goto label_9;
-                    else
-                        goto label_7;
-                }
-                else
-                    break;
             }
-            while (0 != 0);
-            goto label_4;
-            label_15:
-            dateTime = dockControl2.MetaData.LastFocused;
-            dockControl1 = dockControl2;
-            if (4 != 0)
-            {
-                if (4 == 0)
-                    goto label_4;
-                else
-                    goto label_4;
-            }
-            else
-                goto label_5;
-            label_10:
-            if (dockControl2 == notThisOne)
-                goto label_3;
-            else
-                goto label_6;
+            return found;
         }
-
+        //        internal DockControl FindMostRecentlyUsedWindow(DockSituation dockSituation, DockControl notThisOne)
+        //        {
+        //            DateTime dateTime = DateTime.MinValue;
+        //            DockControl dockControl1 = null;
+        //            DockControl[] dockControls = this.GetDockControls();
+        //            int index = 0;
+        //            goto label_5;
+        //            label_3:
+        //            label_4:
+        //            ++index;
+        //            label_5:
+        //            if (index >= dockControls.Length)
+        //                return dockControl1;
+        //            DockControl dockControl2 = dockControls[index];
+        //            if (dockControl2 == notThisOne)
+        //                goto label_3;
+        //
+        //            if (dockControl2.MetaData.LastFocused >= dateTime)
+        //            {
+        //                if (dockSituation != DockSituation.None)
+        //                {
+        //                    if (dockControl2.DockSituation != dockSituation)
+        //                        goto label_4;
+        //
+        //                }
+        //                goto label_15;
+        //            }
+        //            goto label_4;
+        //
+        //
+        //            label_15:
+        //            dateTime = dockControl2.MetaData.LastFocused;
+        //            dockControl1 = dockControl2;
+        //            goto label_4;
+        //
+        //
+        //        }
+        //
         /// <summary>
         /// Raises the ShowActiveFilesList event.
         /// 
@@ -877,9 +851,6 @@ namespace FQ.FreeDock
             if (dockStyle == DockStyle.Fill || dockStyle == DockStyle.None)
                 return null;
 
-
-
-            AutoHideBar x10ac79a4257c7f52_1;
             foreach (AutoHideBar bar in this.autoHideBars)
             {
                 if (bar.Dock == dockStyle)
@@ -980,68 +951,74 @@ namespace FQ.FreeDock
         internal DockContainer[] GetDockContainers(DockStyle dockStyle)
         {
             if (dockStyle == DockStyle.Fill)
-            {
-                int num;
-                if (true)
-                    goto label_14;
-            }
-            else
-                goto label_10;
-            label_2:
-            int length = 0;
-            DockContainer[] dockContainerArray1 = new DockContainer[length];
-            DockContainer[] dockContainerArray2;
-            Array.Copy((Array)dockContainerArray2, (Array)dockContainerArray1, length);
-            return dockContainerArray1;
-            label_10:
+                throw new ArgumentException("dockStyle");
             if (this.DockSystemContainer == null)
                 return new DockContainer[0];
-            dockContainerArray2 = new DockContainer[this.DockSystemContainer.Controls.Count];
-            if (0 != 0)
-                ;
-            int num1;
-            if (true)
-                goto label_13;
-            label_4:
-            int index = 0;
-            --index;
-            label_5:
-            if (index >= 0 || (uint)index > uint.MaxValue)
+            ArrayList array = new ArrayList();
+            foreach (Control control in this.DockSystemContainer.Controls)
             {
-                DockContainer dockContainer = this.DockSystemContainer.Controls[index] as DockContainer;
-                if (dockContainer != null)
-                {
-                    if ((uint)length + (uint)index <= uint.MaxValue)
-                    {
-                        while (dockContainer.Dock == dockStyle)
-                        {
-                            dockContainerArray2[length++] = dockContainer;
-                            if (0 != 0)
-                            {
-                                if ((uint)index + (uint)index < 0U)
-                                    goto label_2;
-                            }
-                            else
-                                break;
-                        }
-                        goto label_4;
-                    }
-                    else
-                        goto label_14;
-                }
-                else
-                    goto label_4;
+                DockContainer dockContainer = control as DockContainer;
+                if (dockContainer != null && dockContainer.Dock == dockStyle)
+                    array.Add(dockContainer);
             }
-            else
-                goto label_2;
-            label_13:
-            length = 0;
-            index = this.DockSystemContainer.Controls.Count - 1;
-            goto label_5;
-            label_14:
-            throw new ArgumentException("dockStyle");
+            array.Reverse();
+            return array.ToArray(typeof(DockContainer)) as DockContainer[];
         }
-
+        // not found in 2.4
+        //        internal DockContainer[] GetDockContainers(DockStyle dockStyle)
+        //        {
+        //            if (dockStyle == DockStyle.Fill)
+        //            {
+        //                goto label_14;
+        //            }
+        //            else
+        //                goto label_10;
+        //
+        //            label_2:
+        //            int length = 0;
+        //            DockContainer[] dockContainerArray1 = new DockContainer[length];
+        //            DockContainer[] dockContainerArray2;
+        //            Array.Copy((Array)dockContainerArray2, (Array)dockContainerArray1, length);
+        //            return dockContainerArray1;
+        //            label_10:
+        //            if (this.DockSystemContainer == null)
+        //                return new DockContainer[0];
+        //            dockContainerArray2 = new DockContainer[this.DockSystemContainer.Controls.Count];
+        //            goto label_13;
+        //            label_4:
+        //            int index = 0;
+        //            --index;
+        //            label_5:
+        //            if (index >= 0 || (uint)index > uint.MaxValue)
+        //            {
+        //                DockContainer dockContainer = this.DockSystemContainer.Controls[index] as DockContainer;
+        //                if (dockContainer != null)
+        //                {
+        //                    if ((uint)length + (uint)index <= uint.MaxValue)
+        //                    {
+        //                        while (dockContainer.Dock == dockStyle)
+        //                        {
+        //                            dockContainerArray2[length++] = dockContainer;
+        //                            break;
+        //                        }
+        //                        goto label_4;
+        //                    }
+        //                    else
+        //                        goto label_14;
+        //                }
+        //                else
+        //                    goto label_4;
+        //            }
+        //            else
+        //                goto label_2;
+        //            label_13:
+        //            length = 0;
+        //            index = this.DockSystemContainer.Controls.Count - 1;
+        //            goto label_5;
+        //            label_14:
+        //            throw new ArgumentException("dockStyle");
+        //        }
+        //
         private int GetOutsideControlIndex(Control container, DockStyle dockStyle)
         {
             int num = container.Controls.Count;
@@ -1153,36 +1130,37 @@ namespace FQ.FreeDock
             DockContainer[] dockContainerList2;
             XmlDocument xmlDocument;
             int num3;
-            do
-            {
-                this.EnsureHandles();
-                xmlDocument = new XmlDocument();
-                xmlDocument.LoadXml(layout);
-                this.GetLayout();
-                dockContainerList2 = this.GetOrderedDockedDockContainerList();
-                dockContainerList1 = this.GetFloatingDockContainerList();
-                num3 = 0;
-                num2 = 0;
-                arrayList = new ArrayList((ICollection)dockContainerList2);
-                if ((uint)num3 <= uint.MaxValue)
-                    goto label_82;
-            }
-            while (false);
+            this.EnsureHandles();
+            xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(layout);
+            this.GetLayout();
+            dockContainerList2 = this.GetOrderedDockedDockContainerList();
+            dockContainerList1 = this.GetFloatingDockContainerList();
+            num3 = 0;
+            num2 = 0;
+            arrayList = new ArrayList(dockContainerList2);
+            goto label_82;
             return;
+
             label_82:
-            arrayList.AddRange((ICollection)dockContainerList1);
-            DocumentContainer documentContainer = (DocumentContainer)null;
+            arrayList.AddRange(dockContainerList1);
+            DocumentContainer documentContainer = null;
             if (this.SerializeTabbedDocuments)
                 documentContainer = this.FindDockedContainer(DockStyle.Fill) as DocumentContainer;
             if (documentContainer != null)
-                arrayList.Add((object)documentContainer);
+                arrayList.Add(documentContainer);
             int index1;
+
             try
             {
                 foreach (DockContainer dockContainer in arrayList)
                     dockContainer.x272ed7848e373c56();
                 label_66:
                 this.DockSystemContainer.SuspendLayout();
+
+                foreach (XmlNode xmlNode in xmlDocument.GetElementsByTagName("Layout")[0].ChildNodes)
+                {
+                }
                 IEnumerator enumerator = xmlDocument.GetElementsByTagName("Layout")[0].ChildNodes.GetEnumerator();
                 int index2 = 0;
                 int index3 = 0;
@@ -1229,31 +1207,18 @@ namespace FQ.FreeDock
                         else
                             continue;
                         label_32:
-                        if (0 != 0)
-                        {
-                            if ((uint)index2 + (uint)index3 >= 0U)
-                                goto label_31;
-                        }
-                        else if (-1 != 0)
-                        {
-                            if (true)
-                                break;
-                            else
-                                goto label_47;
-                        }
-                        else
-                            goto label_30;
+    
+                        break;
+            
+
                         label_34:
-                        if ((int)byte.MaxValue != 0)
-                            container1 = dockContainerList1[num2++];
-                        else
-                            goto label_57;
+                        container1 = dockContainerList1[num2++];
+
                         label_36:
                         this.ReadFloatingContainerProperties(xmlNode, container1);
                         continue;
                         label_42:
-                        if ((index3 & 0) == 0)
-                            goto label_29;
+                        goto label_29;
                         label_43:
                         if (!(xmlNode.Name == "Container"))
                             goto label_46;
@@ -1272,11 +1237,9 @@ namespace FQ.FreeDock
                         if (documentContainer != null)
                         {
                             container2 = (DockContainer)documentContainer;
-                            documentContainer = (DocumentContainer)null;
-                            goto label_49;
+                            documentContainer = null;
                         }
-                        else
-                            goto label_49;
+                        goto label_49;
                         label_48:
                         if (xmlNode.Name == "Container")
                             goto label_50;
@@ -1291,7 +1254,7 @@ namespace FQ.FreeDock
                         label_50:
                         if (num3 < dockContainerList2.Length)
                         {
- 
+
                             container2 = dockContainerList2[num3++];
                             goto label_49;
 
@@ -1299,7 +1262,7 @@ namespace FQ.FreeDock
                         else
                             goto label_49;
                         label_55:
-                        container2 = (DockContainer)null;
+                        container2 = null;
                         if (!(xmlNode.Name == "DocumentContainer"))
                         {
                             goto label_48;
@@ -1316,10 +1279,8 @@ namespace FQ.FreeDock
                         label_58:
                         if (xmlNode.NodeType == XmlNodeType.Element)
                         {
-                            if ((uint)num3 >= 0U)
-                                goto label_43;
-                            else
-                                goto label_46;
+                            goto label_43;
+       
                         }
                         else
                             goto label_29;
@@ -1349,25 +1310,14 @@ namespace FQ.FreeDock
                             while (index3 < dockContainerList1.Length)
                             {
                                 dockContainerList1[index3].Dispose();
-                                if ((num2 | int.MaxValue) != 0)
-                                {
-                                    if ((uint)index1 >= 0U)
-                                    {
-                                        if (true)
-                                            ++index3;
-                                        else
-                                            goto label_65;
-                                    }
-                                }
-                                else
-                                    goto label_23;
+                                              
+                                ++index3;
                             }
                             goto label_14;
                         }
                         else
                             goto label_10;
                     }
-                    label_65:
                     dockContainerList2[index1].Dispose();
                     ++index1;
                 }
@@ -1377,31 +1327,25 @@ namespace FQ.FreeDock
                 ++index2;
                 label_11:
                 DockControl[] dockControls = { };
-                if (index2 >= 0) //if (index2 >= dockControls.Length)
+                if (index2 >= dockControls.Length)
                     return;
                 DockControl dockControl = dockControls[index2];
-                if ((uint)num2 - (uint)index3 <= uint.MaxValue)
+   
+                if (!dockControl.IsInContainer && dockControl.CloseAction == DockControlCloseAction.Dispose)
                 {
-                    if (!dockControl.IsInContainer && dockControl.CloseAction == DockControlCloseAction.Dispose)
-                    {
-                        dockControl.Dispose();
-                        goto label_10;
-                    }
-                    else
-                        goto label_10;
+                    dockControl.Dispose();
+                    goto label_10;
                 }
                 else
-                    goto label_15;
+                    goto label_10;
+ 
                 label_14:
                 if (documentContainer != null)
                     documentContainer.Dispose();
                 label_15:
                 dockControls = this.GetDockControls();
                 index2 = 0;
-                if ((uint)num2 + (uint)num2 < 0U)
-                    goto label_66;
-                else
-                    goto label_11;
+                goto label_11;
                 label_84:
                 ;
             }
@@ -1417,19 +1361,292 @@ namespace FQ.FreeDock
                     {
                         if (!dockContainer.IsDisposed)
                             dockContainer.xfe00f14c7d278916();
-                        else if ((num2 | 2) != 0)
-                        {
-                            if (false)
-                                ;
-                        }
-                        else
-                            break;
                     }
                 }
                 this.DockSystemContainer.ResumeLayout();
             }
         }
-
+        //        public void SetLayout(string layout)
+        //        {
+        //            this.EnsureDockSystemContainer();
+        //            ArrayList arrayList;
+        //            int num2;
+        //            FloatingDockContainer[] dockContainerList1;
+        //            DockContainer[] dockContainerList2;
+        //            XmlDocument xmlDocument;
+        //            int num3;
+        //            this.EnsureHandles();
+        //            xmlDocument = new XmlDocument();
+        //            xmlDocument.LoadXml(layout);
+        //            this.GetLayout();
+        //            dockContainerList2 = this.GetOrderedDockedDockContainerList();
+        //            dockContainerList1 = this.GetFloatingDockContainerList();
+        //            num3 = 0;
+        //            num2 = 0;
+        //            arrayList = new ArrayList(dockContainerList2);
+        //            goto label_82;
+        //            return;
+        //            label_82:
+        //            arrayList.AddRange((ICollection)dockContainerList1);
+        //            DocumentContainer documentContainer = (DocumentContainer)null;
+        //            if (this.SerializeTabbedDocuments)
+        //                documentContainer = this.FindDockedContainer(DockStyle.Fill) as DocumentContainer;
+        //            if (documentContainer != null)
+        //                arrayList.Add((object)documentContainer);
+        //            int index1;
+        //            try
+        //            {
+        //                foreach (DockContainer dockContainer in arrayList)
+        //                    dockContainer.x272ed7848e373c56();
+        //                label_66:
+        //                this.DockSystemContainer.SuspendLayout();
+        //                IEnumerator enumerator = xmlDocument.GetElementsByTagName("Layout")[0].ChildNodes.GetEnumerator();
+        //                int index2 = 0;
+        //                int index3 = 0;
+        //                try
+        //                {
+        //                    while (true)
+        //                    {
+        //                        DockContainer container2 = null;
+        //
+        //                        if (enumerator.MoveNext())
+        //                            goto label_59;
+        //                        else
+        //                            goto label_32;
+        //                        label_29:
+        //                        XmlNode xmlNode = null;
+        //                        if (xmlNode.NodeType != XmlNodeType.Element)
+        //                            continue;
+        //                        label_30:
+        //                        if (!(xmlNode.Name == "FloatingContainer"))
+        //                            continue;
+        //                        label_31:
+        //                        FloatingDockContainer container1;
+        //                        if (xmlNode.HasChildNodes)
+        //                        {
+        //                            do
+        //                            {
+        //                                container1 = (FloatingDockContainer)null;
+        //                                if (num2 < dockContainerList1.Length)
+        //                                {
+        //                                    if ((uint)index3 >= 0U)
+        //                                    {
+        //                                        if ((uint)num3 <= uint.MaxValue)
+        //                                            goto label_34;
+        //                                    }
+        //                                    else
+        //                                        goto label_48;
+        //                                }
+        //                                else
+        //                                    goto label_36;
+        //                            }
+        //                            while ((uint)index3 - (uint)num3 > uint.MaxValue);
+        //                            goto label_29;
+        //                        }
+        //                        else
+        //                            continue;
+        //                        label_32:
+        //                        if (0 != 0)
+        //                        {
+        //                            if ((uint)index2 + (uint)index3 >= 0U)
+        //                                goto label_31;
+        //                        }
+        //                        else if (-1 != 0)
+        //                        {
+        //                            if (true)
+        //                                break;
+        //                            else
+        //                                goto label_47;
+        //                        }
+        //                        else
+        //                            goto label_30;
+        //                        label_34:
+        //                        if ((int)byte.MaxValue != 0)
+        //                            container1 = dockContainerList1[num2++];
+        //                        else
+        //                            goto label_57;
+        //                        label_36:
+        //                        this.ReadFloatingContainerProperties(xmlNode, container1);
+        //                        continue;
+        //                        label_42:
+        //                        if ((index3 & 0) == 0)
+        //                            goto label_29;
+        //                        label_43:
+        //                        if (!(xmlNode.Name == "Container"))
+        //                            goto label_46;
+        //                        label_44:
+        //                        if (xmlNode.HasChildNodes)
+        //                            goto label_55;
+        //                        else
+        //                            goto label_29;
+        //                        label_46:
+        //                        if (xmlNode.Name == "DocumentContainer")
+        //                            goto label_44;
+        //                        else
+        //                            goto label_42;
+        //                        label_47:
+        //                        container2 = null;
+        //                        if (documentContainer != null)
+        //                        {
+        //                            container2 = (DockContainer)documentContainer;
+        //                            documentContainer = (DocumentContainer)null;
+        //                            goto label_49;
+        //                        }
+        //                        else
+        //                            goto label_49;
+        //                        label_48:
+        //                        if (xmlNode.Name == "Container")
+        //                            goto label_50;
+        //                        label_49:
+        //                        this.ReadContainerProperties(xmlNode, container2);
+        //                        if ((uint)num3 - (uint)index3 >= 0U)
+        //                        {
+        //                            continue;
+        //                        }
+        //                        else
+        //                            goto label_42;
+        //                        label_50:
+        //                        if (num3 < dockContainerList2.Length)
+        //                        {
+        //
+        //                            container2 = dockContainerList2[num3++];
+        //                            goto label_49;
+        //
+        //                        }
+        //                        else
+        //                            goto label_49;
+        //                        label_55:
+        //                        container2 = (DockContainer)null;
+        //                        if (!(xmlNode.Name == "DocumentContainer"))
+        //                        {
+        //                            goto label_48;
+        //
+        //                        }
+        //                        else
+        //                            goto label_47;
+        //                        label_57:
+        //                        if (xmlNode.Name == "Window")
+        //                        {
+        //                            this.ReadWindowProperties(xmlNode);
+        //                            continue;
+        //                        }
+        //                        label_58:
+        //                        if (xmlNode.NodeType == XmlNodeType.Element)
+        //                        {
+        //                            if ((uint)num3 >= 0U)
+        //                                goto label_43;
+        //                            else
+        //                                goto label_46;
+        //                        }
+        //                        else
+        //                            goto label_29;
+        //                        label_59:
+        //                        xmlNode = (XmlNode)enumerator.Current;
+        //                        if (xmlNode.NodeType == XmlNodeType.Element)
+        //                            goto label_57;
+        //                        else
+        //                            goto label_58;
+        //                    }
+        //                }
+        //                finally
+        //                {
+        //                    IDisposable disposable = enumerator as IDisposable;
+        //                    if (disposable != null)
+        //                        disposable.Dispose();
+        //                }
+        //                index1 = num3;
+        //                do
+        //                {
+        //                    if (index1 >= dockContainerList2.Length)
+        //                    {
+        //                        if ((uint)index1 >= 0U)
+        //                        {
+        //                            label_23:
+        //                            index3 = num2;
+        //                            while (index3 < dockContainerList1.Length)
+        //                            {
+        //                                dockContainerList1[index3].Dispose();
+        //                                if ((num2 | int.MaxValue) != 0)
+        //                                {
+        //                                    if ((uint)index1 >= 0U)
+        //                                    {
+        //                                        if (true)
+        //                                            ++index3;
+        //                                        else
+        //                                            goto label_65;
+        //                                    }
+        //                                }
+        //                                else
+        //                                    goto label_23;
+        //                            }
+        //                            goto label_14;
+        //                        }
+        //                        else
+        //                            goto label_10;
+        //                    }
+        //                    label_65:
+        //                    dockContainerList2[index1].Dispose();
+        //                    ++index1;
+        //                }
+        //                while ((uint)index3 + (uint)num2 <= uint.MaxValue);
+        //                goto label_84;
+        //                label_10:
+        //                ++index2;
+        //                label_11:
+        //                DockControl[] dockControls = { };
+        //                if (index2 >= 0) //if (index2 >= dockControls.Length)
+        //                    return;
+        //                DockControl dockControl = dockControls[index2];
+        //                if ((uint)num2 - (uint)index3 <= uint.MaxValue)
+        //                {
+        //                    if (!dockControl.IsInContainer && dockControl.CloseAction == DockControlCloseAction.Dispose)
+        //                    {
+        //                        dockControl.Dispose();
+        //                        goto label_10;
+        //                    }
+        //                    else
+        //                        goto label_10;
+        //                }
+        //                else
+        //                    goto label_15;
+        //                label_14:
+        //                if (documentContainer != null)
+        //                    documentContainer.Dispose();
+        //                label_15:
+        //                dockControls = this.GetDockControls();
+        //                index2 = 0;
+        //                if ((uint)num2 + (uint)num2 < 0U)
+        //                    goto label_66;
+        //                else
+        //                    goto label_11;
+        //                label_84:
+        //                ;
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                throw new ArgumentException("The layout information provided could not be interpreted.", ex);
+        //            }
+        //            finally
+        //            {
+        //                foreach (DockContainer dockContainer in arrayList)
+        //                {
+        //                    if (dockContainer != null)
+        //                    {
+        //                        if (!dockContainer.IsDisposed)
+        //                            dockContainer.xfe00f14c7d278916();
+        //                        else if ((num2 | 2) != 0)
+        //                        {
+        //                            if (false)
+        //                                ;
+        //                        }
+        //                        else
+        //                            break;
+        //                    }
+        //                }
+        //                this.DockSystemContainer.ResumeLayout();
+        //            }
+        //        }
+        //
         private bool ConvertStringToBool(string str)
         {
             return !(str == "0");
@@ -1467,8 +1684,6 @@ namespace FQ.FreeDock
             if (node.Attributes["Guid"] != null)
             {
                 guid = new Guid(node.Attributes["Guid"].Value);
-                if (-1 == 0)
-                    ;
             }
             if (container == null)
                 container = new FloatingDockContainer(this, guid);
@@ -1492,8 +1707,7 @@ namespace FQ.FreeDock
                             splitLayoutSystem = this.ReadSplitLayoutSystem(splitNode, (DockContainer)container);
                             if (splitLayoutSystem == null)
                             {
-                                if (0 == 0)
-                                    container.Dispose();
+                                container.Dispose();
                             }
                             else
                                 goto label_7;
@@ -1641,40 +1855,25 @@ namespace FQ.FreeDock
                     do
                     {
                         xmlNode = (XmlNode)enumerator.Current;
-                        if (0 != 0 || xmlNode.NodeType == XmlNodeType.Element)
+                        if (xmlNode.NodeType == XmlNodeType.Element)
                             goto label_16;
                         else
                             goto label_9;
                         label_7:
                         if (xmlNode.NodeType != XmlNodeType.Element)
                         {
-                            if (0 != 0 || -2 == 0)
-                                continue;
-                            else
-                                goto label_4;
+                            goto label_4;
                         }
                         else
                             break;
                         label_9:
-                        if (4 == 0)
-                            ;
-                        if (0 == 0)
-                            goto label_7;
-                        else
-                            goto label_11;
+                        goto label_7;
+
                         label_16:
                         if (xmlNode.Name == "SplitLayoutSystem")
                         {
                             splitLayoutSystem = this.ReadSplitLayoutSystem(xmlNode, container);
-                            if ((int)byte.MaxValue == 0)
-                            {
-                                if (-1 != 0)
-                                    goto label_14;
-                                else
-                                    goto label_9;
-                            }
-                            else
-                                goto label_6;
+                            goto label_6;
                         }
                         else
                             goto label_7;
@@ -1690,9 +1889,7 @@ namespace FQ.FreeDock
                         goto label_14;
                     else
                         continue;
-                    label_11:
-                    if (3 != 0)
-                        goto label_3;
+              
                     label_12:
                     ControlLayoutSystem controlLayoutSystem = this.ReadControlLayoutSystem(xmlNode, container);
                     if (controlLayoutSystem != null && 0 == 0)
@@ -1721,28 +1918,15 @@ namespace FQ.FreeDock
         private ControlLayoutSystem ReadControlLayoutSystem(XmlNode controlNode, DockContainer container)
         {
             Guid guid1 = Guid.Empty;
-            bool flag1;
-            if (true)
-                goto label_44;
-            else
-                goto label_38;
+            goto label_44;
+
             label_2:
             ControlLayoutSystem newLayoutSystem;
             return newLayoutSystem;
             label_4:
             bool flag2;
-            if (true)
-            {
-                if (-1 != 0)
-                {
-                    newLayoutSystem.Guid = guid1;
-                    goto label_2;
-                }
-                else
-                    goto label_47;
-            }
-            else
-                goto label_40;
+            newLayoutSystem.Guid = guid1;
+            goto label_2;
             label_38:
             if (controlNode.Attributes["SelectedControl"] != null)
                 goto label_46;
@@ -1753,8 +1937,6 @@ namespace FQ.FreeDock
                 goto label_40;
             label_46:
             Guid guid2 = new Guid(controlNode.Attributes["SelectedControl"].Value);
-            if (false)
-                ;
             DockControl dockControl = this.FindControl(guid2);
             goto label_39;
             label_40:
@@ -1767,13 +1949,7 @@ namespace FQ.FreeDock
                 label_12:
                 if (!enumerator1.MoveNext())
                 {
-                    if (((flag2 ? 1 : 0) & 0) != 0)
-                    {
-                        if (15 == 0)
-                            goto label_12;
-                    }
-                    else
-                        goto label_3;
+                    goto label_3;
                 }
                 XmlNode xmlNode1 = (XmlNode)enumerator1.Current;
                 if (xmlNode1.NodeType == XmlNodeType.Element && xmlNode1.Name == "Controls")
@@ -1789,33 +1965,20 @@ namespace FQ.FreeDock
                             if (xmlNode2.NodeType == XmlNodeType.Element)
                                 goto label_19;
                             label_15:
-                            if (-1 == 0)
-                            {
-                                if (1 == 0)
-                                    goto label_17;
-                            }
-                            else
-                                continue;
+                            continue;
                             label_19:
                             if (!(xmlNode2.Name == "Control"))
                             {
-                                if (-1 == 0)
-                                    break;
                             }
                             else
                             {
                                 DockControl control = this.FindControl(new Guid(xmlNode2.Attributes["Guid"].Value));
                                 if (control != null)
                                 {
-                                    if (15 != 0)
-                                    {
-                                        if (1 != 0)
-                                            arrayList.Add((object)control);
-                                        else
-                                            goto label_15;
-                                    }
-                                    else
-                                        goto label_24;
+            
+                        
+                                    arrayList.Add((object)control);
+
                                 }
                             }
                         }
@@ -1845,8 +2008,7 @@ namespace FQ.FreeDock
                     disposable.Dispose();
                     goto label_33;
                 }
-                else if (false)
-                    goto label_33;
+  
                 label_37:
                 ;
             }
@@ -1861,17 +2023,13 @@ namespace FQ.FreeDock
                     while (dockControl != null)
                     {
                         newLayoutSystem.SelectedControl = dockControl;
-                        if (0 == 0)
-                            break;
+                        break;
                     }
                     newLayoutSystem.Collapsed = flag2;
-                    if (true)
-                    {
-                        if (!(guid1 != Guid.Empty))
-                            goto label_2;
-                    }
-                    else
-                        break;
+        
+                    if (!(guid1 != Guid.Empty))
+                        goto label_2;
+
                 }
                 while (1 == 0);
                 goto label_4;
@@ -1880,14 +2038,11 @@ namespace FQ.FreeDock
                 goto label_47;
             label_44:
             size = SandDockManager.ConvertStringToSizeF(controlNode.Attributes["WorkingSize"].Value);
-            if (true)
-            {
-                flag2 = this.ConvertStringToBool(controlNode.Attributes["Collapsed"].Value);
-                dockControl = null;
-                goto label_38;
-            }
-            else
-                goto label_4;
+
+            flag2 = this.ConvertStringToBool(controlNode.Attributes["Collapsed"].Value);
+            dockControl = null;
+            goto label_38;
+
             label_47:
             return null;
         }
@@ -2047,36 +2202,24 @@ namespace FQ.FreeDock
                 DockContainer container1;
                 if (index2 >= dockContainerList1.Length)
                 {
-                    if ((index1 | 8) != 0)
-                    {
-                        documentContainer = this.FindDockedContainer(DockStyle.Fill) as DocumentContainer;
-                        if ((uint)index1 > uint.MaxValue || documentContainer != null)
-                            goto label_4;
-                        else
-                            goto label_2;
-                    }
+ 
+                    documentContainer = this.FindDockedContainer(DockStyle.Fill) as DocumentContainer;
+                    if ((uint)index1 > uint.MaxValue || documentContainer != null)
+                        goto label_4;
                     else
-                        goto label_23;
+                        goto label_2;
+
                 }
                 else
                 {
                     container1 = (DockContainer)dockContainerList1[index2];
-                    if ((index1 | 1) != 0)
-                    {
-                        if ((uint)index1 + (uint)index1 < 0U)
-                            goto label_23;
-                    }
-                    else
-                        goto label_15;
                 }
                 label_10:
                 if (container1.LayoutSystem.ContainsPersistableDockControls)
                     this.SaveContainerLayout(container1, writer);
                 ++index2;
-                if ((uint)index2 >= 0U)
-                    goto label_7;
-                else
-                    goto label_23;
+                goto label_7;
+ 
                 label_12:
                 DockContainer[] dockContainerList2;
                 DockContainer container2 = null;
@@ -2092,40 +2235,23 @@ namespace FQ.FreeDock
                     goto label_21;
                 }
                 label_15:
-                if (true)
-                {
-                    this.SaveContainerLayout(container2, writer);
-                    if (false)
-                        goto label_10;
-                }
-                else
-                    goto label_33;
+   
+                this.SaveContainerLayout(container2, writer);
+
                 label_17:
                 ++index1;
                 goto label_12;
                 label_21:
-                if (0 == 0)
+
+                if (container2.LayoutSystem.ContainsPersistableDockControls)
                 {
-                    if (container2.LayoutSystem.ContainsPersistableDockControls)
-                    {
-                        if (false)
-                            goto label_36;
-                        else
-                            goto label_15;
-                    }
-                    else
-                        goto label_17;
+                    goto label_15;
                 }
                 else
-                    goto label_4;
+                    goto label_17;
+
                 label_23:
-                if (0 != 0)
-                {
-                    if ((uint)index2 - (uint)index2 <= uint.MaxValue)
-                        continue;
-                }
-                else
-                    goto label_2;
+                goto label_2;
                 label_25:
                 writer.WriteStartDocument();
                 ((XmlWriter)writer).WriteStartElement("Layout");
@@ -2137,10 +2263,7 @@ namespace FQ.FreeDock
                 label_33:
                 dockContainerList2 = this.GetOrderedDockedDockContainerList();
                 index1 = 0;
-                if ((int)byte.MaxValue == 0)
-                    goto label_4;
-                else
-                    goto label_12;
+                goto label_12;
                 label_35:
                 stringWriter = new StringWriter();
                 label_36:
@@ -2199,13 +2322,10 @@ namespace FQ.FreeDock
             ((XmlWriter)writer).WriteStartElement("FloatingContainer");
             writer.WriteAttributeString("Bounds", this.ConvertRectangleToString(x410f3612b9a8f9de.FloatingBounds));
             writer.WriteAttributeString("Guid", x410f3612b9a8f9de.Guid.ToString());
-            if (0 == 0)
-            {
-                this.SaveLayoutSystem((LayoutSystemBase)container.LayoutSystem, writer);
-                writer.WriteEndElement();
-            }
-            else
-                goto label_2;
+
+            this.SaveLayoutSystem((LayoutSystemBase)container.LayoutSystem, writer);
+            writer.WriteEndElement();
+
         }
 
         private void SaveLayoutSystem(LayoutSystemBase layoutSystem, XmlTextWriter writer)
@@ -2222,8 +2342,7 @@ namespace FQ.FreeDock
                 goto label_17;
             label_2:
             writer.WriteEndElement();
-            if (0 == 0)
-                return;
+            return;
             int num;
             if ((uint)num - (uint)num <= uint.MaxValue)
                 goto label_38;
@@ -2236,8 +2355,6 @@ namespace FQ.FreeDock
                 {
                     ControlLayoutSystem controlLayoutSystem = (ControlLayoutSystem)layoutSystem;
                     writer.WriteAttributeString("Guid", controlLayoutSystem.Guid.ToString());
-                    if (false)
-                        return;
                     writer.WriteAttributeString("Collapsed", this.ConvertBoolToString(controlLayoutSystem.Collapsed));
                     if (controlLayoutSystem.SelectedControl == null)
                         goto label_5;
@@ -2270,10 +2387,8 @@ namespace FQ.FreeDock
                             disposable.Dispose();
                     }
                     label_14:
-                    if (true)
-                        goto label_4;
-                    else
-                        goto label_15;
+                    goto label_4;
+
                     label_3:
                     writer.WriteAttributeString("SelectedControl", controlLayoutSystem.SelectedControl.Guid.ToString());
                     goto label_5;
@@ -2282,14 +2397,7 @@ namespace FQ.FreeDock
                         goto label_3;
                     else
                         goto label_5;
-                    label_15:
-                    if ((int)byte.MaxValue != 0)
-                    {
-                        if ((num | 3) != 0)
-                            goto label_3;
-                        else
-                            goto label_1;
-                    }
+          
                 }
                 else
                     goto label_2;
@@ -2315,10 +2423,7 @@ namespace FQ.FreeDock
                     else if ((uint)num + (uint)num < 0U)
                         goto label_2;
                 }
-                if (1 == 0)
-                    goto label_2;
-                else
-                    goto label_2;
+                goto label_2;
             }
             finally
             {
@@ -2422,67 +2527,22 @@ namespace FQ.FreeDock
                 bar.PropagateNewRenderer();
             }
         }
-
+        // reviewed with 2.4
         internal void RegisterDockContainer(DockContainer container)
         {
+            if (container is DocumentContainer && this.documentContainer != null)
+                throw new InvalidOperationException("Only one DocumentContainer can exist in a SandDock layout.");
+            if (!this.dockContainers.Contains(container))
+                this.dockContainers.Add(container);
+            if (this.DockSystemContainer == null && container.Parent is ContainerControl && !container.IsFloating)
+                this.DockSystemContainer = container.Parent;
+            container.AllowDrop = this.SelectTabsOnDrag;
             if (!(container is DocumentContainer))
-                goto label_9;
-            else
-                goto label_14;
-            label_4:
+                return;
+            this.documentContainer = (DocumentContainer)container;
             this.documentContainer.BorderStyle = this.BorderStyle;
             this.documentContainer.DocumentOverflow = this.DocumentOverflow;
             this.documentContainer.IntegralClose = this.IntegralClose;
-            if (0 != 0)
-                return;
-            else
-                return;
-            label_5:
-            container.AllowDrop = this.SelectTabsOnDrag;
-            if (!(container is DocumentContainer))
-            {
-                if (15 != 0)
-                {
-                    if (2 != 0)
-                        return;
-                }
-                else
-                    goto label_4;
-            }
-            this.documentContainer = (DocumentContainer)container;
-            goto label_4;
-            label_9:
-            while (!this.dockContainers.Contains(container))
-            {
-                this.dockContainers.Add(container);
-                if (int.MaxValue != 0)
-                    goto label_6;
-            }
-            goto label_10;
-            label_6:
-            if (this.DockSystemContainer != null || !(container.Parent is ContainerControl) || container.IsFloating)
-                goto label_5;
-            label_7:
-            this.DockSystemContainer = container.Parent;
-            if (0 != 0)
-                goto label_4;
-            else
-                goto label_5;
-            label_10:
-            if (0 != 0)
-                goto label_7;
-            else
-                goto label_6;
-            label_14:
-            if (-2 != 0)
-            {
-                if (this.documentContainer != null)
-                    throw new InvalidOperationException("Only one DocumentContainer can exist in a SandDock layout.");
-                else
-                    goto label_9;
-            }
-            else
-                goto label_5;
         }
 
         internal void UnregisterDockContainer(DockContainer container)
@@ -2532,38 +2592,20 @@ namespace FQ.FreeDock
 
         internal FloatingDockContainer FindFloatingDockContainer(Guid guid)
         {
-            FloatingDockContainer[] dockContainerList = this.GetFloatingDockContainerList();
-            int index = 0;
-            while (index < dockContainerList.Length)
+            foreach (FloatingDockContainer container in this.GetFloatingDockContainerList())
             {
-                FloatingDockContainer x410f3612b9a8f9de1 = dockContainerList[index];
-                if (!(x410f3612b9a8f9de1.Guid == guid))
-                {
-                    ++index;
-                }
-                else
-                {
-                    FloatingDockContainer x410f3612b9a8f9de2 = x410f3612b9a8f9de1;
-                    if (8 != 0)
-                        return x410f3612b9a8f9de2;
-                }
+                if (container.Guid == guid)
+                    return container;
             }
-            return (FloatingDockContainer)null;
+            return null;
         }
 
         private Control FindDockSystemContainer(IDesignerHost designerHost, Control parent)
         {
-            foreach (Control parent1 in parent.Controls)
+            foreach (Control control in parent.Controls)
             {
-                if (parent1.Dock == DockStyle.Fill || 0 == 0 && 0 != 0)
-                {
-                    if (parent1.Site == null)
-                    {
-
-                    }
-                    else if (parent1.Site.DesignMode && !parent1.Controls.IsReadOnly)
-                        return this.FindDockSystemContainer(designerHost, parent1);
-                }
+                if (control.Dock == DockStyle.Fill && control.Site != null && control.Site.DesignMode && !control.Controls.IsReadOnly)
+                    return this.FindDockSystemContainer(designerHost, control);
             }
             return parent;
         }
@@ -2576,52 +2618,17 @@ namespace FQ.FreeDock
         {
             if (disposing)
             {
-                if (0 == 0)
-                    goto label_13;
-                else
-                    goto label_8;
-                label_6:
-                AutoHideBar[] x10ac79a4257c7f52Array1;
-                for (int index = 0; index < x10ac79a4257c7f52Array1.Length; ++index)
-                    x10ac79a4257c7f52Array1[index].Dispose();
+                DockContainer[] containers = new DockContainer[this.dockContainers.Count];
+                this.dockContainers.CopyTo(containers);
+                foreach (Component component in containers)
+                    component.Dispose();
+                this.dockContainers.Clear();
+                AutoHideBar[] bars = new AutoHideBar[this.autoHideBars.Count];
+                this.autoHideBars.CopyTo(bars);
+                for (int i = 0; i < bars.Length; ++i)
+                    bars[i].Dispose();
                 this.autoHideBars.Clear();
-                goto label_5;
-                label_8:
-                AutoHideBar[] x10ac79a4257c7f52Array2 = new AutoHideBar[this.autoHideBars.Count];
-                label_9:
-                this.autoHideBars.CopyTo((Array)x10ac79a4257c7f52Array2);
-                int index1;
-                if (false)
-                    return;
-                x10ac79a4257c7f52Array1 = x10ac79a4257c7f52Array2;
-                goto label_6;
-                label_13:
-                int num1;
-                if (true)
-                {
-                    if (int.MaxValue != 0)
-                        goto label_15;
-                    label_12:
-                    this.dockContainers.Clear();
-                    goto label_8;
-                    label_15:
-                    DockContainer[] dockContainerArray1 = new DockContainer[this.dockContainers.Count];
-                    int num2;
-                    if (true)
-                    {
-                        this.dockContainers.CopyTo((Array)dockContainerArray1);
-                        DockContainer[] dockContainerArray2 = dockContainerArray1;
-                        for (index1 = 0; index1 < dockContainerArray2.Length; ++index1)
-                            dockContainerArray2[index1].Dispose();
-                        goto label_12;
-                    }
-                    else
-                        goto label_9;
-                }
-                else
-                    goto label_6;
             }
-            label_5:
             base.Dispose(disposing);
         }
 
@@ -2680,270 +2687,86 @@ namespace FQ.FreeDock
                 this.ActiveTabbedDocumentChanged(this, e);
         }
 
+        // reviewed with 2.4
         private void OnDockSystemContainerResize(object sender, EventArgs e)
         {
-            if (this.OwnerForm == null)
-                goto label_60;
-            else
-                goto label_77;
-            label_52:
-            int num1;
-            Form form1 = null;
-            if (form1.ActiveMdiChild.WindowState == FormWindowState.Maximized)
+            if (this.OwnerForm != null && this.OwnerForm.WindowState == FormWindowState.Minimized)
                 return;
-            label_54:
-            Rectangle rectangle = xedb4922162c60d3d.x41c62f474d3fb367(this.DockSystemContainer);
-            num1 = -rectangle.Width;
-            int num2 = -rectangle.Height;
-            if (this.DockSystemContainer is ToolStripContentPanel)
-                goto label_51;
-            label_47:
-            if (num1 > 0)
-                goto label_48;
-            label_1:
-            int num3;
-            int num4 = 0;
-            int num5;
-            int num6 = 0;
-            if (num2 <= 0)
-            {
-                if (false)
-                    goto label_34;
-            }
-            else
-            {
-                ArrayList arrayList = new ArrayList();
-                if (true)
-                {
-                    if (true)
-                    {
-                        int num7 = 0;
-                        IEnumerator enumerator1 = this.dockContainers.GetEnumerator();
-                        try
-                        {
-                            while (enumerator1.MoveNext())
-                            {
-                                DockContainer dockContainer = (DockContainer)enumerator1.Current;
-                                if (dockContainer.Dock == DockStyle.Top)
-                                    goto label_6;
-                                label_5:
-                                if (dockContainer.Dock != DockStyle.Bottom)
-                                    continue;
-                                label_6:
-                                num7 += dockContainer.Height;
-                                arrayList.Add((object)dockContainer);
-                                if (false)
-                                    goto label_5;
-                            }
-                        }
-                        finally
-                        {
-                            IDisposable disposable = enumerator1 as IDisposable;
-                            while (disposable != null)
-                            {
-                                disposable.Dispose();
-                                if ((uint)num4 + (uint)num4 >= 0U)
-                                    break;
-                            }
-                        }
-                        if (num7 <= 0)
-                            return;
-                        IEnumerator enumerator2 = arrayList.GetEnumerator();
-                        try
-                        {
-                            label_15:
-                            while (enumerator2.MoveNext())
-                            {
-                                do
-                                {
-                                    DockContainer dockContainer = (DockContainer)enumerator2.Current;
-                                    int num8 = 0;
-                                    if (true)
-                                    {
-                                        num8 = Convert.ToInt32((double)dockContainer.Height / (double)num7 * (double)num2);
-                                        num7 -= dockContainer.Height;
-                                    }
-                                    num2 -= num8;
-                                    dockContainer.ContentSize -= num8;
-                                    if (num7 != 0)
-                                        goto label_15;
-                                }
-                                while ((uint)num7 + (uint)num7 > uint.MaxValue);
-                                break;
-                            }
-                            return;
-                        }
-                        finally
-                        {
-                            IDisposable disposable = enumerator2 as IDisposable;
-                            while (disposable != null)
-                            {
-                                disposable.Dispose();
-                                if (true)
-                                    break;
-                            }
-                        }
-                    }
-                }
-                else
-                    goto label_34;
-            }
-            if (true)
-                return;
-            else
-                goto label_77;
-            label_34:
-            ArrayList arrayList1;
-            if (num4 > 0)
-            {
-                IEnumerator enumerator = arrayList1.GetEnumerator();
-                try
-                {
-                    while (enumerator.MoveNext())
-                    {
-                        DockContainer dockContainer = (DockContainer)enumerator.Current;
-                        num5 = Convert.ToInt32((double)dockContainer.Width / (double)num4 * (double)num1);
-         
-         
-                        num4 -= dockContainer.Width;
-                        num1 -= num5;
-                        dockContainer.ContentSize -= num5;
-                        if (num4 == 0)
-                            break;
-
-                    }
-                    goto label_1;
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
-                }
-            }
-            else
-                goto label_1;
-            label_48:
-            if (true)
-            {
-                if (int.MinValue != 0)
-                {
-                    arrayList1 = new ArrayList();
-                    num4 = 0;
-                    IEnumerator enumerator = this.dockContainers.GetEnumerator();
-                    try
-                    {
-                        while (true)
-                        {
-                            DockContainer dockContainer = null;
-                            while (enumerator.MoveNext())
-                            {
-                                dockContainer = (DockContainer)enumerator.Current;
-                                if (dockContainer.Dock == DockStyle.Left || dockContainer.Dock == DockStyle.Right)
-                                    goto label_42;
-                            }
-                            if ((num1 & 0) == 0)
-                                goto label_34;
-                            label_42:
-                            num4 += dockContainer.Width;
-                            arrayList1.Add((object)dockContainer);
-                        }
-                    }
-                    finally
-                    {
-                        IDisposable disposable = enumerator as IDisposable;
-                        if (disposable != null)
-                            disposable.Dispose();
-                    }
-                }
-                else if (0 != 0)
-                {
-                    if ((uint)num2 - (uint)num1 <= uint.MaxValue)
-                        goto label_77;
-                    else
-                        goto label_67;
-                }
-                else
-                    goto label_34;
-            }
-            else
-                goto label_52;
-            label_51:
-            if (rectangle.Height <= 0)
-                return;
-            if (false)
-                goto label_72;
-            else
-                goto label_47;
-            label_58:
-            if (form1.ActiveMdiChild == null)
-            {
-                if (false)
-                    return;
-                else
-                    goto label_54;
-            }
-            else
-                goto label_65;
-            label_60:
             if (this.DockSystemContainer != null)
-                goto label_75;
-            else
-                goto label_54;
-            label_65:
-            Form form2;
-            if (form1.ActiveMdiChild == form2)
-                goto label_54;
-            else
-                goto label_52;
-            label_67:
-            if (form1 != null)
             {
-                if (form1.WindowState == FormWindowState.Minimized)
-                    return;
-                else
-                    goto label_58;
-            }
-            else
-                goto label_54;
-            label_72:
-            form1 = form2.Parent.FindForm();
-            goto label_67;
-            label_75:
-            form2 = this.DockSystemContainer.FindForm();
-            if (true)
-            {
-                if (form2 == null)
-                {
-                    if (false)
-                        goto label_58;
-                    else
-                        goto label_54;
-                }
-                else
+                Form form2 = this.DockSystemContainer.FindForm();
+                if (form2 != null)
                 {
                     if (form2.WindowState == FormWindowState.Minimized)
                         return;
-                    if (form2.Parent == null)
-                        goto label_54;
-                    else
-                        goto label_72;
+                    if (form2.Parent != null)
+                    {
+                        Form form1 = form2.Parent.FindForm();
+                        if (form1 != null)
+                        {
+                            if (form1.WindowState == FormWindowState.Minimized)
+                                return;
+                            if (form1.ActiveMdiChild != null && form1.ActiveMdiChild != form2 && form1.ActiveMdiChild.WindowState == FormWindowState.Maximized)
+                                return;
+                        }
+                    }
                 }
             }
-            else
-                goto label_65;
-            label_77:
-            if (this.OwnerForm.WindowState == FormWindowState.Minimized)
+
+            Rectangle rectangle = xedb4922162c60d3d.x41c62f474d3fb367(this.DockSystemContainer);
+            int num1 = -rectangle.Width;
+            int num2 = -rectangle.Height;
+            if (this.DockSystemContainer is ToolStripContentPanel && (/*rectangle.Width <= 0 ||*/ rectangle.Height <= 0))
                 return;
-            if (true)
+            if (num1 > 0)
             {
-                if (true)
-                    goto label_60;
-                else
-                    goto label_75;
+                ArrayList arrayList1 = new ArrayList();
+                int num4 = 0;
+                foreach (DockContainer dockContainer in this.dockContainers)
+                {
+                    if (dockContainer.Dock == DockStyle.Left || dockContainer.Dock == DockStyle.Right)
+                    {   
+                        num4 += dockContainer.Width;
+                        arrayList1.Add(dockContainer);
+                    }
+                }
+                if (num4 > 0)
+                {
+                    foreach (DockContainer dockContainer in arrayList1)
+                    {
+                        int num5 = Convert.ToInt32((double)dockContainer.Width / (double)num4 * (double)num1);
+                        num4 -= dockContainer.Width;
+                        num1 -= num5;
+                        dockContainer.ContentSize -= num5;
+                    }
+                }
             }
-            else
-                goto label_67;
+            int num3;
+            int num6 = 0;
+            if (num2 < 0)
+            {
+                ArrayList arrayList = new ArrayList();
+                int num7 = 0;
+                foreach (DockContainer dockContainer in dockContainers)
+                {
+                    if (dockContainer.Dock == DockStyle.Top || dockContainer.Dock == DockStyle.Bottom)
+                    {
+                        num7 += dockContainer.Height;
+                        arrayList.Add(dockContainer);
+                    }
+                }
+                if (num7 <= 0)
+                    return;
+                foreach (DockContainer dockContainer in arrayList)
+                {
+                    int num8 = Convert.ToInt32((double)dockContainer.Height / (double)num7 * (double)num2);
+                    num7 -= dockContainer.Height;
+                    num2 -= num8;
+                    dockContainer.ContentSize -= num8;
+                    if (num7 == 0)
+                        break;
+                }
+            }
         }
 
         private void OnOwnerFormActivated(object sender, EventArgs e)

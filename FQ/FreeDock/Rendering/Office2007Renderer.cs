@@ -1994,7 +1994,6 @@ namespace FQ.FreeDock.Rendering
             int width;
             using (Font font1 = new Font(font, FontStyle.Bold))
                 width = TextRenderer.MeasureText((IDeviceContext)graphics, text, font1, new System.Drawing.Size(int.MaxValue, int.MaxValue), flags).Width;
-            label_9:
             width += 14;
 
             goto label_3;

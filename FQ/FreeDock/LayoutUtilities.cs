@@ -40,15 +40,12 @@ namespace FQ.FreeDock
         {
             if (container == null)
                 return DockSituation.None;
-
-            if (container.IsFloating)
+            else if (container.IsFloating)
                 return DockSituation.Floating;
-
-            if (container.Dock == DockStyle.Fill)
+            else if (container.Dock == DockStyle.Fill)
                 return DockSituation.Document;
-
-            return DockSituation.Docked;
-
+            else
+                return DockSituation.Docked;
         }
 
         internal static ControlLayoutSystem[] GetLayoutSystemsFor(DockContainer container)
@@ -64,167 +61,210 @@ namespace FQ.FreeDock
 
         internal static ControlLayoutSystem xba5fd484c0e6478b(SandDockManager manager, DockSituation dockSituation, x129cb2a2bdfd0ab2 xfffbdea061bfa120)
         {
-            DockContainer[] dockContainers1 = { };
-            int index1;
-            int index2;
-            ControlLayoutSystem[] controlLayoutSystemArray1;
-            DockContainer[] dockContainers2;
             switch (dockSituation)
             {
                 case DockSituation.Docked:
-                    dockContainers2 = manager.GetDockContainers();
-                    index1 = 0;
-                    goto label_25;
+                    foreach (DockContainer container in  manager.GetDockContainers())
+                    {
+                        if (LayoutUtilities.CheckForDockSituation(container) == dockSituation)
+                        {
+                            ControlLayoutSystem[] layouts = LayoutUtilities.GetLayoutSystemsFor(container);
+                            if (layouts.Length > 0)
+                            {
+                                ControlLayoutSystem layout = layouts[0];
+                                if (layout.Guid == xfffbdea061bfa120.Guid)
+                                    return layout;
+                            }
+                        }
+                    }
+                    break;
                 case DockSituation.Document:
                     if (manager.DocumentContainer != null)
                     {
-                        controlLayoutSystemArray1 = LayoutUtilities.GetLayoutSystemsFor((DockContainer)manager.DocumentContainer);
-
-                        index2 = 0;
-                        goto label_17;
-
+                        ControlLayoutSystem[] layouts = LayoutUtilities.GetLayoutSystemsFor(manager.DocumentContainer);
+                        foreach (ControlLayoutSystem layout in layouts)
+                        {
+                            if (layout.Guid == xfffbdea061bfa120.Guid)
+                                return layout;
+                        }
                     }
-                    else
-                        break;
+                    break;
                 case DockSituation.Floating:
-                    dockContainers1 = manager.GetDockContainers();
-                    goto label_15;
+                    foreach (DockContainer dc in manager.GetDockContainers())
+                    {
+                        if (LayoutUtilities.CheckForDockSituation(dc) == dockSituation)
+                        {
+                            ControlLayoutSystem[] layouts = LayoutUtilities.GetLayoutSystemsFor(dc);
+                            foreach (ControlLayoutSystem layout in layouts)
+                            {
+                                if (layout.Guid == xfffbdea061bfa120.Guid)
+                                    return layout;
+                            }
+                        }
+                    }
+                    break;
                 default:
                     throw new InvalidOperationException();
             }
-            label_3:
-            return (ControlLayoutSystem)null;
-            label_4:
-            int index3;
-            int index4;
-            ControlLayoutSystem[] controlLayoutSystemArray2;
-            if (index3 < dockContainers1.Length)
-            {
-                DockContainer xd3311d815ca25f02 = dockContainers1[index3];
-
-                if (LayoutUtilities.CheckForDockSituation(xd3311d815ca25f02) == dockSituation)
-                {
-                    controlLayoutSystemArray2 = LayoutUtilities.GetLayoutSystemsFor(xd3311d815ca25f02);
-                    index4 = 0;
-                    goto label_9;
-                }
-
-            }
-            else
-                goto label_3;
-            label_5:
-            ++index3;
-            goto label_4;
-            label_7:
-            ControlLayoutSystem controlLayoutSystem1;
-            ControlLayoutSystem controlLayoutSystem2;
-            if (controlLayoutSystem1.Guid == xfffbdea061bfa120.Guid)
-            {
-                controlLayoutSystem2 = controlLayoutSystem1;
-                goto label_38;
-            }
-            ++index4;
-            label_9:
-            if (index4 < controlLayoutSystemArray2.Length)
-            {
-                controlLayoutSystem1 = controlLayoutSystemArray2[index4];
-                goto label_7;
-            }
-            else
-                goto label_5;
-            label_15:
-            index3 = 0;
-            goto label_4;
-            label_17:
-            ControlLayoutSystem controlLayoutSystem3;
-            if (index2 < controlLayoutSystemArray1.Length)
-            {
-                controlLayoutSystem3 = controlLayoutSystemArray1[index2];
-
-            }
-            else
-                goto label_3;
-            label_20:
-            if (!(controlLayoutSystem3.Guid == xfffbdea061bfa120.Guid))
-            {
-                ++index2;
-                goto label_17;
-            }
-            else
-            {
-                if ((index2 | -1) != 0)
-                {
-                    controlLayoutSystem2 = controlLayoutSystem3;
-                    goto label_38;
-                }
-                else
-                    goto label_15;
-            }
-
-
-            label_24:
-            ++index1;
-            label_25:
-            if (index1 < dockContainers2.Length)
-            {
-                DockContainer xd3311d815ca25f02 = dockContainers2[index1];
-                if (LayoutUtilities.CheckForDockSituation(xd3311d815ca25f02) == dockSituation)
-                {
-     
-                    goto label_35;
-                    label_27:
-                    ControlLayoutSystem controlLayoutSystem4;
-                    int index5;
-                    if (!(controlLayoutSystem4.Guid == xfffbdea061bfa120.Guid))
-                    {
-                        ++index5;
-                    }
-                    else
-                    {
-                        controlLayoutSystem2 = controlLayoutSystem4;
-                        goto label_38;
-                    }
-                    label_29:
-                    int num2;
-                    ControlLayoutSystem[] controlLayoutSystemArray3;
-                    if (index5 >= controlLayoutSystemArray3.Length)
-                    {
-
-                        goto label_24;
-
-
-                    }
-                    else
-                    {
-                        controlLayoutSystem4 = controlLayoutSystemArray3[index5];
-                        goto label_27;
-                    }
-                    label_35:
-                    controlLayoutSystemArray3 = LayoutUtilities.GetLayoutSystemsFor(xd3311d815ca25f02);
-                    index5 = 0;
-                  
-                    goto label_29;
-                }
-                else
-                    goto label_24;
-            }
-            else
-                goto label_3;
-            label_38:
-            return controlLayoutSystem2;
+            return null;
         }
-
+        //        internal static ControlLayoutSystem xba5fd484c0e6478b(SandDockManager manager, DockSituation dockSituation, x129cb2a2bdfd0ab2 xfffbdea061bfa120)
+        //        {
+        //            DockContainer[] dockContainers1 = { };
+        //            int index1;
+        //            int index2;
+        //            ControlLayoutSystem[] controlLayoutSystemArray1;
+        //            DockContainer[] dockContainers2;
+        //            switch (dockSituation)
+        //            {
+        //                case DockSituation.Docked:
+        //                    dockContainers2 = manager.GetDockContainers();
+        //                    index1 = 0;
+        //                    goto label_25;
+        //                case DockSituation.Document:
+        //                    if (manager.DocumentContainer != null)
+        //                    {
+        //                        controlLayoutSystemArray1 = LayoutUtilities.GetLayoutSystemsFor((DockContainer)manager.DocumentContainer);
+        //
+        //                        index2 = 0;
+        //                        goto label_17;
+        //
+        //                    }
+        //                    else
+        //                        break;
+        //                case DockSituation.Floating:
+        //                    dockContainers1 = manager.GetDockContainers();
+        //                    goto label_15;
+        //                default:
+        //                    throw new InvalidOperationException();
+        //            }
+        //            label_3:
+        //            return null;
+        //            label_4:
+        //            int index3;
+        //            int index4;
+        //            ControlLayoutSystem[] controlLayoutSystemArray2;
+        //            if (index3 < dockContainers1.Length)
+        //            {
+        //                DockContainer xd3311d815ca25f02 = dockContainers1[index3];
+        //
+        //                if (LayoutUtilities.CheckForDockSituation(xd3311d815ca25f02) == dockSituation)
+        //                {
+        //                    controlLayoutSystemArray2 = LayoutUtilities.GetLayoutSystemsFor(xd3311d815ca25f02);
+        //                    index4 = 0;
+        //                    goto label_9;
+        //                }
+        //
+        //            }
+        //            else
+        //                goto label_3;
+        //            label_5:
+        //            ++index3;
+        //            goto label_4;
+        //            label_7:
+        //            ControlLayoutSystem controlLayoutSystem1;
+        //            ControlLayoutSystem controlLayoutSystem2;
+        //            if (controlLayoutSystem1.Guid == xfffbdea061bfa120.Guid)
+        //            {
+        //                controlLayoutSystem2 = controlLayoutSystem1;
+        //                goto label_38;
+        //            }
+        //            ++index4;
+        //            label_9:
+        //            if (index4 < controlLayoutSystemArray2.Length)
+        //            {
+        //                controlLayoutSystem1 = controlLayoutSystemArray2[index4];
+        //                goto label_7;
+        //            }
+        //            else
+        //                goto label_5;
+        //            label_15:
+        //            index3 = 0;
+        //            goto label_4;
+        //            label_17:
+        //            ControlLayoutSystem controlLayoutSystem3;
+        //            if (index2 < controlLayoutSystemArray1.Length)
+        //            {
+        //                controlLayoutSystem3 = controlLayoutSystemArray1[index2];
+        //
+        //            }
+        //            else
+        //                goto label_3;
+        //            if (!(controlLayoutSystem3.Guid == xfffbdea061bfa120.Guid))
+        //            {
+        //                ++index2;
+        //                goto label_17;
+        //            }
+        //            else
+        //            {
+        //                if ((index2 | -1) != 0)
+        //                {
+        //                    controlLayoutSystem2 = controlLayoutSystem3;
+        //                    goto label_38;
+        //                }
+        //                else
+        //                    goto label_15;
+        //            }
+        //
+        //
+        //            label_24:
+        //            ++index1;
+        //            label_25:
+        //            if (index1 < dockContainers2.Length)
+        //            {
+        //                DockContainer xd3311d815ca25f02 = dockContainers2[index1];
+        //                if (LayoutUtilities.CheckForDockSituation(xd3311d815ca25f02) == dockSituation)
+        //                {
+        //
+        //                    goto label_35;
+        //                    label_27:
+        //                    ControlLayoutSystem controlLayoutSystem4;
+        //                    int index5;
+        //                    if (!(controlLayoutSystem4.Guid == xfffbdea061bfa120.Guid))
+        //                    {
+        //                        ++index5;
+        //                    }
+        //                    else
+        //                    {
+        //                        controlLayoutSystem2 = controlLayoutSystem4;
+        //                        goto label_38;
+        //                    }
+        //                    label_29:
+        //                    ControlLayoutSystem[] controlLayoutSystemArray3;
+        //                    if (index5 >= controlLayoutSystemArray3.Length)
+        //                    {
+        //
+        //                        goto label_24;
+        //
+        //
+        //                    }
+        //                    else
+        //                    {
+        //                        controlLayoutSystem4 = controlLayoutSystemArray3[index5];
+        //                        goto label_27;
+        //                    }
+        //                    label_35:
+        //                    controlLayoutSystemArray3 = LayoutUtilities.GetLayoutSystemsFor(xd3311d815ca25f02);
+        //                    index5 = 0;
+        //
+        //                    goto label_29;
+        //                }
+        //                else
+        //                    goto label_24;
+        //            }
+        //            else
+        //                goto label_3;
+        //            label_38:
+        //            return controlLayoutSystem2;
+        //        }
+        //
         internal static int[] GetIndexesTopDown(ControlLayoutSystem layout)
         {
             ArrayList arrayList = new ArrayList();
-
             for (LayoutSystemBase ly = layout; ly != null; ly = ly.Parent)
             {
                 if (ly.Parent != null)
-                {
                     arrayList.Add(ly.Parent.LayoutSystems.IndexOf(ly));
-      
-                }
             }
             arrayList.Reverse();
             return (int[])arrayList.ToArray(typeof(int));
@@ -245,7 +285,6 @@ namespace FQ.FreeDock
                 case ContainerDockLocation.Center:
                 default:
                     return DockStyle.Fill;
-
             }
         }
 

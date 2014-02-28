@@ -92,57 +92,27 @@ namespace FQ.FreeDock
         /// </summary>
         public static void ShowCachedAssemblyError(Assembly componentAssembly, Assembly designerAssembly)
         {
-            string text = SandDockLanguage.x39981e4ce91f2127 + Environment.NewLine + Environment.NewLine;
-            do
+            string text = string.Concat(new string[]
             {
-                string str1 = text;
-                goto label_12;
-                label_1:
-                string[] strArray1;
-
-                strArray1[3] = Environment.NewLine;
-                strArray1[4] = SandDockLanguage.x72913f986fffe0b3;
-                text = string.Concat(strArray1);
-                MessageBox.Show(text, "Visual Studio Error Detected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-                goto label_9;
-
-
-                label_3:
-                string[] strArray2;
-                string str2 = string.Concat(strArray2);
-                strArray1 = new string[5];
-
-                label_4:
-                strArray1[0] = str2;
-                strArray1[1] = SandDockLanguage.x0c2979d11a5a497d;
-                strArray1[2] = Environment.NewLine;
-                goto label_1;
-                label_6:
-                strArray2[3] = designerAssembly.Location;
-                strArray2[4] = Environment.NewLine;
-                strArray2[5] = Environment.NewLine;
-                goto label_3;
-                label_9:
-                continue;
-                label_12:
-                text = str1 + "Component Assembly:" + Environment.NewLine + componentAssembly.Location + Environment.NewLine + Environment.NewLine;
-                string str3 = text;
-                strArray2 = new string[6];
-
-                strArray2[0] = str3;
-                strArray2[1] = "Designer Assembly:";
-
-                strArray2[2] = Environment.NewLine;
-
-                goto label_6;
-
-            }
-            while (0 != 0);
-            goto label_10;
-
-            label_10:
-            ;
+                SandDockLanguage.x39981e4ce91f2127,
+                Environment.NewLine,
+                Environment.NewLine,
+                "Component Assembly:",
+                Environment.NewLine, 
+                componentAssembly.Location,
+                Environment.NewLine,
+                Environment.NewLine,
+                "Designer Assembly:",
+                Environment.NewLine,
+                designerAssembly.Location,
+                Environment.NewLine,
+                Environment.NewLine,
+                SandDockLanguage.x0c2979d11a5a497d,
+                Environment.NewLine,
+                Environment.NewLine,
+                SandDockLanguage.x72913f986fffe0b3
+            });
+            MessageBox.Show(text, "Visual Studio Error Detected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }

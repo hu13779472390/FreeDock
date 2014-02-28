@@ -304,7 +304,7 @@ namespace FQ.FreeDock
 
         private bool x6991238ec3e25129()
         {
-            return !x443cc432acaadb1d.x641f26d1017e3571;
+            return !x443cc432acaadb1d.IsNotRemoteSession;
         }
         // reviewed with 2.4
         internal void xcdb145600c1b7224(bool x0b9c38731edfc369)
@@ -333,11 +333,11 @@ namespace FQ.FreeDock
         }
 
         // reviewed with 2.4
-        internal void xe6ff614263a59ef9(DockControl dockControl, bool x0b9c38731edfc369, bool x17cc8f73454a0462)
+        internal void xe6ff614263a59ef9(DockControl dockControl, bool x0b9c38731edfc369, bool active)
         {
             if (this.xdf67155884991aa8 == dockControl.LayoutSystem && dockControl.LayoutSystem.SelectedControl == dockControl)
             {
-                if (!x17cc8f73454a0462)
+                if (!active)
                     return;
                 dockControl.Activate();
             }
@@ -379,7 +379,7 @@ namespace FQ.FreeDock
                 }
                 finally
                 {
-                    if (x17cc8f73454a0462 && this.ShowingLayoutSystem == dockControl.LayoutSystem)
+                    if (active && this.ShowingLayoutSystem == dockControl.LayoutSystem)
                         dockControl.Activate();
                 }
             }

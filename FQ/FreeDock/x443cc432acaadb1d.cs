@@ -22,7 +22,7 @@ namespace FQ.FreeDock
         }
 
        
-        public static bool x641f26d1017e3571
+        public static bool IsNotRemoteSession
         {
             [SecuritySafeCritical]
             get
@@ -39,7 +39,7 @@ namespace FQ.FreeDock
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        [DllImport("user32.dll")]
-        public static extern int GetSystemMetrics(int smIndex);
+//        [DllImport("user32.dll")]
+//        public static extern int GetSystemMetrics(int smIndex);
     }
 }

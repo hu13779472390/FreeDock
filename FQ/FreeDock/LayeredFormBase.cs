@@ -29,41 +29,41 @@ namespace FQ.FreeDock
         [SecuritySafeCritical]
         public void x0ecee64b07d2d5b1(Bitmap bitmap, byte alpha)
         {
-            IntPtr dc = x443cc432acaadb1d.GetDC(IntPtr.Zero);
-            IntPtr compatibleDc = x443cc432acaadb1d.CreateCompatibleDC(dc);
+            IntPtr dc = WinApi.GetDC(IntPtr.Zero);
+            IntPtr compatibleDc = WinApi.CreateCompatibleDC(dc);
             IntPtr hObject1 = IntPtr.Zero;
             IntPtr hObject2 = IntPtr.Zero;
             try
             {
                 hObject1 = bitmap.GetHbitmap(Color.FromArgb(0));
-                hObject2 = x443cc432acaadb1d.SelectObject(compatibleDc, hObject1);
-                x443cc432acaadb1d.BLENDFUNCTION pblend;
-                x443cc432acaadb1d.Point pptDst;
-                x443cc432acaadb1d.Size psize;
-                x443cc432acaadb1d.Point pprSrc;
-                psize = new x443cc432acaadb1d.Size(bitmap.Width, bitmap.Height);
-                pprSrc = new x443cc432acaadb1d.Point(0, 0);
-                pptDst = new x443cc432acaadb1d.Point(this.Left, this.Top);
-                pblend = new x443cc432acaadb1d.BLENDFUNCTION();
+                hObject2 = WinApi.SelectObject(compatibleDc, hObject1);
+                WinApi.BLENDFUNCTION pblend;
+                WinApi.POINT pptDst;
+                WinApi.SIZE psize;
+                WinApi.POINT pprSrc;
+                psize = new WinApi.SIZE(bitmap.Width, bitmap.Height);
+                pprSrc = new WinApi.POINT(0, 0);
+                pptDst = new WinApi.POINT(this.Left, this.Top);
+                pblend = new WinApi.BLENDFUNCTION();
                 pblend.BlendOp = 0;
                 pblend.BlendFlags = 0;
                 pblend.SourceConstantAlpha = alpha;
                 pblend.AlphaFormat = 1;
-                x443cc432acaadb1d.UpdateLayeredWindow(this.Handle, dc, ref pptDst, ref psize, compatibleDc, ref pprSrc, 0, ref pblend, ULW_ALPHA);
+                WinApi.UpdateLayeredWindow(this.Handle, dc, ref pptDst, ref psize, compatibleDc, ref pprSrc, 0, ref pblend, ULW_ALPHA);
             }
             finally
             {
                 if (hObject1 != IntPtr.Zero)
                 {
-                    x443cc432acaadb1d.SelectObject(compatibleDc, hObject2);
-                    x443cc432acaadb1d.DeleteObject(hObject1);
+                    WinApi.SelectObject(compatibleDc, hObject2);
+                    WinApi.DeleteObject(hObject1);
                 }
-                x443cc432acaadb1d.ReleaseDC(IntPtr.Zero, dc);
-                x443cc432acaadb1d.DeleteDC(compatibleDc);
+                WinApi.ReleaseDC(IntPtr.Zero, dc);
+                WinApi.DeleteDC(compatibleDc);
             }
         }
 
-        private class x443cc432acaadb1d
+        private class WinApi
         {
             public const int x5369785684a974f4 = 1;
             public const int x93b283a033d1b54a = 2;
@@ -72,7 +72,7 @@ namespace FQ.FreeDock
             public const byte xa34cc3e091661d7f = 1;
 
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref x443cc432acaadb1d.Point pptDst, ref x443cc432acaadb1d.Size psize, IntPtr hdcSrc, ref x443cc432acaadb1d.Point pprSrc, int crKey, ref x443cc432acaadb1d.BLENDFUNCTION pblend, int dwFlags);
+            public static extern bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref WinApi.POINT pptDst, ref WinApi.SIZE psize, IntPtr hdcSrc, ref WinApi.POINT pprSrc, int crKey, ref BLENDFUNCTION pblend, int dwFlags);
 
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr GetDC(IntPtr hWnd);
@@ -92,24 +92,24 @@ namespace FQ.FreeDock
             [DllImport("gdi32.dll", SetLastError = true)]
             public static extern bool DeleteObject(IntPtr hObject);
 
-            public struct Size
+            public struct SIZE
             {
                 public int cx;
                 public int cy;
 
-                public Size(int cx, int cy)
+                public SIZE(int cx, int cy)
                 {
                     this.cx = cx;
                     this.cy = cy;
                 }
             }
 
-            public struct Point
+            public struct POINT
             {
                 public int x;
                 public int y;
 
-                public Point(int x, int y)
+                public POINT(int x, int y)
                 {
                     this.x = x;
                     this.y = y;
