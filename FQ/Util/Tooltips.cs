@@ -19,10 +19,9 @@ namespace FQ.Util
         private Point location;
         private ToolTipForm tipForm;
         private Timer timer;
-        private Form x9238f6a5f034aeb5;
-        private const int SWP_SHOWWINDOW = 0x0040;
-        private const int SWP_NOACTIVATE = 0x0010;
-        private ToolTip tooptip;
+        private Form containingForm;
+//        private const int SWP_SHOWWINDOW = 0x0040;
+//        private const int SWP_NOACTIVATE = 0x0010;
 
         public bool DropShadow
         {
@@ -64,12 +63,10 @@ namespace FQ.Util
             this.timer = new Timer();
             this.timer.Interval = SystemInformation.DoubleClickTime;
             this.timer.Tick += new EventHandler(this.OnTimerTick);
-            this.tooptip = new ToolTip();
-            this.tooptip.AutoPopDelay = 5000;
         }
 
-        [DllImport("user32.dll")]
-        private static extern bool SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int flags);
+//        [DllImport("user32.dll")]
+//        private static extern bool SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int flags);
 
         public void Dispose()
         {
@@ -87,7 +84,6 @@ namespace FQ.Util
             this.control.Disposed -= new EventHandler(this.OnControlDisposed);
             this.control.FontChanged -= new EventHandler(this.OnControlFontChanged);
             this.control = null;
-            this.tooptip.Dispose();
             this.timer.Tick -= new EventHandler(this.OnTimerTick);
             this.timer.Dispose();
             this.x0e75cd3866dbb930 = true;
@@ -100,125 +96,7 @@ namespace FQ.Util
 //                flag = Environment.OSVersion.Version >= new Version(5, 1, 0, 0);
             return flag;
         }
-        //        [SecuritySafeCritical]
-        //        public void x4402a69f607144e3(Point point, string text)
-        //        {
-        //            this.xa6607dfd4b3038ad.Text = text;
-        //
-        //            Size size;
-        //            do
-        //            {
-        //                size = Size.Ceiling(this.xa6607dfd4b3038ad.MeasureText(text));
-        //                size.Height += 4;
-        //                size.Width += 4;
-        //                point.Y += 19;
-        //
-        //                Screen screen = Screen.FromPoint(point);
-        //
-        //                if (point.X < screen.Bounds.Left)
-        //                    point.X = screen.Bounds.Left;
-        //
-        //                do
-        //                {
-        //                    if (point.X + size.Width <= screen.Bounds.Right)
-        //                    {
-        //                        if (point.Y < screen.Bounds.Top)
-        //                        {
-        //                            point.Y = screen.Bounds.Top;
-        //
-        //                            if (point.Y + size.Height > screen.Bounds.Bottom)
-        //                            {
-        //                                point.Y = screen.Bounds.Bottom - size.Height;
-        //                                continue;
-        //                            }
-        //                            else
-        //                                goto label_17;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        point.X = screen.Bounds.Right - size.Width;
-        //                        if (point.X >= screen.Bounds.Left)
-        //                        {
-        //
-        //                            if (point.Y < screen.Bounds.Top)
-        //                            {
-        //                                point.Y = screen.Bounds.Top;
-        //
-        //                                if (point.Y + size.Height > screen.Bounds.Bottom)
-        //                                {
-        //                                    point.Y = screen.Bounds.Bottom - size.Height;
-        //                                    continue;
-        //                                }
-        //                                else
-        //                                    goto label_17;
-        //                            }
-        //
-        //                            if (point.Y + size.Height > screen.Bounds.Bottom)
-        //                            {
-        //                                point.Y = screen.Bounds.Bottom - size.Height;
-        //                                continue;
-        //                            }
-        //                            else
-        //                                goto label_17;
-        //                        }
-        //                        else
-        //                            return;
-        //
-        //                    }
-        //                    point.Y = screen.Bounds.Top;
-        //                    if (point.Y + size.Height > screen.Bounds.Bottom)
-        //                    {
-        //                        point.Y = screen.Bounds.Bottom - size.Height;
-        //                        continue;
-        //                    }
-        //                    else
-        //                        goto label_17;
-        //
-        //                }
-        //                while (0 != 0);
-        //                if (point.Y >= screen.Bounds.Top)
-        //                {
-        //                    ++point.X;
-        //                }
-        //                else
-        //                {
-        //                    return;
-        //                }
-        //            }
-        //            while (0 != 0);
-        //
-        //            label_17:
-        //            Tooltips.SetWindowPos(this.xa6607dfd4b3038ad.Handle, -1, point.X, point.Y, size.Width, size.Height, 80);
-        //            VisualStyleElement normal = VisualStyleElement.ToolTip.Standard.Normal;
-        //            if (Application.RenderWithVisualStyles)
-        //            {
-        //                if (VisualStyleRenderer.IsElementDefined(normal))
-        //                {
-        //                    using (Graphics graphics = this.xa6607dfd4b3038ad.CreateGraphics())
-        //                    {
-        //                        this.xa6607dfd4b3038ad.Region = new VisualStyleRenderer(normal).GetBackgroundRegion((IDeviceContext)graphics, this.xa6607dfd4b3038ad.ClientRectangle);
-        //                    }
-        //                }
-        //
-        //            }
-        //
-        //            this.xa6607dfd4b3038ad.Invalidate();
-        //            this.x364c1e3b189d47fe = true;
-        //            if (this.x9238f6a5f034aeb5 != null)
-        //                this.x9238f6a5f034aeb5.Deactivate -= new EventHandler(this.xdef19f2ef265bf1e);
-        //
-        //            this.x9238f6a5f034aeb5 = this.x624fa8b017460890(this.control);
-        //            if (this.x9238f6a5f034aeb5 == null)
-        //                return;
-        //            this.x9238f6a5f034aeb5.Deactivate += new EventHandler(this.xdef19f2ef265bf1e);
-        //            this.xa6607dfd4b3038ad.Owner = this.x9238f6a5f034aeb5;
-        //            return;
-        //
-        //
-        //        }
-        //
-        [SecuritySafeCritical]
+
         public void x4402a69f607144e3(Point point, string text)
         {
             this.tipForm.Text = text;
@@ -228,13 +106,13 @@ namespace FQ.Util
             label_5:
             this.tipForm.Invalidate();
             this.x364c1e3b189d47fe = true;
-            if (this.x9238f6a5f034aeb5 != null)
-                this.x9238f6a5f034aeb5.Deactivate -= new EventHandler(this.xdef19f2ef265bf1e);
-            this.x9238f6a5f034aeb5 = this.FindTopMostContainingForm(this.control);
-            if (this.x9238f6a5f034aeb5 == null)
+            if (this.containingForm != null)
+                this.containingForm.Deactivate -= new EventHandler(this.xdef19f2ef265bf1e);
+            this.containingForm = this.FindTopMostContainingForm(this.control);
+            if (this.containingForm == null)
                 return;
-            this.x9238f6a5f034aeb5.Deactivate += new EventHandler(this.xdef19f2ef265bf1e);
-            this.tipForm.Owner = this.x9238f6a5f034aeb5;
+            this.containingForm.Deactivate += new EventHandler(this.xdef19f2ef265bf1e);
+            this.tipForm.Owner = this.containingForm;
             return;
 
             label_43:
@@ -304,8 +182,7 @@ namespace FQ.Util
 
             this.tipForm.Size = size;
             this.tipForm.Location = point;
-//            this.tipForm.Show();
-            this.tooptip.Show(text, this.control, point);
+            this.tipForm.Show();
 
             normal = VisualStyleElement.ToolTip.Standard.Normal;
             if (Application.RenderWithVisualStyles)
@@ -329,10 +206,10 @@ namespace FQ.Util
             this.tipForm.Owner = null;
             this.tipForm.Visible = false;
             this.x364c1e3b189d47fe = false;
-            if (this.x9238f6a5f034aeb5 == null)
+            if (this.containingForm == null)
                 return;
-            this.x9238f6a5f034aeb5.Deactivate -= new EventHandler(this.xdef19f2ef265bf1e);
-            this.x9238f6a5f034aeb5 = null;
+            this.containingForm.Deactivate -= new EventHandler(this.xdef19f2ef265bf1e);
+            this.containingForm = null;
         }
 
         private void OnControlMouseMove(object sender, MouseEventArgs e)
@@ -407,77 +284,7 @@ namespace FQ.Util
             label_21:
             return;
         }
-        //        private void OnControlMouseMove(object sender, MouseEventArgs e)
-        //        {
-        //            if (e.Button == MouseButtons.None)
-        //                goto label_19;
-        //            else
-        //                goto label_22;
-        //
-        //            label_1:
-        //            goto label_4;
-        //
-        //            label_2:
-        //            ;
-        //            label_3:
-        //            return;
-        //            label_4:
-        //            goto label_21;
-        //
-        //            label_5:
-        //            string xb41faee6912a2313;
-        //            if (xb41faee6912a2313 != this.tipForm.Text)
-        //            {
-        //                this.x4402a69f607144e3(Cursor.Position, xb41faee6912a2313);
-        //                return;
-        //            }
-        //            else
-        //                goto label_1;
-        //
-        //            label_19:
-        //            if (!this.x364c1e3b189d47fe)
-        //                goto label_8;
-        //            else
-        //                goto label_20;
-        //
-        //            label_6:
-        //            Point point;
-        //            this.location = point;
-        //            this.timer.Enabled = false;
-        //            this.timer.Enabled = true;
-        //            return;
-        //
-        //            label_8:
-        //            point = new Point(e.X, e.Y);
-        //            if (!(point != this.location))
-        //                return;
-        //
-        //            goto label_6;
-        //
-        //            label_20:
-        //            xb41faee6912a2313 = this.GetTooltipText(new Point(e.X, e.Y));
-        //
-        //            if (xb41faee6912a2313 != null)
-        //                goto label_13;
-        //            label_11:
-        //            this.x47c79a4d207183de();
-        //            return;
-        //            label_13:
-        //
-        //            if (xb41faee6912a2313.Length != 0)
-        //            {
-        //                goto label_5;
-        //            }
-        //            else
-        //                goto label_11;
-        //
-        //            label_21:
-        //            return;
-        //
-        //            label_22:
-        //            ;
-        //        }
-        //
+
         private void OnTimerTick(object sender, EventArgs e)
         {
             string xb41faee6912a2313 = "";
@@ -589,6 +396,7 @@ namespace FQ.Util
             //0x80000000
             private const int WS_GROUP = 0x00020000;
             private const int WS_EX_NOACTIVATE = 0x08000000;
+            private const int WS_EX_TOOLWINDOW = 0x00000080;
             private const int SPI_GETDROPSHADOW = 0x1024;
             private Tooltips tooltips;
             private TextFormatFlags textFormatFlags;
@@ -622,7 +430,7 @@ namespace FQ.Util
                     if (this.tooltips != null && this.tooltips.DropShadow && ToolTipForm.CanDropShadow)
                     {
                         createParams.ClassStyle |= WS_GROUP;
-//                        createParams.ExStyle |= 0x00000080 | 0x00000004;
+                        createParams.ExStyle |= WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW;
                     }
                     return createParams;
                 }
@@ -639,6 +447,15 @@ namespace FQ.Util
 //                        return Convert.ToBoolean(i);
 //                    }
                     return false;
+                }
+            }
+
+            // very import for tooltip 
+            protected override bool ShowWithoutActivation
+            {
+                get
+                { 
+                    return true;
                 }
             }
 
@@ -708,6 +525,7 @@ namespace FQ.Util
                     TextRenderer.DrawText(e.Graphics, this.Text, this.Font, clientRectangle, SystemColors.InfoText, this.textFormatFlags);
                 }
             }
+
         }
 
         internal delegate string x58986a4a0b75e5b5(Point location);

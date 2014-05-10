@@ -84,7 +84,6 @@
     <Compile Include="FQ\FreeDock\DockContainer.cs" />
     <Compile Include="FQ\FreeDock\x890231ddf317379e.cs" />
     <Compile Include="FQ\FreeDock\DockingHints.cs" />
-    <Compile Include="FQ\FreeDock\x7a797590a9beb775.cs" />
     <Compile Include="FQ\FreeDock\DockSide.cs" />
     <Compile Include="FQ\FreeDock\ContainerDockLocation.cs" />
     <Compile Include="FQ\FreeDock\DocumentLayoutSystem.cs" />
@@ -97,7 +96,6 @@
     <Compile Include="FQ\FreeDock\xd936980ea1aac341.cs" />
     <Compile Include="FQ\FreeDock\ContextMenuContext.cs" />
     <Compile Include="FQ\FreeDock\DockingManager.cs" />
-    <Compile Include="FQ\FreeDock\x31248f32f85df1dd.cs" />
     <Compile Include="FQ\FreeDock\DockingRules.cs" />
     <Compile Include="FQ\FreeDock\DockControlEventHandler.cs" />
     <Compile Include="FQ\FreeDock\DockControlClosingEventArgs.cs" />
@@ -157,6 +155,8 @@
     <Compile Include="FQ\FreeDock\LayeredFormBase.cs" />
     <Compile Include="FQ\FreeDock\xedb4922162c60d3d.cs" />
     <Compile Include="FQ\FreeDock\ThemeHelper.cs" />
+    <Compile Include="FQ\FreeDock\DockingHintForm.cs" />
+    <Compile Include="FQ\FreeDock\DockingIndicatorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FQ\FreeDock\Resources\dockinghintbottom.png" />

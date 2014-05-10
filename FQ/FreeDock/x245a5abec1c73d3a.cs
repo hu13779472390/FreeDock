@@ -12,10 +12,7 @@ namespace FQ.FreeDock
         {
             TypeConverter converter1 = TypeDescriptor.GetConverter(typeof(long));
             label_31:
-            if (0 != 0)
-                goto label_10;
-            else
-                goto label_32;
+            goto label_32;
             label_5:
             if (x8a5ce9fbef4b9a09.Attributes["LastFloatingWindowGuid"] != null)
                 goto label_9;

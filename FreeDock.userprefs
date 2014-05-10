@@ -1,22 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\DocumentLayoutSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FQ\FreeDock\x09c1c18390e52ebf.cs">
     <Files>
-      <File FileName="DemoApplication\frmMain.cs" Line="438" Column="13" />
-      <File FileName="FQ\FreeDock\DockControl.cs" Line="1273" Column="1" />
-      <File FileName="FQ\FreeDock\TabbedDocument.cs" Line="84" Column="37" />
-      <File FileName="FQ\FreeDock\WindowOpenMethod.cs" Line="9" Column="17" />
-      <File FileName="FQ\FreeDock\AutoHideBar.cs" Line="346" Column="28" />
-      <File FileName="FQ\FreeDock\WindowMetaData.cs" Line="151" Column="9" />
-      <File FileName="FQ\FreeDock\x129cb2a2bdfd0ab2.cs" Line="6" Column="5" />
-      <File FileName="FQ\FreeDock\xd0aa9d0e7d3446c0.cs" Line="3" Column="5" />
-      <File FileName="FQ\FreeDock\DocumentLayoutSystem.cs" Line="1" Column="1" />
-      <File FileName="FQ\FreeDock\DocumentContainerWindowOpenPosition.cs" Line="7" Column="52" />
-      <File FileName="FQ\FreeDock\DocumentContainer.cs" Line="47" Column="47" />
+      <File FileName="FQ\FreeDock\DockingIndicatorManager.cs" Line="13" Column="42" />
+      <File FileName="FQ\FreeDock\LayeredFormBase.cs" Line="42" Column="65" />
+      <File FileName="FQ\FreeDock\xedb4922162c60d3d.cs" Line="9" Column="41" />
+      <File FileName="FQ\FreeDock\x890231ddf317379e.cs" Line="40" Column="48" />
+      <File FileName="FQ\FreeDock\x09c1c18390e52ebf.cs" Line="8" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Alex\FreeDock\FQ\FreeDock\DocumentContainer.cs" line="194" column="44" />
+      <Breakpoint file="C:\Users\Alex\FreeDock\FQ\FreeDock\DocumentLayoutSystem.cs" line="258" column="72" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

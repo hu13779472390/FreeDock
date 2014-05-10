@@ -38,6 +38,7 @@ namespace FQ.FreeDock
                 return;
             this.dockContainer.ActiveControl = layout.SelectedControl;
         }
+
         // reviewd!
         protected override void OnResize(EventArgs e)
         {
@@ -50,6 +51,7 @@ namespace FQ.FreeDock
                 }
             }
         }
+
         // reviewd!
         protected override void OnMove(EventArgs e)
         {
@@ -62,6 +64,7 @@ namespace FQ.FreeDock
                 }
             }
         }
+
         // reviewd!
         private bool x8956f13386ebab05()
         {
@@ -77,12 +80,14 @@ namespace FQ.FreeDock
             }
             return false;
         }
+
         // reviewd!
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
             this.startPoint = Point.Empty;
         }
+
         // reviewd!
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -102,6 +107,7 @@ namespace FQ.FreeDock
                 }
             }
         }
+
         // reviewed!
         [SecuritySafeCritical]
         protected override void WndProc(ref Message m)
@@ -111,7 +117,7 @@ namespace FQ.FreeDock
                 case WM_NCLBUTTONDOWN:
                     if (m.WParam.ToInt32() == HTCAPTION)
                     {
-                        x443cc432acaadb1d.ReleaseCapture();
+//                        x443cc432acaadb1d.ReleaseCapture();
                         this.Activate();
                         this.startPoint = this.PointToClient(Cursor.Position);
                         this.Capture = true;

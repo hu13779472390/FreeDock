@@ -376,7 +376,7 @@ namespace FQ.FreeDock.Design
                     controlAt = controlLayoutSystem.GetControlAt(x13d4cb8d1bd20347);
                 }
                 while (0 != 0);
-                this.x531514c39973cbc6 = (xedb4922162c60d3d)new x31248f32f85df1dd(this.dockContainer.Manager, this.dockContainer, (LayoutSystemBase)controlLayoutSystem, controlAt, controlLayoutSystem.SelectedControl.MetaData.DockedContentSize, x13d4cb8d1bd20347, DockingHints.TranslucentFill);
+                this.x531514c39973cbc6 = (xedb4922162c60d3d)new DockingIndicatorManager(this.dockContainer.Manager, this.dockContainer, (LayoutSystemBase)controlLayoutSystem, controlAt, controlLayoutSystem.SelectedControl.MetaData.DockedContentSize, x13d4cb8d1bd20347, DockingHints.TranslucentFill);
                 if (0 == 0)
                 {
                     if (3 == 0)

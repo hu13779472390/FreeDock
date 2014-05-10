@@ -34,10 +34,10 @@ namespace FQ.FreeDock
     [Designer("FQ.FreeDock.Design.SandDockManagerDesigner, SandDock.Design, Version=1.0.0.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3")]
     public class SandDockManager : Component
     {
-//        private DockingHints dockingHints = DockingHints.TranslucentFill;
-        private DockingHints dockingHints = DockingHints.RubberBand;
-
+        private DockingHints dockingHints = DockingHints.TranslucentFill;
+        //        private DockingHints dockingHints = DockingHints.RubberBand;
         private DockingManager dockingManager = DockingManager.Whidbey;
+        //        private DockingManager dockingManager = DockingManager.Standard;
         private int minimumDockContainerSize = 30;
         private int maximumDockContainerSize = 500;
         private bool allowDockContainerResize = true;
@@ -2686,7 +2686,6 @@ namespace FQ.FreeDock
             if (this.ActiveTabbedDocumentChanged != null)
                 this.ActiveTabbedDocumentChanged(this, e);
         }
-
         // reviewed with 2.4
         private void OnDockSystemContainerResize(object sender, EventArgs e)
         {

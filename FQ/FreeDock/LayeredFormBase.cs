@@ -10,6 +10,8 @@ namespace FQ.FreeDock
     {
         private const int WS_EX_LAYERED = 0x00080000;
         private const int ULW_ALPHA = 0x00000002;
+        private const int WS_EX_NOACTIVATE = 0x08000000;
+        private const int WS_EX_TOOLWINDOW = 0x00000080;
 
         protected override CreateParams CreateParams
         {
@@ -17,7 +19,17 @@ namespace FQ.FreeDock
             {
                 CreateParams createParams = base.CreateParams;
                 createParams.ExStyle |= WS_EX_LAYERED;
+                createParams.ExStyle |= WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW;
                 return createParams;
+            }
+        }
+
+        // very import for tooltip 
+        protected override bool ShowWithoutActivation
+        {
+            get
+            { 
+                return true;
             }
         }
 

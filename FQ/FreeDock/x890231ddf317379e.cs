@@ -37,7 +37,7 @@ namespace FQ.FreeDock
         private Control control;
         private bool xd0c8332c4cbc4175;
         private bool hollow;
-        private x7a797590a9beb775 x74e209c76c4b5a3e;
+        private DockingHintForm dockingHintForm;
 
         public event EventHandler Cancelled;
 
@@ -61,7 +61,7 @@ namespace FQ.FreeDock
             Application.AddMessageFilter(this);
             if (dockingHints != DockingHints.TranslucentFill)
                 return;
-            this.x74e209c76c4b5a3e = new x7a797590a9beb775(hollow);
+            this.dockingHintForm = new DockingHintForm(hollow);
         }
 
         private void OnMouseCaptureChanged(object sender, EventArgs e)
@@ -81,20 +81,20 @@ namespace FQ.FreeDock
         {
             if (this.bounds == bounds)
                 return;
-            if (this.dockingHints == DockingHints.RubberBand)
-                this.x45e11bb29ea5a4f9();
-            if (this.dockingHints == DockingHints.RubberBand)
-            {
-                if (this.hollow)
-                    WinBrush.xda2defffc25953e0(null, bounds, x067d6ddeefb41622, this.tabStripSize);
-                else
-                    WinBrush.xe5e0d1644c72aafd(null, bounds);
-                this.bounds = bounds;
-                this.xd0c8332c4cbc4175 = x067d6ddeefb41622;
-                return;
-            }
-            else
-                this.x74e209c76c4b5a3e.xf00ba4096f8180b1(bounds, x067d6ddeefb41622);
+//            if (this.dockingHints == DockingHints.RubberBand)
+//                this.x45e11bb29ea5a4f9();
+//            if (this.dockingHints == DockingHints.RubberBand)
+//            {
+//                if (this.hollow)
+//                    WinBrush.xda2defffc25953e0(null, bounds, x067d6ddeefb41622, this.tabStripSize);
+//                else
+//                    WinBrush.xe5e0d1644c72aafd(null, bounds);
+//                this.bounds = bounds;
+//                this.xd0c8332c4cbc4175 = x067d6ddeefb41622;
+//                return;
+//            }
+//            else
+                this.dockingHintForm.xf00ba4096f8180b1(bounds, x067d6ddeefb41622);
         }
 
         protected void x11972e8742c570b8()
@@ -102,7 +102,7 @@ namespace FQ.FreeDock
             if (this.dockingHints == DockingHints.RubberBand)
                 this.x45e11bb29ea5a4f9();
             else
-                this.x74e209c76c4b5a3e.Hide();
+                this.dockingHintForm.Hide();
         }
 
         private void x45e11bb29ea5a4f9()
@@ -137,8 +137,8 @@ namespace FQ.FreeDock
             this.x11972e8742c570b8();
             if (this.dockingHints == DockingHints.TranslucentFill)
             {
-                this.x74e209c76c4b5a3e.Dispose();
-                this.x74e209c76c4b5a3e = null;
+                this.dockingHintForm.Dispose();
+                this.dockingHintForm = null;
             }
 
             if (this.form != null)

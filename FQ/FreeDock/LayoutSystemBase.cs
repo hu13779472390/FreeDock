@@ -124,9 +124,8 @@ namespace FQ.FreeDock
         // reviewed
         internal void xe9a159cd1e028df2(SandDockManager sandDockManager, DockContainer dockContainer, LayoutSystemBase layout, DockControl dockControl, int x9562cf1322eeedf1, Point x6afebf16b45c02e0, DockingHints hints, DockingManager dockingManager)
         {
-
             if (dockingManager == DockingManager.Whidbey && x890231ddf317379e.IsNT5())
-                this.x531514c39973cbc6 = new x31248f32f85df1dd(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
+                this.x531514c39973cbc6 = new DockingIndicatorManager(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
             else
                 this.x531514c39973cbc6 = new xedb4922162c60d3d(sandDockManager, this.DockContainer, this, dockControl, x9562cf1322eeedf1, x6afebf16b45c02e0, hints);
 

@@ -495,7 +495,7 @@ namespace FQ.FreeDock
                         this.x49cf4e0157d9436c = controlAt == null;
                         DockingHints dockingHints = this.DockContainer.Manager == null ? DockingHints.TranslucentFill : this.DockContainer.Manager.DockingHints;
                         DockingManager dockingManager = this.DockContainer.Manager == null ? DockingManager.Standard : this.DockContainer.Manager.DockingManager;
-                        this.xe9a159cd1e028df2(this.DockContainer.Manager, this.DockContainer, (LayoutSystemBase)this, controlAt, this.SelectedControl.MetaData.DockedContentSize, this.x6afebf16b45c02e0, dockingHints, dockingManager);
+                        this.xe9a159cd1e028df2(this.DockContainer.Manager, this.DockContainer, this, controlAt, this.SelectedControl.MetaData.DockedContentSize, this.x6afebf16b45c02e0, dockingHints, dockingManager);
                         return;
                     }
                 }

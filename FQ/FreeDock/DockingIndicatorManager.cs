@@ -10,17 +10,17 @@ using System.Security;
 namespace FQ.FreeDock
 {
     // G
-    class x31248f32f85df1dd : xedb4922162c60d3d
+    class DockingIndicatorManager : xedb4922162c60d3d
     {
         private ControlLayoutSystem x5d62a4c2b1aa6ba9;
-        private x23d0185c2770c169 xa0a376f49c1ad375;
+        private DockingIndicatorForm xa0a376f49c1ad375;
         private bool x347de2b6e474668a;
         private bool x66992a14bbd05efe;
         private Rectangle x6f306c95372dd403;
         private Rectangle x8caac3836061e4ad;
         private ArrayList ownedForms;
 
-        public x31248f32f85df1dd(SandDockManager manager, DockContainer container, LayoutSystemBase sourceControlSystem, DockControl sourceControl, int dockedSize, System.Drawing.Point startPoint, DockingHints dockingHints)
+        public DockingIndicatorManager(SandDockManager manager, DockContainer container, LayoutSystemBase sourceControlSystem, DockControl sourceControl, int dockedSize, System.Drawing.Point startPoint, DockingHints dockingHints)
             : base(manager, container, sourceControlSystem, sourceControl, dockedSize, startPoint, dockingHints)
         {
             this.ownedForms = new ArrayList();
@@ -34,16 +34,15 @@ namespace FQ.FreeDock
             this.x6f306c95372dd403 = xedb4922162c60d3d.xc68a4bb946c59a9e(this.Manager.DockSystemContainer.ClientRectangle, this.Manager.DockSystemContainer);
             this.x8caac3836061e4ad = xedb4922162c60d3d.xc68a4bb946c59a9e(xedb4922162c60d3d.x41c62f474d3fb367(this.Manager.DockSystemContainer), this.Manager.DockSystemContainer);
             if (this.AllowDock(ContainerDockLocation.Top))
-                this.ownedForms.Add(new x31248f32f85df1dd.x23d0185c2770c169(this, this.x6f306c95372dd403, DockStyle.Top));
+                this.ownedForms.Add(new DockingIndicatorForm(this, this.x6f306c95372dd403, DockStyle.Top));
             if (this.AllowDock(ContainerDockLocation.Left))
-                this.ownedForms.Add(new x31248f32f85df1dd.x23d0185c2770c169(this, this.x6f306c95372dd403, DockStyle.Left));
+                this.ownedForms.Add(new DockingIndicatorForm(this, this.x6f306c95372dd403, DockStyle.Left));
             if (this.AllowDock(ContainerDockLocation.Bottom))
-                this.ownedForms.Add(new x31248f32f85df1dd.x23d0185c2770c169(this, this.x6f306c95372dd403, DockStyle.Bottom));
+                this.ownedForms.Add(new DockingIndicatorForm(this, this.x6f306c95372dd403, DockStyle.Bottom));
             if (this.AllowDock(ContainerDockLocation.Right))
-                this.ownedForms.Add(new x31248f32f85df1dd.x23d0185c2770c169(this, this.x6f306c95372dd403, DockStyle.Right));
-
+                this.ownedForms.Add(new DockingIndicatorForm(this, this.x6f306c95372dd403, DockStyle.Right));
             if ((this.DockContainer.Dock != DockStyle.Fill || this.DockContainer.IsFloating) && (this.AllowDock(ContainerDockLocation.Center) || (this.AllowDock(ContainerDockLocation.Left) || this.AllowDock(ContainerDockLocation.Right) || this.AllowDock(ContainerDockLocation.Top) || this.AllowDock(ContainerDockLocation.Bottom))))
-                this.ownedForms.Add((object)new x31248f32f85df1dd.x23d0185c2770c169(this, this.x8caac3836061e4ad, DockStyle.Fill));
+                this.ownedForms.Add(new DockingIndicatorForm(this, this.x8caac3836061e4ad, DockStyle.Fill));
 
             if (this.Manager == null || this.Manager.OwnerForm == null)
                 return;
@@ -57,11 +56,9 @@ namespace FQ.FreeDock
             xedb4922162c60d3d.DockTarget dockTarget = null;
             bool flag1 = this.x6f306c95372dd403.Contains(position);
             bool flag2 = this.x8caac3836061e4ad.Contains(position);
-            object[] objArray1 = { };
             if (flag1 != this.x347de2b6e474668a || flag2 != this.x66992a14bbd05efe)
             {
-                objArray1 = this.ownedForms.ToArray();
-                foreach (x31248f32f85df1dd.x23d0185c2770c169 form in this.ownedForms)
+                foreach (DockingIndicatorForm form in this.ownedForms)
                 {
                     if (form.DockStyle == DockStyle.Fill && flag2 != this.x66992a14bbd05efe)
                     {
@@ -94,7 +91,7 @@ namespace FQ.FreeDock
                 this.x5d62a4c2b1aa6ba9 = controlLayoutSystem;
                 if (this.x5d62a4c2b1aa6ba9 != null)
                 {
-                    this.xa0a376f49c1ad375 = new x31248f32f85df1dd.x23d0185c2770c169(this, this.x5d62a4c2b1aa6ba9);
+                    this.xa0a376f49c1ad375 = new DockingIndicatorForm(this, this.x5d62a4c2b1aa6ba9);
                     this.xa0a376f49c1ad375.x35579b297303ed43();
                 }
             }
@@ -102,7 +99,7 @@ namespace FQ.FreeDock
                 dockTarget = null;
             if (this.xa0a376f49c1ad375 != null && this.xa0a376f49c1ad375.Bounds.Contains(position) && dockTarget != null)
                 dockTarget = this.xa0a376f49c1ad375.x22749e65b5253094(position);
-            foreach (x31248f32f85df1dd.x23d0185c2770c169 form in this.ownedForms)
+            foreach (DockingIndicatorForm form in this.ownedForms)
             {
                 if (dockTarget == null && form.Bounds.Contains(position))
                     dockTarget = form.x22749e65b5253094(position);
@@ -138,22 +135,23 @@ namespace FQ.FreeDock
                 this.xa0a376f49c1ad375.x8ffe90e7fbccfccd();
                 this.xa0a376f49c1ad375 = null;
             }
-            foreach (x31248f32f85df1dd.x23d0185c2770c169 x23d0185c2770c169 in this.ownedForms)
-                x23d0185c2770c169.x8ffe90e7fbccfccd();
+            foreach (DockingIndicatorForm form in this.ownedForms)
+                form.x8ffe90e7fbccfccd();
             this.ownedForms.Clear();
             base.Dispose();
         }
 
-        private class x23d0185c2770c169 : LayeredFormBase
+        private class DockingIndicatorForm : LayeredFormBase
         {
-            private Rectangle bounds = Rectangle.Empty;
-            private DockSide dockSide = DockSide.None;
-            private const int xca96dc7024c32126 = 88;
-            private const int xc82cb74794544a35 = 88;
+            private const int BITMAP_WIDTH = 88;
+            private const int BITMAP_HEIGHT = 88;
             private const int x6b0037d5c155e862 = 200;
             private const int x77bf04ec211c4a37 = 16;
             private const int x339acab5bf3e83ae = 64;
-            private x31248f32f85df1dd manager;
+
+            private Rectangle bounds = Rectangle.Empty;
+            private DockSide dockSide = DockSide.None;
+            private DockingIndicatorManager manager;
             private ControlLayoutSystem layoutSystem;
             private bool x3321191c6256921e;
             private Bitmap bitmap;
@@ -219,7 +217,7 @@ namespace FQ.FreeDock
                 }
             }
 
-            private x23d0185c2770c169()
+            private DockingIndicatorForm()
             {
                 this.FormBorderStyle = FormBorderStyle.None;
                 this.ShowInTaskbar = false;
@@ -230,7 +228,7 @@ namespace FQ.FreeDock
                 this.bitmap = new Bitmap(88, 88, PixelFormat.Format32bppArgb);
             }
 
-            public x23d0185c2770c169(x31248f32f85df1dd manager, Rectangle fc, DockStyle dockStyle) : this()
+            public DockingIndicatorForm(DockingIndicatorManager manager, Rectangle fc, DockStyle dockStyle) : this()
             {
                 this.manager = manager;
                 this.dockStyle = dockStyle;
@@ -252,16 +250,16 @@ namespace FQ.FreeDock
                         this.bounds = new Rectangle(fc.X + fc.Width / 2 - 44, fc.Y + fc.Height / 2 - 44, 88, 88);
                         break;
                 }
-                this.x912beb3fd0dd9feb();
+                this.DrawIndicator();
             }
 
-            public x23d0185c2770c169(x31248f32f85df1dd manager, ControlLayoutSystem layoutSystem) : this()
+            public DockingIndicatorForm(DockingIndicatorManager manager, ControlLayoutSystem layoutSystem) : this()
             {
                 this.manager = manager;
                 this.layoutSystem = layoutSystem;
                 this.bounds = new Rectangle(layoutSystem.DockContainer.PointToScreen(layoutSystem.Bounds.Location), layoutSystem.Bounds.Size);
                 this.bounds = new Rectangle(this.bounds.X + this.bounds.Width / 2 - 44, this.bounds.Y + this.bounds.Height / 2 - 44, 88, 88);
-                this.x912beb3fd0dd9feb();
+                this.DrawIndicator();
             }
 
             [DllImport("user32.dll")]
@@ -269,35 +267,36 @@ namespace FQ.FreeDock
 
             private const int SWP_DRAWFRAME = 0x0010;
             private const int SWP_SHOWWINDOW = 0x0040;
+
             // reviewed with 2.4
-            private void x912beb3fd0dd9feb()
+            private void DrawIndicator()
             {
                 using (Graphics g = Graphics.FromImage(this.bitmap))
                 {
                     RenderHelper.ClearBackground(g, Color.Transparent);
                     if (this.dockStyle == DockStyle.None || this.dockStyle == DockStyle.Fill)
                     {
-                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintcenter.png")))
+                        using (Image image = Image.FromStream(typeof(DockingIndicatorForm).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintcenter.png")))
                             g.DrawImageUnscaled(image, 0, 0);
                     }
                     else if (this.dockStyle == DockStyle.Top)
                     {
-                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghinttop.png")))
+                        using (Image image = Image.FromStream(typeof(DockingIndicatorForm).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghinttop.png")))
                             g.DrawImageUnscaled(image, 29, 0);
                     }
                     else if (this.dockStyle == DockStyle.Bottom)
                     {
-                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintbottom.png")))
+                        using (Image image = Image.FromStream(typeof(DockingIndicatorForm).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintbottom.png")))
                             g.DrawImageUnscaled(image, 29, 57);
                     }
                     else if (this.dockStyle == DockStyle.Left)
                     {
-                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintleft.png")))
+                        using (Image image = Image.FromStream(typeof(DockingIndicatorForm).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintleft.png")))
                             g.DrawImageUnscaled(image, 0, 29);
                     }
                     else if (this.dockStyle == DockStyle.Right)
                     {
-                        using (Image image = Image.FromStream(typeof(x31248f32f85df1dd.x23d0185c2770c169).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintright.png")))
+                        using (Image image = Image.FromStream(typeof(DockingIndicatorForm).Assembly.GetManifestResourceStream("FQ.FreeDock.Resources.dockinghintright.png")))
                             g.DrawImageUnscaled(image, 57, 29);
                     }
                     Color highlight = SystemColors.Highlight;
@@ -326,6 +325,7 @@ namespace FQ.FreeDock
                 }
                 base.Dispose(disposing);
             }
+
             // reviewed with 2.4
             private xedb4922162c60d3d.DockTarget xd9d182c023a01aa8(Point point)
             {
@@ -405,7 +405,7 @@ namespace FQ.FreeDock
                 {
                     this.x3321191c6256921e = flag;
                     this.dockSide = dockSide;
-                    this.x912beb3fd0dd9feb();
+                    this.DrawIndicator();
                 }
                 return dockTarget;
             }
@@ -493,8 +493,10 @@ namespace FQ.FreeDock
             [SecuritySafeCritical]
             public void x2c6f5ac62ee048e5()
             {
-                x31248f32f85df1dd.x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.bounds.X, this.bounds.Y, this.bounds.Width, this.bounds.Height, SWP_DRAWFRAME | SWP_SHOWWINDOW/*80*/);
-//                this.Bounds = this.xda73fcb97c77d998;
+//                x23d0185c2770c169.SetWindowPos(new HandleRef(this, this.Handle), -1, this.bounds.X, this.bounds.Y, this.bounds.Width, this.bounds.Height, SWP_DRAWFRAME | SWP_SHOWWINDOW/*80*/);
+                this.Size = this.bounds.Size;
+                this.Location = this.bounds.Location;
+                this.Show();
             }
 
             private void OnTimer(object sender, EventArgs e)
@@ -512,6 +514,14 @@ namespace FQ.FreeDock
  
                 if (this.ShouldDispose)
                     base.Dispose();
+            }
+
+            public new void x0ecee64b07d2d5b1(Bitmap bitmap, byte alpha)
+            {
+                using (Graphics g = this.CreateGraphics())
+                {
+                    g.DrawImage(this.bitmap, new PointF(0, 0));
+                }
             }
         }
     }

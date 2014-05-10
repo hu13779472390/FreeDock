@@ -189,7 +189,7 @@ namespace FQ.FreeDock
             this.BackColor = SystemColors.AppWorkspace;
         }
 
-        internal override ControlLayoutSystem xd6284ffe96aec512()
+        internal override ControlLayoutSystem CreateNewControlLayoutSystem()
         {
             return new DocumentLayoutSystem();
         }

@@ -468,7 +468,6 @@ namespace FQ.FreeDock
                 this.Manager = null;
                 this.tooltips.GetTooltipText -= new Tooltips.x58986a4a0b75e5b5(this.xa3a7472ac4e61f76);
                 this.tooltips.Dispose();
-
                 this.tooltip.Dispose();
             }
             base.Dispose(disposing);
@@ -513,16 +512,14 @@ namespace FQ.FreeDock
         {
             if (controls == null)
                 throw new ArgumentNullException("controls");
-
-            ControlLayoutSystem controlLayout = this.xd6284ffe96aec512();
+            ControlLayoutSystem controlLayout = this.CreateNewControlLayoutSystem();
             controlLayout.WorkingSize = size;
-            if (controls.Length != 0)
+            if (controls != null && controls.Length != 0)
                 controlLayout.Controls.AddRange(controls);
-
             return controlLayout;
         }
 
-        internal virtual ControlLayoutSystem xd6284ffe96aec512()
+        internal virtual ControlLayoutSystem CreateNewControlLayoutSystem()
         {
             return new ControlLayoutSystem();
         }
@@ -531,6 +528,7 @@ namespace FQ.FreeDock
         {
             return this.GetService(type);
         }
+
         // reviewed with 2.4
         internal void x272ed7848e373c56()
         {

@@ -26,7 +26,7 @@ namespace FQ.FreeDock
         private const int x088e2ac38f89d005 = 17;
         private int x200b7f5a9d983ba4;
         private int x4f8ccd50477a481e;
-        private Timer x5d56ae798b9cdf38;
+        private Timer timer;
         private DockControl x9241b98e8e24ab0c;
         private SandDockButton leftScrollButton;
         private SandDockButton rightScrollButton;
@@ -190,9 +190,9 @@ namespace FQ.FreeDock
             this.rightScrollButton = new SandDockButton();
             this.closeButton = new SandDockButton();
             this.activeFilesButton = new SandDockButton();
-            this.x5d56ae798b9cdf38 = new Timer();
-            this.x5d56ae798b9cdf38.Interval = 20;
-            this.x5d56ae798b9cdf38.Tick += new EventHandler(this.xcaf19fd9570f4eb4);
+            this.timer = new Timer();
+            this.timer.Interval = 20;
+            this.timer.Tick += new EventHandler(this.OnTimerTick);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace FQ.FreeDock
         /// <param name="desiredWidth">The desired width of this layout system, in pixels.</param><param name="desiredHeight">The desired height of this layout system, in pixels.</param>
         public DocumentLayoutSystem(int desiredWidth, int desiredHeight) : this()
         {
-            this.WorkingSize = new SizeF((float)desiredWidth, (float)desiredHeight);
+            this.WorkingSize = new SizeF(desiredWidth, desiredHeight);
         }
 
         /// <summary>
@@ -289,11 +289,9 @@ namespace FQ.FreeDock
         internal override void xa82f7b310984e03e(SandDockButton button)
         {
             if (button == this.closeButton)
-                this.OnCloseButtonClick((EventArgs)new CancelEventArgs());
+                this.OnCloseButtonClick(new CancelEventArgs());
             if (button == this.leftScrollButton || button == this.rightScrollButton)
-            {
                 this.xd11b6d3bf98020cb();
-            }
             else
             {
                 if (button != this.activeFilesButton || this.DockContainer == null || this.DockContainer.Manager == null)
@@ -426,9 +424,8 @@ namespace FQ.FreeDock
         // reviewed with 2.4
         private void xd00751399198ecd1(RendererBase renderer, Graphics g, Rectangle bounds)
         {
-           
             int y = bounds.Top + bounds.Height / 2 - 7;
-            int num1 = 0;
+            int num1 = bounds.Right - 2;
             if (this.SelectedControl != null && this.SelectedControl.AllowClose && !this.IntegralClose)
             {
                 this.closeButton.Enabled = true;
@@ -535,7 +532,7 @@ namespace FQ.FreeDock
 
         private void xd11b6d3bf98020cb()
         {
-            this.x5d56ae798b9cdf38.Enabled = false;
+            this.timer.Enabled = false;
             this.HighlightedButton = null;
             this.xfa5e20eb950b9ee1 = false;
             this.xd541e2fc281b554b();
@@ -543,8 +540,8 @@ namespace FQ.FreeDock
 
         private void xcf8b319f2bffca87()
         {
-            this.x5d56ae798b9cdf38.Enabled = true;
-            this.xcaf19fd9570f4eb4(this.x5d56ae798b9cdf38, EventArgs.Empty);
+            this.timer.Enabled = true;
+            this.OnTimerTick(this.timer, EventArgs.Empty);
         }
         // reviewed with 2.4
         private void x523c1f22a806032d(int xa00f04d8b3a6664c)
@@ -563,7 +560,7 @@ namespace FQ.FreeDock
             this.x3e0280cae730d1f2();
         }
 
-        private void xcaf19fd9570f4eb4(object sender, EventArgs e)
+        private void OnTimerTick(object sender, EventArgs e)
         {
             if (this.HighlightedButton == this.leftScrollButton)
                 this.x523c1f22a806032d(-15);

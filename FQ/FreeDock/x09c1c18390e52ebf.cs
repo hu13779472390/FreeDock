@@ -80,7 +80,6 @@ namespace FQ.FreeDock
                 if (rectangle.Y > this.xb646339c3b9e735a - 4)
                     rectangle.Y = this.xb646339c3b9e735a - 4;
             }
-//            DockStyle dock = this.dockContainer.Dock;
             switch (this.dockContainer.Dock)
             {
                 case DockStyle.Top:
